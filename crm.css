@@ -181,3 +181,18 @@ body {
     border-bottom: 4px solid var(--black);
   }
 }
+
+.collapse-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 6px 10px;
+  align-self: flex-end;
+}
+
+.collapse-btn:hover {
+  color: #fff;
+}
+
