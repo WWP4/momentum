@@ -18,25 +18,37 @@
 
 <div class="app">
 
-  <!-- SIDEBAR -->
-  <button class="collapse-btn" onclick="toggleSidebar()">☰</button>
-  <aside class="sidebar">
+ <!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <div class="sidebar-top">
     <div class="brand">
       <h1>MOMENTUM</h1>
       <span>ATHLETE CRM</span>
     </div>
 
-    <nav class="nav">
-      <a class="active" href="#">Dashboard</a>
-      <a href="#">Athletes</a>
-      <a href="#">Teams</a>
-      <a href="#">Training Logs</a>
-      <a href="#">Academic Credits</a>
-      <a href="#">Reports</a>
-      <a href="#">Messages</a>
-      <a href="#">Settings</a>
-    </nav>
-  </aside>
+    <button
+      class="collapse-btn"
+      data-sidebar-toggle
+      aria-label="Toggle sidebar"
+    >
+      ☰
+    </button>
+  </div>
+
+  <nav class="nav">
+    <a class="active" href="#"><span>Dashboard</span></a>
+    <a href="#"><span>Athletes</span></a>
+    <a href="#"><span>Teams</span></a>
+    <a href="#"><span>Training Logs</span></a>
+    <a href="#"><span>Academic Credits</span></a>
+    <a href="#"><span>Reports</span></a>
+    <a href="#"><span>Messages</span></a>
+    <a href="#"><span>Settings</span></a>
+  </nav>
+
+</aside>
+
 
   <!-- MAIN CONTENT -->
   <main class="main">
