@@ -196,3 +196,24 @@ body {
   color: #fff;
 }
 
+
+/* Hover-open expansion */
+.sidebar.hover-open {
+  width: 260px;
+}
+
+/* Prevent hover-open from affecting stored state */
+.sidebar.collapsed:not(.hover-open) {
+  width: 76px;
+}
+
+/* Smooth label fade */
+.sidebar .nav span {
+  transition: opacity .15s ease;
+}
+
+.sidebar.collapsed .nav span {
+  opacity: 0;
+  pointer-events: none;
+}
+
