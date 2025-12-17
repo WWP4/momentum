@@ -217,3 +217,45 @@ body {
   pointer-events: none;
 }
 
+/* =========================================================
+   🔒 GRID + SIDEBAR HARD FIX (PRODUCTION SAFE)
+   ======================================================= */
+
+/* Force grid to always behave */
+.app {
+  display: grid !important;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  transition: grid-template-columns 0.25s ease;
+}
+
+/* When sidebar is collapsed, collapse the GRID column */
+.app.sidebar-collapsed {
+  grid-template-columns: 76px 1fr;
+}
+
+/* Sidebar must stay in normal flow */
+.sidebar {
+  position: relative !important;
+  height: 100vh;
+}
+
+/* Main content must be allowed to grow */
+.main {
+  width: 100%;
+  min-width: 0;
+  display: block;
+}
+
+/* Prevent mobile rules from breaking desktop */
+@media (min-width: 901px) {
+  .app {
+    grid-template-columns: 260px 1fr !important;
+  }
+
+  .app.sidebar-collapsed {
+    grid-template-columns: 76px 1fr !important;
+  }
+}
+
+
