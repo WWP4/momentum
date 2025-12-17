@@ -1,0 +1,152 @@
+/* =========================================================
+   MOMENTUM ATHLETE CRM — BASE UI
+   Red / Black / White
+   ======================================================= */
+
+/* ---------- TOKENS ---------- */
+:root {
+  --red: #d61f26;
+  --black: #000000;
+  --white: #ffffff;
+  --bg: #f5f5f5;
+  --border: #111111;
+  --muted: #666666;
+  --radius: 14px;
+  --shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
+
+/* ---------- RESET ---------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: #111;
+}
+
+/* ---------- APP LAYOUT ---------- */
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  background: var(--red);
+  color: var(--white);
+  border-right: 4px solid var(--black);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.brand span {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* ---------- NAV ---------- */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--white);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.nav a:hover {
+  background: rgba(0,0,0,0.15);
+  transform: translateX(2px);
+}
+
+.nav a.active {
+  background: var(--black);
+}
+
+/* ---------- MAIN ---------- */
+.main {
+  padding: 24px;
+  display: grid;
+  gap: 18px;
+}
+
+/* ---------- TOP BAR ---------- */
+.topbar {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  box-shadow: var(--shadow);
+}
+
+.topbar h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.topbar .meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- CARDS ---------- */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.card h3,
+.card h4 {
+  margin-top: 0;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.stat {
+  font-size: 28px;
+  font-weight: 700;
+  display: block;
+  margin-top: 6px;
+}
+
+/* ---------- GRID ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 4px solid var(--black);
+  }
+}
