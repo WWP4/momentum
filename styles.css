@@ -2748,3 +2748,91 @@ body.handoff-fire .why__title{
   color: #0b0f18;
 }
 
+/* =========================================
+   LIGHT PAGE MODE (redirect/apply/etc)
+   Paste at BOTTOM of styles.css
+   ========================================= */
+
+body.page--light{
+  background:#fff;
+  color:#0b0d13;
+}
+
+/* Make muted text readable on white */
+body.page--light :is(.p--muted, .muted, .sub, .lead, .note){
+  color: rgba(11,13,19,.70) !important;
+}
+
+/* Buttons: fix "gray on white" + "white on white" */
+body.page--light .btn{
+  box-shadow: 0 18px 50px rgba(0,0,0,.08);
+}
+
+body.page--light .btn--primary{
+  /* Make primary actually look primary on white pages */
+  background: linear-gradient(90deg, var(--accentA), var(--accentB));
+  color:#fff;
+}
+
+body.page--light .btn--ghost{
+  background:#fff;
+  color:#0b0d13;
+  border:1px solid rgba(11,13,19,.14);
+  box-shadow: 0 18px 50px rgba(0,0,0,.06);
+}
+
+/* Optional: true black premium button */
+body.page--light .btn--dark{
+  background:#0b0f18;
+  color:#fff;
+  border:1px solid rgba(11,15,24,.18);
+}
+
+/* Optional: soft secondary */
+body.page--light .btn--soft{
+  background: rgba(11,13,19,.06);
+  color:#0b0d13;
+  border:1px solid rgba(11,13,19,.10);
+  box-shadow:none;
+}
+
+/* =========================================
+   QUIZ (mq__) – force readable text in light mode
+   ========================================= */
+
+body.page--light #momentumParentQuiz,
+body.page--light .mq,
+body.page--light .mq__panel,
+body.page--light .mq__step{
+  color:#0b0d13;
+}
+
+/* If your option pills/cards are present but “blank”, this fixes it */
+body.page--light .mq__choice,
+body.page--light .mq__choice *{
+  color:#0b0d13 !important;
+}
+
+/* Common pattern: label text inside spans gets set to transparent/white somewhere */
+body.page--light .mq__choice span,
+body.page--light .mq__choice strong,
+body.page--light .mq__choice small{
+  color:#0b0d13 !important;
+}
+
+/* Inputs / fields on white pages */
+body.page--light .mq input[type="text"],
+body.page--light .mq input[type="email"],
+body.page--light .mq input[type="tel"],
+body.page--light .mq textarea,
+body.page--light .mq select{
+  background:#fff;
+  color:#0b0d13;
+  border:1px solid rgba(11,13,19,.14);
+}
+
+/* Checkbox/radio visual consistency */
+body.page--light .mq input[type="checkbox"],
+body.page--light .mq input[type="radio"]{
+  accent-color: var(--accentA);
+}
