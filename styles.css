@@ -2836,3 +2836,57 @@ body.page--light .mq input[type="checkbox"],
 body.page--light .mq input[type="radio"]{
   accent-color: var(--accentA);
 }
+/* =========================
+   MOMENTUM BRAND UNIFICATION
+   ========================= */
+
+/* 1) Unify quiz accent colors withs: make MQ use the same brand gradient */
+:root{
+  /* If these already exist above, keep them — this just ensures MQ matches */
+  /* --accentA and --accentB are used by .btn--primary */
+  /* Set MQ to mirror the same gradient */
+  --mq-red: var(--accentA);
+  --mq-blue: var(--accentB);
+}
+
+/* 2) Normalize button shape + weight so MQ buttons feel identical to site buttons */
+.mq__btn{
+  border-radius: 16px;              /* closer to your premium rounding */
+  padding: 12px 16px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  border: 1px solid rgba(11,13,19,.12);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease, background 180ms ease;
+}
+
+/* 3) Primary button: same “Momentum” gradient everywhere */
+.mq__btn--primary{
+  background: linear-gradient(90deg, var(--accentA), var(--accentB));
+  border-color: transparent;
+  box-shadow: 0 18px 60px rgba(0,0,0,.12);
+}
+
+.mq__btn--primary:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+}
+
+/* 4) Ghost button: make it look intentional (less “default gray”) */
+.mq__btn--ghost{
+  background: rgba(255,255,255,.92);
+  color: rgba(11,13,19,.86);
+  border: 1px solid rgba(11,13,19,.14);
+  box-shadow: 0 14px 40px rgba(0,0,0,.06);
+}
+
+.mq__btn--ghost:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 18px 55px rgba(0,0,0,.08);
+}
+
+/* 5) Focus states: consistent premium ring */
+.mq__btn:focus-visible,
+.btn:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accentA) 22%, transparent), 0 18px 60px rgba(0,0,0,.12);
+}
