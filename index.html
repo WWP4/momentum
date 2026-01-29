@@ -1,334 +1,67 @@
+<!-- index.html (hero-only starter) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Momentum Athlete — Parent Application</title>
-  <meta name="description" content="Apply to Momentum Athlete. Turn your athlete’s training into verified high school credit." />
+  <title>Momentum — Parent Program</title>
+  <meta name="description" content="Apply to Momentum. Turn your athlete’s training into verified high school credit." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;1,600;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
-  <!-- Top Bar -->
+  <!-- Minimal topbar (optional) -->
   <header class="topbar">
     <div class="container topbar__inner">
-      <a class="brand" href="#">
+      <a class="brand" href="#" aria-label="Momentum home">
         <span class="brand__word">MOMENTUM</span><span class="brand__dot">.</span>
       </a>
 
       <nav class="nav">
-        <a href="#how">How it works</a>
-        <a href="#what-you-submit">What you submit</a>
-        <a href="#faq">FAQ</a>
+        <a href="#learn">Learn</a>
         <a class="nav__cta" href="#apply">Apply</a>
       </nav>
-
-      <button class="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-
-    <div class="mobileNav" id="mobileNav" hidden>
-      <a href="#how">How it works</a>
-      <a href="#what-you-submit">What you submit</a>
-      <a href="#faq">FAQ</a>
-      <a class="nav__cta" href="#apply">Apply</a>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="hero" id="top">
-    <div class="hero__videoWrap">
-      <!-- Replace this source with your MP4 -->
-      <video autoplay muted playsinline loop preload="metadata"
-        poster="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1600&q=70">
-        <source src="https://cdn.coverr.co/videos/coverr-basketball-player-practicing-9157/1080p.mp4" type="video/mp4">
-      </video>
-    </div>
+  <main>
+    <section class="heroType" id="top" aria-label="Momentum Parent Program">
+      <div class="heroType__bg" aria-hidden="true"></div>
 
-    <div class="hero__cap" aria-hidden="true"></div>
-    <div class="hero__vignette" aria-hidden="true"></div>
-    <div class="hero__reveal" aria-hidden="true"></div>
-
-    <div class="container hero__inner">
-      <div class="kicker">
-        <span class="kicker__dot"></span>
-        Parent Application
-      </div>
-
-      <h1 class="headline">
-        Turn training into<br />
-        verified high school credit.
-      </h1>
-
-      <p class="sub">
-        Momentum recognizes the structured training your athlete is already completing and turns it into
-        official transcript credit through our accredited academic program.
-      </p>
-
-      <div class="divider" aria-hidden="true"></div>
-
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="#apply">Start Application</a>
-        <a class="btn btn--ghost" href="#how">See How It Works</a>
-      </div>
-
-      <div class="trustRow">
-        <div class="trustPill">No new practices</div>
-        <div class="trustPill">No extra homework</div>
-        <div class="trustPill">Transcript recognized</div>
-      </div>
-    </div>
-
-    <div class="scrollHint" aria-hidden="true">Scroll</div>
-  </section>
-
-  <!-- SECTION: VALUE -->
-  <section class="section section--dark">
-    <div class="container">
-      <div class="grid2">
-        <div>
-          <h2 class="h2">Built for families who are already investing the time.</h2>
-          <p class="p">
-            If your athlete trains multiple nights per week, travels, and competes, you already have the structure.
-            Momentum simply validates that commitment as academic progress — and handles the paperwork.
-          </p>
+      <div class="container heroType__inner">
+        <!-- Animated wordmark -->
+        <div class="wordmark" aria-label="Momentum">
+          <span class="wordmark__letters" id="wordmarkLetters" aria-hidden="true"></span>
+          <span class="wordmark__sr">MOMENTUM.</span>
+          <span class="wordmark__underline" aria-hidden="true"></span>
         </div>
 
-        <div class="card card--glass">
-          <div class="card__title">What you get</div>
-          <ul class="list">
-            <li>Verified course credit aligned to athletic training</li>
-            <li>Enrollment + parent communication handled for you</li>
-            <li>Clear documentation for your records</li>
-            <li>Simple onboarding and transparent process</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+        <h1 class="heroType__headline" id="heroHeadline">
+          Bring Momentum to your athlete’s transcript.
+        </h1>
 
-  <!-- SECTION: HOW -->
-  <section class="section" id="how">
-    <div class="container">
-      <div class="sectionHead">
-        <h2 class="h2">How it works</h2>
-        <p class="p p--muted">
-          You share your athlete’s current training schedule. We confirm eligibility, map credits, and guide you through enrollment.
+        <p class="heroType__sub" id="heroSub">
+          We turn the structured training your athlete is already completing into verified high school credit —
+          without adding practices and without adding extra workload.
         </p>
-      </div>
 
-      <div class="steps">
-        <div class="step">
-          <div class="step__num">1</div>
-          <div class="step__body">
-            <div class="step__title">Submit the application</div>
-            <div class="step__text">Tell us the sport, club, training schedule, and your athlete’s current school situation.</div>
-          </div>
+        <div class="heroType__actions" id="heroActions">
+          <a class="btn btn--primary" href="#apply">Apply Now</a>
+          <a class="btn btn--ghost" href="#learn">Learn More</a>
         </div>
 
-        <div class="step">
-          <div class="step__num">2</div>
-          <div class="step__body">
-            <div class="step__title">We evaluate your training</div>
-            <div class="step__text">Our academic team reviews the program details and confirms credit alignment.</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step__num">3</div>
-          <div class="step__body">
-            <div class="step__title">Enrollment + documentation</div>
-            <div class="step__text">We complete onboarding and provide the documentation you need for the transcript process.</div>
-          </div>
+        <div class="heroType__note" id="heroNote">
+          No new classes. No added work. Just recognition for what your athlete already does.
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- SECTION: WHAT YOU SUBMIT -->
-  <section class="section section--dark" id="what-you-submit">
-    <div class="container">
-      <div class="grid2">
-        <div class="card">
-          <div class="card__title">What we’ll ask for</div>
-          <ul class="list">
-            <li>Athlete name + grade</li>
-            <li>Sport + club / training location</li>
-            <li>Typical weekly training schedule</li>
-            <li>Competition schedule estimate (optional)</li>
-            <li>Parent contact info</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <div class="card__title">What you do not need</div>
-          <ul class="list">
-            <li>Extra training sessions</li>
-            <li>New curriculum from your club</li>
-            <li>A complicated portfolio</li>
-            <li>Hours of paperwork</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION: APPLY -->
-  <section class="section" id="apply">
-    <div class="container">
-      <div class="sectionHead">
-        <h2 class="h2">Start the parent application</h2>
-        <p class="p p--muted">
-          Submit the form and we’ll follow up with next steps. This takes about 2 minutes.
-        </p>
-      </div>
-
-      <div class="applyWrap">
-        <form class="form" id="applyForm">
-          <div class="formGrid">
-            <div class="field">
-              <label for="parentName">Parent / Guardian Name</label>
-              <input id="parentName" name="parentName" type="text" autocomplete="name" required />
-            </div>
-
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required />
-            </div>
-
-            <div class="field">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" />
-            </div>
-
-            <div class="field">
-              <label for="athleteName">Athlete Name</label>
-              <input id="athleteName" name="athleteName" type="text" required />
-            </div>
-
-            <div class="field">
-              <label for="grade">Athlete Grade</label>
-              <select id="grade" name="grade" required>
-                <option value="" selected disabled>Select</option>
-                <option>6</option><option>7</option><option>8</option>
-                <option>9</option><option>10</option><option>11</option><option>12</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="sport">Sport</label>
-              <input id="sport" name="sport" type="text" placeholder="Soccer, Basketball, Volleyball..." required />
-            </div>
-
-            <div class="field">
-              <label for="club">Club / Training Program</label>
-              <input id="club" name="club" type="text" placeholder="Club name / training facility" required />
-            </div>
-
-            <div class="field field--full">
-              <label for="schedule">Typical Weekly Training Schedule</label>
-              <textarea id="schedule" name="schedule" rows="4" placeholder="Example: Mon/Wed/Fri 6–8pm + Sat morning strength session" required></textarea>
-            </div>
-
-            <div class="field field--full">
-              <label for="notes">Anything else we should know?</label>
-              <textarea id="notes" name="notes" rows="3" placeholder="Optional"></textarea>
-            </div>
-          </div>
-
-          <div class="formActions">
-            <button class="btn btn--primary" type="submit">Submit Application</button>
-            <div class="formFine">
-              By submitting, you agree to be contacted by Momentum Athlete regarding program enrollment.
-            </div>
-          </div>
-
-          <div class="formStatus" id="formStatus" role="status" aria-live="polite"></div>
-        </form>
-
-        <aside class="applyAside">
-          <div class="asideCard">
-            <div class="asideCard__title">What happens after you submit</div>
-            <ol class="miniSteps">
-              <li>We confirm eligibility based on training structure</li>
-              <li>We send the next-step enrollment packet</li>
-              <li>We guide you through transcript documentation</li>
-            </ol>
-          </div>
-
-          <div class="asideCard asideCard--dark">
-            <div class="asideCard__title">Need to talk to someone first?</div>
-            <p class="p p--muted" style="margin:0 0 14px;">
-              If you want a quick walkthrough, we can explain the process and what your athlete qualifies for.
-            </p>
-            <a class="btn btn--ghost btn--full" href="#top">Back to top</a>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section section--dark" id="faq">
-    <div class="container">
-      <div class="sectionHead">
-        <h2 class="h2">FAQ</h2>
-        <p class="p p--muted">Straight answers parents care about.</p>
-      </div>
-
-      <div class="faq">
-        <details class="faqItem">
-          <summary>Is this extra training or extra work for my athlete?</summary>
-          <div class="faqItem__body">
-            No. Momentum is designed to recognize training your athlete is already completing. We validate the structure and handle the documentation process.
-          </div>
-        </details>
-
-        <details class="faqItem">
-          <summary>How long does approval usually take?</summary>
-          <div class="faqItem__body">
-            Once we have your application and training details, the evaluation step is typically fast. We’ll communicate timing clearly after you submit.
-          </div>
-        </details>
-
-        <details class="faqItem">
-          <summary>What if my athlete plays multiple sports?</summary>
-          <div class="faqItem__body">
-            Submit the primary sport and include the rest in the notes. We’ll guide you on the cleanest way to document the full training picture.
-          </div>
-        </details>
-
-        <details class="faqItem">
-          <summary>What if we are homeschooled or in private school?</summary>
-          <div class="faqItem__body">
-            Still submit. The process can support different school situations — we’ll confirm the best path during follow-up.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__brand">
-        <div class="brand brand--footer"><span class="brand__word">MOMENTUM</span><span class="brand__dot">.</span></div>
-        <div class="footer__note">Momentum Athlete Program. All rights reserved.</div>
-      </div>
-
-      <div class="footer__links">
-        <a href="#how">How it works</a>
-        <a href="#apply">Apply</a>
-        <a href="#faq">FAQ</a>
-      </div>
-    </div>
-  </footer>
+    </section>
+  </main>
 
   <script src="./app.js"></script>
 </body>
