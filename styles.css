@@ -2690,3 +2690,61 @@ body.handoff-fire .why__title{
 .mq .mq__textarea.mq__bad{
   border-color: rgba(255,40,79,.55);
 }
+
+
+/* ===========================
+   Parent Quiz (light theme)
+   Scoped so it won't touch other sections
+   =========================== */
+#apply .mq,
+#apply #momentumParentQuiz,
+.mq {
+  color: #0b0f18; /* dark ink for white backgrounds */
+}
+
+/* Make sure all text inside quiz inherits the dark ink */
+#apply .mq * ,
+#apply #momentumParentQuiz * ,
+.mq * {
+  color: inherit;
+}
+
+/* Common text helpers if you use them */
+#apply .mq__title,
+#apply .mq__h,
+#apply .mq__q h3,
+#apply .mq__q label,
+#apply .mq__label,
+#apply .mq__field label,
+.mq__title,
+.mq__h,
+.mq__q h3,
+.mq__q label,
+.mq__label,
+.mq__field label {
+  color: #0b0f18;
+}
+
+#apply .mq__p,
+#apply .mq__hint,
+#apply .mq__sub,
+.mq__p,
+.mq__hint,
+.mq__sub {
+  color: rgba(11, 15, 24, .72);
+}
+
+/* Choice chips/cards */
+#apply .mq__choice,
+.mq__choice {
+  color: #0b0f18;
+}
+
+/* If you have a specific span for option text, force it */
+#apply .mq__choiceText,
+#apply .mq__choice span,
+.mq__choiceText,
+.mq__choice span {
+  color: #0b0f18;
+}
+
