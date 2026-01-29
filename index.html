@@ -629,29 +629,33 @@ observer.observe(lastStep);
 
 })();
 
-  <script>
+<!-- 1) Load Supabase FIRST -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2) Then your quiz script -->
+<script>
 (() => {
-  // Set these once (use your Netlify env values; anon key is OK client-side because RLS is on)
   const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
-  const SUPABASE_ANON_KEY = window.SUPABASE_API || ""; // optional if you set it on window, else paste directly
 
-  // If you prefer: paste the anon key directly below and remove window.SUPABASE_API
-  // const SUPABASE_ANON_KEY = "YOUR_ANON_KEY_HERE";
-
-  if (!window.supabase || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.warn("Supabase not configured. Add SUPABASE_ANON_KEY.");
-    return;
-  }
+  // IMPORTANT: paste the anon key here (Netlify env vars are NOT available on window automatically)
+  const SUPABASE_ANON_KEY = "PASTE_YOUR_ANON_KEY_HERE";
 
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const form = document.getElementById("momentumParentQuiz");
+  if (!form) { console.warn("momentumParentQuiz not found"); return; }
+
   const steps = Array.from(form.querySelectorAll(".mq__step")).filter(s => s.id !== "mqSubmitStep");
   const submitStep = document.getElementById("mqSubmitStep");
 
   const backBtn = document.getElementById("mqBack");
   const nextBtn = document.getElementById("mqNext");
   const submitBtn = document.getElementById("mqSubmitBtn");
+
+  if (!backBtn || !nextBtn || !submitBtn || !submitStep) {
+    console.warn("Missing quiz controls or submit step");
+    return;
+  }
 
   const stepNowEl = document.getElementById("mqStepNow");
   const stepTotalEl = document.getElementById("mqStepTotal");
@@ -677,12 +681,12 @@ observer.observe(lastStep);
     form.querySelectorAll(".mq__step").forEach(s => s.classList.remove("is-active"));
     steps[idx].classList.add("is-active");
 
-    const pct = Math.round((idx / (steps.length - 1)) * 100);
-    barFill.style.width = `${pct}%`;
-    bar.setAttribute("aria-valuenow", String(pct));
+    const pct = steps.length === 1 ? 100 : Math.round((idx / (steps.length - 1)) * 100);
+    if (barFill) barFill.style.width = `${pct}%`;
+    if (bar) bar.setAttribute("aria-valuenow", String(pct));
 
-    stepNowEl.textContent = String(idx + 1);
-    hintEl.textContent = steps[idx].dataset.title || "";
+    if (stepNowEl) stepNowEl.textContent = String(idx + 1);
+    if (hintEl) hintEl.textContent = steps[idx].dataset.title || "";
 
     backBtn.disabled = idx === 0;
 
@@ -705,25 +709,39 @@ observer.observe(lastStep);
     return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map(i => i.value);
   }
 
+  // Better: show what's missing instead of silently failing
   function validateStep(){
-    // simple required validation: any [required] in this step must be filled/checked
     const cur = steps[idx];
+    cur.querySelectorAll(".mq__bad").forEach(el => el.classList.remove("mq__bad"));
+
     const required = Array.from(cur.querySelectorAll("[required]"));
+    let firstBad = null;
+
     for (const el of required){
       if (el.type === "radio"){
         const name = el.name;
-        if (!cur.querySelector(`input[name="${name}"]:checked`)) return false;
+        if (!cur.querySelector(`input[name="${name}"]:checked`)){
+          const group = el.closest(".mq__field") || el.closest(".mq__q") || cur;
+          group.classList.add("mq__bad");
+          firstBad = firstBad || group;
+        }
       } else {
-        if (!String(el.value || "").trim()) return false;
+        if (!String(el.value || "").trim()){
+          el.classList.add("mq__bad");
+          firstBad = firstBad || el;
+        }
       }
+    }
+
+    if (firstBad){
+      firstBad.scrollIntoView({ behavior:"smooth", block:"center" });
+      return false;
     }
     return true;
   }
 
   function computeScore(payload){
-    // Controlled, simple scoring you can tune later
     let score = 0;
-
     if (payload.training_sessions_per_week === "5+") score += 3;
     else if (payload.training_sessions_per_week === "3–4") score += 2;
     else if (payload.training_sessions_per_week === "1–2") score += 1;
@@ -747,95 +765,80 @@ observer.observe(lastStep);
   }
 
   async function submit(){
-    // show submit screen
     form.querySelectorAll(".mq__step").forEach(s => s.classList.remove("is-active"));
     submitStep.classList.add("is-active");
 
-    spinner.style.display = "block";
-    tryAgain.style.display = "none";
-    submitTitle.textContent = "Submitting…";
-    submitMsg.textContent = "Saving your answers.";
+    if (spinner) spinner.style.display = "block";
+    if (tryAgain) tryAgain.style.display = "none";
+    if (submitTitle) submitTitle.textContent = "Submitting…";
+    if (submitMsg) submitMsg.textContent = "Saving your answers.";
 
-    // build payload matching your SQL column names
     const payload = {
       parent_name: getText("parent_name"),
       email: getText("email"),
       phone: getText("phone"),
-
       athlete_name: getText("athlete_name"),
       athlete_age_group: getRadio("athlete_age_group"),
       primary_sport: getText("primary_sport"),
       city: getText("city"),
       state: getText("state"),
-
       training_sessions_per_week: getRadio("training_sessions_per_week"),
       session_length: getRadio("session_length"),
       session_includes: getArray("session_includes"),
-
       games_per_week: getRadio("games_per_week"),
       competition_types: getArray("competition_types"),
-
       strength_conditioning: getRadio("strength_conditioning"),
       recovery_practices: getArray("recovery_practices"),
-
       nutrition_guidance: getRadio("nutrition_guidance"),
       nutrition_topics: getArray("nutrition_topics"),
-
       leadership_roles: getArray("leadership_roles"),
       character_emphasis: getArray("character_emphasis"),
       life_skills: getArray("life_skills"),
       mental_performance: getArray("mental_performance"),
-
       notes: getText("notes"),
       source: getText("source") || "momentum-site"
     };
 
     const score = computeScore(payload);
-    const qualifies = score >= 8; // tune threshold any time
-
+    const qualifies = score >= 8;
     payload.score = score;
     payload.qualifies = qualifies;
 
-    scoreEl.value = String(score);
-    qualifiesEl.value = qualifies ? "true" : "false";
+    if (scoreEl) scoreEl.value = String(score);
+    if (qualifiesEl) qualifiesEl.value = qualifies ? "true" : "false";
 
     const { error } = await supabase.from("parent_applications").insert(payload);
     if (error) throw error;
 
-    spinner.style.display = "none";
-    submitTitle.textContent = "Submitted.";
-    submitMsg.textContent = qualifies
+    if (spinner) spinner.style.display = "none";
+    if (submitTitle) submitTitle.textContent = "Submitted.";
+    if (submitMsg) submitMsg.textContent = qualifies
       ? "You’re a strong fit. We’ll follow up with next steps and confirm credit options."
       : "We received your application. We’ll follow up with next steps and recommendations.";
   }
 
   backBtn.addEventListener("click", () => show(idx - 1));
-
-  nextBtn.addEventListener("click", () => {
-    if (!validateStep()) return;
-    show(idx + 1);
-  });
+  nextBtn.addEventListener("click", () => { if (validateStep()) show(idx + 1); });
 
   submitBtn.addEventListener("click", async () => {
     if (!validateStep()) return;
     submitBtn.disabled = true;
     try { await submit(); }
     catch (e){
-      spinner.style.display = "none";
-      submitTitle.textContent = "Couldn’t submit.";
-      submitMsg.textContent = e?.message || "Please try again.";
-      tryAgain.style.display = "inline-flex";
+      if (spinner) spinner.style.display = "none";
+      if (submitTitle) submitTitle.textContent = "Couldn’t submit.";
+      if (submitMsg) submitMsg.textContent = e?.message || "Please try again.";
+      if (tryAgain) tryAgain.style.display = "inline-flex";
       submitBtn.disabled = false;
     }
   });
 
-  tryAgain.addEventListener("click", () => {
-    // return to last step
+  tryAgain?.addEventListener("click", () => {
     submitBtn.disabled = false;
     show(steps.length - 1);
   });
 
-  // Tap-to-select on choice cards (works even if clicking text)
+  // Allow clicking the card to select radios
   form.addEventListener("click", (e) => {
     const choice = e.target.closest(".mq__choice");
     if (choice){
@@ -848,10 +851,6 @@ observer.observe(lastStep);
 })();
 </script>
 
-  
-</script>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </body>
 </html>
