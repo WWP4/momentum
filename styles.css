@@ -1799,7 +1799,8 @@ a{color:inherit; text-decoration:none}
 
 
 /* =========================
-   DRAMATIC TIMELINE → WHY HANDOFF
+   Premium handoff: timeline -> WHY
+   Smooth gradient wipe + soft lift
    ========================= */
 
 .why{
@@ -1807,57 +1808,54 @@ a{color:inherit; text-decoration:none}
   overflow: hidden;
 }
 
-/* Main energy layer */
+/* Moving color "light" wipe */
 .why::before{
-  content:"";
-  position:absolute;
-  inset:-20%;
-  pointer-events:none;
-
-  opacity:0;
-  transform: translateY(140px) scale(1.25);
-
-  background:
-    radial-gradient(900px 520px at 50% 85%, rgba(255,43,85,.45), transparent 60%),
-    radial-gradient(900px 520px at 50% 85%, rgba(90,92,255,.42), transparent 62%),
-    linear-gradient(180deg,
-      rgba(0,0,0,.55) 0%,
-      rgba(0,0,0,.35) 20%,
-      transparent 55%
-    );
-
-  transition:
-    opacity 260ms ease,
-    transform 900ms cubic-bezier(.18,.85,.2,1);
-
-  z-index:0;
-}
-
-/* Inner bloom highlight */
-.why::after{
   content:"";
   position:absolute;
   inset:-30%;
   pointer-events:none;
 
-  opacity:0;
-  transform: scale(.85);
+  /* start off-screen */
+  opacity: 0;
+  transform: translateX(-18%) translateY(8%) rotate(-8deg);
+  filter: blur(10px);
 
   background:
-    radial-gradient(circle at 50% 70%,
-      rgba(255,255,255,.25),
-      rgba(255,43,85,.18),
-      rgba(90,92,255,.16),
-      transparent 65%
+    linear-gradient(90deg,
+      transparent 0%,
+      rgba(255,43,85,.22) 32%,
+      rgba(90,92,255,.20) 52%,
+      transparent 76%
     );
 
-  filter: blur(40px);
+  transition:
+    opacity 180ms ease,
+    transform 950ms cubic-bezier(.18,.85,.2,1),
+    filter 950ms cubic-bezier(.18,.85,.2,1);
+
+  z-index: 0;
+}
+
+/* Secondary soft glow that fades in/out (keeps it elegant) */
+.why::after{
+  content:"";
+  position:absolute;
+  inset:-15%;
+  pointer-events:none;
+
+  opacity: 0;
+  transform: translateY(10px);
+  filter: blur(26px);
+
+  background:
+    radial-gradient(700px 300px at 22% 40%, rgba(255,43,85,.12), transparent 65%),
+    radial-gradient(700px 300px at 78% 42%, rgba(90,92,255,.10), transparent 66%);
 
   transition:
-    opacity 360ms ease,
-    transform 820ms cubic-bezier(.2,.9,.2,1);
+    opacity 220ms ease,
+    transform 850ms cubic-bezier(.18,.85,.2,1);
 
-  z-index:0;
+  z-index: 0;
 }
 
 /* Keep content above effects */
@@ -1867,48 +1865,37 @@ a{color:inherit; text-decoration:none}
 .why__grid,
 .why__cta{
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
-/* FIRE STATE */
+/* Trigger moment */
 body.handoff-fire .why::before{
-  opacity:1;
-  transform: translateY(0) scale(1);
+  opacity: 1;
+  transform: translateX(18%) translateY(-6%) rotate(-8deg);
+  filter: blur(0px);
 }
 
 body.handoff-fire .why::after{
-  opacity:1;
-  transform: scale(1);
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Cards react to energy */
+/* Card reaction: lift + clean highlight (not neon rings) */
 body.handoff-fire .whyCard{
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow:
-    0 40px 120px rgba(0,0,0,.22),
-    0 0 0 12px rgba(255,43,85,.10),
-    0 0 0 22px rgba(90,92,255,.08);
+    0 34px 110px rgba(0,0,0,.14),
+    inset 0 0 0 1px rgba(0,0,0,.07);
 }
 
-/* Fade everything back to clean */
-.why::before,
-.why::after{
-  transition-delay: 0ms;
+/* Optional: a little extra polish on the title highlight */
+body.handoff-fire .why__title{
+  filter: saturate(1.03);
 }
 
-body.handoff-fire .why::before{
-  transition-delay: 0ms;
-}
-
-body.handoff-fire .why::after{
-  transition-delay: 80ms;
-}
-
-/* Reduced motion safety */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   .why::before,
-  .why::after{
-    display:none;
-  }
+  .why::after{ display:none; }
 }
 
