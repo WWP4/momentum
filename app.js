@@ -262,6 +262,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (tryAgain) tryAgain.style.display = "none";
       if (submitTitle) submitTitle.textContent = "Submitting…";
       if (submitMsg) submitMsg.textContent = "Saving your answers.";
+       window.location.href = "/redirect.html";
+
 
       const payload = {
         parent_name: getText("parent_name"),
