@@ -629,16 +629,43 @@ observer.observe(lastStep);
 
 })();
 
-<!-- 1) Load Supabase FIRST -->
+<script src="./app.js"></script>
+
+<!-- WHY arrival observer (close the script properly) -->
+<script>
+(() => {
+  const why = document.querySelector('.whyV2');
+  const timeline = document.querySelector('.timeline');
+  if(!why || !timeline) return;
+
+  let arrived = false;
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting && !arrived){
+        arrived = true;
+        setTimeout(()=> why.classList.add('is-arrived'), 180);
+      }
+    });
+  },{ threshold: .6 });
+
+  observer.observe(timeline);
+})();
+</script>
+
+<!-- Supabase library MUST load before your quiz script -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- 2) Then your quiz script -->
+<!-- Quiz script -->
 <script>
 (() => {
   const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
 
-  // IMPORTANT: paste the anon key here (Netlify env vars are NOT available on window automatically)
+  // Paste your anon key here (Netlify env vars do NOT appear in browser automatically)
   const SUPABASE_ANON_KEY = "PASTE_YOUR_ANON_KEY_HERE";
+
+  if (!window.supabase) { console.warn("Supabase library not loaded"); return; }
+  if (!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.includes("PASTE_")) { console.warn("Missing SUPABASE_ANON_KEY"); return; }
 
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -652,11 +679,6 @@ observer.observe(lastStep);
   const nextBtn = document.getElementById("mqNext");
   const submitBtn = document.getElementById("mqSubmitBtn");
 
-  if (!backBtn || !nextBtn || !submitBtn || !submitStep) {
-    console.warn("Missing quiz controls or submit step");
-    return;
-  }
-
   const stepNowEl = document.getElementById("mqStepNow");
   const stepTotalEl = document.getElementById("mqStepTotal");
   const hintEl = document.getElementById("mqHint");
@@ -667,14 +689,18 @@ observer.observe(lastStep);
   const submitTitle = document.getElementById("mqSubmitTitle");
   const submitMsg = document.getElementById("mqSubmitMsg");
   const tryAgain = document.getElementById("mqTryAgain");
-  const spinner = submitStep.querySelector(".mq__spinner");
+  const spinner = submitStep ? submitStep.querySelector(".mq__spinner") : null;
 
   const scoreEl = document.getElementById("mqScore");
   const qualifiesEl = document.getElementById("mqQualifies");
 
-  let idx = 0;
+  if (!steps.length || !backBtn || !nextBtn || !submitBtn || !submitStep) {
+    console.warn("Quiz elements missing (steps/buttons/submitStep).");
+    return;
+  }
 
-  stepTotalEl.textContent = String(steps.length);
+  let idx = 0;
+  if (stepTotalEl) stepTotalEl.textContent = String(steps.length);
 
   function show(i){
     idx = Math.max(0, Math.min(steps.length - 1, i));
@@ -699,17 +725,14 @@ observer.observe(lastStep);
     const el = form.querySelector(`input[name="${name}"]:checked`);
     return el ? el.value : "";
   }
-
   function getText(name){
     const el = form.querySelector(`[name="${name}"]`);
     return el ? String(el.value || "").trim() : "";
   }
-
   function getArray(name){
     return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map(i => i.value);
   }
 
-  // Better: show what's missing instead of silently failing
   function validateStep(){
     const cur = steps[idx];
     cur.querySelectorAll(".mq__bad").forEach(el => el.classList.remove("mq__bad"));
@@ -742,6 +765,7 @@ observer.observe(lastStep);
 
   function computeScore(payload){
     let score = 0;
+
     if (payload.training_sessions_per_week === "5+") score += 3;
     else if (payload.training_sessions_per_week === "3–4") score += 2;
     else if (payload.training_sessions_per_week === "1–2") score += 1;
@@ -782,25 +806,32 @@ observer.observe(lastStep);
       primary_sport: getText("primary_sport"),
       city: getText("city"),
       state: getText("state"),
+
       training_sessions_per_week: getRadio("training_sessions_per_week"),
       session_length: getRadio("session_length"),
       session_includes: getArray("session_includes"),
+
       games_per_week: getRadio("games_per_week"),
       competition_types: getArray("competition_types"),
+
       strength_conditioning: getRadio("strength_conditioning"),
       recovery_practices: getArray("recovery_practices"),
+
       nutrition_guidance: getRadio("nutrition_guidance"),
       nutrition_topics: getArray("nutrition_topics"),
+
       leadership_roles: getArray("leadership_roles"),
       character_emphasis: getArray("character_emphasis"),
       life_skills: getArray("life_skills"),
       mental_performance: getArray("mental_performance"),
+
       notes: getText("notes"),
       source: getText("source") || "momentum-site"
     };
 
     const score = computeScore(payload);
     const qualifies = score >= 8;
+
     payload.score = score;
     payload.qualifies = qualifies;
 
@@ -833,12 +864,13 @@ observer.observe(lastStep);
     }
   });
 
-  tryAgain?.addEventListener("click", () => {
-    submitBtn.disabled = false;
-    show(steps.length - 1);
-  });
+  if (tryAgain){
+    tryAgain.addEventListener("click", () => {
+      submitBtn.disabled = false;
+      show(steps.length - 1);
+    });
+  }
 
-  // Allow clicking the card to select radios
   form.addEventListener("click", (e) => {
     const choice = e.target.closest(".mq__choice");
     if (choice){
