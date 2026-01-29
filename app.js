@@ -117,4 +117,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // Reduced motion: still activate the section styling
     why.classList.add("is-active");
   }
+  
 });
