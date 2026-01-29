@@ -1796,3 +1796,60 @@ a{color:inherit; text-decoration:none}
     transform: translateY(0);
   }
 }
+
+
+/* =========================
+   Timeline -> Why "handoff wash"
+   ========================= */
+
+.why{
+  position: relative;
+  overflow: hidden;
+}
+
+.why::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  pointer-events:none;
+  opacity:0;
+  transform: translateY(18px) scale(1.02);
+
+  /* This is the moving color energy */
+  background:
+    radial-gradient(900px 420px at 18% 35%, rgba(255,43,85,.18), transparent 60%),
+    radial-gradient(900px 420px at 82% 45%, rgba(90,92,255,.16), transparent 62%),
+    linear-gradient(90deg, rgba(255,43,85,.10), rgba(90,92,255,.10));
+
+  filter: blur(0px);
+  transition: opacity 420ms ease, transform 780ms cubic-bezier(.2,.9,.2,1);
+  z-index: 0;
+}
+
+/* Keep real content above overlay */
+.why .container,
+.why__inner,
+.why__header,
+.why__grid,
+.why__cta{
+  position: relative;
+  z-index: 1;
+}
+
+/* Triggered moment: the wash appears then settles */
+body.handoff-fire .why::before{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 220ms ease, transform 780ms cubic-bezier(.2,.9,.2,1);
+}
+
+/* Optional: subtle “brighten” of cards during the wash */
+body.handoff-fire .whyCard{
+  transition: transform 340ms ease, box-shadow 340ms ease, filter 340ms ease;
+  filter: saturate(1.06) contrast(1.02);
+}
+
+/* Reduced motion: no wash */
+@media (prefers-reduced-motion: reduce){
+  .why::before{ display:none; }
+}
