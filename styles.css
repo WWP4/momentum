@@ -2238,3 +2238,62 @@ body.handoff-fire .why__title{
   .whyV2__reason, .whyV2__proof{ transition:none; }
 }
 
+/* TIMELINE → WHY HANDOFF */
+
+.whyV2__underline{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-6px;
+  height:3px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--why-red),var(--why-blue));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 650ms cubic-bezier(.22,.61,.36,1);
+}
+
+/* Activated underline */
+.whyV2.is-arrived .whyV2__underline{
+  transform:scaleX(1);
+}
+
+/* WHY cards hidden initially */
+
+.whyV2__reason{
+  opacity:0;
+  transform:translateY(16px);
+}
+
+/* Reveal when active */
+.whyV2.is-arrived .whyV2__reason{
+  opacity:1;
+  transform:translateY(0);
+  transition:
+    opacity 550ms cubic-bezier(.22,.61,.36,1),
+    transform 550ms cubic-bezier(.22,.61,.36,1);
+}
+
+/* Stagger */
+.whyV2.is-arrived .whyV2__reason:nth-child(1){transition-delay:120ms}
+.whyV2.is-arrived .whyV2__reason:nth-child(2){transition-delay:200ms}
+.whyV2.is-arrived .whyV2__reason:nth-child(3){transition-delay:280ms}
+.whyV2.is-arrived .whyV2__reason:nth-child(4){transition-delay:360ms}
+
+/* Subtle arrival haze */
+
+.whyV2::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(700px 220px at 25% 20%, color-mix(in srgb,var(--why-red) 10%,transparent), transparent 60%),
+    radial-gradient(700px 220px at 75% 30%, color-mix(in srgb,var(--why-blue) 10%,transparent), transparent 62%);
+  opacity:0;
+  transition:opacity 600ms ease-out;
+  pointer-events:none;
+}
+
+.whyV2.is-arrived::before{
+  opacity:.55;
+}
