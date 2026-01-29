@@ -12,178 +12,403 @@
   --red:#ff2b5c;
   --blue:#4f6bff;
   --ink:#0b0f18;
+  --muted: rgba(11,15,24,.66);
+  --line: rgba(11,15,24,.10);
+  --card: rgba(255,255,255,.86);
+  --shadow: 0 40px 90px rgba(0,0,0,.10);
+  --shadow2: 0 24px 60px rgba(0,0,0,.10);
+  --r: 26px;
 }
 
 *{box-sizing:border-box}
+html,body{height:100%}
 body{
   margin:0;
-  font-family:Inter,system-ui,sans-serif;
-  background:#fff;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   color:var(--ink);
+  background:#fff;
 }
 
+/* Page background: white but alive (premium “energy”) */
 .page{
   min-height:100vh;
+  position:relative;
+  overflow:hidden;
+  padding:28px 20px 56px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+.page:before{
+  content:"";
+  position:absolute; inset:-10%;
+  background:
+    radial-gradient(900px 600px at 10% 12%, rgba(255,43,92,.18), transparent 60%),
+    radial-gradient(900px 600px at 90% 16%, rgba(79,107,255,.18), transparent 62%),
+    radial-gradient(700px 600px at 50% 120%, rgba(79,107,255,.10), transparent 62%);
+  filter: blur(18px);
+  pointer-events:none;
+}
+
+/* subtle grain so it doesn’t feel “flat” */
+.page:after{
+  content:"";
+  position:absolute; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity:.20;
+  pointer-events:none;
+}
+
+.wrap{
+  width:min(980px, 100%);
+  position:relative;
+  z-index:1;
+}
+
+/* top bar */
+.top{
   display:flex;
   align-items:center;
-  justify-content:center;
-  padding:48px 20px;
+  justify-content:space-between;
+  margin:8px 2px 22px;
 }
-
-.card{
-  max-width:820px;
-  width:100%;
-  border-radius:28px;
-  padding:56px;
+.brand{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.mark{
+  width:40px; height:40px;
+  border-radius:14px;
   background:
-    radial-gradient(600px at 0% 0%, rgba(255,43,92,.08), transparent 60%),
-    radial-gradient(600px at 100% 0%, rgba(79,107,255,.08), transparent 60%),
-    #fff;
-  box-shadow:0 40px 80px rgba(0,0,0,.08);
+    radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
+    linear-gradient(135deg, rgba(255,43,92,.95), rgba(79,107,255,.95));
+  box-shadow: 0 16px 40px rgba(0,0,0,.16);
+}
+.word{
+  font-weight:800;
+  letter-spacing:.02em;
+  font-size:14px;
+}
+.word span{opacity:.55; font-weight:700}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  border-radius:999px;
+  background: rgba(255,255,255,.70);
+  border: 1px solid rgba(11,15,24,.10);
+  box-shadow: 0 12px 30px rgba(0,0,0,.06);
+  backdrop-filter: blur(8px);
+}
+.pillDot{
+  width:10px; height:10px; border-radius:999px;
+  background: linear-gradient(90deg,var(--red),var(--blue));
+}
+.pillText{
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color: rgba(11,15,24,.72);
 }
 
-.badge{
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:999px;
-  background:#f3f4f8;
-  font-size:12px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  margin-bottom:16px;
+/* main card */
+.card{
+  border-radius: var(--r);
+  background: var(--card);
+  border:1px solid rgba(11,15,24,.10);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  overflow:hidden;
+}
+
+/* accent rail (makes it feel intentional + branded) */
+.rail{
+  height:4px;
+  background: linear-gradient(90deg, var(--red), rgba(255,43,92,.15), rgba(79,107,255,.15), var(--blue));
+}
+
+.inner{
+  padding: 40px 44px 34px;
 }
 
 h1{
-  font-size:42px;
-  line-height:1.1;
-  margin:0 0 12px;
+  margin: 10px 0 10px;
+  font-size: clamp(34px, 4.3vw, 54px);
+  line-height: 1.06;
+  letter-spacing:-.03em;
+}
+.sub{
+  margin: 0 0 26px;
+  max-width: 66ch;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--muted);
 }
 
-p.lead{
-  color:rgba(11,15,24,.7);
-  margin:0 0 36px;
-  font-size:18px;
+/* a clean “next” strip */
+.nextStrip{
+  margin-top: 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.72);
+  border:1px solid rgba(11,15,24,.08);
 }
+.nextStrip b{font-weight:700}
+.nextStrip span{color: rgba(11,15,24,.60); font-size:14px}
 
-.actions{
+/* CTAs */
+.grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px;
-  margin-top:28px;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 18px;
+  margin-top: 18px;
 }
 
-.action{
-  border:1px solid #e6e7ef;
-  border-radius:20px;
-  padding:28px;
-  transition:.3s ease;
+.panel{
+  border-radius: 22px;
+  border:1px solid rgba(11,15,24,.10);
+  background: rgba(255,255,255,.75);
+  box-shadow: var(--shadow2);
+  padding: 22px 22px 18px;
+  position:relative;
+  overflow:hidden;
 }
 
-.action:hover{
-  transform:translateY(-2px);
-  box-shadow:0 20px 40px rgba(0,0,0,.06);
+.panel:before{
+  content:"";
+  position:absolute; inset:-40%;
+  background:
+    radial-gradient(320px 240px at 15% 20%, rgba(255,43,92,.18), transparent 60%),
+    radial-gradient(320px 240px at 85% 20%, rgba(79,107,255,.18), transparent 62%);
+  filter: blur(18px);
+  opacity:.65;
+  pointer-events:none;
 }
 
-.action h3{
-  margin:0 0 6px;
+.panel > *{position:relative; z-index:1}
+
+.panelTop{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom: 10px;
 }
 
-.action p{
-  margin:0 0 18px;
-  color:rgba(11,15,24,.65);
+.icon{
+  width:44px; height:44px;
+  border-radius: 16px;
+  display:grid;
+  place-items:center;
+  border: 1px solid rgba(11,15,24,.10);
+  background: rgba(255,255,255,.70);
+}
+.icon svg{width:22px;height:22px;color: rgba(11,15,24,.78)}
+
+.panel h3{
+  margin: 0 0 6px;
+  font-size: 18px;
+  letter-spacing:-.01em;
+}
+.panel p{
+  margin: 0 0 16px;
+  color: rgba(11,15,24,.66);
+  line-height:1.5;
+  font-size: 14.5px;
 }
 
+/* button system */
+.btnRow{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:12px 22px;
-  border-radius:999px;
-  font-weight:600;
+  gap:10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 700;
   text-decoration:none;
-  border:none;
   cursor:pointer;
+  border:1px solid transparent;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s cubic-bezier(.2,.8,.2,1), background .25s;
+  will-change: transform;
 }
 
-.primary{
-  background:linear-gradient(90deg,var(--red),var(--blue));
-  color:white;
+.btnPrimary{
+  color:#fff;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  box-shadow: 0 18px 40px rgba(79,107,255,.18), 0 18px 40px rgba(255,43,92,.16);
+}
+.btnPrimary:hover{transform: translateY(-2px); box-shadow: 0 26px 58px rgba(0,0,0,.18);}
+.btnGhost{
+  color: var(--ink);
+  background: rgba(255,255,255,.78);
+  border-color: rgba(11,15,24,.12);
+}
+.btnGhost:hover{transform: translateY(-2px); box-shadow: 0 24px 52px rgba(0,0,0,.10);}
+
+.small{
+  font-size: 12.5px;
+  color: rgba(11,15,24,.55);
+  margin-top: 10px;
 }
 
-.ghost{
-  background:#f3f4f8;
-  color:var(--ink);
+/* deposit: make it feel serious + “secure your spot” */
+.depositTag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size:12px;
+  color: rgba(11,15,24,.70);
+  border:1px solid rgba(11,15,24,.10);
+  background: rgba(255,255,255,.72);
+}
+.depositTag i{
+  width:10px; height:10px; border-radius: 999px;
+  display:inline-block;
+  background: linear-gradient(90deg, var(--red), var(--blue));
 }
 
-.note{
-  margin-top:32px;
-  padding-top:24px;
-  border-top:1px solid #eee;
-  font-size:14px;
-  color:rgba(11,15,24,.6);
+/* footer note */
+.foot{
+  padding: 18px 44px 26px;
+  border-top: 1px solid rgba(11,15,24,.08);
+  color: rgba(11,15,24,.60);
+  font-size: 13px;
+  line-height: 1.5;
+  background: rgba(255,255,255,.60);
 }
 
-@media(max-width:720px){
-  h1{font-size:32px}
-  .actions{grid-template-columns:1fr}
-  .card{padding:36px 24px}
+@media (max-width: 860px){
+  .inner{padding: 30px 22px 24px;}
+  .foot{padding: 16px 22px 22px;}
+  .grid{grid-template-columns: 1fr;}
+}
+
+/* subtle entrance animation (premium, not flashy) */
+@media (prefers-reduced-motion: no-preference){
+  .card{animation: rise .7s cubic-bezier(.2,.8,.2,1) both;}
+  .panel{animation: fadeUp .75s cubic-bezier(.2,.8,.2,1) both; animation-delay: .12s;}
+  .panel:nth-child(2){animation-delay: .20s;}
+  @keyframes rise{from{opacity:0; transform: translateY(10px) scale(.99)} to{opacity:1; transform: translateY(0) scale(1)}}
+  @keyframes fadeUp{from{opacity:0; transform: translateY(14px)} to{opacity:1; transform: translateY(0)}}
 }
 </style>
 </head>
 
 <body>
-
 <div class="page">
-  <div class="card">
+  <div class="wrap">
 
-    <span class="badge">Application received</span>
-
-    <h1>Thank you — we’ve got your submission.</h1>
-
-    <p class="lead">
-      Our team will review your athlete’s training and confirm credit eligibility.
-      Most families hear back within one business day.
-    </p>
-
-    <div class="actions">
-
-      <!-- BOOK CALL -->
-      <div class="action">
-        <h3>Schedule a quick onboarding call</h3>
-        <p>
-          Walk through qualifications, credits, and next steps with a Momentum advisor.
-          Takes about 15 minutes.
-        </p>
-
-        <!-- Replace with your Calendly -->
-        <a class="btn primary" href="https://calendly.com/YOUR-LINK" target="_blank">
-          Book meeting
-        </a>
+    <div class="top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="word">MOMENTUM<span>.</span></div>
       </div>
-
-      <!-- DEPOSIT -->
-      <div class="action">
-        <h3>Secure your athlete’s spot</h3>
-        <p>
-          If you feel confident moving forward, you may place your deposit now.
-          This reserves your athlete’s enrollment while credits are finalized.
-        </p>
-
-        <!-- Replace with your Stripe / QB / payment link -->
-        <a class="btn ghost" href="https://YOUR-DEPOSIT-LINK" target="_blank">
-          Place deposit
-        </a>
+      <div class="pill" aria-label="Status: Application received">
+        <span class="pillDot" aria-hidden="true"></span>
+        <span class="pillText">Application received</span>
       </div>
-
     </div>
 
-    <div class="note">
-      Placing a deposit secures your athlete’s position in Momentum and allows us to begin transcript alignment.
-      You’ll still review exact credits before full enrollment.
-    </div>
+    <section class="card" aria-label="Thank you">
+      <div class="rail" aria-hidden="true"></div>
+
+      <div class="inner">
+        <h1>Submission received.</h1>
+        <p class="sub">
+          We’re reviewing your athlete’s training profile and confirming the best credit path.
+          Most families hear back within one business day.
+        </p>
+
+        <div class="nextStrip" aria-label="What happens next">
+          <div>
+            <b>Next:</b> we confirm eligibility + recommended credits.
+            <span>Then you choose your enrollment option.</span>
+          </div>
+          <div class="depositTag"><i aria-hidden="true"></i> Deposit reserves your spot</div>
+        </div>
+
+        <div class="grid" role="list">
+
+          <!-- CALL -->
+          <article class="panel" role="listitem">
+            <div class="panelTop">
+              <div>
+                <h3>Book a quick onboarding call</h3>
+                <p>
+                  A calm, 15-minute walkthrough: qualifications, credits, timeline, and exactly what happens next.
+                </p>
+              </div>
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9Z" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- replace link -->
+            <div class="btnRow">
+              <a class="btn btnPrimary" href="https://calendly.com/YOUR-LINK" target="_blank" rel="noopener">
+                Book meeting
+              </a>
+              <a class="btn btnGhost" href="/#learn">
+                Learn more
+              </a>
+            </div>
+
+            <div class="small">If you’re not sure yet, this is the best next step.</div>
+          </article>
+
+          <!-- DEPOSIT -->
+          <article class="panel" role="listitem">
+            <div class="panelTop">
+              <div>
+                <h3>Secure your athlete’s spot</h3>
+                <p>
+                  If you already have enough information, you can place your deposit now.
+                  This reserves enrollment while credits are finalized.
+                </p>
+              </div>
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2.5l7 3.4v6.2c0 5-3.1 9.4-7 10.9-3.9-1.5-7-5.9-7-10.9V5.9l7-3.4Z" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M9.2 12.2l1.9 1.9 3.8-4.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- replace link -->
+            <div class="btnRow">
+              <a class="btn btnGhost" href="https://YOUR-DEPOSIT-LINK" target="_blank" rel="noopener">
+                Place deposit
+              </a>
+            </div>
+
+            <div class="small">Deposit = reserved position + transcript alignment begins.</div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="foot">
+        Placing a deposit secures your athlete’s position in Momentum and allows us to begin transcript alignment.
+        You’ll review the recommended credits before full enrollment.
+      </div>
+    </section>
 
   </div>
 </div>
-
 </body>
 </html>
+
