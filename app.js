@@ -310,10 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const { error } = await supabase.from("parent_applications").insert(payload);
     if (error) throw error;
 
-  // Insert
-const { error } = await supabase.from("parent_applications").insert(payload);
-if (error) throw error;
-
 // Send confirmation email via Netlify function
 await fetch("/.netlify/functions/momentum-quiz", {
   method: "POST",
