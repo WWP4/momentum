@@ -310,12 +310,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const { error } = await supabase.from("parent_applications").insert(payload);
     if (error) throw error;
 
-    // Optional: call your Netlify function to send email (if you set it up)
-    // await fetch("/.netlify/functions/send-confirmation", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email: payload.email, parent_name: payload.parent_name, athlete_name: payload.athlete_name })
-    // });
+  // Insert
+const { error } = await supabase.from("parent_applications").insert(payload);
+if (error) throw error;
+
+// Send confirmation email via Netlify function
+await fetch("/.netlify/functions/momentum-quiz", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    email: payload.email,
+    parent_name: payload.parent_name,
+    athlete_name: payload.athlete_name
+  })
+});
+
+// Redirect ONLY after success
+window.location.href = "/redirect.html";
+
 
     // Redirect ONLY after success
     window.location.href = "/redirect.html";
