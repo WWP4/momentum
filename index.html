@@ -628,6 +628,227 @@ const observer = new IntersectionObserver(entries=>{
 observer.observe(lastStep);
 
 })();
+
+  <script>
+(() => {
+  // Set these once (use your Netlify env values; anon key is OK client-side because RLS is on)
+  const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
+  const SUPABASE_ANON_KEY = window.SUPABASE_API || ""; // optional if you set it on window, else paste directly
+
+  // If you prefer: paste the anon key directly below and remove window.SUPABASE_API
+  // const SUPABASE_ANON_KEY = "YOUR_ANON_KEY_HERE";
+
+  if (!window.supabase || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.warn("Supabase not configured. Add SUPABASE_ANON_KEY.");
+    return;
+  }
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const form = document.getElementById("momentumParentQuiz");
+  const steps = Array.from(form.querySelectorAll(".mq__step")).filter(s => s.id !== "mqSubmitStep");
+  const submitStep = document.getElementById("mqSubmitStep");
+
+  const backBtn = document.getElementById("mqBack");
+  const nextBtn = document.getElementById("mqNext");
+  const submitBtn = document.getElementById("mqSubmitBtn");
+
+  const stepNowEl = document.getElementById("mqStepNow");
+  const stepTotalEl = document.getElementById("mqStepTotal");
+  const hintEl = document.getElementById("mqHint");
+
+  const barFill = document.querySelector(".mq__barFill");
+  const bar = document.querySelector(".mq__bar");
+
+  const submitTitle = document.getElementById("mqSubmitTitle");
+  const submitMsg = document.getElementById("mqSubmitMsg");
+  const tryAgain = document.getElementById("mqTryAgain");
+  const spinner = submitStep.querySelector(".mq__spinner");
+
+  const scoreEl = document.getElementById("mqScore");
+  const qualifiesEl = document.getElementById("mqQualifies");
+
+  let idx = 0;
+
+  stepTotalEl.textContent = String(steps.length);
+
+  function show(i){
+    idx = Math.max(0, Math.min(steps.length - 1, i));
+    form.querySelectorAll(".mq__step").forEach(s => s.classList.remove("is-active"));
+    steps[idx].classList.add("is-active");
+
+    const pct = Math.round((idx / (steps.length - 1)) * 100);
+    barFill.style.width = `${pct}%`;
+    bar.setAttribute("aria-valuenow", String(pct));
+
+    stepNowEl.textContent = String(idx + 1);
+    hintEl.textContent = steps[idx].dataset.title || "";
+
+    backBtn.disabled = idx === 0;
+
+    const isLast = idx === steps.length - 1;
+    nextBtn.style.display = isLast ? "none" : "inline-flex";
+    submitBtn.style.display = isLast ? "inline-flex" : "none";
+  }
+
+  function getRadio(name){
+    const el = form.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : "";
+  }
+
+  function getText(name){
+    const el = form.querySelector(`[name="${name}"]`);
+    return el ? String(el.value || "").trim() : "";
+  }
+
+  function getArray(name){
+    return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map(i => i.value);
+  }
+
+  function validateStep(){
+    // simple required validation: any [required] in this step must be filled/checked
+    const cur = steps[idx];
+    const required = Array.from(cur.querySelectorAll("[required]"));
+    for (const el of required){
+      if (el.type === "radio"){
+        const name = el.name;
+        if (!cur.querySelector(`input[name="${name}"]:checked`)) return false;
+      } else {
+        if (!String(el.value || "").trim()) return false;
+      }
+    }
+    return true;
+  }
+
+  function computeScore(payload){
+    // Controlled, simple scoring you can tune later
+    let score = 0;
+
+    if (payload.training_sessions_per_week === "5+") score += 3;
+    else if (payload.training_sessions_per_week === "3–4") score += 2;
+    else if (payload.training_sessions_per_week === "1–2") score += 1;
+
+    if (payload.session_length === "90+ minutes") score += 2;
+    else if (payload.session_length === "60–90 minutes") score += 1;
+
+    score += Math.min(3, (payload.session_includes || []).length);
+
+    if (payload.games_per_week === "4+") score += 2;
+    else if (payload.games_per_week === "2–3") score += 1;
+
+    score += Math.min(2, (payload.competition_types || []).length);
+    if (payload.strength_conditioning && payload.strength_conditioning !== "No") score += 1;
+    score += Math.min(2, (payload.recovery_practices || []).length);
+    score += Math.min(2, (payload.nutrition_topics || []).length);
+    score += Math.min(2, (payload.leadership_roles || []).length);
+    score += Math.min(2, (payload.mental_performance || []).length);
+
+    return score;
+  }
+
+  async function submit(){
+    // show submit screen
+    form.querySelectorAll(".mq__step").forEach(s => s.classList.remove("is-active"));
+    submitStep.classList.add("is-active");
+
+    spinner.style.display = "block";
+    tryAgain.style.display = "none";
+    submitTitle.textContent = "Submitting…";
+    submitMsg.textContent = "Saving your answers.";
+
+    // build payload matching your SQL column names
+    const payload = {
+      parent_name: getText("parent_name"),
+      email: getText("email"),
+      phone: getText("phone"),
+
+      athlete_name: getText("athlete_name"),
+      athlete_age_group: getRadio("athlete_age_group"),
+      primary_sport: getText("primary_sport"),
+      city: getText("city"),
+      state: getText("state"),
+
+      training_sessions_per_week: getRadio("training_sessions_per_week"),
+      session_length: getRadio("session_length"),
+      session_includes: getArray("session_includes"),
+
+      games_per_week: getRadio("games_per_week"),
+      competition_types: getArray("competition_types"),
+
+      strength_conditioning: getRadio("strength_conditioning"),
+      recovery_practices: getArray("recovery_practices"),
+
+      nutrition_guidance: getRadio("nutrition_guidance"),
+      nutrition_topics: getArray("nutrition_topics"),
+
+      leadership_roles: getArray("leadership_roles"),
+      character_emphasis: getArray("character_emphasis"),
+      life_skills: getArray("life_skills"),
+      mental_performance: getArray("mental_performance"),
+
+      notes: getText("notes"),
+      source: getText("source") || "momentum-site"
+    };
+
+    const score = computeScore(payload);
+    const qualifies = score >= 8; // tune threshold any time
+
+    payload.score = score;
+    payload.qualifies = qualifies;
+
+    scoreEl.value = String(score);
+    qualifiesEl.value = qualifies ? "true" : "false";
+
+    const { error } = await supabase.from("parent_applications").insert(payload);
+    if (error) throw error;
+
+    spinner.style.display = "none";
+    submitTitle.textContent = "Submitted.";
+    submitMsg.textContent = qualifies
+      ? "You’re a strong fit. We’ll follow up with next steps and confirm credit options."
+      : "We received your application. We’ll follow up with next steps and recommendations.";
+  }
+
+  backBtn.addEventListener("click", () => show(idx - 1));
+
+  nextBtn.addEventListener("click", () => {
+    if (!validateStep()) return;
+    show(idx + 1);
+  });
+
+  submitBtn.addEventListener("click", async () => {
+    if (!validateStep()) return;
+    submitBtn.disabled = true;
+    try { await submit(); }
+    catch (e){
+      spinner.style.display = "none";
+      submitTitle.textContent = "Couldn’t submit.";
+      submitMsg.textContent = e?.message || "Please try again.";
+      tryAgain.style.display = "inline-flex";
+      submitBtn.disabled = false;
+    }
+  });
+
+  tryAgain.addEventListener("click", () => {
+    // return to last step
+    submitBtn.disabled = false;
+    show(steps.length - 1);
+  });
+
+  // Tap-to-select on choice cards (works even if clicking text)
+  form.addEventListener("click", (e) => {
+    const choice = e.target.closest(".mq__choice");
+    if (choice){
+      const input = choice.querySelector("input");
+      if (input && input.type === "radio") input.checked = true;
+    }
+  });
+
+  show(0);
+})();
+</script>
+
+  
 </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
