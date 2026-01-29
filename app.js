@@ -120,5 +120,34 @@ window.addEventListener("load", () => {
         btn.textContent = "Submit Application";
       }
     }
+
+    window.addEventListener("load", () => {
+  const hero = document.querySelector(".heroType");
+  const lettersEl = document.getElementById("wordmarkLetters");
+  if(!hero || !lettersEl) return;
+
+  const text = "MOMENTUM.";
+  const step = 140;      // ms between letters (slow)
+  const fade = 520;      // per-letter fade duration (matches CSS var --typeFade)
+  const gap = 260;       // pause after last letter before underline
+  const wipeDelay = 260; // let the wipe begin immediately but feel cinematic
+
+  // Build letters with staggered animation delays
+  lettersEl.innerHTML = "";
+  for (let i = 0; i < text.length; i++) {
+    const span = document.createElement("span");
+    span.className = "ch";
+    span.textContent = text[i] === " " ? "\u00A0" : text[i];
+    span.style.setProperty("--d", `${(i * step) + wipeDelay}ms`);
+    lettersEl.appendChild(span);
+  }
+
+  // Compute underline + copy delays based on typing duration
+  const typingTotal = (text.length - 1) * step + fade + wipeDelay;
+  hero.style.setProperty("--underlineDelay", `${typingTotal + gap}ms`);
+  hero.style.setProperty("--copyDelay", `${typingTotal + gap + 200}ms`);
+
+  // Trigger reveal + animations
+  requestAnimationFrame(() => hero.classList.add("is-ready"));
   });
 })();
