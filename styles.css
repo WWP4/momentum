@@ -1799,7 +1799,7 @@ a{color:inherit; text-decoration:none}
 
 
 /* =========================
-   Timeline -> Why "handoff wash"
+   DRAMATIC TIMELINE → WHY HANDOFF
    ========================= */
 
 .why{
@@ -1807,49 +1807,108 @@ a{color:inherit; text-decoration:none}
   overflow: hidden;
 }
 
+/* Main energy layer */
 .why::before{
   content:"";
   position:absolute;
-  inset:-2px;
+  inset:-20%;
   pointer-events:none;
+
   opacity:0;
-  transform: translateY(18px) scale(1.02);
+  transform: translateY(140px) scale(1.25);
 
-  /* This is the moving color energy */
   background:
-    radial-gradient(900px 420px at 18% 35%, rgba(255,43,85,.18), transparent 60%),
-    radial-gradient(900px 420px at 82% 45%, rgba(90,92,255,.16), transparent 62%),
-    linear-gradient(90deg, rgba(255,43,85,.10), rgba(90,92,255,.10));
+    radial-gradient(900px 520px at 50% 85%, rgba(255,43,85,.45), transparent 60%),
+    radial-gradient(900px 520px at 50% 85%, rgba(90,92,255,.42), transparent 62%),
+    linear-gradient(180deg,
+      rgba(0,0,0,.55) 0%,
+      rgba(0,0,0,.35) 20%,
+      transparent 55%
+    );
 
-  filter: blur(0px);
-  transition: opacity 420ms ease, transform 780ms cubic-bezier(.2,.9,.2,1);
-  z-index: 0;
+  transition:
+    opacity 260ms ease,
+    transform 900ms cubic-bezier(.18,.85,.2,1);
+
+  z-index:0;
 }
 
-/* Keep real content above overlay */
+/* Inner bloom highlight */
+.why::after{
+  content:"";
+  position:absolute;
+  inset:-30%;
+  pointer-events:none;
+
+  opacity:0;
+  transform: scale(.85);
+
+  background:
+    radial-gradient(circle at 50% 70%,
+      rgba(255,255,255,.25),
+      rgba(255,43,85,.18),
+      rgba(90,92,255,.16),
+      transparent 65%
+    );
+
+  filter: blur(40px);
+
+  transition:
+    opacity 360ms ease,
+    transform 820ms cubic-bezier(.2,.9,.2,1);
+
+  z-index:0;
+}
+
+/* Keep content above effects */
 .why .container,
 .why__inner,
 .why__header,
 .why__grid,
 .why__cta{
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
-/* Triggered moment: the wash appears then settles */
+/* FIRE STATE */
 body.handoff-fire .why::before{
-  opacity: 1;
+  opacity:1;
   transform: translateY(0) scale(1);
-  transition: opacity 220ms ease, transform 780ms cubic-bezier(.2,.9,.2,1);
 }
 
-/* Optional: subtle “brighten” of cards during the wash */
+body.handoff-fire .why::after{
+  opacity:1;
+  transform: scale(1);
+}
+
+/* Cards react to energy */
 body.handoff-fire .whyCard{
-  transition: transform 340ms ease, box-shadow 340ms ease, filter 340ms ease;
-  filter: saturate(1.06) contrast(1.02);
+  transform: translateY(-4px);
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.22),
+    0 0 0 12px rgba(255,43,85,.10),
+    0 0 0 22px rgba(90,92,255,.08);
 }
 
-/* Reduced motion: no wash */
-@media (prefers-reduced-motion: reduce){
-  .why::before{ display:none; }
+/* Fade everything back to clean */
+.why::before,
+.why::after{
+  transition-delay: 0ms;
 }
+
+body.handoff-fire .why::before{
+  transition-delay: 0ms;
+}
+
+body.handoff-fire .why::after{
+  transition-delay: 80ms;
+}
+
+/* Reduced motion safety */
+@media (prefers-reduced-motion: reduce){
+  .why::before,
+  .why::after{
+    display:none;
+  }
+}
+
