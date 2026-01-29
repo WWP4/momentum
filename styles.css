@@ -2679,3 +2679,14 @@ body.handoff-fire .why__title{
   .mq__step{ animation:none; }
   .mq__barFill{ transition:none; }
 }
+
+
+.mq .mq__bad{
+  outline: 2px solid rgba(255,40,79,.35);
+  box-shadow: 0 0 0 6px rgba(255,40,79,.10);
+  border-radius: 14px;
+}
+.mq .mq__input.mq__bad,
+.mq .mq__textarea.mq__bad{
+  border-color: rgba(255,40,79,.55);
+}
