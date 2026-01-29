@@ -35,6 +35,35 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(() => hero.classList.add("is-ready"));
   }
 
+    // Timeline reveal + fill
+  const events = document.querySelectorAll("[data-event]");
+  const fill = document.getElementById("railFill");
+
+  if (events.length) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add("is-in");
+        entry.target.classList.add("is-active");
+
+        // remove active from others
+        events.forEach(e => { if (e !== entry.target) e.classList.remove("is-active"); });
+
+        // fill height based on index
+        const idx = [...events].indexOf(entry.target);
+        const pct = ((idx + 1) / events.length) * 100;
+        if (fill) fill.style.height = `${pct}%`;
+      });
+    }, { threshold: 0.45 });
+
+    events.forEach((el, i) => {
+      el.style.transitionDelay = `${i * 160}ms`;
+      io.observe(el);
+    });
+  }
+
+
   /* =========================
      HOW IT WORKS (REVEAL)
      ========================= */
