@@ -1899,218 +1899,311 @@ body.handoff-fire .why__title{
   .why::after{ display:none; }
 }
 
-/* ===============================
-   WHY V2 – Premium Parent Section
-   =============================== */
+/* =========================
+   WHY V3 (WHITE) — SCOPED + PREMIUM
+   Add at very bottom of styles.css
+   ========================= */
 
-:root {
-  --m-red: #ff2b55;
-  --m-blue: #5a5cff;
-  --ink: #0b0d12;
-  --muted: rgba(11,13,18,.65);
-  --border: rgba(11,13,18,.08);
+.whyV3{
+  position:relative;
+  background:#fff;
+  color:#0b0d12;
+  padding: clamp(84px, 8vw, 120px) 0;
+  overflow:hidden;
 }
 
-.whyV2 {
-  background: #fff;
-  padding: clamp(80px, 8vw, 120px) 0;
+/* subtle section atmosphere (white stays white) */
+.whyV3::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 12% 6%, rgba(255,43,85,.08), transparent 60%),
+    radial-gradient(900px 520px at 88% 12%, rgba(90,92,255,.08), transparent 62%),
+    radial-gradient(900px 520px at 50% 92%, rgba(0,0,0,.03), transparent 55%);
+  filter: blur(6px);
+  opacity:.9;
 }
 
-.whyV2__inner {
-  max-width: 1200px;
-  margin: auto;
+.whyV3__inner{ position:relative; z-index:1; }
+
+.whyV3__head{
+  text-align:center;
+  max-width: 980px;
+  margin: 0 auto 46px;
 }
 
-/* Header */
-
-.whyV2__header {
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto 64px;
-}
-
-.whyV2__eyebrow {
-  text-transform: uppercase;
-  letter-spacing: .18em;
-  font-weight: 700;
+.whyV3__eyebrow{
+  font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 800;
   font-size: 12px;
-  opacity: .55;
-  margin-bottom: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(11,13,18,.55);
+  margin: 0 0 14px;
 }
 
-.whyV2__title {
-  font-size: clamp(36px, 5vw, 56px);
+.whyV3__title{
+  font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-weight: 900;
-  margin-bottom: 16px;
+  letter-spacing: -0.05em;
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.02;
+  margin: 0 0 14px;
 }
 
-.whyV2__accent {
-  position: relative;
+/* Red underline under the word Momentum (but still blends with your red/blue theme) */
+.whyV3__accent{
+  position:relative;
+  display:inline-block;
 }
-
-.whyV2__accent::after {
+.whyV3__accent::after{
   content:"";
   position:absolute;
   left:0;
-  bottom:-6px;
-  width:100%;
-  height:4px;
-  background: var(--m-red);
-  border-radius:2px;
+  right:0;
+  bottom:.06em;
+  height: .22em;
+  border-radius: 999px;
+  background: rgba(255,43,85,.95);
+  opacity: .22;
+  transform: scaleX(1);
+  transform-origin:left;
 }
 
-.whyV2__lead {
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.6;
+/* optional: when we “handoff”, we animate the underline brighter */
+body.handoff-fire .whyV3__accent::after{
+  opacity: .34;
+  filter: saturate(1.1);
 }
 
-/* Split layout */
+.whyV3__lead{
+  margin: 0 auto;
+  max-width: 76ch;
+  color: rgba(11,13,18,.70);
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.7;
+}
 
-.whyV2__split {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 60px;
-  align-items: flex-start;
+/* Layout: proof left, reasons right */
+.whyV3__layout{
+  display:grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 24px;
+  align-items:start;
 }
 
 /* Proof panel */
-
-.whyV2__proof {
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 36px;
+.whyV3__proof{
+  position:sticky;
+  top: 110px;
+  border-radius: 26px;
+  padding: 26px;
+  background: #fff;
+  border: 1px solid rgba(11,13,18,.10);
+  box-shadow: 0 26px 90px rgba(0,0,0,.08);
+  overflow:hidden;
 }
 
-.whyV2__mark {
-  display:flex;
-  gap:8px;
-  margin-bottom:20px;
+.whyV3__proof::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(600px 380px at 18% 16%, rgba(255,43,85,.14), transparent 60%),
+    radial-gradient(600px 380px at 86% 24%, rgba(90,92,255,.14), transparent 62%);
+  filter: blur(22px);
+  opacity:.55;
+  pointer-events:none;
 }
 
-.whyV2__dot {
-  width:10px;
-  height:10px;
-  border-radius:50%;
-}
-
-.whyV2__dot--red { background: var(--m-red); }
-.whyV2__dot--blue { background: var(--m-blue); }
-
-.whyV2__proofH {
-  font-size: 28px;
-  margin-bottom: 12px;
-}
-
-.whyV2__proofP {
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-.whyV2__proofStats {
-  margin-top: 28px;
-  display: grid;
-  gap: 18px;
-}
-
-.whyV2__statK {
-  font-weight: 700;
-}
-
-.whyV2__statL {
-  font-size: 14px;
-  color: var(--muted);
-}
-
-/* Reasons */
-
-.whyV2__reasons {
-  display:grid;
-  gap:18px;
-}
-
-.whyV2__reason {
+.whyV3__proofTop{
   position:relative;
   display:flex;
-  gap:18px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px 26px;
-  transition:.35s ease;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
-.whyV2__reason:hover {
+.whyV3__pill{
+  display:inline-flex;
+  align-items:center;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(11,13,18,.10);
+  background: rgba(255,255,255,.80);
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(11,13,18,.72);
+}
+
+.whyV3__marks{ display:flex; gap:8px; }
+.whyV3__mark{ width:10px; height:10px; border-radius:50%; }
+.whyV3__mark--red{ background: rgba(255,43,85,.95); }
+.whyV3__mark--blue{ background: rgba(90,92,255,.95); }
+
+.whyV3__proofH{
+  position:relative;
+  font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-size: 24px;
+  margin: 0 0 10px;
+}
+.whyV3__proofP{
+  position:relative;
+  margin: 0;
+  color: rgba(11,13,18,.70);
+  line-height: 1.65;
+}
+
+.whyV3__stats{
+  position:relative;
+  margin-top: 18px;
+  display:grid;
+  gap: 12px;
+}
+.whyV3__stat{
+  border-radius: 18px;
+  padding: 14px 14px;
+  border: 1px solid rgba(11,13,18,.08);
+  background: rgba(255,255,255,.75);
+}
+.whyV3__statK{
+  font-weight: 800;
+  color: rgba(11,13,18,.78);
+  margin-bottom: 4px;
+}
+.whyV3__statV{
+  color: rgba(11,13,18,.62);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* Reasons list */
+.whyV3__reasons{
+  display:grid;
+  gap: 14px;
+}
+
+.whyV3__reason{
+  position:relative;
+  display:flex;
+  gap: 14px;
+  align-items:flex-start;
+  border-radius: 22px;
+  padding: 18px 18px;
+  background:#fff;
+  border: 1px solid rgba(11,13,18,.10);
+  box-shadow: 0 18px 70px rgba(0,0,0,.06);
+  overflow:hidden;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: opacity 700ms ease, transform 900ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease;
+}
+
+.whyV3__reason.is-in{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.whyV3__reason:hover{
   transform: translateY(-4px);
-  box-shadow:0 16px 40px rgba(0,0,0,.08);
+  box-shadow: 0 30px 110px rgba(0,0,0,.12);
 }
 
-.whyV2__icon {
-  width:42px;
-  height:42px;
-  border-radius:10px;
-  border:1px solid var(--border);
+/* Icon chip */
+.whyV3__icon{
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   display:grid;
   place-items:center;
+  border: 1px solid rgba(11,13,18,.10);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,43,85,.14), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(90,92,255,.14), transparent 62%),
+    rgba(11,13,18,.02);
+}
+.whyV3__icon svg{ width: 22px; height: 22px; color: rgba(11,13,18,.88); }
+
+.whyV3__h{
+  font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+.whyV3__p{
+  margin: 0;
+  color: rgba(11,13,18,.70);
+  line-height: 1.65;
+  font-size: 15px;
 }
 
-.whyV2__icon svg {
-  width:22px;
-}
-
-.whyV2__h {
-  font-size:18px;
-  margin-bottom:6px;
-}
-
-.whyV2__p {
-  color:var(--muted);
-  font-size:15px;
-}
-
-/* Edge glow */
-
-.whyV2__edge {
+.whyV3__edge{
   position:absolute;
-  right:0;
-  top:12px;
-  bottom:12px;
-  width:4px;
-  border-radius:4px;
+  right: 12px;
+  top: 12px;
+  bottom: 12px;
+  width: 4px;
+  border-radius: 99px;
+  background: rgba(11,13,18,.10);
+  opacity:.9;
 }
 
-.whyV2__edge--red { background: var(--m-red); }
-.whyV2__edge--blue { background: var(--m-blue); }
+/* edge color based on data-accent */
+.whyV3__reason[data-accent="red"] .whyV3__edge{
+  background: linear-gradient(180deg, rgba(255,43,85,.95), rgba(255,43,85,.18));
+}
+.whyV3__reason[data-accent="blue"] .whyV3__edge{
+  background: linear-gradient(180deg, rgba(90,92,255,.95), rgba(90,92,255,.18));
+}
 
 /* CTA */
-
-.whyV2__cta {
-  margin-top:80px;
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:36px;
+.whyV3__cta{
+  margin-top: 22px;
+  border-radius: 26px;
+  padding: 18px 18px;
+  background:#fff;
+  border: 1px solid rgba(11,13,18,.10);
+  box-shadow: 0 26px 90px rgba(0,0,0,.10);
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:30px;
+  justify-content:space-between;
+  gap: 14px;
 }
 
-.whyV2__ctaH {
-  font-size:24px;
+.whyV3__ctaH{
+  font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+.whyV3__ctaP{
+  margin: 0;
+  color: rgba(11,13,18,.70);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.whyV3__ctaBtns{ display:flex; gap:10px; flex-wrap:wrap; }
+
+/* Timeline -> WHY “handoff” moment (dramatic but clean) */
+body.handoff-fire .whyV3::before{
+  opacity: 1;
+  filter: blur(0px);
 }
 
-.whyV2__ctaP {
-  color:var(--muted);
+body.handoff-fire .whyV3__reasons .whyV3__reason{
+  box-shadow: 0 30px 120px rgba(0,0,0,.14);
 }
 
-/* Mobile */
-
-@media(max-width:900px){
-  .whyV2__split {
-    grid-template-columns:1fr;
-  }
-
-  .whyV2__cta {
-    flex-direction:column;
-    text-align:center;
-  }
+/* Responsive */
+@media (max-width: 980px){
+  .whyV3__layout{ grid-template-columns: 1fr; }
+  .whyV3__proof{ position:relative; top:auto; }
+  .whyV3__cta{ flex-direction:column; align-items:flex-start; }
 }
