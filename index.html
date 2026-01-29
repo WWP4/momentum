@@ -3,297 +3,333 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hero Video Reveal</title>
+  <title>Momentum Athlete — Parent Application</title>
+  <meta name="description" content="Apply to Momentum Athlete. Turn your athlete’s training into verified high school credit." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg:#07090e;
-      --ink:#ffffff;
-      --muted:rgba(255,255,255,.78);
-      --brand:#002D72; /* swap to your brand */
-      --radius:22px;
-      --shadow: 0 30px 80px rgba(0,0,0,.45);
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font-family:"DM Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    }
-
-    /* HERO */
-    .hero{
-      position:relative;
-      min-height:100svh;
-      display:grid;
-      place-items:center;
-      overflow:hidden;
-      isolation:isolate;
-    }
-
-    /* video layer */
-    .hero__videoWrap{
-      position:absolute;
-      inset:0;
-      z-index:-2;
-      overflow:hidden;
-      transform: scale(1.06);
-      transition: transform 4.5s ease;
-    }
-    .hero.is-ready .hero__videoWrap{ transform: scale(1.0); }
-
-    .hero video{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      filter:saturate(1.02) contrast(1.03);
-    }
-
-    /* top-only overlay (premium “dark cap”) */
-    .hero__cap{
-      position:absolute;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-      background:
-        linear-gradient(to bottom,
-          rgba(0,0,0,.62) 0%,
-          rgba(0,0,0,.42) 22%,
-          rgba(0,0,0,.20) 42%,
-          rgba(0,0,0,0) 62%);
-    }
-
-    /* subtle vignette */
-    .hero__vignette{
-      position:absolute;
-      inset:-10%;
-      z-index:-1;
-      pointer-events:none;
-      background: radial-gradient(ellipse at center, rgba(0,0,0,0) 35%, rgba(0,0,0,.55) 100%);
-      mix-blend-mode:multiply;
-    }
-
-    /* reveal panel that slides away (cinematic) */
-    .hero__reveal{
-      position:absolute;
-      inset:0;
-      background: var(--brand);
-      z-index:5;
-      transform: translateY(0);
-      transition: transform 900ms cubic-bezier(.2,.9,.2,1);
-    }
-    .hero.is-ready .hero__reveal{
-      transform: translateY(-105%);
-    }
-
-    /* content */
-    .hero__inner{
-      width:min(1120px, calc(100% - 48px));
-      padding: clamp(36px, 6vw, 72px) 0;
-    }
-
-    .kicker{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      font-size:14px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.82);
-      opacity:0;
-      transform: translateY(14px);
-      transition: opacity 650ms ease, transform 650ms ease;
-      transition-delay: 450ms;
-    }
-    .hero.is-ready .kicker{ opacity:1; transform: translateY(0); }
-
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(255,255,255,.9);
-      box-shadow: 0 0 0 6px rgba(255,255,255,.14);
-    }
-
-    .headline{
-      font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      font-weight:800;
-      font-size: clamp(38px, 6vw, 74px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      margin: 14px 0 14px;
-      max-width: 20ch;
-
-      opacity:0;
-      transform: translateY(18px);
-      transition: opacity 850ms ease, transform 850ms ease;
-      transition-delay: 560ms;
-    }
-    .hero.is-ready .headline{ opacity:1; transform: translateY(0); }
-
-    .sub{
-      max-width: 60ch;
-      color: var(--muted);
-      font-size: clamp(16px, 2.2vw, 19px);
-      line-height:1.55;
-      margin: 0 0 22px;
-
-      opacity:0;
-      transform: translateY(14px);
-      transition: opacity 750ms ease, transform 750ms ease;
-      transition-delay: 720ms;
-    }
-    .hero.is-ready .sub{ opacity:1; transform: translateY(0); }
-
-    /* premium divider that grows L->R */
-    .divider{
-      height:3px;
-      width:min(420px, 60vw);
-      background: rgba(255,255,255,.88);
-      transform-origin:left;
-      transform: scaleX(0);
-      opacity:.0;
-      transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 700ms ease;
-      transition-delay: 860ms;
-      border-radius:999px;
-      margin: 18px 0 26px;
-    }
-    .hero.is-ready .divider{
-      transform: scaleX(1);
-      opacity:.88;
-    }
-
-    .ctaRow{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      align-items:center;
-
-      opacity:0;
-      transform: translateY(12px);
-      transition: opacity 700ms ease, transform 700ms ease;
-      transition-delay: 940ms;
-    }
-    .hero.is-ready .ctaRow{ opacity:1; transform: translateY(0); }
-
-    .btn{
-      appearance:none;
-      border:0;
-      border-radius: 999px;
-      padding: 14px 18px;
-      font-weight:600;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      text-decoration:none;
-      transition: transform 180ms ease, filter 180ms ease;
-      will-change: transform;
-      user-select:none;
-    }
-    .btn:active{ transform: translateY(1px); }
-
-    .btnPrimary{
-      background: rgba(255,255,255,.95);
-      color:#0a0d14;
-      box-shadow: var(--shadow);
-    }
-    .btnGhost{
-      background: rgba(10,13,20,.28);
-      color: rgba(255,255,255,.92);
-      border: 1px solid rgba(255,255,255,.28);
-      backdrop-filter: blur(10px);
-    }
-    .btn:hover{ filter: brightness(1.02); transform: translateY(-1px); }
-
-    /* optional: tiny scroll hint */
-    .scrollHint{
-      position:absolute;
-      bottom:18px;
-      left:50%;
-      transform: translateX(-50%);
-      font-size: 12px;
-      letter-spacing:.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.72);
-      opacity:0;
-      transition: opacity 650ms ease;
-      transition-delay: 1300ms;
-    }
-    .hero.is-ready .scrollHint{ opacity:1; }
-
-    /* reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{transition:none !important; animation:none !important;}
-      .hero__reveal{ display:none; }
-      .hero__videoWrap{ transform:none !important; }
-      .kicker,.headline,.sub,.ctaRow,.divider,.scrollHint{ opacity:1 !important; transform:none !important; }
-    }
-  </style>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
-  <header class="hero" id="hero">
-    <!-- Replace src with your mp4 -->
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="#">
+        <span class="brand__word">MOMENTUM</span><span class="brand__dot">.</span>
+      </a>
+
+      <nav class="nav">
+        <a href="#how">How it works</a>
+        <a href="#what-you-submit">What you submit</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav__cta" href="#apply">Apply</a>
+      </nav>
+
+      <button class="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobileNav" id="mobileNav" hidden>
+      <a href="#how">How it works</a>
+      <a href="#what-you-submit">What you submit</a>
+      <a href="#faq">FAQ</a>
+      <a class="nav__cta" href="#apply">Apply</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
     <div class="hero__videoWrap">
-      <video
-        autoplay
-        muted
-        playsinline
-        loop
-        preload="metadata"
-        poster="https://images.unsplash.com/photo-1520975958225-0f22099f3835?auto=format&fit=crop&w=1600&q=70">
-        <source src="https://cdn.coverr.co/videos/coverr-coastal-waves-9710/1080p.mp4" type="video/mp4">
+      <!-- Replace this source with your MP4 -->
+      <video autoplay muted playsinline loop preload="metadata"
+        poster="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1600&q=70">
+        <source src="https://cdn.coverr.co/videos/coverr-basketball-player-practicing-9157/1080p.mp4" type="video/mp4">
       </video>
     </div>
 
-    <div class="hero__cap"></div>
-    <div class="hero__vignette"></div>
-
-    <!-- cinematic reveal panel -->
+    <div class="hero__cap" aria-hidden="true"></div>
+    <div class="hero__vignette" aria-hidden="true"></div>
     <div class="hero__reveal" aria-hidden="true"></div>
 
-    <div class="hero__inner">
-      <div class="kicker"><span class="dot"></span> Premium On-Page Experience</div>
+    <div class="container hero__inner">
+      <div class="kicker">
+        <span class="kicker__dot"></span>
+        Parent Application
+      </div>
 
-      <h1 class="headline">A hero that feels expensive the moment it loads.</h1>
+      <h1 class="headline">
+        Turn training into<br />
+        verified high school credit.
+      </h1>
 
       <p class="sub">
-        Video background + cinematic reveal + slow zoom + staggered copy + a clean divider animation.
-        No gimmicks — just a high-end first impression.
+        Momentum recognizes the structured training your athlete is already completing and turns it into
+        official transcript credit through our accredited academic program.
       </p>
 
-      <div class="divider"></div>
+      <div class="divider" aria-hidden="true"></div>
 
-      <div class="ctaRow">
-        <a class="btn btnPrimary" href="#next">Get Started</a>
-        <a class="btn btnGhost" href="#work">View Examples</a>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#apply">Start Application</a>
+        <a class="btn btn--ghost" href="#how">See How It Works</a>
+      </div>
+
+      <div class="trustRow">
+        <div class="trustPill">No new practices</div>
+        <div class="trustPill">No extra homework</div>
+        <div class="trustPill">Transcript recognized</div>
       </div>
     </div>
 
-    <div class="scrollHint">Scroll</div>
-  </header>
+    <div class="scrollHint" aria-hidden="true">Scroll</div>
+  </section>
 
-  <main id="next" style="padding:80px 24px; max-width:1120px; margin:0 auto; color:rgba(255,255,255,.78)">
-    <h2 style="font-family:Montserrat,system-ui; letter-spacing:-0.01em; color:#fff; margin:0 0 10px;">Next Section</h2>
-    <p style="margin:0; line-height:1.6;">
-      This page is just to show the hero. Replace the video source with your own MP4 and you’re done.
-    </p>
-  </main>
+  <!-- SECTION: VALUE -->
+  <section class="section section--dark">
+    <div class="container">
+      <div class="grid2">
+        <div>
+          <h2 class="h2">Built for families who are already investing the time.</h2>
+          <p class="p">
+            If your athlete trains multiple nights per week, travels, and competes, you already have the structure.
+            Momentum simply validates that commitment as academic progress — and handles the paperwork.
+          </p>
+        </div>
 
-  <script>
-    // Start the hero animations as soon as the page is ready.
-    // (No external libraries.)
-    window.addEventListener("load", () => {
-      const hero = document.getElementById("hero");
-      hero.classList.add("is-ready");
-    });
-  </script>
+        <div class="card card--glass">
+          <div class="card__title">What you get</div>
+          <ul class="list">
+            <li>Verified course credit aligned to athletic training</li>
+            <li>Enrollment + parent communication handled for you</li>
+            <li>Clear documentation for your records</li>
+            <li>Simple onboarding and transparent process</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: HOW -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="sectionHead">
+        <h2 class="h2">How it works</h2>
+        <p class="p p--muted">
+          You share your athlete’s current training schedule. We confirm eligibility, map credits, and guide you through enrollment.
+        </p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step__num">1</div>
+          <div class="step__body">
+            <div class="step__title">Submit the application</div>
+            <div class="step__text">Tell us the sport, club, training schedule, and your athlete’s current school situation.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step__num">2</div>
+          <div class="step__body">
+            <div class="step__title">We evaluate your training</div>
+            <div class="step__text">Our academic team reviews the program details and confirms credit alignment.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step__num">3</div>
+          <div class="step__body">
+            <div class="step__title">Enrollment + documentation</div>
+            <div class="step__text">We complete onboarding and provide the documentation you need for the transcript process.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: WHAT YOU SUBMIT -->
+  <section class="section section--dark" id="what-you-submit">
+    <div class="container">
+      <div class="grid2">
+        <div class="card">
+          <div class="card__title">What we’ll ask for</div>
+          <ul class="list">
+            <li>Athlete name + grade</li>
+            <li>Sport + club / training location</li>
+            <li>Typical weekly training schedule</li>
+            <li>Competition schedule estimate (optional)</li>
+            <li>Parent contact info</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card__title">What you do not need</div>
+          <ul class="list">
+            <li>Extra training sessions</li>
+            <li>New curriculum from your club</li>
+            <li>A complicated portfolio</li>
+            <li>Hours of paperwork</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: APPLY -->
+  <section class="section" id="apply">
+    <div class="container">
+      <div class="sectionHead">
+        <h2 class="h2">Start the parent application</h2>
+        <p class="p p--muted">
+          Submit the form and we’ll follow up with next steps. This takes about 2 minutes.
+        </p>
+      </div>
+
+      <div class="applyWrap">
+        <form class="form" id="applyForm">
+          <div class="formGrid">
+            <div class="field">
+              <label for="parentName">Parent / Guardian Name</label>
+              <input id="parentName" name="parentName" type="text" autocomplete="name" required />
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+
+            <div class="field">
+              <label for="athleteName">Athlete Name</label>
+              <input id="athleteName" name="athleteName" type="text" required />
+            </div>
+
+            <div class="field">
+              <label for="grade">Athlete Grade</label>
+              <select id="grade" name="grade" required>
+                <option value="" selected disabled>Select</option>
+                <option>6</option><option>7</option><option>8</option>
+                <option>9</option><option>10</option><option>11</option><option>12</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="sport">Sport</label>
+              <input id="sport" name="sport" type="text" placeholder="Soccer, Basketball, Volleyball..." required />
+            </div>
+
+            <div class="field">
+              <label for="club">Club / Training Program</label>
+              <input id="club" name="club" type="text" placeholder="Club name / training facility" required />
+            </div>
+
+            <div class="field field--full">
+              <label for="schedule">Typical Weekly Training Schedule</label>
+              <textarea id="schedule" name="schedule" rows="4" placeholder="Example: Mon/Wed/Fri 6–8pm + Sat morning strength session" required></textarea>
+            </div>
+
+            <div class="field field--full">
+              <label for="notes">Anything else we should know?</label>
+              <textarea id="notes" name="notes" rows="3" placeholder="Optional"></textarea>
+            </div>
+          </div>
+
+          <div class="formActions">
+            <button class="btn btn--primary" type="submit">Submit Application</button>
+            <div class="formFine">
+              By submitting, you agree to be contacted by Momentum Athlete regarding program enrollment.
+            </div>
+          </div>
+
+          <div class="formStatus" id="formStatus" role="status" aria-live="polite"></div>
+        </form>
+
+        <aside class="applyAside">
+          <div class="asideCard">
+            <div class="asideCard__title">What happens after you submit</div>
+            <ol class="miniSteps">
+              <li>We confirm eligibility based on training structure</li>
+              <li>We send the next-step enrollment packet</li>
+              <li>We guide you through transcript documentation</li>
+            </ol>
+          </div>
+
+          <div class="asideCard asideCard--dark">
+            <div class="asideCard__title">Need to talk to someone first?</div>
+            <p class="p p--muted" style="margin:0 0 14px;">
+              If you want a quick walkthrough, we can explain the process and what your athlete qualifies for.
+            </p>
+            <a class="btn btn--ghost btn--full" href="#top">Back to top</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--dark" id="faq">
+    <div class="container">
+      <div class="sectionHead">
+        <h2 class="h2">FAQ</h2>
+        <p class="p p--muted">Straight answers parents care about.</p>
+      </div>
+
+      <div class="faq">
+        <details class="faqItem">
+          <summary>Is this extra training or extra work for my athlete?</summary>
+          <div class="faqItem__body">
+            No. Momentum is designed to recognize training your athlete is already completing. We validate the structure and handle the documentation process.
+          </div>
+        </details>
+
+        <details class="faqItem">
+          <summary>How long does approval usually take?</summary>
+          <div class="faqItem__body">
+            Once we have your application and training details, the evaluation step is typically fast. We’ll communicate timing clearly after you submit.
+          </div>
+        </details>
+
+        <details class="faqItem">
+          <summary>What if my athlete plays multiple sports?</summary>
+          <div class="faqItem__body">
+            Submit the primary sport and include the rest in the notes. We’ll guide you on the cleanest way to document the full training picture.
+          </div>
+        </details>
+
+        <details class="faqItem">
+          <summary>What if we are homeschooled or in private school?</summary>
+          <div class="faqItem__body">
+            Still submit. The process can support different school situations — we’ll confirm the best path during follow-up.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <div class="brand brand--footer"><span class="brand__word">MOMENTUM</span><span class="brand__dot">.</span></div>
+        <div class="footer__note">Momentum Athlete Program. All rights reserved.</div>
+      </div>
+
+      <div class="footer__links">
+        <a href="#how">How it works</a>
+        <a href="#apply">Apply</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
 </body>
 </html>
