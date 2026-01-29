@@ -278,5 +278,38 @@
   </main>
 
   <script src="./app.js"></script>
+
+<script>
+(() => {
+
+const why = document.querySelector('.whyV2');
+const lastStep = document.querySelector('.timeline-step:last-child') || document.querySelector('.timeline');
+
+if(!why || !lastStep) return;
+
+let arrived = false;
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting && !arrived){
+      arrived = true;
+
+      // micro pause for completion recognition
+      setTimeout(()=>{
+        why.classList.add('is-arrived');
+      },180);
+
+    }
+  });
+},{
+  threshold:.6
+});
+
+observer.observe(lastStep);
+
+})();
+</script>
+
+  
 </body>
 </html>
