@@ -2,158 +2,298 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Momentum Athlete — CRM</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hero Video Reveal</title>
 
-  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="crm.css" />
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <style>
+    :root{
+      --bg:#07090e;
+      --ink:#ffffff;
+      --muted:rgba(255,255,255,.78);
+      --brand:#002D72; /* swap to your brand */
+      --radius:22px;
+      --shadow: 0 30px 80px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:"DM Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    /* video layer */
+    .hero__videoWrap{
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      overflow:hidden;
+      transform: scale(1.06);
+      transition: transform 4.5s ease;
+    }
+    .hero.is-ready .hero__videoWrap{ transform: scale(1.0); }
+
+    .hero video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      filter:saturate(1.02) contrast(1.03);
+    }
+
+    /* top-only overlay (premium “dark cap”) */
+    .hero__cap{
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        linear-gradient(to bottom,
+          rgba(0,0,0,.62) 0%,
+          rgba(0,0,0,.42) 22%,
+          rgba(0,0,0,.20) 42%,
+          rgba(0,0,0,0) 62%);
+    }
+
+    /* subtle vignette */
+    .hero__vignette{
+      position:absolute;
+      inset:-10%;
+      z-index:-1;
+      pointer-events:none;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0) 35%, rgba(0,0,0,.55) 100%);
+      mix-blend-mode:multiply;
+    }
+
+    /* reveal panel that slides away (cinematic) */
+    .hero__reveal{
+      position:absolute;
+      inset:0;
+      background: var(--brand);
+      z-index:5;
+      transform: translateY(0);
+      transition: transform 900ms cubic-bezier(.2,.9,.2,1);
+    }
+    .hero.is-ready .hero__reveal{
+      transform: translateY(-105%);
+    }
+
+    /* content */
+    .hero__inner{
+      width:min(1120px, calc(100% - 48px));
+      padding: clamp(36px, 6vw, 72px) 0;
+    }
+
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      font-size:14px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.82);
+      opacity:0;
+      transform: translateY(14px);
+      transition: opacity 650ms ease, transform 650ms ease;
+      transition-delay: 450ms;
+    }
+    .hero.is-ready .kicker{ opacity:1; transform: translateY(0); }
+
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.14);
+    }
+
+    .headline{
+      font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-weight:800;
+      font-size: clamp(38px, 6vw, 74px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      margin: 14px 0 14px;
+      max-width: 20ch;
+
+      opacity:0;
+      transform: translateY(18px);
+      transition: opacity 850ms ease, transform 850ms ease;
+      transition-delay: 560ms;
+    }
+    .hero.is-ready .headline{ opacity:1; transform: translateY(0); }
+
+    .sub{
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: clamp(16px, 2.2vw, 19px);
+      line-height:1.55;
+      margin: 0 0 22px;
+
+      opacity:0;
+      transform: translateY(14px);
+      transition: opacity 750ms ease, transform 750ms ease;
+      transition-delay: 720ms;
+    }
+    .hero.is-ready .sub{ opacity:1; transform: translateY(0); }
+
+    /* premium divider that grows L->R */
+    .divider{
+      height:3px;
+      width:min(420px, 60vw);
+      background: rgba(255,255,255,.88);
+      transform-origin:left;
+      transform: scaleX(0);
+      opacity:.0;
+      transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 700ms ease;
+      transition-delay: 860ms;
+      border-radius:999px;
+      margin: 18px 0 26px;
+    }
+    .hero.is-ready .divider{
+      transform: scaleX(1);
+      opacity:.88;
+    }
+
+    .ctaRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+
+      opacity:0;
+      transform: translateY(12px);
+      transition: opacity 700ms ease, transform 700ms ease;
+      transition-delay: 940ms;
+    }
+    .hero.is-ready .ctaRow{ opacity:1; transform: translateY(0); }
+
+    .btn{
+      appearance:none;
+      border:0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-weight:600;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      transition: transform 180ms ease, filter 180ms ease;
+      will-change: transform;
+      user-select:none;
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    .btnPrimary{
+      background: rgba(255,255,255,.95);
+      color:#0a0d14;
+      box-shadow: var(--shadow);
+    }
+    .btnGhost{
+      background: rgba(10,13,20,.28);
+      color: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(10px);
+    }
+    .btn:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+
+    /* optional: tiny scroll hint */
+    .scrollHint{
+      position:absolute;
+      bottom:18px;
+      left:50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      letter-spacing:.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+      opacity:0;
+      transition: opacity 650ms ease;
+      transition-delay: 1300ms;
+    }
+    .hero.is-ready .scrollHint{ opacity:1; }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important; animation:none !important;}
+      .hero__reveal{ display:none; }
+      .hero__videoWrap{ transform:none !important; }
+      .kicker,.headline,.sub,.ctaRow,.divider,.scrollHint{ opacity:1 !important; transform:none !important; }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="app">
-
- <!-- SIDEBAR -->
-<aside class="sidebar">
-
-  <div class="sidebar-top">
-    <div class="brand">
-      <h1>MOMENTUM</h1>
-      <span>ATHLETE CRM</span>
+  <header class="hero" id="hero">
+    <!-- Replace src with your mp4 -->
+    <div class="hero__videoWrap">
+      <video
+        autoplay
+        muted
+        playsinline
+        loop
+        preload="metadata"
+        poster="https://images.unsplash.com/photo-1520975958225-0f22099f3835?auto=format&fit=crop&w=1600&q=70">
+        <source src="https://cdn.coverr.co/videos/coverr-coastal-waves-9710/1080p.mp4" type="video/mp4">
+      </video>
     </div>
 
-    <button
-      class="collapse-btn"
-      data-sidebar-toggle
-      aria-label="Toggle sidebar"
-    >
-      ☰
-    </button>
-  </div>
+    <div class="hero__cap"></div>
+    <div class="hero__vignette"></div>
 
-  <nav class="nav">
-    <a class="active" href="#"><span>Dashboard</span></a>
-    <a href="#"><span>Athletes</span></a>
-    <a href="#"><span>Teams</span></a>
-    <a href="#"><span>Training Logs</span></a>
-    <a href="#"><span>Academic Credits</span></a>
-    <a href="#"><span>Reports</span></a>
-    <a href="#"><span>Messages</span></a>
-    <a href="#"><span>Settings</span></a>
-  </nav>
+    <!-- cinematic reveal panel -->
+    <div class="hero__reveal" aria-hidden="true"></div>
 
-</aside>
+    <div class="hero__inner">
+      <div class="kicker"><span class="dot"></span> Premium On-Page Experience</div>
 
+      <h1 class="headline">A hero that feels expensive the moment it loads.</h1>
 
-  <!-- MAIN CONTENT -->
-  <main class="main">
-
-    <!-- HEADER -->
-    <header class="topbar">
-      <h2>Dashboard</h2>
-      <span class="meta">Momentum Athlete Internal Workspace</span>
-    </header>
-
-    <!-- CONTENT -->
-    <section class="card">
-      <h3>Welcome</h3>
-      <p class="muted">
-        This is your Momentum Athlete CRM workspace.  
-        Athlete records, training verification, and academic credit tracking will live here.
+      <p class="sub">
+        Video background + cinematic reveal + slow zoom + staggered copy + a clean divider animation.
+        No gimmicks — just a high-end first impression.
       </p>
-    </section>
 
-    <section class="grid">
-      <div class="card">
-        <h4>Total Athletes</h4>
-        <strong class="stat">—</strong>
+      <div class="divider"></div>
+
+      <div class="ctaRow">
+        <a class="btn btnPrimary" href="#next">Get Started</a>
+        <a class="btn btnGhost" href="#work">View Examples</a>
       </div>
+    </div>
 
-      <div class="card">
-        <h4>Active Credits</h4>
-        <strong class="stat">—</strong>
-      </div>
-
-      <div class="card">
-        <h4>Pending Reviews</h4>
-        <strong class="stat">—</strong>
-      </div>
-    </section>
-
-    <section class="mindset-checkin" data-aos="fade-up">
-
-  <header class="mindset-header">
-    <h2>Momentum Mindset</h2>
-    <p>Daily check-ins to support focus, confidence, and mental strength — on and off the field.</p>
+    <div class="scrollHint">Scroll</div>
   </header>
 
-  <div class="checkin-card">
-
-    <h3 class="checkin-question">How are you feeling today?</h3>
-
-    <div class="checkin-options">
-      <button class="checkin-option" data-value="strong">
-        <span class="title">Feeling Strong</span>
-        <span class="desc">Focused, confident, ready</span>
-      </button>
-
-      <button class="checkin-option" data-value="okay">
-        <span class="title">Doing Okay</span>
-        <span class="desc">Steady, managing things well</span>
-      </button>
-
-      <button class="checkin-option" data-value="off">
-        <span class="title">Feeling Off</span>
-        <span class="desc">Low energy or distracted</span>
-      </button>
-
-      <button class="checkin-option" data-value="struggling">
-        <span class="title">Struggling Today</span>
-        <span class="desc">Overwhelmed or frustrated</span>
-      </button>
-
-      <button class="checkin-option custom" data-value="custom">
-        <span class="title">Something Else</span>
-        <span class="desc">Write your own</span>
-      </button>
-    </div>
-
-    <div class="checkin-extra hidden">
-      <label>Want to add context? <span>(Optional)</span></label>
-      <textarea placeholder="A sentence or two is plenty."></textarea>
-    </div>
-
-    <div class="checkin-share hidden">
-      <label>Who can see this check-in?</label>
-      <div class="share-options">
-        <label><input type="radio" name="share" checked> Just me</label>
-        <label><input type="radio" name="share"> Share with coach</label>
-        <label><input type="radio" name="share"> Share with program staff</label>
-      </div>
-    </div>
-
-    <footer class="checkin-footer">
-      <span class="privacy-note">Private by default. Shared only if you choose.</span>
-      <button class="submit-checkin" disabled>Log Check-In</button>
-    </footer>
-
-  </div>
-
-</section>
-
-
+  <main id="next" style="padding:80px 24px; max-width:1120px; margin:0 auto; color:rgba(255,255,255,.78)">
+    <h2 style="font-family:Montserrat,system-ui; letter-spacing:-0.01em; color:#fff; margin:0 0 10px;">Next Section</h2>
+    <p style="margin:0; line-height:1.6;">
+      This page is just to show the hero. Replace the video source with your own MP4 and you’re done.
+    </p>
   </main>
 
-</div>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script src="crm.js"></script>
-<script src="js/mindset.js"></script>
-
+  <script>
+    // Start the hero animations as soon as the page is ready.
+    // (No external libraries.)
+    window.addEventListener("load", () => {
+      const hero = document.getElementById("hero");
+      hero.classList.add("is-ready");
+    });
+  </script>
 </body>
 </html>
