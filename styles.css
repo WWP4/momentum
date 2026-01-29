@@ -2297,3 +2297,54 @@ body.handoff-fire .why__title{
 .whyV2.is-arrived::before{
   opacity:.55;
 }
+
+
+/* ENERGY SURGE DROP */
+
+.whyV2::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-260px;
+  width:520px;
+  height:520px;
+  transform:translateX(-50%) scale(.4);
+  background:
+    radial-gradient(circle at center,
+      rgba(255,40,85,.55),
+      rgba(90,92,255,.45),
+      transparent 65%);
+  opacity:0;
+  filter:blur(60px);
+  transition:
+    opacity 480ms ease-out,
+    transform 700ms cubic-bezier(.22,.61,.36,1);
+  pointer-events:none;
+}
+
+.whyV2.is-arrived::after{
+  opacity:1;
+  transform:translateX(-50%) scale(1);
+}
+.whyV2__underline{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-8px;
+  height:4px;
+  border-radius:999px;
+
+  background:
+    linear-gradient(90deg,
+      #ff284f,
+      #5a5cff,
+      #ff284f);
+
+  box-shadow:
+    0 6px 20px rgba(255,40,85,.35),
+    0 6px 22px rgba(90,92,255,.35);
+
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 650ms cubic-bezier(.22,.61,.36,1);
+}
