@@ -772,3 +772,45 @@ a{color:inherit; text-decoration:none}
   .heroType__headline,.heroType__sub,.heroType__actions,.heroType__note{ opacity:1; transform:none; }
 }
 
+/* Center entire hero stack */
+.heroType__inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+/* Center the wordmark */
+.wordmark{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* Center headline width nicely */
+.heroType__headline{
+  max-width: 18ch;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* Center subheading */
+.heroType__sub{
+  max-width: 64ch;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* Center buttons */
+.heroType__actions{
+  justify-content:center;
+}
+
+
+.heroType__headline{
+  letter-spacing:-0.03em;
+}
+
+.heroType__sub{
+  opacity:.85;
+}
+
