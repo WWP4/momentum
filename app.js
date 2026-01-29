@@ -121,235 +121,240 @@ document.addEventListener("DOMContentLoaded", () => {
   })();
 
   /* =========================
-     QUIZ (Supabase)
-     Requires supabase-js loaded in HTML BEFORE app.js
-     ========================= */
-  (function initParentQuiz(){
-    const form = document.getElementById("momentumParentQuiz");
-    if (!form) return;
+   QUIZ (Supabase)
+   Requires supabase-js loaded in HTML BEFORE app.js
+   ========================= */
+(function initParentQuiz(){
+  const form = document.getElementById("momentumParentQuiz");
+  if (!form) return;
 
-    const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0ZmZja3phcnFjbnN0bnNrZWd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NTQ4MjMsImV4cCI6MjA4NTIzMDgyM30.IWAPHYfVQNuhZoe4mAtDcSYjKYGR7qdwhb6AedBzWnA";
+  const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0ZmZja3phcnFjbnN0bnNrZWd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NTQ4MjMsImV4cCI6MjA4NTIzMDgyM30.IWAPHYfVQNuhZoe4mAtDcSYjKYGR7qdwhb6AedBzWnA";
 
-    if (!window.supabase) {
-      console.warn("Supabase library not loaded. Include supabase-js script BEFORE app.js");
-      return;
-    }
+  if (!window.supabase) {
+    console.warn("Supabase library not loaded. Include supabase-js script BEFORE app.js");
+    return;
+  }
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const steps = Array.from(form.querySelectorAll(".mq__step")).filter(s => s.id !== "mqSubmitStep");
-    const submitStep = document.getElementById("mqSubmitStep");
+  const steps = Array.from(form.querySelectorAll(".mq__step")).filter(s => s.id !== "mqSubmitStep");
+  const submitStep = document.getElementById("mqSubmitStep");
 
-    const backBtn = document.getElementById("mqBack");
-    const nextBtn = document.getElementById("mqNext");
-    const submitBtn = document.getElementById("mqSubmitBtn");
+  const backBtn = document.getElementById("mqBack");
+  const nextBtn = document.getElementById("mqNext");
+  const submitBtn = document.getElementById("mqSubmitBtn");
 
-    const stepNowEl = document.getElementById("mqStepNow");
-    const stepTotalEl = document.getElementById("mqStepTotal");
-    const hintEl = document.getElementById("mqHint");
+  const stepNowEl = document.getElementById("mqStepNow");
+  const stepTotalEl = document.getElementById("mqStepTotal");
+  const hintEl = document.getElementById("mqHint");
 
-    const barFill = document.querySelector(".mq__barFill");
-    const bar = document.querySelector(".mq__bar");
+  const barFill = document.querySelector(".mq__barFill");
+  const bar = document.querySelector(".mq__bar");
 
-    const submitTitle = document.getElementById("mqSubmitTitle");
-    const submitMsg = document.getElementById("mqSubmitMsg");
-    const tryAgain = document.getElementById("mqTryAgain");
-    const spinner = submitStep ? submitStep.querySelector(".mq__spinner") : null;
+  const submitTitle = document.getElementById("mqSubmitTitle");
+  const submitMsg = document.getElementById("mqSubmitMsg");
+  const tryAgain = document.getElementById("mqTryAgain");
+  const spinner = submitStep ? submitStep.querySelector(".mq__spinner") : null;
 
-    const scoreEl = document.getElementById("mqScore");
-    const qualifiesEl = document.getElementById("mqQualifies");
+  const scoreEl = document.getElementById("mqScore");
+  const qualifiesEl = document.getElementById("mqQualifies");
 
-    if (!steps.length || !submitStep || !backBtn || !nextBtn || !submitBtn) {
-      console.warn("Quiz elements missing (steps/buttons/submitStep).");
-      return;
-    }
+  if (!steps.length || !submitStep || !backBtn || !nextBtn || !submitBtn) {
+    console.warn("Quiz elements missing (steps/buttons/submitStep).");
+    return;
+  }
 
-    let idx = 0;
-    if (stepTotalEl) stepTotalEl.textContent = String(steps.length);
+  let idx = 0;
+  if (stepTotalEl) stepTotalEl.textContent = String(steps.length);
 
-    function show(i){
-      idx = Math.max(0, Math.min(steps.length - 1, i));
-      form.querySelectorAll(".mq__step").forEach(s => s.classList.remove("is-active"));
-      steps[idx].classList.add("is-active");
+  function show(i){
+    idx = Math.max(0, Math.min(steps.length - 1, i));
+    form.querySelectorAll(".mq__step").forEach(s => s.classList.remove("is-active"));
+    steps[idx].classList.add("is-active");
 
-      const pct = steps.length === 1 ? 100 : Math.round((idx / (steps.length - 1)) * 100);
-      if (barFill) barFill.style.width = `${pct}%`;
-      if (bar) bar.setAttribute("aria-valuenow", String(pct));
+    const pct = steps.length === 1 ? 100 : Math.round((idx / (steps.length - 1)) * 100);
+    if (barFill) barFill.style.width = `${pct}%`;
+    if (bar) bar.setAttribute("aria-valuenow", String(pct));
 
-      if (stepNowEl) stepNowEl.textContent = String(idx + 1);
-      if (hintEl) hintEl.textContent = steps[idx].dataset.title || "";
+    if (stepNowEl) stepNowEl.textContent = String(idx + 1);
+    if (hintEl) hintEl.textContent = steps[idx].dataset.title || "";
 
-      backBtn.disabled = idx === 0;
+    backBtn.disabled = idx === 0;
 
-      const isLast = idx === steps.length - 1;
-      nextBtn.style.display = isLast ? "none" : "inline-flex";
-      submitBtn.style.display = isLast ? "inline-flex" : "none";
-    }
+    const isLast = idx === steps.length - 1;
+    nextBtn.style.display = isLast ? "none" : "inline-flex";
+    submitBtn.style.display = isLast ? "inline-flex" : "none";
+  }
 
-    function getRadio(name){
-      const el = form.querySelector(`input[name="${name}"]:checked`);
-      return el ? el.value : "";
-    }
-    function getText(name){
-      const el = form.querySelector(`[name="${name}"]`);
-      return el ? String(el.value || "").trim() : "";
-    }
-    function getArray(name){
-      return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map(i => i.value);
-    }
+  function getRadio(name){
+    const el = form.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : "";
+  }
+  function getText(name){
+    const el = form.querySelector(`[name="${name}"]`);
+    return el ? String(el.value || "").trim() : "";
+  }
+  function getArray(name){
+    return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map(i => i.value);
+  }
 
-    function validateStep(){
-      const cur = steps[idx];
-      cur.querySelectorAll(".mq__bad").forEach(el => el.classList.remove("mq__bad"));
+  function validateStep(){
+    const cur = steps[idx];
+    cur.querySelectorAll(".mq__bad").forEach(el => el.classList.remove("mq__bad"));
 
-      const required = Array.from(cur.querySelectorAll("[required]"));
-      let firstBad = null;
+    const required = Array.from(cur.querySelectorAll("[required]"));
+    let firstBad = null;
 
-      for (const el of required){
-        if (el.type === "radio"){
-          const name = el.name;
-          if (!cur.querySelector(`input[name="${name}"]:checked`)){
-            const group = el.closest(".mq__field") || el.closest(".mq__q") || cur;
-            group.classList.add("mq__bad");
-            firstBad = firstBad || group;
-          }
-        } else {
-          if (!String(el.value || "").trim()){
-            el.classList.add("mq__bad");
-            firstBad = firstBad || el;
-          }
+    for (const el of required){
+      if (el.type === "radio"){
+        const name = el.name;
+        if (!cur.querySelector(`input[name="${name}"]:checked`)){
+          const group = el.closest(".mq__field") || el.closest(".mq__q") || cur;
+          group.classList.add("mq__bad");
+          firstBad = firstBad || group;
+        }
+      } else {
+        if (!String(el.value || "").trim()){
+          el.classList.add("mq__bad");
+          firstBad = firstBad || el;
         }
       }
-
-      if (firstBad){
-        firstBad.scrollIntoView({ behavior:"smooth", block:"center" });
-        return false;
-      }
-      return true;
     }
 
-    function computeScore(payload){
-      let score = 0;
-
-      if (payload.training_sessions_per_week === "5+") score += 3;
-      else if (payload.training_sessions_per_week === "3–4") score += 2;
-      else if (payload.training_sessions_per_week === "1–2") score += 1;
-
-      if (payload.session_length === "90+ minutes") score += 2;
-      else if (payload.session_length === "60–90 minutes") score += 1;
-
-      score += Math.min(3, (payload.session_includes || []).length);
-
-      if (payload.games_per_week === "4+") score += 2;
-      else if (payload.games_per_week === "2–3") score += 1;
-
-      score += Math.min(2, (payload.competition_types || []).length);
-      if (payload.strength_conditioning && payload.strength_conditioning !== "No") score += 1;
-      score += Math.min(2, (payload.recovery_practices || []).length);
-      score += Math.min(2, (payload.nutrition_topics || []).length);
-      score += Math.min(2, (payload.leadership_roles || []).length);
-      score += Math.min(2, (payload.mental_performance || []).length);
-
-      return score;
+    if (firstBad){
+      firstBad.scrollIntoView({ behavior:"smooth", block:"center" });
+      return false;
     }
+    return true;
+  }
 
-    async function submit(){
-      form.querySelectorAll(".mq__step").forEach(s => s.classList.remove("is-active"));
-      submitStep.classList.add("is-active");
+  function computeScore(payload){
+    let score = 0;
 
-      if (spinner) spinner.style.display = "block";
-      if (tryAgain) tryAgain.style.display = "none";
-      if (submitTitle) submitTitle.textContent = "Submitting…";
-      if (submitMsg) submitMsg.textContent = "Saving your answers.";
-       window.location.href = "/redirect.html";
+    if (payload.training_sessions_per_week === "5+") score += 3;
+    else if (payload.training_sessions_per_week === "3–4") score += 2;
+    else if (payload.training_sessions_per_week === "1–2") score += 1;
 
+    if (payload.session_length === "90+ minutes") score += 2;
+    else if (payload.session_length === "60–90 minutes") score += 1;
 
-      const payload = {
-        parent_name: getText("parent_name"),
-        email: getText("email"),
-        phone: getText("phone"),
-        athlete_name: getText("athlete_name"),
-        athlete_age_group: getRadio("athlete_age_group"),
-        primary_sport: getText("primary_sport"),
-        city: getText("city"),
-        state: getText("state"),
+    score += Math.min(3, (payload.session_includes || []).length);
 
-        training_sessions_per_week: getRadio("training_sessions_per_week"),
-        session_length: getRadio("session_length"),
-        session_includes: getArray("session_includes"),
+    if (payload.games_per_week === "4+") score += 2;
+    else if (payload.games_per_week === "2–3") score += 1;
 
-        games_per_week: getRadio("games_per_week"),
-        competition_types: getArray("competition_types"),
+    score += Math.min(2, (payload.competition_types || []).length);
+    if (payload.strength_conditioning && payload.strength_conditioning !== "No") score += 1;
+    score += Math.min(2, (payload.recovery_practices || []).length);
+    score += Math.min(2, (payload.nutrition_topics || []).length);
+    score += Math.min(2, (payload.leadership_roles || []).length);
+    score += Math.min(2, (payload.mental_performance || []).length);
 
-        strength_conditioning: getRadio("strength_conditioning"),
-        recovery_practices: getArray("recovery_practices"),
+    return score;
+  }
 
-        nutrition_guidance: getRadio("nutrition_guidance"),
-        nutrition_topics: getArray("nutrition_topics"),
+  async function submit(){
+    // Show submit UI
+    form.querySelectorAll(".mq__step").forEach(s => s.classList.remove("is-active"));
+    submitStep.classList.add("is-active");
 
-        leadership_roles: getArray("leadership_roles"),
-        character_emphasis: getArray("character_emphasis"),
-        life_skills: getArray("life_skills"),
-        mental_performance: getArray("mental_performance"),
+    if (spinner) spinner.style.display = "block";
+    if (tryAgain) tryAgain.style.display = "none";
+    if (submitTitle) submitTitle.textContent = "Submitting…";
+    if (submitMsg) submitMsg.textContent = "Saving your answers.";
 
-        notes: getText("notes"),
-        source: getText("source") || "momentum-site"
-      };
+    // Build payload
+    const payload = {
+      parent_name: getText("parent_name"),
+      email: getText("email"),
+      phone: getText("phone"),
+      athlete_name: getText("athlete_name"),
+      athlete_age_group: getRadio("athlete_age_group"),
+      primary_sport: getText("primary_sport"),
+      city: getText("city"),
+      state: getText("state"),
 
-      const score = computeScore(payload);
-      const qualifies = score >= 8;
+      training_sessions_per_week: getRadio("training_sessions_per_week"),
+      session_length: getRadio("session_length"),
+      session_includes: getArray("session_includes"),
 
-      payload.score = score;
-      payload.qualifies = qualifies;
+      games_per_week: getRadio("games_per_week"),
+      competition_types: getArray("competition_types"),
 
-      if (scoreEl) scoreEl.value = String(score);
-      if (qualifiesEl) qualifiesEl.value = qualifies ? "true" : "false";
+      strength_conditioning: getRadio("strength_conditioning"),
+      recovery_practices: getArray("recovery_practices"),
 
-      const { error } = await supabase.from("parent_applications").insert(payload);
-      if (error) throw error;
+      nutrition_guidance: getRadio("nutrition_guidance"),
+      nutrition_topics: getArray("nutrition_topics"),
 
+      leadership_roles: getArray("leadership_roles"),
+      character_emphasis: getArray("character_emphasis"),
+      life_skills: getArray("life_skills"),
+      mental_performance: getArray("mental_performance"),
+
+      notes: getText("notes"),
+      source: getText("source") || "momentum-site"
+    };
+
+    // Score
+    const score = computeScore(payload);
+    const qualifies = score >= 8;
+    payload.score = score;
+    payload.qualifies = qualifies;
+
+    if (scoreEl) scoreEl.value = String(score);
+    if (qualifiesEl) qualifiesEl.value = qualifies ? "true" : "false";
+
+    // Insert
+    const { error } = await supabase.from("parent_applications").insert(payload);
+    if (error) throw error;
+
+    // Optional: call your Netlify function to send email (if you set it up)
+    // await fetch("/.netlify/functions/send-confirmation", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ email: payload.email, parent_name: payload.parent_name, athlete_name: payload.athlete_name })
+    // });
+
+    // Redirect ONLY after success
+    window.location.href = "/redirect.html";
+  }
+
+  backBtn.addEventListener("click", () => show(idx - 1));
+
+  nextBtn.addEventListener("click", () => {
+    if (validateStep()) show(idx + 1);
+  });
+
+  submitBtn.addEventListener("click", async () => {
+    if (!validateStep()) return;
+    submitBtn.disabled = true;
+    try {
+      await submit();
+    } catch (e) {
       if (spinner) spinner.style.display = "none";
-      if (submitTitle) submitTitle.textContent = "Submitted.";
-      if (submitMsg) {
-        submitMsg.textContent = qualifies
-          ? "You’re a strong fit. We’ll follow up with next steps and confirm credit options."
-          : "We received your application. We’ll follow up with next steps and recommendations.";
-      }
+      if (submitTitle) submitTitle.textContent = "Couldn’t submit.";
+      if (submitMsg) submitMsg.textContent = e?.message || "Please try again.";
+      if (tryAgain) tryAgain.style.display = "inline-flex";
+      submitBtn.disabled = false;
     }
+  });
 
-    backBtn.addEventListener("click", () => show(idx - 1));
-    nextBtn.addEventListener("click", () => { if (validateStep()) show(idx + 1); });
-
-    submitBtn.addEventListener("click", async () => {
-      if (!validateStep()) return;
-      submitBtn.disabled = true;
-      try { await submit(); }
-      catch (e){
-        if (spinner) spinner.style.display = "none";
-        if (submitTitle) submitTitle.textContent = "Couldn’t submit.";
-        if (submitMsg) submitMsg.textContent = e?.message || "Please try again.";
-        if (tryAgain) tryAgain.style.display = "inline-flex";
-        submitBtn.disabled = false;
-      }
+  if (tryAgain){
+    tryAgain.addEventListener("click", () => {
+      submitBtn.disabled = false;
+      show(steps.length - 1);
     });
+  }
 
-    if (tryAgain){
-      tryAgain.addEventListener("click", () => {
-        submitBtn.disabled = false;
-        show(steps.length - 1);
-      });
-    }
+  // Tap-to-select on choice cards
+  form.addEventListener("click", (e) => {
+    const choice = e.target.closest(".mq__choice");
+    if (!choice) return;
+    const input = choice.querySelector("input");
+    if (input && input.type === "radio") input.checked = true;
+  });
 
-    // Tap-to-select on choice cards
-    form.addEventListener("click", (e) => {
-      const choice = e.target.closest(".mq__choice");
-      if (choice){
-        const input = choice.querySelector("input");
-        if (input && input.type === "radio") input.checked = true;
-      }
-    });
-
-    show(0);
-  })();
-});
+  show(0);
+})();
