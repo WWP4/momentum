@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Momentum — Submissions Admin</title>
+
+  <!-- Supabase JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#0f1733;
+      --panel2:#0c132b;
+      --text:#eaf0ff;
+      --muted:#a9b4d0;
+      --line:rgba(255,255,255,.10);
+      --accent:#6ea8ff;
+      --good:#62d49e;
+      --warn:#ffd27a;
+      --bad:#ff7a7a;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(110,168,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 90% 20%, rgba(98,212,158,.14), transparent 55%),
+        radial-gradient(1000px 900px at 55% 90%, rgba(255,210,122,.10), transparent 60%),
+        var(--bg);
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    button, input, select, textarea{ font-family: inherit; }
+
+    .wrap{
+      max-width: 1180px;
+      margin: 28px auto 60px;
+      padding: 0 18px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .titleBlock{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 280px;
+    }
+
+    .badge{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(110,168,255,.35), rgba(98,212,158,.25));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      letter-spacing:.5px;
+    }
+
+    h1{
+      margin:0;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing:.2px;
+      line-height: 1.1;
+    }
+
+    .sub{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .statusRow{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .dot{ width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.28); }
+    .dot.good{ background: var(--good); }
+    .dot.warn{ background: var(--warn); }
+    .dot.bad{ background: var(--bad); }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .toolbar{
+      padding: 14px 14px 12px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr .8fr auto auto;
+      gap: 10px;
+      align-items:end;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0,0,0,.14);
+    }
+
+    .field label{
+      display:block;
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0 0 6px 2px;
+      letter-spacing:.3px;
+      text-transform: uppercase;
+    }
+
+    .control{
+      width:100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(15, 23, 51, .55);
+      color: var(--text);
+      outline:none;
+    }
+    .control::placeholder{ color: rgba(234,240,255,.45); }
+
+    .btn{
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      cursor:pointer;
+      font-weight: 700;
+      transition: transform .05s ease, background .15s ease, border-color .15s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{ background: rgba(255,255,255,.11); border-color: rgba(255,255,255,.22); }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(110,168,255,.65), rgba(110,168,255,.25));
+      border-color: rgba(110,168,255,.55);
+    }
+    .btn.primary:hover{ background: linear-gradient(135deg, rgba(110,168,255,.75), rgba(110,168,255,.30)); }
+
+    .btn.ghost{
+      background: transparent;
+      border-color: rgba(255,255,255,.12);
+      color: var(--muted);
+    }
+    .btn.ghost:hover{ background: rgba(255,255,255,.06); color: var(--text); }
+
+    .metaBar{
+      padding: 10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      background: rgba(0,0,0,.12);
+    }
+
+    .metaLeft, .metaRight{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tiny{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(234,240,255,.7);
+      background: rgba(0,0,0,.20);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 6px 8px;
+      border-radius: 12px;
+    }
+
+    .tableWrap{
+      overflow:auto;
+      max-height: 68vh;
+      background: rgba(0,0,0,.10);
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      min-width: 920px;
+    }
+
+    thead th{
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      text-align:left;
+      font-size: 11px;
+      letter-spacing:.3px;
+      text-transform: uppercase;
+      color: rgba(234,240,255,.72);
+      background: rgba(10, 16, 32, .92);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 12px;
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+    }
+
+    tbody td{
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      vertical-align: top;
+      color: rgba(234,240,255,.92);
+      font-size: 13px;
+    }
+
+    tbody tr:hover{
+      background: rgba(255,255,255,.05);
+    }
+
+    .cell-muted{ color: rgba(234,240,255,.65); }
+    .cell-mono{ font-family: var(--mono); font-size: 12px; color: rgba(234,240,255,.78); }
+    .nowrap{ white-space: nowrap; }
+
+    .rowActions{
+      display:flex;
+      gap: 8px;
+      align-items:center;
+      flex-wrap: wrap;
+    }
+
+    .iconBtn{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      cursor:pointer;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .iconBtn:hover{ background: rgba(255,255,255,.10); }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      background: rgba(10,16,32,.94);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: var(--shadow);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--text);
+      min-width: 260px;
+      max-width: 560px;
+      display:none;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+    }
+    .toast strong{ font-size: 13px; }
+    .toast span{ color: var(--muted); font-size: 12px; }
+    .toast .close{
+      border: 0;
+      background: transparent;
+      color: rgba(234,240,255,.7);
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 0 4px;
+      line-height: 1;
+    }
+
+    .empty{
+      padding: 28px 14px;
+      text-align:center;
+      color: var(--muted);
+    }
+
+    .configBox{
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .configBox code{
+      font-family: var(--mono);
+      color: rgba(234,240,255,.82);
+      background: rgba(0,0,0,.22);
+      padding: 2px 6px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    @media (max-width: 980px){
+      .toolbar{ grid-template-columns: 1fr 1fr; }
+      .statusRow{ justify-content:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="titleBlock">
+        <div class="badge">M</div>
+        <div>
+          <h1>Momentum — Admin Submissions</h1>
+          <div class="sub">View, search, copy, and export submissions (fast copy/paste for emails).</div>
+        </div>
+      </div>
+
+      <div class="statusRow">
+        <div class="pill" id="connPill"><span class="dot warn" id="connDot"></span><span id="connText">Not connected</span></div>
+        <div class="pill"><span class="dot good"></span><span id="countText">0 results</span></div>
+        <button class="btn ghost" id="refreshBtn">Refresh</button>
+        <button class="btn primary" id="exportBtn">Export CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <div class="field">
+          <label>Search</label>
+          <input class="control" id="searchInput" placeholder="Name, email, phone, club, notes..." />
+        </div>
+
+        <div class="field">
+          <label>From date</label>
+          <input class="control" id="fromDate" type="date" />
+        </div>
+
+        <div class="field">
+          <label>To date</label>
+          <input class="control" id="toDate" type="date" />
+        </div>
+
+        <button class="btn" id="clearBtn">Clear</button>
+        <button class="btn primary" id="loadBtn">Load</button>
+      </div>
+
+      <div class="metaBar">
+        <div class="metaLeft">
+          <span>Table:</span>
+          <span class="tiny" id="tableNameTag"></span>
+          <span class="cell-muted">Order:</span>
+          <span class="tiny">newest → oldest</span>
+        </div>
+        <div class="metaRight">
+          <span class="cell-muted">Tip:</span>
+          <span>Use the <span class="tiny">Copy Email</span> or <span class="tiny">Copy Summary</span> buttons.</span>
+        </div>
+      </div>
+
+      <div class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="nowrap">Submitted</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th class="nowrap">Phone</th>
+              <th>Club / Program</th>
+              <th>Notes / Answers</th>
+              <th class="nowrap">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="7" class="empty">Configure Supabase and click “Load”.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="configBox">
+      <div style="margin-bottom:10px; font-weight:800; color: rgba(234,240,255,.9);">Setup (2 minutes)</div>
+      <div style="margin-bottom:10px;">
+        1) Paste your <strong>Supabase URL</strong> and <strong>anon key</strong> into the <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> fields in the script.
+      </div>
+      <div style="margin-bottom:10px;">
+        2) Set your submissions table name in <code>TABLE</code> (default is <code>momentum_submissions</code>).
+      </div>
+      <div>
+        3) If your column names differ, update the <code>COLUMNS</code> mapping in the script (name/email/phone/club/notes/answers).
+      </div>
+      <div style="margin-top:10px; color: rgba(255,210,122,.95);">
+        Security note: an <code>anon</code> key can be safe only if your Supabase Row Level Security (RLS) is correct. For a true “admin-only” page, restrict reads via RLS and authenticate users (Supabase Auth) or serve this behind a password gate.
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div>
+      <strong id="toastTitle">Copied</strong><br/>
+      <span id="toastMsg">Text copied to clipboard.</span>
+    </div>
+    <button class="close" id="toastClose" aria-label="Close">×</button>
+  </div>
+
+  <script>
+    /*************************************************************
+     * 1) PASTE YOUR SUPABASE DETAILS HERE
+     *************************************************************/
+    const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0ZmZja3phcnFjbnN0bnNrZWd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NTQ4MjMsImV4cCI6MjA4NTIzMDgyM30.IWAPHYfVQNuhZoe4mAtDcSYjKYGR7qdwhb6AedBzWnA";
+
+    /*************************************************************
+     * 2) SET YOUR TABLE + COLUMN MAPPING
+     *************************************************************/
+    const TABLE = "momentum_submissions";
+
+    // Update these if your table uses different column names.
+    // You can keep extras like 'answers' as JSON.
+    const COLUMNS = {
+      created_at: "created_at",
+      name: "name",
+      email: "email",
+      phone: "phone",
+      club: "club",          // e.g., club_name, program, organization
+      notes: "notes",        // plain text field
+      answers: "answers"     // JSON field (optional)
+    };
+
+    // How many records to load at once:
+    const PAGE_SIZE = 250;
+
+    /*************************************************************
+     * App state
+     *************************************************************/
+    let supabase = null;
+    let rowsCache = [];
+
+    const el = (id) => document.getElementById(id);
+
+    const tbody = el("tbody");
+    const searchInput = el("searchInput");
+    const fromDate = el("fromDate");
+    const toDate = el("toDate");
+    const loadBtn = el("loadBtn");
+    const refreshBtn = el("refreshBtn");
+    const clearBtn = el("clearBtn");
+    const exportBtn = el("exportBtn");
+
+    const connDot = el("connDot");
+    const connText = el("connText");
+    const countText = el("countText");
+    const tableNameTag = el("tableNameTag");
+
+    const toast = el("toast");
+    const toastTitle = el("toastTitle");
+    const toastMsg = el("toastMsg");
+    const toastClose = el("toastClose");
+
+    tableNameTag.textContent = TABLE;
+
+    function setConn(status, text){
+      connText.textContent = text;
+      connDot.classList.remove("good","warn","bad");
+      connDot.classList.add(status);
+    }
+
+    function showToast(title, msg){
+      toastTitle.textContent = title;
+      toastMsg.textContent = msg;
+      toast.style.display = "flex";
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toast.style.display = "none", 2200);
+    }
+    toastClose.addEventListener("click", () => toast.style.display = "none");
+
+    async function copyText(text, label="Copied"){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast(label, "Saved to clipboard.");
+      }catch(e){
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        showToast(label, "Saved to clipboard.");
+      }
+    }
+
+    function safe(v){
+      if (v === null || v === undefined) return "";
+      return String(v);
+    }
+
+    function formatDate(iso){
+      if (!iso) return "";
+      const d = new Date(iso);
+      // local display
+      return d.toLocaleString(undefined, { year:"numeric", month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit" });
+    }
+
+    function guessField(row, key){
+      const col = COLUMNS[key];
+      if (col && row[col] !== undefined) return row[col];
+      return "";
+    }
+
+    function stringifyAnswers(ans){
+      if (!ans) return "";
+      if (typeof ans === "string") return ans;
+      try{
+        return JSON.stringify(ans, null, 2);
+      }catch{
+        return String(ans);
+      }
+    }
+
+    function buildSummary(row){
+      const submitted = formatDate(guessField(row,"created_at"));
+      const name = safe(guessField(row,"name")).trim();
+      const email = safe(guessField(row,"email")).trim();
+      const phone = safe(guessField(row,"phone")).trim();
+      const club = safe(guessField(row,"club")).trim();
+      const notes = safe(guessField(row,"notes")).trim();
+      const answers = stringifyAnswers(guessField(row,"answers")).trim();
+
+      const parts = [
+        `Momentum Submission`,
+        `Submitted: ${submitted || "-"}`,
+        `Name: ${name || "-"}`,
+        `Email: ${email || "-"}`,
+        `Phone: ${phone || "-"}`,
+        `Club/Program: ${club || "-"}`,
+      ];
+      if (notes) parts.push(`Notes: ${notes}`);
+      if (answers) parts.push(`Answers:\n${answers}`);
+
+      return parts.join("\n");
+    }
+
+    function buildEmailDraft(row){
+      const name = safe(guessField(row,"name")).trim();
+      const club = safe(guessField(row,"club")).trim();
+      const submitted = formatDate(guessField(row,"created_at"));
+      const email = safe(guessField(row,"email")).trim();
+
+      // Simple neutral draft that works even without personalization-heavy tone
+      return [
+        `Subject: Momentum Credits — Next Steps`,
+        ``,
+        `Hi${name ? " " + name : ""},`,
+        ``,
+        `Thanks for submitting your training details${club ? " for " + club : ""}.`,
+        `We’ve received everything and will match your weekly training + competition schedule to the eligible Momentum course credits.`,
+        ``,
+        `Submission time: ${submitted || "-"}`,
+        ``,
+        `Next step: Reply with any additional training hours, strength sessions, or film/recovery work you want included.`,
+        ``,
+        `Thank you,`,
+        `Momentum Team`,
+        `${email ? "" : ""}`
+      ].join("\n");
+    }
+
+    function filteredRows(){
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) return rowsCache;
+
+      return rowsCache.filter(r => {
+        const hay = [
+          guessField(r,"name"),
+          guessField(r,"email"),
+          guessField(r,"phone"),
+          guessField(r,"club"),
+          guessField(r,"notes"),
+          stringifyAnswers(guessField(r,"answers"))
+        ].map(safe).join(" | ").toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
+    function render(){
+      const rows = filteredRows();
+      countText.textContent = `${rows.length} results`;
+
+      if (!rows.length){
+        tbody.innerHTML = `<tr><td colspan="7" class="empty">No results. Adjust your filters and click “Load”.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = rows.map((row, idx) => {
+        const submitted = formatDate(guessField(row,"created_at"));
+        const name = safe(guessField(row,"name"));
+        const email = safe(guessField(row,"email"));
+        const phone = safe(guessField(row,"phone"));
+        const club = safe(guessField(row,"club"));
+        const notes = safe(guessField(row,"notes"));
+        const answers = guessField(row,"answers");
+        const answersPreview = stringifyAnswers(answers);
+
+        const id = row.id ?? row.uuid ?? row.submission_id ?? idx;
+
+        return `
+          <tr data-rowid="${String(id).replace(/"/g,'&quot;')}">
+            <td class="cell-muted nowrap">${submitted || "-"}</td>
+            <td>${name || "<span class='cell-muted'>—</span>"}</td>
+            <td class="cell-mono">${email || "<span class='cell-muted'>—</span>"}</td>
+            <td class="cell-mono nowrap">${phone || "<span class='cell-muted'>—</span>"}</td>
+            <td>${club || "<span class='cell-muted'>—</span>"}</td>
+            <td class="cell-muted" style="max-width:420px;">
+              ${notes ? `<div style="margin-bottom:8px; color: rgba(234,240,255,.85)">${escapeHtml(notes)}</div>` : ""}
+              ${answersPreview ? `<pre style="margin:0; white-space:pre-wrap; font-family: var(--mono); font-size: 11px; color: rgba(234,240,255,.68); background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.08); padding:10px; border-radius: 12px; max-height:140px; overflow:auto;">${escapeHtml(answersPreview)}</pre>` : `<span class="cell-muted">—</span>`}
+            </td>
+            <td class="nowrap">
+              <div class="rowActions">
+                <button class="iconBtn" data-action="copy-email" data-id="${id}">Copy Email</button>
+                <button class="iconBtn" data-action="copy-phone" data-id="${id}">Copy Phone</button>
+                <button class="iconBtn" data-action="copy-summary" data-id="${id}">Copy Summary</button>
+                <button class="iconBtn" data-action="copy-draft" data-id="${id}">Copy Email Draft</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function escapeHtml(str){
+      return safe(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function findRowById(id){
+      return rowsCache.find(r => String(r.id ?? r.uuid ?? r.submission_id) === String(id));
+    }
+
+    tbody.addEventListener("click", async (e) => {
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
+
+      const action = btn.getAttribute("data-action");
+      const id = btn.getAttribute("data-id");
+      const row = findRowById(id) || rowsCache.find((r, i) => String(i) === String(id));
+      if (!row) return;
+
+      if (action === "copy-email"){
+        await copyText(safe(guessField(row,"email")).trim(), "Email copied");
+      }
+      if (action === "copy-phone"){
+        await copyText(safe(guessField(row,"phone")).trim(), "Phone copied");
+      }
+      if (action === "copy-summary"){
+        await copyText(buildSummary(row), "Summary copied");
+      }
+      if (action === "copy-draft"){
+        await copyText(buildEmailDraft(row), "Draft copied");
+      }
+    });
+
+    function toISODateStart(d){ return d ? new Date(d + "T00:00:00").toISOString() : null; }
+    function toISODateEnd(d){
+      if (!d) return null;
+      const dt = new Date(d + "T23:59:59");
+      return dt.toISOString();
+    }
+
+    async function initSupabase(){
+      if (!SUPABASE_URL || SUPABASE_URL.includes("PASTE_") || !SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.includes("PASTE_")){
+        setConn("warn", "Missing Supabase config");
+        return false;
+      }
+      try{
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // quick connectivity probe
+        const { error } = await supabase.from(TABLE).select("count", { count: "exact", head: true });
+        if (error) throw error;
+        setConn("good", "Connected");
+        return true;
+      }catch(err){
+        console.error(err);
+        setConn("bad", "Connection failed");
+        showToast("Connection failed", safe(err?.message || err));
+        return false;
+      }
+    }
+
+    async function loadData(){
+      tbody.innerHTML = `<tr><td colspan="7" class="empty">Loading…</td></tr>`;
+
+      const ok = await initSupabase();
+      if (!ok){
+        tbody.innerHTML = `<tr><td colspan="7" class="empty">Fix Supabase settings in the script, then click “Load”.</td></tr>`;
+        return;
+      }
+
+      const fromIso = toISODateStart(fromDate.value);
+      const toIso = toISODateEnd(toDate.value);
+
+      try{
+        // Build query
+        let q = supabase.from(TABLE).select("*").order(COLUMNS.created_at, { ascending:false }).limit(PAGE_SIZE);
+
+        if (fromIso) q = q.gte(COLUMNS.created_at, fromIso);
+        if (toIso) q = q.lte(COLUMNS.created_at, toIso);
+
+        const { data, error } = await q;
+        if (error) throw error;
+
+        rowsCache = Array.isArray(data) ? data : [];
+        render();
+        showToast("Loaded", `Pulled ${rowsCache.length} submission(s).`);
+      }catch(err){
+        console.error(err);
+        rowsCache = [];
+        render();
+        showToast("Load failed", safe(err?.message || err));
+      }
+    }
+
+    function clearFilters(){
+      searchInput.value = "";
+      fromDate.value = "";
+      toDate.value = "";
+      render();
+    }
+
+    function exportCSV(){
+      const rows = filteredRows();
+      if (!rows.length){
+        showToast("Nothing to export", "No rows match your filter.");
+        return;
+      }
+
+      // Pick common columns + include answers/notes.
+      const cols = [
+        COLUMNS.created_at,
+        COLUMNS.name,
+        COLUMNS.email,
+        COLUMNS.phone,
+        COLUMNS.club,
+        COLUMNS.notes,
+        COLUMNS.answers
+      ];
+
+      const header = cols.join(",");
+      const lines = rows.map(r => cols.map(c => {
+        let v = r[c];
+        if (v && typeof v === "object") v = JSON.stringify(v);
+        v = safe(v).replaceAll('"','""');
+        return `"${v}"`;
+      }).join(","));
+
+      const csv = [header, ...lines].join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `momentum-submissions-${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      showToast("Exported", "CSV downloaded.");
+    }
+
+    // Live filtering
+    searchInput.addEventListener("input", () => render());
+
+    loadBtn.addEventListener("click", loadData);
+    refreshBtn.addEventListener("click", loadData);
+    clearBtn.addEventListener("click", clearFilters);
+    exportBtn.addEventListener("click", exportCSV);
+
+    // Initial UI
+    setConn("warn", "Not connected");
+    countText.textContent = "0 results";
+  </script>
+</body>
+</html>
