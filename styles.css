@@ -1325,3 +1325,193 @@ a{color:inherit; text-decoration:none}
   .rail__fill{ transition:none; }
   .event__card, .event__card::before{ transition:none; }
 }
+
+
+/* =========================
+   WHY (Parents) — Premium section
+   ========================= */
+
+.why{
+  background:
+    radial-gradient(1100px 700px at 12% 0%, rgba(255,43,85,.05), transparent 60%),
+    radial-gradient(1100px 700px at 88% 20%, rgba(90,92,255,.05), transparent 62%),
+    #fafafa;
+  padding: clamp(70px, 7vw, 105px) 0;
+  color: #0b0d13;
+}
+
+.why .container{
+  width: min(var(--max, 1180px), calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.why__header{
+  text-align: center;
+  margin-bottom: clamp(26px, 3.6vw, 46px);
+}
+
+.why__eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(11,13,19,.55);
+  margin: 0 0 12px;
+}
+
+.why__title{
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: clamp(30px, 4.2vw, 50px);
+  margin: 0 0 10px;
+}
+
+.why__lead{
+  margin: 0 auto;
+  max-width: 80ch;
+  color: rgba(11,13,19,.72);
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.65;
+}
+
+.why__grid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.whyCard{
+  grid-column: span 6;
+  background: rgba(255,255,255,.9);
+  border-radius: 22px;
+  padding: 24px 24px 18px;
+  position: relative;
+  overflow: hidden;
+
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.06),
+    inset 0 0 0 1px rgba(0,0,0,.05);
+
+  transform: translateY(10px);
+  opacity: 1;
+  transition:
+    transform 340ms ease,
+    box-shadow 340ms ease;
+}
+
+/* Soft brand halo behind every card */
+.whyCard::before{
+  content:"";
+  position:absolute;
+  inset:-18px;
+  border-radius: 28px;
+  z-index:-1;
+  opacity:.22;
+  filter: blur(28px);
+  background: linear-gradient(135deg, rgba(255,43,85,.75), rgba(90,92,255,.75));
+}
+
+.whyCard:hover{
+  transform: translateY(-4px);
+  box-shadow:
+    0 28px 90px rgba(0,0,0,.12),
+    inset 0 0 0 1px rgba(0,0,0,.06);
+}
+
+.whyCard__icon{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  background:
+    linear-gradient(135deg, rgba(255,43,85,.10), rgba(90,92,255,.10));
+  color: rgba(11,13,19,.92);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+  margin-bottom: 14px;
+}
+
+.whyCard__icon svg{
+  width: 22px;
+  height: 22px;
+}
+
+.whyCard__h{
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.whyCard__p{
+  margin: 0;
+  color: rgba(11,13,19,.72);
+  line-height: 1.65;
+  font-size: 15.5px;
+}
+
+.whyCard__bar{
+  height: 4px;
+  width: 100%;
+  border-radius: 999px;
+  margin-top: 16px;
+  opacity: .9;
+}
+
+.whyCard__bar--red{
+  background: linear-gradient(90deg, rgba(255,43,85,.95), rgba(255,43,85,.15));
+}
+
+.whyCard__bar--blue{
+  background: linear-gradient(90deg, rgba(90,92,255,.95), rgba(90,92,255,.15));
+}
+
+/* CTA strip */
+.why__cta{
+  margin-top: clamp(22px, 3vw, 34px);
+  border-radius: 22px;
+  padding: 22px 22px;
+  background: rgba(255,255,255,.85);
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.06),
+    inset 0 0 0 1px rgba(0,0,0,.05);
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.why__ctaH{
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.why__ctaP{
+  margin: 0;
+  color: rgba(11,13,19,.72);
+  line-height: 1.55;
+  font-size: 14.5px;
+}
+
+.why__ctaBtns{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .whyCard{ grid-column: span 12; }
+  .why__cta{ flex-direction: column; align-items:flex-start; }
+}
+
