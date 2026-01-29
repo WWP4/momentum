@@ -1756,3 +1756,43 @@ a{color:inherit; text-decoration:none}
   .whyCard{ grid-column: span 12; }
   .why__cta{ flex-direction: column; align-items:flex-start; }
 }
+
+/* WHY sync + reveal (premium, subtle) */
+.whyCard.reveal-ready{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms ease, transform 900ms cubic-bezier(.2,.9,.2,1);
+}
+
+.whyCard.reveal-ready.is-in{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pulse when the timeline "hands off" energy */
+.whyCard.is-pulsing{
+  animation: whyPulse 900ms cubic-bezier(.2,.9,.2,1) var(--pulse-delay, 0ms) both;
+}
+
+@keyframes whyPulse{
+  0%{
+    box-shadow:
+      0 26px 80px rgba(0,0,0,.08),
+      inset 0 0 0 1px rgba(0,0,0,.06);
+    transform: translateY(0);
+  }
+  35%{
+    box-shadow:
+      0 34px 110px rgba(0,0,0,.14),
+      0 0 0 10px rgba(255,43,85,.06),
+      0 0 0 18px rgba(90,92,255,.05),
+      inset 0 0 0 1px rgba(0,0,0,.07);
+    transform: translateY(-3px);
+  }
+  100%{
+    box-shadow:
+      0 26px 80px rgba(0,0,0,.08),
+      inset 0 0 0 1px rgba(0,0,0,.06);
+    transform: translateY(0);
+  }
+}
