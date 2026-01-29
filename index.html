@@ -662,7 +662,7 @@ observer.observe(lastStep);
   const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
 
   // Paste your anon key here (Netlify env vars do NOT appear in browser automatically)
-  const SUPABASE_ANON_KEY = "PASTE_YOUR_ANON_KEY_HERE";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0ZmZja3phcnFjbnN0bnNrZWd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NTQ4MjMsImV4cCI6MjA4NTIzMDgyM30.IWAPHYfVQNuhZoe4mAtDcSYjKYGR7qdwhb6AedBzWnA";
 
   if (!window.supabase) { console.warn("Supabase library not loaded"); return; }
   if (!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.includes("PASTE_")) { console.warn("Missing SUPABASE_ANON_KEY"); return; }
