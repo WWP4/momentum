@@ -1,84 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Momentum — Application Received</title>
+  <title>Momentum — Application Received</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./redirect.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./redirect.css">
 </head>
-
-<body>
 
 <body>
 
   <div class="wrap">
 
     <header class="top">
-      <div class="brand">
-        <div class="mark"></div>
-        <div class="word">MOMENTUM<span>.</span></div>
+      <!-- Brand (no square mark, no random colors) -->
+      <div class="brand" aria-label="Momentum">
+        <div class="word" style="font-weight:900; letter-spacing:.08em; font-size:13px;">
+          MOMENTUM<span style="color:inherit;">.</span>
+        </div>
       </div>
 
-      <div class="pill">
-        <span class="pillDot"></span>
-        APPLICATION RECEIVED
+      <!-- Status pill -->
+      <div class="pill" aria-label="Status">
+        <span class="pillDot" aria-hidden="true"></span>
+        Application received
       </div>
     </header>
 
-    <main class="card">
-      <div class="rail"></div>
+    <main class="card" role="main">
+      <div class="rail" aria-hidden="true"></div>
 
-      <section class="inner">
-        <h1>Thank you — your application is in.</h1>
+      <section class="inner" aria-label="Confirmation">
+
+        <h1>Application received.</h1>
 
         <p class="sub">
-          We’re reviewing your athlete’s training profile and mapping credits.
-          Most families hear back within one business day.
+          Our team is reviewing your athlete’s training profile and mapping it to transcript-ready credit.
+          You’ll receive a clear next step within one business day.
         </p>
 
-        <div class="videoWrap">
+        <div class="videoWrap" aria-label="Momentum overview video">
           <iframe
             src="https://www.youtube.com/embed/yDswWl8bqgc?rel=0"
             title="Momentum Overview"
-            frameborder="0"
             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
           </iframe>
         </div>
 
-        <div class="nextStrip">
+        <div class="nextStrip" aria-label="What happens next">
           <div class="nextLeft">
-            <div class="nextKicker">Next</div>
-            <div class="nextText">We confirm eligibility → then you choose enrollment.</div>
+            <div class="nextKicker">What happens next</div>
+            <div class="nextText">We confirm eligibility, then you choose enrollment.</div>
           </div>
-          <div class="tag">Deposit reserves your spot</div>
+          <div class="tag">Deposit holds your spot</div>
         </div>
 
-        <div class="grid">
-          <div class="panel">
-            <h3>Book a quick onboarding call</h3>
-            <p>15 minutes to review qualifications, credits, and next steps.</p>
-            <a class="btn primary" href="https://calendly.com/tricitycanvasproducts/30min" target="_blank" rel="noopener">
-              Book Meeting
+        <div class="grid" role="list" aria-label="Next actions">
+
+          <!-- Primary action -->
+          <div class="panel" role="listitem">
+            <h3>Reserve enrollment</h3>
+            <p>
+              If you’re ready to move forward, a deposit holds your athlete’s place while credits are finalized.
+              You’ll confirm details before full enrollment.
+            </p>
+
+            <a class="btn dark"
+               href="https://buy.stripe.com/fZu8wQe9Sgdg7x9e2saR201"
+               target="_blank"
+               rel="noopener">
+              Place deposit
             </a>
+
+            <div class="fineprint">
+              Deposits are optional. Eligibility and credits are confirmed before final enrollment.
+            </div>
           </div>
 
-          <div class="panel">
-            <h3>Secure your athlete’s spot</h3>
-            <p>Already confident? Place your deposit to reserve enrollment while credits are finalized.</p>
-            <a class="btn dark" href="https://buy.stripe.com/fZu8wQe9Sgdg7x9e2saR201" target="_blank" rel="noopener">
-              Place Deposit
+          <!-- Secondary action -->
+          <div class="panel" role="listitem">
+            <h3>Talk with an advisor</h3>
+            <p>
+              Prefer to review it first? Book a quick call to go over qualifications, credits, and timeline.
+              We’ll answer questions and outline next steps.
+            </p>
+
+            <a class="btn primary"
+               href="https://calendly.com/tricitycanvasproducts/30min"
+               target="_blank"
+               rel="noopener">
+              Book a 15-minute call
             </a>
-            <div class="fineprint">Deposit is optional. You’ll confirm credits before full enrollment.</div>
+
+            <div class="fineprint">
+              If you don’t see a time that works, email us and we’ll make it easy.
+            </div>
           </div>
+
         </div>
+
       </section>
 
-      <footer class="foot">
+      <footer class="foot" aria-label="Contact">
         <div class="footCol">
           <div class="footBrand">MOMENTUM<span>.</span></div>
           <div class="footSmall">
@@ -89,40 +115,13 @@
         </div>
 
         <div class="footThanks">
-          Thank you for trusting Momentum with your athlete’s future. We’ll follow up with clear next steps.
+          Thank you for trusting Momentum. You’ll receive a clear, specific next step within one business day.
         </div>
       </footer>
 
     </main>
 
   </div>
-
-</body>
-
-      </section>
-
-    </main>
-
-</section>
-
-<footer class="foot">
-
-<div>
-<strong>MOMENTUM</strong><br>
-hq@momentum-athlete.com<br>
-3240 W Chain of Rocks Rd<br>
-St. Louis, MO
-</div>
-
-<div class="thanks">
-Thank you for trusting Momentum with your athlete’s future.
-</div>
-
-</footer>
-
-</main>
-
-</div>
 
 </body>
 </html>
