@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
    Requires supabase-js loaded in HTML BEFORE app.js
    ========================= */
 (function initParentQuiz(){
-  const form = document.getElementById("momentumParentQuiz");
+ const form = document.getElementById("momentumPartnerQuiz");
   if (!form) return;
 
   const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
