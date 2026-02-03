@@ -375,17 +375,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Optional: if you add a Netlify Function later, keep this.
       // It will not break if the function doesn't exist (we swallow 404).
-      try {
-        await fetch("/.netlify/functions/momentum-club-quiz.", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: payload.email,
-            contact_name: payload.contact_name,
-            facility_name: payload.facility_name,
-          }),
-        });
-      } catch (_) {}
+    try {
+  const res = await fetch("/.netlify/functions/momentum-club-quiz", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: payload.email,
+      contact_name: payload.contact_name,
+      facility_name: payload.facility_name,
+    }),
+  });
+
+  if (!res.ok) {
+    const txt = await res.text();
+    console.error("Email function failed:", txt);
+    alert("Email failed to send — check console.");
+  } else {
+    console.log("Email sent successfully");
+  }
+
+} catch (err) {
+  console.error("Email fetch error:", err);
+  alert("Network error sending email");
+}
+
 
       // success redirect
       window.location.href = "/redirect.html";
