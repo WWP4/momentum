@@ -69,152 +69,156 @@ exports.handler = async (event) => {
       };
     }
 
-    const subject = "Momentum — Partner application received";
+  const subject = "Momentum — Partner application received";
 
-    const BRAND_BLUE = "#0B2D6B";
-    const BRAND_RED = "#C1121F";
+// Use your real hosted logo URL:
+const LOGO_URL =
+  process.env.MOMENTUM_LOGO_URL ||
+  "https://YOUR-DOMAIN.com/path/to/momentum-logo.png"; // replace
 
-    const html = `
-      <div style="margin:0;padding:0;background:#f4f7fb;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f7fb;">
-          <tr>
-            <td align="center" style="padding:28px 14px;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="640" style="max-width:640px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;border:1px solid #e6edf7;">
+const BRAND_RED = "#E11D2E";
+const BLACK = "#0B0B0D";
+const MUTED = "#6B7280";
+const BORDER = "#E5E7EB";
+
+const html = `
+  <div style="margin:0;padding:0;background:#ffffff;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;">
+      <tr>
+        <td align="center" style="padding:32px 14px;">
+          
+          <table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width:100%;border:1px solid ${BORDER};border-radius:16px;overflow:hidden;">
+            
+            <!-- Header -->
+            <tr>
+              <td style="background:${BLACK};padding:18px 22px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td align="left" style="vertical-align:middle;">
+                      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td style="vertical-align:middle;">
+                            <img src="${LOGO_URL}" width="34" height="34" alt="Momentum" style="display:block;border-radius:8px;">
+                          </td>
+                          <td style="padding-left:12px;vertical-align:middle;">
+                            <div style="font-family:Montserrat, Arial, sans-serif;font-size:15px;font-weight:800;letter-spacing:.2px;color:#ffffff;line-height:1.2;">
+                              Momentum Athlete
+                            </div>
+                            <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;color:#D1D5DB;line-height:1.2;margin-top:3px;">
+                              Club Partner Application
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+
+                    <td align="right" style="vertical-align:middle;">
+                      <span style="display:inline-block;font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:800;letter-spacing:.2px;color:#ffffff;background:${BRAND_RED};padding:8px 12px;border-radius:999px;">
+                        Received
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Body -->
+            <tr>
+              <td style="padding:24px 22px 18px 22px;">
                 
-                <tr>
-                  <td style="background:${BRAND_BLUE};padding:18px 22px;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td align="left" style="font-family:Montserrat, Arial, sans-serif;color:#ffffff;">
-                          <div style="font-size:18px;font-weight:800;letter-spacing:.2px;line-height:1.2;">
-                            Momentum Athlete
-                          </div>
-                          <div style="font-size:13px;opacity:.92;line-height:1.3;margin-top:3px;">
-                            Club Partner Application
-                          </div>
-                        </td>
-                        <td align="right" style="font-family:Montserrat, Arial, sans-serif;color:#ffffff;">
-                          <div style="display:inline-block;background:${BRAND_RED};padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.2px;">
-                            Received
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:22px;font-weight:900;letter-spacing:-.2px;color:${BLACK};line-height:1.25;margin:0 0 10px 0;">
+                  Your partner application is in.
+                </div>
 
-                <tr>
-                  <td style="padding:22px 22px 10px 22px;font-family:Montserrat, Arial, sans-serif;color:#0b1220;">
-                    <div style="font-size:22px;font-weight:800;line-height:1.25;margin:0 0 10px 0;">
-                      Your partner application is in.
-                    </div>
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:14px;line-height:1.7;color:${BLACK};margin:0 0 16px 0;">
+                  ${contactName ? `Hi ${escapeHtml(contactName)},` : "Hi,"}
+                  we’ve received your Momentum partner application${
+                    clubName
+                      ? ` for <strong style="color:${BLACK};">${escapeHtml(clubName)}</strong>`
+                      : ""
+                  }.
+                </div>
 
-                    <div style="font-size:15px;line-height:1.6;margin:0 0 14px 0;color:#1b2a44;">
-                      ${contactName ? `Hi ${escapeHtml(contactName)},` : "Hi,"}
-                      we’ve received your Momentum partner application${
-                        clubName
-                          ? ` for <strong style="color:${BRAND_BLUE};">${escapeHtml(
-                              clubName
-                            )}</strong>`
-                          : ""
-                      }.
-                    </div>
+                <!-- Minimal divider -->
+                <div style="height:1px;background:${BORDER};margin:16px 0;"></div>
 
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7faff;border:1px solid #e3ecfb;border-radius:12px;margin:0 0 16px 0;">
-                      <tr>
-                        <td style="padding:14px 14px;">
-                          <div style="font-size:13px;font-weight:800;letter-spacing:.2px;color:${BRAND_BLUE};margin:0 0 8px 0;">
-                            SUBMISSION SUMMARY
-                          </div>
+                <!-- Summary (clean, no big “card”) -->
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:900;letter-spacing:.18em;color:${MUTED};margin:0 0 10px 0;">
+                  SUMMARY
+                </div>
 
-                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;color:#13233f;">
-                            <tr>
-                              <td style="padding:6px 0;color:#5a6b86;width:160px;">Facility</td>
-                              <td style="padding:6px 0;font-weight:700;">${
-                                clubName ? escapeHtml(clubName) : "—"
-                              }</td>
-                            </tr>
-                            <tr>
-                              <td style="padding:6px 0;color:#5a6b86;">Primary contact</td>
-                              <td style="padding:6px 0;font-weight:700;">${
-                                contactName ? escapeHtml(contactName) : "—"
-                              }</td>
-                            </tr>
-                            <tr>
-                              <td style="padding:6px 0;color:#5a6b86;">Submitted to</td>
-                              <td style="padding:6px 0;font-weight:700;">Momentum Partner Team</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-family:Montserrat, Arial, sans-serif;font-size:14px;color:${BLACK};">
+                  <tr>
+                    <td style="padding:8px 0;color:${MUTED};width:160px;">Facility</td>
+                    <td style="padding:8px 0;font-weight:800;">${clubName ? escapeHtml(clubName) : "—"}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:8px 0;color:${MUTED};">Primary contact</td>
+                    <td style="padding:8px 0;font-weight:800;">${contactName ? escapeHtml(contactName) : "—"}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:8px 0;color:${MUTED};">Submitted to</td>
+                    <td style="padding:8px 0;font-weight:800;">Momentum Partner Team</td>
+                  </tr>
+                </table>
 
-                    <div style="font-size:13px;font-weight:900;letter-spacing:.2px;color:${BRAND_BLUE};margin:0 0 8px 0;">
-                      WHAT HAPPENS NEXT
-                    </div>
+                <!-- Next steps (tight + premium) -->
+                <div style="height:1px;background:${BORDER};margin:16px 0;"></div>
 
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 16px 0;">
-                      <tr>
-                        <td style="padding:10px 12px;border:1px solid #e8effa;border-radius:12px;">
-                          <div style="font-size:14px;line-height:1.55;color:#13233f;">
-                            <div style="font-weight:800;margin:0 0 4px 0;">Step 1 — Quick review</div>
-                            <div style="color:#4d5f7b;">We review your facility details and confirm the best partner setup for your athletes.</div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr><td style="height:10px;"></td></tr>
-                      <tr>
-                        <td style="padding:10px 12px;border:1px solid #e8effa;border-radius:12px;">
-                          <div style="font-size:14px;line-height:1.55;color:#13233f;">
-                            <div style="font-weight:800;margin:0 0 4px 0;">Step 2 — Partner rollout plan</div>
-                            <div style="color:#4d5f7b;">You’ll get a clear rollout plan: how credit works, what you communicate to parents, and how onboarding runs.</div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr><td style="height:10px;"></td></tr>
-                      <tr>
-                        <td style="padding:10px 12px;border:1px solid #e8effa;border-radius:12px;">
-                          <div style="font-size:14px;line-height:1.55;color:#13233f;">
-                            <div style="font-weight:800;margin:0 0 4px 0;">Step 3 — Short onboarding call</div>
-                            <div style="color:#4d5f7b;">If you want, we’ll walk through everything in 15–30 minutes and answer questions.</div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:900;letter-spacing:.18em;color:${MUTED};margin:0 0 10px 0;">
+                  WHAT HAPPENS NEXT
+                </div>
 
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 14px 0;">
-                      <tr>
-                        <td align="left">
-                          <a href="https://calendly.com/tricitycanvasproducts/30min"
-                            style="display:inline-block;background:${BRAND_RED};color:#ffffff;text-decoration:none;font-family:Montserrat, Arial, sans-serif;font-weight:800;font-size:14px;letter-spacing:.2px;padding:12px 16px;border-radius:12px;">
-                            Schedule the partner call
-                          </a>
-                        </td>
-                      </tr>
-                    </table>
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:14px;line-height:1.8;color:${BLACK};margin:0 0 14px 0;">
+                  <strong>1.</strong> Quick review of your facility and setup<br>
+                  <strong>2.</strong> Partner rollout plan (credits, onboarding, parent messaging)<br>
+                  <strong>3.</strong> Optional 15–30 minute onboarding call
+                </div>
 
-                    <div style="font-size:13px;line-height:1.6;color:#51637f;margin:0 0 8px 0;">
-                      Thanks — we’ll keep this simple and fast.
-                    </div>
-                  </td>
-                </tr>
+                <!-- CTA button (one bold red element) -->
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:6px 0 8px 0;">
+                  <tr>
+                    <td align="left">
+                      <a href="https://calendly.com/tricitycanvasproducts/30min"
+                        style="display:inline-block;background:${BRAND_RED};color:#ffffff;text-decoration:none;font-family:Montserrat, Arial, sans-serif;font-weight:900;font-size:14px;letter-spacing:.2px;padding:12px 16px;border-radius:12px;">
+                        Schedule the partner call
+                      </a>
+                    </td>
+                  </tr>
+                </table>
 
-                <tr>
-                  <td style="padding:16px 22px;background:#f7faff;border-top:1px solid #e6edf7;font-family:Montserrat, Arial, sans-serif;color:#556b8b;">
-                    <div style="font-size:12px;line-height:1.6;">
-                      <strong style="color:${BRAND_BLUE};">Momentum Athlete</strong><br>
-                      3240 W Chain of Rocks Rd • St. Louis, MO<br>
-                      <a href="mailto:hq@momentum-athlete.com" style="color:${BRAND_BLUE};font-weight:800;text-decoration:none;">hq@momentum-athlete.com</a>
-                    </div>
-                  </td>
-                </tr>
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;line-height:1.7;color:${MUTED};margin:0;">
+                  If you’d rather reply by email, just hit reply — we’ll respond quickly.
+                </div>
+              </td>
+            </tr>
 
-              </table>
-            </td>
-          </tr>
-        </table>
-      </div>
-    `;
+            <!-- Signature / Footer -->
+            <tr>
+              <td style="padding:18px 22px;background:#FAFAFA;border-top:1px solid ${BORDER};">
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:13px;font-weight:900;color:${BLACK};margin:0 0 4px 0;">
+                  Momentum Athlete
+                </div>
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;line-height:1.6;color:${MUTED};margin:0;">
+                  Momentum Partner Team<br>
+                  <a href="mailto:hq@momentum-athlete.com" style="color:${BLACK};font-weight:800;text-decoration:none;">hq@momentum-athlete.com</a>
+                </div>
+              </td>
+            </tr>
+
+          </table>
+
+          <!-- Tiny plain footer -->
+          <div style="font-family:Montserrat, Arial, sans-serif;font-size:11px;color:${MUTED};margin-top:12px;">
+            Sent by Momentum Athlete. If this wasn’t you, you can ignore this message.
+          </div>
+
+        </td>
+      </tr>
+    </table>
+  </div>
+`;
+
 
     const params = new URLSearchParams();
     params.append("from", `Momentum <${FROM_EMAIL}>`);
