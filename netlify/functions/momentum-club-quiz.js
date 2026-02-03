@@ -1,18 +1,58 @@
 // netlify/functions/momentum-club-quiz.js
+
 exports.handler = async (event) => {
+  // CORS (safe to keep even if same-origin)
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
+
   try {
-    if (event.httpMethod !== "POST") {
-      return { statusCode: 405, body: "Method Not Allowed" };
+    if (event.httpMethod === "OPTIONS") {
+      return { statusCode: 200, headers, body: "ok" };
     }
 
-    const data = JSON.parse(event.body || "{}");
+    if (event.httpMethod !== "POST") {
+      return { statusCode: 405, headers, body: "Method Not Allowed" };
+    }
 
+    // Parse body safely
+    let data = {};
+    try {
+      data = JSON.parse(event.body || "{}");
+    } catch {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: "Invalid JSON body" }),
+      };
+    }
+
+    // Accept BOTH naming schemes:
+    // New frontend sends: contact_name, facility_name
+    // Old expected: primary_contact_name, club_name
     const toEmail = (data.email || "").trim();
-    const contactName = (data.primary_contact_name || "").trim();
-    const clubName = (data.club_name || "").trim();
+
+    const contactName =
+      (data.contact_name ||
+        data.primary_contact_name ||
+        data.primaryContactName ||
+        "").trim();
+
+    const clubName =
+      (data.facility_name ||
+        data.club_name ||
+        data.clubName ||
+        data.facilityName ||
+        "").trim();
 
     if (!toEmail) {
-      return { statusCode: 400, body: JSON.stringify({ error: "Missing email" }) };
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: "Missing email" }),
+      };
     }
 
     const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
@@ -22,7 +62,10 @@ exports.handler = async (event) => {
     if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: "Missing MAILGUN_API_KEY or MAILGUN_DOMAIN env vars" }),
+        headers,
+        body: JSON.stringify({
+          error: "Missing MAILGUN_API_KEY or MAILGUN_DOMAIN env vars",
+        }),
       };
     }
 
@@ -68,7 +111,13 @@ exports.handler = async (event) => {
 
                     <div style="font-size:15px;line-height:1.6;margin:0 0 14px 0;color:#1b2a44;">
                       ${contactName ? `Hi ${escapeHtml(contactName)},` : "Hi,"}
-                      we’ve received your Momentum partner application${clubName ? ` for <strong style="color:${BRAND_BLUE};">${escapeHtml(clubName)}</strong>` : ""}.
+                      we’ve received your Momentum partner application${
+                        clubName
+                          ? ` for <strong style="color:${BRAND_BLUE};">${escapeHtml(
+                              clubName
+                            )}</strong>`
+                          : ""
+                      }.
                     </div>
 
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7faff;border:1px solid #e3ecfb;border-radius:12px;margin:0 0 16px 0;">
@@ -81,11 +130,15 @@ exports.handler = async (event) => {
                           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;color:#13233f;">
                             <tr>
                               <td style="padding:6px 0;color:#5a6b86;width:160px;">Facility</td>
-                              <td style="padding:6px 0;font-weight:700;">${clubName ? escapeHtml(clubName) : "—"}</td>
+                              <td style="padding:6px 0;font-weight:700;">${
+                                clubName ? escapeHtml(clubName) : "—"
+                              }</td>
                             </tr>
                             <tr>
                               <td style="padding:6px 0;color:#5a6b86;">Primary contact</td>
-                              <td style="padding:6px 0;font-weight:700;">${contactName ? escapeHtml(contactName) : "—"}</td>
+                              <td style="padding:6px 0;font-weight:700;">${
+                                contactName ? escapeHtml(contactName) : "—"
+                              }</td>
                             </tr>
                             <tr>
                               <td style="padding:6px 0;color:#5a6b86;">Submitted to</td>
@@ -140,24 +193,6 @@ exports.handler = async (event) => {
                       </tr>
                     </table>
 
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fff7f7;border:1px solid #ffd6da;border-radius:12px;margin:0 0 14px 0;">
-                      <tr>
-                        <td style="padding:12px 12px;">
-                          <div style="font-size:13px;font-weight:900;letter-spacing:.2px;color:${BRAND_RED};margin:0 0 6px 0;">
-                            NEED HELP OR DIDN’T HEAR BACK?
-                          </div>
-                          <div style="font-size:14px;line-height:1.6;color:#2a2a2a;">
-                            <div style="margin:0 0 6px 0;">1) Check spam/junk for “Momentum — Partner application received.”</div>
-                            <div style="margin:0 0 6px 0;">
-                              2) If you don’t hear from us within one business day, email:
-                              <a href="mailto:hq@momentum-athlete.com" style="color:${BRAND_BLUE};font-weight:800;text-decoration:none;">hq@momentum-athlete.com</a>
-                            </div>
-                            <div style="margin:0;">3) Reply to this email with the best time to call.</div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-
                     <div style="font-size:13px;line-height:1.6;color:#51637f;margin:0 0 8px 0;">
                       Thanks — we’ll keep this simple and fast.
                     </div>
@@ -199,14 +234,27 @@ exports.handler = async (event) => {
       body: params.toString(),
     });
 
-    const text = await res.text();
+    const mgText = await res.text();
+
     if (!res.ok) {
-      return { statusCode: 502, body: JSON.stringify({ error: "Mailgun error", details: text }) };
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({
+          error: "Mailgun error",
+          status: res.status,
+          details: mgText,
+        }),
+      };
     }
 
-    return { statusCode: 200, body: JSON.stringify({ ok: true }) };
+    return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: err?.message || "Server error" }) };
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: err?.message || "Server error" }),
+    };
   }
 };
 
