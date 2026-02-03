@@ -69,12 +69,7 @@ exports.handler = async (event) => {
       };
     }
 
-  const subject = "Momentum — Partner application received";
-
-// Use your real hosted logo URL:
-const LOGO_URL =
-  process.env.MOMENTUM_LOGO_URL ||
-  "https://YOUR-DOMAIN.com/path/to/momentum-logo.png"; // replace
+const subject = "Momentum — Partner application received";
 
 const BRAND_RED = "#E11D2E";
 const BLACK = "#0B0B0D";
@@ -87,7 +82,8 @@ const html = `
       <tr>
         <td align="center" style="padding:32px 14px;">
           
-          <table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width:100%;border:1px solid ${BORDER};border-radius:16px;overflow:hidden;">
+          <table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0"
+            style="max-width:640px;width:100%;border:1px solid ${BORDER};border-radius:16px;overflow:hidden;">
             
             <!-- Header -->
             <tr>
@@ -95,25 +91,16 @@ const html = `
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                   <tr>
                     <td align="left" style="vertical-align:middle;">
-                      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                        <tr>
-                          <td style="vertical-align:middle;">
-                            <img src="${LOGO_URL}" width="34" height="34" alt="Momentum" style="display:block;border-radius:8px;">
-                          </td>
-                          <td style="padding-left:12px;vertical-align:middle;">
-                            <div style="font-family:Montserrat, Arial, sans-serif;font-size:15px;font-weight:800;letter-spacing:.2px;color:#ffffff;line-height:1.2;">
-                              Momentum Athlete
-                            </div>
-                            <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;color:#D1D5DB;line-height:1.2;margin-top:3px;">
-                              Club Partner Application
-                            </div>
-                          </td>
-                        </tr>
-                      </table>
+                      <div style="font-family:Montserrat, Arial, sans-serif;font-size:16px;font-weight:900;letter-spacing:.6px;color:#ffffff;line-height:1;">
+                        MOMENTUM<span style="color:${BRAND_RED};">.</span>
+                      </div>
+                      <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;color:#D1D5DB;line-height:1.3;margin-top:6px;">
+                        Club Partner Application
+                      </div>
                     </td>
 
                     <td align="right" style="vertical-align:middle;">
-                      <span style="display:inline-block;font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:800;letter-spacing:.2px;color:#ffffff;background:${BRAND_RED};padding:8px 12px;border-radius:999px;">
+                      <span style="display:inline-block;font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:900;letter-spacing:.2px;color:#ffffff;background:${BRAND_RED};padding:8px 12px;border-radius:999px;">
                         Received
                       </span>
                     </td>
@@ -139,15 +126,16 @@ const html = `
                   }.
                 </div>
 
-                <!-- Minimal divider -->
+                <!-- Divider -->
                 <div style="height:1px;background:${BORDER};margin:16px 0;"></div>
 
-                <!-- Summary (clean, no big “card”) -->
+                <!-- Summary -->
                 <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:900;letter-spacing:.18em;color:${MUTED};margin:0 0 10px 0;">
                   SUMMARY
                 </div>
 
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-family:Montserrat, Arial, sans-serif;font-size:14px;color:${BLACK};">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                  style="font-family:Montserrat, Arial, sans-serif;font-size:14px;color:${BLACK};">
                   <tr>
                     <td style="padding:8px 0;color:${MUTED};width:160px;">Facility</td>
                     <td style="padding:8px 0;font-weight:800;">${clubName ? escapeHtml(clubName) : "—"}</td>
@@ -162,20 +150,21 @@ const html = `
                   </tr>
                 </table>
 
-                <!-- Next steps (tight + premium) -->
+                <!-- Divider -->
                 <div style="height:1px;background:${BORDER};margin:16px 0;"></div>
 
+                <!-- Next steps -->
                 <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:900;letter-spacing:.18em;color:${MUTED};margin:0 0 10px 0;">
                   WHAT HAPPENS NEXT
                 </div>
 
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:14px;line-height:1.8;color:${BLACK};margin:0 0 14px 0;">
+                <div style="font-family:Montserrat, Arial, sans-serif;font-size:14px;line-height:1.9;color:${BLACK};margin:0 0 14px 0;">
                   <strong>1.</strong> Quick review of your facility and setup<br>
                   <strong>2.</strong> Partner rollout plan (credits, onboarding, parent messaging)<br>
                   <strong>3.</strong> Optional 15–30 minute onboarding call
                 </div>
 
-                <!-- CTA button (one bold red element) -->
+                <!-- CTA -->
                 <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:6px 0 8px 0;">
                   <tr>
                     <td align="left">
@@ -188,12 +177,12 @@ const html = `
                 </table>
 
                 <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;line-height:1.7;color:${MUTED};margin:0;">
-                  If you’d rather reply by email, just hit reply — we’ll respond quickly.
+                  Prefer email? Reply to this message and we’ll respond quickly.
                 </div>
               </td>
             </tr>
 
-            <!-- Signature / Footer -->
+            <!-- Footer -->
             <tr>
               <td style="padding:18px 22px;background:#FAFAFA;border-top:1px solid ${BORDER};">
                 <div style="font-family:Montserrat, Arial, sans-serif;font-size:13px;font-weight:900;color:${BLACK};margin:0 0 4px 0;">
@@ -208,9 +197,8 @@ const html = `
 
           </table>
 
-          <!-- Tiny plain footer -->
           <div style="font-family:Montserrat, Arial, sans-serif;font-size:11px;color:${MUTED};margin-top:12px;">
-            Sent by Momentum Athlete. If this wasn’t you, you can ignore this message.
+            Sent by MOMENTUM<span style="color:${BRAND_RED};">.</span> If this wasn’t you, you can ignore this message.
           </div>
 
         </td>
@@ -218,6 +206,7 @@ const html = `
     </table>
   </div>
 `;
+
 
 
     const params = new URLSearchParams();
