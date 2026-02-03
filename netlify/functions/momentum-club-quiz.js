@@ -69,143 +69,98 @@ exports.handler = async (event) => {
       };
     }
 
-const subject = "Momentum — Partner application received";
+    const subject = "MOMENTUM. — Application received";
 
-const BRAND_RED = "#E11D2E";
+const RED = "#E11D2E";
 const BLACK = "#0B0B0D";
+const BORDER = "#EAEAEA";
 const MUTED = "#6B7280";
-const BORDER = "#E5E7EB";
 
 const html = `
-  <div style="margin:0;padding:0;background:#ffffff;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;">
-      <tr>
-        <td align="center" style="padding:32px 14px;">
+<div style="margin:0;padding:0;background:#ffffff;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td align="center" style="padding:38px 14px;">
+        <table role="presentation" width="620" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;width:100%;">
           
-          <table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0"
-            style="max-width:640px;width:100%;border:1px solid ${BORDER};border-radius:16px;overflow:hidden;">
-            
-            <!-- Header -->
-            <tr>
-              <td style="background:${BLACK};padding:18px 22px;">
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    <td align="left" style="vertical-align:middle;">
-                      <div style="font-family:Montserrat, Arial, sans-serif;font-size:16px;font-weight:900;letter-spacing:.6px;color:#ffffff;line-height:1;">
-                        MOMENTUM<span style="color:${BRAND_RED};">.</span>
-                      </div>
-                      <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;color:#D1D5DB;line-height:1.3;margin-top:6px;">
-                        Club Partner Application
-                      </div>
-                    </td>
+          <!-- Wordmark -->
+          <tr>
+            <td style="padding:0 0 18px 0;">
+              <div style="font-family:Montserrat,Arial,sans-serif;font-weight:900;letter-spacing:.12em;color:${BLACK};font-size:15px;">
+                MOMENTUM<span style="color:${RED};">.</span>
+              </div>
+              <div style="height:2px;width:34px;background:${RED};margin-top:10px;"></div>
+            </td>
+          </tr>
 
-                    <td align="right" style="vertical-align:middle;">
-                      <span style="display:inline-block;font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:900;letter-spacing:.2px;color:#ffffff;background:${BRAND_RED};padding:8px 12px;border-radius:999px;">
-                        Received
-                      </span>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
+          <!-- Title -->
+          <tr>
+            <td style="padding:0 0 18px 0;">
+              <div style="font-family:Montserrat,Arial,sans-serif;font-weight:900;color:${BLACK};font-size:26px;line-height:1.2;">
+                Application received
+              </div>
+              <div style="font-family:Montserrat,Arial,sans-serif;color:${MUTED};font-size:14px;line-height:1.7;margin-top:8px;">
+                ${contactName ? `Hi ${escapeHtml(contactName)},` : "Hi,"}
+                we’ve received your club partner application${clubName ? ` for <strong style="color:${BLACK};">${escapeHtml(clubName)}</strong>` : ""}.
+              </div>
+            </td>
+          </tr>
 
-            <!-- Body -->
-            <tr>
-              <td style="padding:24px 22px 18px 22px;">
-                
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:22px;font-weight:900;letter-spacing:-.2px;color:${BLACK};line-height:1.25;margin:0 0 10px 0;">
-                  Your partner application is in.
-                </div>
+          <!-- One clean summary table -->
+          <tr>
+            <td style="border:1px solid ${BORDER};border-radius:14px;padding:16px 16px 10px 16px;">
+              <div style="font-family:Montserrat,Arial,sans-serif;font-size:12px;font-weight:900;letter-spacing:.18em;color:${MUTED};margin:0 0 10px 0;">
+                SUMMARY
+              </div>
 
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:14px;line-height:1.7;color:${BLACK};margin:0 0 16px 0;">
-                  ${contactName ? `Hi ${escapeHtml(contactName)},` : "Hi,"}
-                  we’ve received your Momentum partner application${
-                    clubName
-                      ? ` for <strong style="color:${BLACK};">${escapeHtml(clubName)}</strong>`
-                      : ""
-                  }.
-                </div>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                style="font-family:Montserrat,Arial,sans-serif;font-size:14px;color:${BLACK};">
+                <tr>
+                  <td style="padding:10px 0;color:${MUTED};width:170px;">Facility</td>
+                  <td style="padding:10px 0;font-weight:900;">${clubName ? escapeHtml(clubName) : "—"}</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;color:${MUTED};">Primary contact</td>
+                  <td style="padding:10px 0;font-weight:900;">${contactName ? escapeHtml(contactName) : "—"}</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;color:${MUTED};">Next step</td>
+                  <td style="padding:10px 0;font-weight:900;">Review + rollout plan</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-                <!-- Divider -->
-                <div style="height:1px;background:${BORDER};margin:16px 0;"></div>
+          <!-- CTA row -->
+          <tr>
+            <td style="padding:18px 0 0 0;">
+              <a href="https://calendly.com/tricitycanvasproducts/30min"
+                style="display:inline-block;font-family:Montserrat,Arial,sans-serif;font-weight:900;font-size:14px;letter-spacing:.02em;text-decoration:none;background:${BLACK};color:#ffffff;padding:12px 16px;border-radius:12px;">
+                Book onboarding call
+              </a>
+              <span style="font-family:Montserrat,Arial,sans-serif;color:${MUTED};font-size:12px;margin-left:10px;">
+                or reply to this email
+              </span>
+            </td>
+          </tr>
 
-                <!-- Summary -->
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:900;letter-spacing:.18em;color:${MUTED};margin:0 0 10px 0;">
-                  SUMMARY
-                </div>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:24px 0 0 0;">
+              <div style="font-family:Montserrat,Arial,sans-serif;color:${MUTED};font-size:12px;line-height:1.7;">
+                Momentum Partner Team<br>
+                <a href="mailto:hq@momentum-athlete.com" style="color:${BLACK};font-weight:900;text-decoration:none;">hq@momentum-athlete.com</a>
+              </div>
+            </td>
+          </tr>
 
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-                  style="font-family:Montserrat, Arial, sans-serif;font-size:14px;color:${BLACK};">
-                  <tr>
-                    <td style="padding:8px 0;color:${MUTED};width:160px;">Facility</td>
-                    <td style="padding:8px 0;font-weight:800;">${clubName ? escapeHtml(clubName) : "—"}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:8px 0;color:${MUTED};">Primary contact</td>
-                    <td style="padding:8px 0;font-weight:800;">${contactName ? escapeHtml(contactName) : "—"}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:8px 0;color:${MUTED};">Submitted to</td>
-                    <td style="padding:8px 0;font-weight:800;">Momentum Partner Team</td>
-                  </tr>
-                </table>
-
-                <!-- Divider -->
-                <div style="height:1px;background:${BORDER};margin:16px 0;"></div>
-
-                <!-- Next steps -->
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;font-weight:900;letter-spacing:.18em;color:${MUTED};margin:0 0 10px 0;">
-                  WHAT HAPPENS NEXT
-                </div>
-
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:14px;line-height:1.9;color:${BLACK};margin:0 0 14px 0;">
-                  <strong>1.</strong> Quick review of your facility and setup<br>
-                  <strong>2.</strong> Partner rollout plan (credits, onboarding, parent messaging)<br>
-                  <strong>3.</strong> Optional 15–30 minute onboarding call
-                </div>
-
-                <!-- CTA -->
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:6px 0 8px 0;">
-                  <tr>
-                    <td align="left">
-                      <a href="https://calendly.com/tricitycanvasproducts/30min"
-                        style="display:inline-block;background:${BRAND_RED};color:#ffffff;text-decoration:none;font-family:Montserrat, Arial, sans-serif;font-weight:900;font-size:14px;letter-spacing:.2px;padding:12px 16px;border-radius:12px;">
-                        Schedule the partner call
-                      </a>
-                    </td>
-                  </tr>
-                </table>
-
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;line-height:1.7;color:${MUTED};margin:0;">
-                  Prefer email? Reply to this message and we’ll respond quickly.
-                </div>
-              </td>
-            </tr>
-
-            <!-- Footer -->
-            <tr>
-              <td style="padding:18px 22px;background:#FAFAFA;border-top:1px solid ${BORDER};">
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:13px;font-weight:900;color:${BLACK};margin:0 0 4px 0;">
-                  Momentum Athlete
-                </div>
-                <div style="font-family:Montserrat, Arial, sans-serif;font-size:12px;line-height:1.6;color:${MUTED};margin:0;">
-                  Momentum Partner Team<br>
-                  <a href="mailto:hq@momentum-athlete.com" style="color:${BLACK};font-weight:800;text-decoration:none;">hq@momentum-athlete.com</a>
-                </div>
-              </td>
-            </tr>
-
-          </table>
-
-          <div style="font-family:Montserrat, Arial, sans-serif;font-size:11px;color:${MUTED};margin-top:12px;">
-            Sent by MOMENTUM<span style="color:${BRAND_RED};">.</span> If this wasn’t you, you can ignore this message.
-          </div>
-
-        </td>
-      </tr>
-    </table>
-  </div>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
 `;
+
 
 
 
