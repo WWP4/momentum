@@ -376,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Optional: if you add a Netlify Function later, keep this.
       // It will not break if the function doesn't exist (we swallow 404).
       try {
-        await fetch("/.netlify/functions/momentum-club-quiz", {
+        await fetch("/.netlify/functions/momentum-club-quiz.js", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
