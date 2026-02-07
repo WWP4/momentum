@@ -2,136 +2,158 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Momentum Logo Animation Preview</title>
+  <title>Momentum Logo Animation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
     /* ===============================
-       PAGE SETUP (neutral preview)
+       PAGE BASE (PREVIEW ONLY)
     =============================== */
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: #f5f6f8;
-      display: grid;
-      place-items: center;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    html, body{
+      height:100%;
+      margin:0;
+      display:grid;
+      place-items:center;
+      background:#f4f5f7;
     }
 
-    .previewCard {
-      background: #ffffff;
-      padding: 48px 64px;
-      border-radius: 18px;
-      box-shadow: 0 30px 90px rgba(0,0,0,.12);
+    .card{
+      background:#ffffff;
+      padding:48px 64px;
+      border-radius:20px;
+      box-shadow:0 40px 120px rgba(0,0,0,.14);
     }
 
     /* ===============================
-       LOGO ANIMATION
-       (luxury / Tesla-style)
+       LOGO ANIMATION (LUXURY)
     =============================== */
 
     .logoAnim{
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      overflow: hidden;
-      line-height: 0;
+      position:relative;
+      display:inline-block;
+      overflow:hidden;
     }
 
     .logoSvg{
-      height: 64px;     /* adjust size here */
-      width: auto;
-      display: block;
+      height:64px;
+      width:auto;
+      display:block;
 
-      opacity: 0;
-      transform: translateY(8px);
-      filter: blur(8px);
-      animation: logoIn 900ms cubic-bezier(.2,.7,.2,1) forwards;
-      animation-delay: 180ms;
+      opacity:0;
+      transform:translateY(8px);
+      filter:blur(10px);
+      animation:logoIn 820ms cubic-bezier(.2,.7,.2,1) forwards;
+      animation-delay:180ms;
     }
 
-    /* garage-style wipe */
+    /* garage wipe */
     .logoAnim::before{
       content:"";
       position:absolute;
-      inset:-4px;
-      background: #ffffff;
-      transform: translateX(0);
-      animation: logoWipe 900ms cubic-bezier(.2,.7,.2,1) forwards;
-      animation-delay: 180ms;
-      z-index: 2;
+      inset:-6px;
+      background:#ffffff;
+      transform:translateX(0);
+      animation:logoWipe 820ms cubic-bezier(.2,.7,.2,1) forwards;
+      animation-delay:180ms;
+      z-index:2;
     }
 
-    /* subtle sheen sweep */
+    /* subtle sheen */
     .logoAnim::after{
       content:"";
       position:absolute;
       top:-30%;
       left:-40%;
-      width: 40%;
-      height: 160%;
-      background: linear-gradient(
+      width:38%;
+      height:160%;
+      background:linear-gradient(
         90deg,
         transparent,
-        rgba(255,255,255,.75),
+        rgba(255,255,255,.7),
         transparent
       );
-      transform: skewX(-18deg) translateX(-130%);
-      animation: logoSheen 1300ms cubic-bezier(.2,.7,.2,1) forwards;
-      animation-delay: 520ms;
-      z-index: 3;
-      mix-blend-mode: soft-light;
-      opacity: .6;
+      transform:skewX(-18deg) translateX(-140%);
+      animation:logoSheen 1200ms cubic-bezier(.2,.7,.2,1) forwards;
+      animation-delay:520ms;
+      mix-blend-mode:soft-light;
+      opacity:.6;
       pointer-events:none;
+      z-index:3;
     }
 
     @keyframes logoIn{
       to{
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
+        opacity:1;
+        transform:none;
+        filter:none;
       }
     }
 
     @keyframes logoWipe{
-      to{ transform: translateX(110%); }
+      to{ transform:translateX(115%); }
     }
 
     @keyframes logoSheen{
-      to{ transform: skewX(-18deg) translateX(420%); opacity: 0; }
+      to{
+        transform:skewX(-18deg) translateX(420%);
+        opacity:0;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
       .logoSvg{
-        animation: none;
-        opacity: 1;
-        transform: none;
-        filter: none;
+        animation:none;
+        opacity:1;
+        transform:none;
+        filter:none;
       }
       .logoAnim::before,
       .logoAnim::after{
-        display: none;
+        display:none;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="previewCard">
-    <div class="logoAnim" aria-label="Momentum animated logo">
-      
-      <!-- =========================
-           PASTE YOUR SVG MARKUP HERE
-           (inline SVG, not <img>)
-      ========================== -->
 
-      <!-- Example structure only:
-      <svg class="logoSvg" viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
-        ...
+  <div class="card">
+    <div class="logoAnim" aria-label="Momentum logo">
+
+      <!-- ===============================
+           MOMENTUM SVG (INLINE)
+           Red / Black / Gray
+      =============================== -->
+      <svg
+        class="logoSvg"
+        viewBox="0 0 720 200"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Momentum"
+      >
+
+        <!-- ICON -->
+        <polygon points="90,25 160,25 120,90" fill="#c81828"/>
+        <polygon points="175,25 200,90 175,90" fill="#555"/>
+        <polygon points="215,25 255,90 215,90" fill="#111"/>
+
+        <!-- WORDMARK -->
+        <text
+          x="60"
+          y="160"
+          font-size="88"
+          font-weight="900"
+          letter-spacing="6"
+          font-family="Arial, Helvetica, sans-serif"
+          fill="#111"
+        >
+          MOMENTUM
+        </text>
+
       </svg>
-      -->
 
     </div>
   </div>
+
 </body>
 </html>
