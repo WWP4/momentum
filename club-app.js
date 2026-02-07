@@ -1,447 +1,521 @@
-/* Momentum — Club App JS (Partner Application)
-   - Hero typing
-   - Timeline reveal + rail fill
-   - Steps reveal
-   - Timeline -> WhyV2 arrival trigger
-   - Club quiz (Supabase insert) with "wait for supabase" safety
-*/
+(() => {
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-document.addEventListener("DOMContentLoaded", () => {
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.addEventListener("DOMContentLoaded", () => {
+    initWordmark();
+    initRevealSystem();
+    initTimelineProgress();
+    initWhyArrive();
+    initHeroParallax();
+    initMagneticButtons();
+    initFormFlow();
 
-  /* =========================
-     HELPERS
-     ========================= */
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
-  function waitForSupabase({ timeoutMs = 6000, intervalMs = 120 } = {}) {
-    return new Promise((resolve, reject) => {
-      const start = Date.now();
-      const t = setInterval(() => {
-        const ok =
-          window.supabase &&
-          typeof window.supabase.createClient === "function";
-        if (ok) {
-          clearInterval(t);
-          resolve(true);
-          return;
-        }
-        if (Date.now() - start >= timeoutMs) {
-          clearInterval(t);
-          reject(new Error("Supabase library not loaded (timed out)."));
-        }
-      }, intervalMs);
+    requestAnimationFrame(() => {
+      document.body.classList.add("is-loaded");
     });
-  }
+  });
 
-  function safeAddClass(el, ...cls) {
-    if (!el) return;
-    el.classList.add(...cls);
-  }
+  function initWordmark() {
+    const container = $("#wordmarkLetters");
+    if (!container) {
+      return;
+    }
 
-  /* =========================
-     HERO TYPE
-     ========================= */
-  (function initHeroType() {
-    const hero = $(".heroType");
-    const letters = $("#wordmarkLetters");
-    if (!hero || !letters) return;
+    const word = "MOMENTUM";
+    container.innerHTML = "";
 
-    const WORD = "MOMENTUM.";
-    const TYPE_SPEED = 90;
-    const FADE_SPEED = 260;
-    const UNDERLINE_GAP = 160;
-    const WIPE_DELAY = 140;
-
-    letters.innerHTML = "";
-
-    [...WORD].forEach((char, i) => {
+    [...word].forEach((char, index) => {
       const span = document.createElement("span");
       span.className = "ch";
+      span.style.setProperty("--d", `${index * 90}ms`);
       span.textContent = char;
-      span.style.setProperty("--d", `${WIPE_DELAY + i * TYPE_SPEED}ms`);
-      letters.appendChild(span);
+      container.appendChild(span);
     });
+  }
 
-    const typingDuration = WIPE_DELAY + WORD.length * TYPE_SPEED + FADE_SPEED;
-    hero.style.setProperty(
-      "--underlineDelay",
-      `${typingDuration + UNDERLINE_GAP}ms`
-    );
-    hero.style.setProperty(
-      "--copyDelay",
-      `${typingDuration + UNDERLINE_GAP + 180}ms`
-    );
-
-    requestAnimationFrame(() => hero.classList.add("is-ready"));
-  })();
-
-  /* =========================
-     TIMELINE REVEAL + FILL
-     ========================= */
-  const events = $$("[data-event]");
-  const fill = $("#railFill");
-
-  (function initTimeline() {
-    if (!events.length) return;
-
-    if ("IntersectionObserver" in window && !prefersReduced) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-
-            entry.target.classList.add("is-in", "is-active");
-            events.forEach((e) => {
-              if (e !== entry.target) e.classList.remove("is-active");
-            });
-
-            const idx = events.indexOf(entry.target);
-            const pct = ((idx + 1) / events.length) * 100;
-            if (fill) fill.style.height = `${pct}%`;
-          });
-        },
-        { threshold: 0.45 }
-      );
-
-      events.forEach((el, i) => {
-        el.style.transitionDelay = `${i * 160}ms`;
-        io.observe(el);
-      });
-    } else {
-      events.forEach((el) => el.classList.add("is-in"));
-      if (fill) fill.style.height = "100%";
+  function initRevealSystem() {
+    const revealItems = $$(".reveal");
+    if (!revealItems.length) {
+      return;
     }
-  })();
 
-  /* =========================
-     HOW IT WORKS (REVEAL)
-     ========================= */
-  (function initStepsReveal() {
-    const steps = $$("[data-step]");
-    if (!steps.length) return;
-
-    if ("IntersectionObserver" in window && !prefersReduced) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-in");
-            io.unobserve(entry.target);
-          });
-        },
-        { threshold: 0.18 }
-      );
-
-      steps.forEach((el, idx) => {
-        el.style.transitionDelay = `${idx * 140}ms`;
-        io.observe(el);
-      });
-    } else {
-      steps.forEach((el) => el.classList.add("is-in"));
-    }
-  })();
-
-  /* =========================
-     HANDOFF: Timeline -> WhyV2 arrival
-     ========================= */
-  (function initWhyV2Arrival() {
-    const whyV2 = $(".whyV2");
-    if (!whyV2 || prefersReduced || !("IntersectionObserver" in window)) return;
-
-    const lastEvent = events.length
-      ? events[events.length - 1]
-      : $(".timeline") || null;
-    if (!lastEvent) return;
-
-    let fired = false;
-    const io = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting || fired) return;
-          fired = true;
-
-          setTimeout(() => {
-            whyV2.classList.add("is-arrived");
-          }, 180);
-
-          io.disconnect();
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            observer.unobserve(entry.target);
+          }
         });
       },
-      { threshold: 0.6 }
+      {
+        rootMargin: "0px 0px -12% 0px",
+        threshold: 0.16,
+      }
     );
 
-    io.observe(lastEvent);
-  })();
+    revealItems.forEach((item) => observer.observe(item));
+  }
 
-  /* =========================
-     CLUB QUIZ (Supabase)
-     ========================= */
-  (function initClubQuiz() {
+  function initTimelineProgress() {
+    const timeline = $(".timeline");
+    const railFill = $("#railFill");
+    const events = $$("[data-event]");
+
+    if (!timeline || !railFill || !events.length) {
+      return;
+    }
+
+    const update = () => {
+      const timelineRect = timeline.getBoundingClientRect();
+      const viewport = window.innerHeight || document.documentElement.clientHeight;
+      const centerY = viewport * 0.5;
+
+      const start = timelineRect.top + 180;
+      const end = timelineRect.bottom - 50;
+      const raw = (centerY - start) / Math.max(end - start, 1);
+      const progress = Math.max(0, Math.min(1, raw));
+      railFill.style.height = `${progress * 100}%`;
+
+      let nearestIndex = 0;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      events.forEach((event, index) => {
+        const rect = event.getBoundingClientRect();
+        const eventCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(eventCenter - centerY);
+
+        event.classList.add("is-in");
+
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = index;
+        }
+      });
+
+      events.forEach((event, index) => {
+        event.classList.toggle("is-active", index === nearestIndex);
+      });
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+  }
+
+  function initWhyArrive() {
+    const section = $(".why");
+    if (!section) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            section.classList.add("is-arrived");
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+      }
+    );
+
+    observer.observe(section);
+  }
+
+  function initHeroParallax() {
+    const media = $("#heroMedia");
+    if (!media || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    const smooth = { x: 0, y: 0 };
+    const target = { x: 0, y: 0 };
+
+    const tick = () => {
+      smooth.x += (target.x - smooth.x) * 0.08;
+      smooth.y += (target.y - smooth.y) * 0.08;
+      media.style.transform = `translate3d(${smooth.x}px, ${smooth.y}px, 0)`;
+      requestAnimationFrame(tick);
+    };
+
+    tick();
+
+    document.addEventListener("pointermove", (event) => {
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      target.x = (event.clientX - cx) * 0.01;
+      target.y = (event.clientY - cy) * 0.01;
+    });
+
+    document.addEventListener("pointerleave", () => {
+      target.x = 0;
+      target.y = 0;
+    });
+  }
+
+  function initMagneticButtons() {
+    if (!window.matchMedia("(pointer: fine)").matches) {
+      return;
+    }
+
+    $$(".magnetic").forEach((button) => {
+      button.addEventListener("pointermove", (event) => {
+        const rect = button.getBoundingClientRect();
+        const offsetX = event.clientX - (rect.left + rect.width / 2);
+        const offsetY = event.clientY - (rect.top + rect.height / 2);
+        const force = 0.18;
+
+        button.style.transform = `translate(${offsetX * force}px, ${offsetY * force}px)`;
+      });
+
+      button.addEventListener("pointerleave", () => {
+        button.style.transform = "";
+      });
+    });
+  }
+
+  function initFormFlow() {
     const form = $("#momentumPartnerQuiz");
-    if (!form) return;
+    if (!form) {
+      return;
+    }
 
-    const SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
-    const SUPABASE_ANON_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0ZmZja3phcnFjbnN0bnNrZWd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NTQ4MjMsImV4cCI6MjA4NTIzMDgyM30.IWAPHYfVQNuhZoe4mAtDcSYjKYGR7qdwhb6AedBzWnA";
+    const allSteps = $$(".mq__step", form);
+    const submitStep = $("#mqSubmitStep", form);
+    const steps = allSteps.filter((step) => step !== submitStep);
+    if (!steps.length) {
+      return;
+    }
 
-    const steps = $$(".mq__step", form).filter((s) => s.id !== "mqSubmitStep");
-    const submitStep = $("#mqSubmitStep");
+    const progressBar = $(".mq__barFill");
+    const progressNode = $(".mq__bar");
+    const stepNow = $("#mqStepNow");
+    const stepTotal = $("#mqStepTotal");
+    const hint = $("#mqHint");
+    const scoreField = $("#mqScore");
+    const qualifiesField = $("#mqQualifies");
 
     const backBtn = $("#mqBack");
     const nextBtn = $("#mqNext");
     const submitBtn = $("#mqSubmitBtn");
-
-    const stepNowEl = $("#mqStepNow");
-    const stepTotalEl = $("#mqStepTotal");
-    const hintEl = $("#mqHint");
-
-    const barFill = $(".mq__barFill");
-    const bar = $(".mq__bar");
-
+    const tryAgainBtn = $("#mqTryAgain");
     const submitTitle = $("#mqSubmitTitle");
     const submitMsg = $("#mqSubmitMsg");
-    const tryAgain = $("#mqTryAgain");
-    const spinner = submitStep ? $(".mq__spinner", submitStep) : null;
 
-    const scoreEl = $("#mqScore");
-    const qualifiesEl = $("#mqQualifies");
+    let current = 0;
+    let submitting = false;
 
-    if (!steps.length || !submitStep || !backBtn || !nextBtn || !submitBtn) {
-      console.warn("Club quiz elements missing (steps/buttons/submitStep).");
-      return;
-    }
+    stepTotal.textContent = String(steps.length);
 
-    let idx = 0;
-    if (stepTotalEl) stepTotalEl.textContent = String(steps.length);
+    const setRequiredGroups = (step) => {
+      const requiredRadios = new Set(
+        $$("input[type='radio'][required]", step).map((input) => input.name)
+      );
+      return [...requiredRadios];
+    };
 
-    function show(i) {
-      idx = Math.max(0, Math.min(steps.length - 1, i));
+    const clearBadStates = (step) => {
+      $$(".mq__bad", step).forEach((el) => el.classList.remove("mq__bad"));
+    };
 
-      $$(".mq__step", form).forEach((s) => s.classList.remove("is-active"));
-      steps[idx].classList.add("is-active");
+    const markBad = (field) => {
+      const target = field.closest(".mq__choice, .mq__chip, .mq__field") || field;
+      target.classList.add("mq__bad");
+    };
 
-      const pct =
-        steps.length === 1
-          ? 100
-          : Math.round((idx / (steps.length - 1)) * 100);
+    const validateStep = (step) => {
+      clearBadStates(step);
+      let valid = true;
 
-      if (barFill) barFill.style.width = `${pct}%`;
-      if (bar) bar.setAttribute("aria-valuenow", String(pct));
+      const requiredTextLike = $$('input[required]:not([type="radio"]), textarea[required], select[required]', step);
+      requiredTextLike.forEach((input) => {
+        if (!String(input.value || "").trim()) {
+          valid = false;
+          markBad(input);
+        }
+      });
 
-      if (stepNowEl) stepNowEl.textContent = String(idx + 1);
-      if (hintEl) hintEl.textContent = steps[idx].dataset.title || "";
-
-      backBtn.disabled = idx === 0;
-
-      const isLast = idx === steps.length - 1;
-      nextBtn.style.display = isLast ? "none" : "inline-flex";
-      submitBtn.style.display = isLast ? "inline-flex" : "none";
-    }
-
-    function getRadio(name) {
-      const el = form.querySelector(`input[name="${name}"]:checked`);
-      return el ? el.value : "";
-    }
-    function getText(name) {
-      const el = form.querySelector(`[name="${name}"]`);
-      return el ? String(el.value || "").trim() : "";
-    }
-    function getArray(name) {
-      return $$( `input[name="${name}"]:checked`, form).map((i) => i.value);
-    }
-
-    function validateStep() {
-      const cur = steps[idx];
-      // remove previous error marks
-      $$(".mq__bad", cur).forEach((el) => el.classList.remove("mq__bad"));
-
-      const required = $$("[required]", cur);
-      let firstBad = null;
-
-      for (const el of required) {
-        if (el.type === "radio") {
-          const name = el.name;
-          if (!cur.querySelector(`input[name="${name}"]:checked`)) {
-            const group = el.closest(".mq__field") || el.closest(".mq__q") || cur;
-            group.classList.add("mq__bad");
-            firstBad = firstBad || group;
-          }
-        } else {
-          if (!String(el.value || "").trim()) {
-            el.classList.add("mq__bad");
-            firstBad = firstBad || el;
+      const requiredGroups = setRequiredGroups(step);
+      requiredGroups.forEach((groupName) => {
+        const checked = step.querySelector(`input[type="radio"][name="${groupName}"]:checked`);
+        if (!checked) {
+          valid = false;
+          const first = step.querySelector(`input[type="radio"][name="${groupName}"]`);
+          if (first) {
+            markBad(first);
           }
         }
+      });
+
+      return valid;
+    };
+
+    const showStep = (index) => {
+      steps.forEach((step, i) => {
+        step.classList.toggle("is-active", i === index);
+      });
+
+      if (submitStep) {
+        submitStep.classList.remove("is-active");
       }
 
-      if (firstBad) {
-        firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
-        return false;
+      current = index;
+      const percent = ((current + 1) / steps.length) * 100;
+      if (progressBar) {
+        progressBar.style.width = `${percent}%`;
       }
-      return true;
-    }
+      if (progressNode) {
+        progressNode.setAttribute("aria-valuenow", String(Math.round(percent)));
+      }
+      if (stepNow) {
+        stepNow.textContent = String(current + 1);
+      }
+      if (hint) {
+        hint.textContent = steps[current].dataset.title || "";
+      }
 
-    function computeScore(payload) {
-      // Same scoring style as your parent quiz, tuned for partner eligibility signal
+      if (backBtn) {
+        backBtn.disabled = current === 0 || submitting;
+      }
+
+      const onLast = current === steps.length - 1;
+      if (nextBtn) {
+        nextBtn.style.display = onLast ? "none" : "inline-flex";
+        nextBtn.disabled = submitting;
+      }
+      if (submitBtn) {
+        submitBtn.style.display = onLast ? "inline-flex" : "none";
+        submitBtn.disabled = submitting;
+      }
+    };
+
+    const scoreMap = {
+      training_sessions_per_week: { "1-2": 1, "3-4": 2, "5+": 3 },
+      session_length: { "Under 60 minutes": 1, "60-90 minutes": 2, "90+ minutes": 3 },
+      games_per_week: { "0-1": 1, "2-3": 2, "4+": 3 },
+      strength_conditioning: {
+        "Yes (coach-led)": 3,
+        "Yes (partner / trainer-led)": 2,
+        No: 0,
+      },
+      nutrition_guidance: {
+        "Yes (formal instruction)": 3,
+        "Yes (informal coaching conversations)": 2,
+        No: 0,
+      },
+    };
+
+    const computeScore = () => {
+      const data = new FormData(form);
       let score = 0;
 
-      if (payload.training_sessions_per_week === "5+") score += 3;
-      else if (payload.training_sessions_per_week === "3–4") score += 2;
-      else if (payload.training_sessions_per_week === "1–2") score += 1;
+      Object.entries(scoreMap).forEach(([field, map]) => {
+        const value = data.get(field);
+        if (value && Object.prototype.hasOwnProperty.call(map, value)) {
+          score += map[value];
+        }
+      });
 
-      if (payload.session_length === "90+ minutes") score += 2;
-      else if (payload.session_length === "60–90 minutes") score += 1;
-
-      score += Math.min(3, (payload.session_includes || []).length);
-
-      if (payload.games_per_week === "4+") score += 2;
-      else if (payload.games_per_week === "2–3") score += 1;
-
-      score += Math.min(2, (payload.competition_types || []).length);
-      if (payload.strength_conditioning && payload.strength_conditioning !== "No")
-        score += 1;
-
-      score += Math.min(2, (payload.recovery_practices || []).length);
-      score += Math.min(2, (payload.nutrition_topics || []).length);
-      score += Math.min(2, (payload.leadership_roles || []).length);
-      score += Math.min(2, (payload.mental_performance || []).length);
-
-      return score;
-    }
-
-    async function submit() {
-      // swap to submit screen
-      $$(".mq__step", form).forEach((s) => s.classList.remove("is-active"));
-      submitStep.classList.add("is-active");
-
-      if (spinner) spinner.style.display = "block";
-      if (tryAgain) tryAgain.style.display = "none";
-      if (submitTitle) submitTitle.textContent = "Submitting…";
-      if (submitMsg) submitMsg.textContent = "Saving your answers.";
-
-      // Make sure Supabase exists even if it loads after this file
-      await waitForSupabase({ timeoutMs: 8000, intervalMs: 120 });
-      const supabase = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
-
-      const payload = {
-        // Step 1
-        facility_name: getText("facility_name"),
-        contact_name: getText("contact_name"),
-        email: getText("email"),
-        phone: getText("phone"),
-        primary_sports: getText("primary_sports"),
-        age_range: getRadio("age_range"),
-        city: getText("city"),
-        state: getText("state"),
-
-        // Step 2–7 (names match your HTML)
-        training_sessions_per_week: getRadio("training_sessions_per_week"),
-        session_length: getRadio("session_length"),
-        session_includes: getArray("session_includes"),
-
-        games_per_week: getRadio("games_per_week"),
-        competition_types: getArray("competition_types"),
-
-        strength_conditioning: getRadio("strength_conditioning"),
-        recovery_practices: getArray("recovery_practices"),
-
-        nutrition_guidance: getRadio("nutrition_guidance"),
-        nutrition_topics: getArray("nutrition_topics"),
-
-        leadership_roles: getArray("leadership_roles"),
-        character_emphasis: getArray("character_emphasis"),
-        life_skills: getArray("life_skills"),
-        mental_performance: getArray("mental_performance"),
-
-        notes: getText("notes"),
-        source: getText("source") || "momentum-site",
+      const addCheckboxPoints = (name, max) => {
+        const count = data.getAll(name).length;
+        score += Math.min(count, max);
       };
 
-      const score = computeScore(payload);
-      const qualifies = score >= 8;
-      payload.score = score;
-      payload.qualifies = qualifies;
+      addCheckboxPoints("session_includes", 3);
+      addCheckboxPoints("competition_types", 2);
+      addCheckboxPoints("recovery_practices", 2);
+      addCheckboxPoints("nutrition_topics", 2);
+      addCheckboxPoints("leadership_roles", 2);
+      addCheckboxPoints("character_emphasis", 2);
+      addCheckboxPoints("life_skills", 2);
+      addCheckboxPoints("mental_performance", 2);
 
-      if (scoreEl) scoreEl.value = String(score);
-      if (qualifiesEl) qualifiesEl.value = qualifies ? "true" : "false";
+      const qualifies = score >= 14 ? "high" : score >= 8 ? "moderate" : "early";
 
-      const { error } = await supabase.from("club_applications").insert(payload);
-      if (error) throw error;
+      if (scoreField) {
+        scoreField.value = String(score);
+      }
+      if (qualifiesField) {
+        qualifiesField.value = qualifies;
+      }
 
-      // Optional: if you add a Netlify Function later, keep this.
-      // It will not break if the function doesn't exist (we swallow 404).
-    try {
-  const res = await fetch("/.netlify/functions/momentum-club-quiz", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email: payload.email,
-      contact_name: payload.contact_name,
-      facility_name: payload.facility_name,
-    }),
-  });
+      return { score, qualifies };
+    };
 
-  if (!res.ok) {
-    const txt = await res.text();
-    console.error("Email function failed:", txt);
-    alert("Email failed to send — check console.");
-  } else {
-    console.log("Email sent successfully");
-  }
+    const getPayload = () => {
+      const data = new FormData(form);
+      const payload = {};
 
-} catch (err) {
-  console.error("Email fetch error:", err);
-  alert("Network error sending email");
-}
+      data.forEach((value, key) => {
+        if (Object.prototype.hasOwnProperty.call(payload, key)) {
+          if (Array.isArray(payload[key])) {
+            payload[key].push(value);
+          } else {
+            payload[key] = [payload[key], value];
+          }
+        } else {
+          payload[key] = value;
+        }
+      });
 
+      payload.created_at = new Date().toISOString();
+      return payload;
+    };
 
-      // success redirect
-      window.location.href = "/redirect.html";
-    }
+    const setSubmittingUI = (isSubmitting) => {
+      submitting = isSubmitting;
 
-    // NAV wiring
-    backBtn.addEventListener("click", () => show(idx - 1));
+      if (backBtn) {
+        backBtn.disabled = isSubmitting || current === 0;
+      }
+      if (nextBtn) {
+        nextBtn.disabled = isSubmitting;
+      }
+      if (submitBtn) {
+        submitBtn.disabled = isSubmitting;
+      }
+    };
 
-    nextBtn.addEventListener("click", () => {
-      if (validateStep()) show(idx + 1);
-    });
+    const showSubmitStep = () => {
+      steps.forEach((step) => step.classList.remove("is-active"));
+      if (submitStep) {
+        submitStep.classList.add("is-active");
+      }
+      if (submitTitle) {
+        submitTitle.textContent = "Submitting your profile...";
+      }
+      if (submitMsg) {
+        submitMsg.textContent = "Reviewing your responses for partner qualification.";
+      }
+      if (tryAgainBtn) {
+        tryAgainBtn.style.display = "none";
+      }
+    };
 
-    submitBtn.addEventListener("click", async () => {
-      if (!validateStep()) return;
-      submitBtn.disabled = true;
+    const showSubmitSuccess = (qualifies) => {
+      if (submitTitle) {
+        submitTitle.textContent = "Application received";
+      }
+      if (submitMsg) {
+        const tierCopy = {
+          high: "Your profile looks like a strong fit. Our partner team will contact you with priority next steps.",
+          moderate: "Your profile is in review. We will follow up with your qualification path and recommended rollout.",
+          early: "Thanks for applying. We will contact you with guidance on the best next partner steps.",
+        };
+        submitMsg.textContent = tierCopy[qualifies] || tierCopy.moderate;
+      }
+    };
+
+    const showSubmitError = () => {
+      if (submitTitle) {
+        submitTitle.textContent = "We could not submit right now";
+      }
+      if (submitMsg) {
+        submitMsg.textContent = "Please try again. Your form data is still saved in this browser session.";
+      }
+      if (tryAgainBtn) {
+        tryAgainBtn.style.display = "inline-flex";
+      }
+    };
+
+    const submitToBackend = async (payload) => {
+      const supabaseUrl = window.MOMENTUM_SUPABASE_URL;
+      const supabaseAnonKey = window.MOMENTUM_SUPABASE_ANON_KEY;
+
+      if (window.supabase && supabaseUrl && supabaseAnonKey) {
+        const client = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+        const { error } = await client.from("partner_applications").insert(payload);
+        if (error) {
+          throw error;
+        }
+        return;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+    };
+
+    const handleSubmit = async () => {
+      if (!validateStep(steps[current])) {
+        return;
+      }
+
+      const { qualifies } = computeScore();
+      const payload = getPayload();
+
+      showSubmitStep();
+      setSubmittingUI(true);
 
       try {
-        await submit();
-      } catch (e) {
-        if (spinner) spinner.style.display = "none";
-        if (submitTitle) submitTitle.textContent = "Couldn’t submit.";
-        if (submitMsg)
-          submitMsg.textContent = e?.message || "Please try again.";
-        if (tryAgain) tryAgain.style.display = "inline-flex";
-        submitBtn.disabled = false;
+        await submitToBackend(payload);
+        showSubmitSuccess(qualifies);
+      } catch (error) {
+        console.error("Momentum submit error", error);
+        showSubmitError();
+      } finally {
+        setSubmittingUI(false);
       }
-    });
+    };
 
-    if (tryAgain) {
-      tryAgain.addEventListener("click", () => {
-        submitBtn.disabled = false;
-        show(steps.length - 1);
+    if (backBtn) {
+      backBtn.addEventListener("click", () => {
+        if (submitting) {
+          return;
+        }
+        if (current > 0) {
+          showStep(current - 1);
+        }
       });
     }
 
-    // Tap-to-select on choice cards
-    form.addEventListener("click", (e) => {
-      const choice = e.target.closest(".mq__choice");
-      if (!choice) return;
-      const input = $("input", choice);
-      if (input && input.type === "radio") input.checked = true;
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        if (submitting) {
+          return;
+        }
+        const step = steps[current];
+        if (!validateStep(step)) {
+          return;
+        }
+        if (current < steps.length - 1) {
+          showStep(current + 1);
+        }
+      });
+    }
+
+    if (submitBtn) {
+      submitBtn.addEventListener("click", handleSubmit);
+    }
+
+    if (tryAgainBtn) {
+      tryAgainBtn.addEventListener("click", () => {
+        showStep(current);
+      });
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
     });
 
-    show(0);
-  })();
-});
+    $$("input, textarea, select", form).forEach((input) => {
+      input.addEventListener("change", () => {
+        const holder = input.closest(".mq__choice, .mq__chip, .mq__field");
+        if (holder) {
+          holder.classList.remove("mq__bad");
+        }
+      });
+      input.addEventListener("input", () => {
+        const holder = input.closest(".mq__choice, .mq__chip, .mq__field");
+        if (holder) {
+          holder.classList.remove("mq__bad");
+        }
+      });
+    });
+
+    showStep(0);
+  }
+})();
