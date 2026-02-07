@@ -1,708 +1,614 @@
-<!-- index.html (hero-only starter) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Momentum — Parent Program</title>
-  <meta name="description" content="Apply to Momentum. Turn your athlete’s training into verified high school credit." />
+  <title>Momentum — Club Partner Program</title>
+  <meta
+    name="description"
+    content="Apply to become a Momentum partner. Turn structured athlete training into verified high school credit without changing your coaching model."
+  />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;1,600;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;1,600;1,700&family=DM+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
 
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./momentum-luxury-remake.css" />
 </head>
-
 <body>
-  <!-- Minimal topbar (optional) -->
   <header class="topbar">
     <div class="container topbar__inner">
-      <a class="brand" href="#" aria-label="Momentum home">
+      <a class="brand" href="#top" aria-label="Momentum home">
         <span class="brand__word">MOMENTUM</span><span class="brand__dot">.</span>
       </a>
 
-      <nav class="nav">
+      <nav class="nav" aria-label="Primary navigation">
         <a href="#learn">Learn</a>
-        <a class="nav__cta" href="#apply">Apply</a>
+        <a href="#why">Why Momentum</a>
+        <a class="nav__cta" href="#partner-application">Apply</a>
       </nav>
     </div>
   </header>
 
- <!-- HERO -->
-<main>
-  <section class="heroType" id="top" aria-label="Momentum Club Partner Program">
-    <div class="heroType__bg" aria-hidden="true"></div>
-    <div class="heroType__bg" aria-hidden="true"></div>
-    <div class="heroType__reveal" aria-hidden="true"></div>
+  <main>
+    <section class="heroType" id="top" aria-label="Momentum Club Partner Program">
+      <div class="heroType__bg" aria-hidden="true"></div>
+      <div class="heroType__bg" aria-hidden="true"></div>
+      <div class="heroType__grain" aria-hidden="true"></div>
+      <div class="heroType__reveal" aria-hidden="true"></div>
 
-    <div class="container heroType__inner">
-      <!-- Animated wordmark -->
-      <div class="wordmark" aria-label="Momentum">
-        <span class="wordmark__letters" id="wordmarkLetters" aria-hidden="true"></span>
-        <span class="wordmark__underline" aria-hidden="true"></span>
+      <div class="container heroType__inner">
+        <div class="wordmark" aria-label="Momentum">
+          <span class="wordmark__letters" id="wordmarkLetters" aria-hidden="true"></span>
+          <span class="wordmark__underline" aria-hidden="true"></span>
+        </div>
+
+        <h1 class="heroType__headline" id="heroHeadline">
+          Turn elite training into accredited education.
+        </h1>
+
+        <p class="heroType__sub" id="heroSub">
+          Momentum helps clubs and facilities convert the structured training athletes already complete
+          into verified high school credit, without changing your coaching system.
+        </p>
+
+        <div class="heroType__actions" id="heroActions">
+          <a class="btn btn--primary" href="#partner-application">Become a Partner</a>
+          <a class="btn btn--ghost" href="#learn">How It Works</a>
+        </div>
+
+        <div class="heroType__note" id="heroNote">
+          Concierge onboarding. No curriculum to teach. No schedule disruption.
+        </div>
+
+        <div class="u-flex u-flex-wrap u-gap-10 u-justify-center" style="margin-top:18px;">
+          <span class="chip">Accreditation-aligned</span>
+          <span class="chip">Transcript-ready verification</span>
+          <span class="chip">Partner onboarding in minutes</span>
+        </div>
       </div>
+    </section>
 
-      <h1 class="heroType__headline" id="heroHeadline">
-        Turn your training program into accredited education.
-      </h1>
-
-      <p class="heroType__sub" id="heroSub">
-        Momentum partners with clubs and facilities to convert the structured training your athletes already complete
-        into verified high school credit — creating new value for your members without changing how you coach.
-      </p>
-
-      <div class="heroType__actions" id="heroActions">
-        <a class="btn btn--primary" href="#apply">Become a Partner</a>
-        <a class="btn btn--ghost" href="#learn">How It Works</a>
-      </div>
-
-      <div class="heroType__note" id="heroNote">
-        No curriculum to teach. No schedule changes. Just a powerful academic pathway layered onto your existing program.
-      </div>
-    </div>
-  </section>
-
-
- <section class="timeline" id="learn" aria-label="Momentum Partner Timeline">
-  <div class="container timeline__inner">
-    <div class="timeline__top">
-      <h2 class="timeline__title">Your partnership timeline</h2>
-      <p class="timeline__lead">
-        A simple path from first conversation to accredited programs inside your facility — without changing how you train.
-      </p>
-    </div>
-
-    <div class="rail" aria-hidden="true">
-      <span class="rail__fill" id="railFill"></span>
-    </div>
-
-    <div class="events" id="timelineEvents">
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 1</div>
-          <h3 class="event__h">Explore the model</h3>
-          <p class="event__p">
-            Learn how your existing training programs can qualify for verified high school credit and what Momentum looks like inside your facility.
-          </p>
-        </div>
-      </article>
-
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 2</div>
-          <h3 class="event__h">Partner application</h3>
-          <p class="event__p">
-            Share basic details about your club, sports offered, and weekly training structure. Most partners finish in under 3 minutes.
-          </p>
-        </div>
-      </article>
-
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 3</div>
-          <h3 class="event__h">Onboarding call</h3>
-          <p class="event__p">
-            We align on your programs, confirm eligibility, and map out exactly which credits your athletes will earn.
-          </p>
-        </div>
-      </article>
-
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 4</div>
-          <h3 class="event__h">Activate your facility</h3>
-          <p class="event__p">
-            Your partnership is finalized and Momentum is officially integrated into your training programs.
-          </p>
-        </div>
-      </article>
-
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 5</div>
-          <h3 class="event__h">Athletes enroll + simple check-ins</h3>
-          <p class="event__p">
-            Athletes enroll through your facility and complete quick weekly confirmations to keep everything verified and transcript-ready.
-          </p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-
-<section class="whyV2" id="why" aria-label="Why clubs partner with Momentum">
-  <div class="container whyV2__inner">
-
-    <!-- Top header -->
-    <header class="whyV2__header">
-      <p class="whyV2__eyebrow">For clubs & facilities</p>
-
-      <h2 class="whyV2__title">
-        Why clubs choose
-        <span class="whyV2__accent">
-          Momentum
-          <span class="whyV2__underline"></span>
-        </span>
-      </h2>
-
-      <p class="whyV2__lead">
-        Add accredited education to your existing training program—without changing how you coach or operate.
-      </p>
-    </header>
-
-    <!-- Premium split layout -->
-    <div class="whyV2__split">
-
-      <!-- Left: proof panel -->
-      <aside class="whyV2__proof" aria-label="Momentum partner proof points">
-        <div class="whyV2__proofTop">
-          <div class="whyV2__mark" aria-hidden="true">
-            <span class="whyV2__dot whyV2__dot--red"></span>
-            <span class="whyV2__dot whyV2__dot--blue"></span>
-          </div>
-
-          <h3 class="whyV2__proofH">
-            Plug-in partner model. Transcript-ready outcomes.
-          </h3>
-
-          <p class="whyV2__proofP">
-            Momentum aligns your training structure with accredited coursework and handles the documentation so athletes can earn verified credit through your facility.
+    <section class="timeline" id="learn" aria-label="Momentum partner timeline">
+      <div class="container timeline__inner">
+        <div class="timeline__top">
+          <h2 class="timeline__title">Your partnership timeline</h2>
+          <p class="timeline__lead">
+            A clear path from first conversation to accredited programs inside your facility.
           </p>
         </div>
 
-        <div class="whyV2__proofStats" role="list">
-          <div class="whyV2__stat" role="listitem">
-            <div class="whyV2__statK">3 minutes</div>
-            <div class="whyV2__statL">Typical partner application</div>
-          </div>
-          <div class="whyV2__stat" role="listitem">
-            <div class="whyV2__statK">No disruption</div>
-            <div class="whyV2__statL">No new practices or schedule changes</div>
-          </div>
-          <div class="whyV2__stat" role="listitem">
-            <div class="whyV2__statK">Guided rollout</div>
-            <div class="whyV2__statL">Fast onboarding + clear next steps</div>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Right: reasons list -->
-      <div class="whyV2__reasons" aria-label="Reasons clubs choose Momentum">
-
-        <article class="whyV2__reason" data-why>
-          <div class="whyV2__icon" aria-hidden="true">
-            <!-- Shield -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2.5l7 3.4v6.2c0 5-3.1 9.4-7 10.9-3.9-1.5-7-5.9-7-10.9V5.9l7-3.4Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M9.2 12.2l1.9 1.9 3.8-4.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="whyV2__reasonBody">
-            <h3 class="whyV2__h">Accredited and transcript-ready</h3>
-            <p class="whyV2__p">
-              Verified coursework alignment and documentation schools can recognize.
-            </p>
-          </div>
-          <span class="whyV2__edge whyV2__edge--red" aria-hidden="true"></span>
-        </article>
-
-        <article class="whyV2__reason" data-why>
-          <div class="whyV2__icon" aria-hidden="true">
-            <!-- Clock -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="whyV2__reasonBody">
-            <h3 class="whyV2__h">Built for real facilities</h3>
-            <p class="whyV2__p">
-              A partner flow that’s easy to explain, easy to activate, and simple to maintain.
-            </p>
-          </div>
-          <span class="whyV2__edge whyV2__edge--blue" aria-hidden="true"></span>
-        </article>
-
-        <article class="whyV2__reason" data-why>
-          <div class="whyV2__icon" aria-hidden="true">
-            <!-- File -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M14 3v4a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M8 12h8M8 16h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="whyV2__reasonBody">
-            <h3 class="whyV2__h">Clean verification with simple check-ins</h3>
-            <p class="whyV2__p">
-              Quick weekly confirmations keep credits consistent and audit-friendly.
-            </p>
-          </div>
-          <span class="whyV2__edge whyV2__edge--red" aria-hidden="true"></span>
-        </article>
-
-        <article class="whyV2__reason" data-why>
-          <div class="whyV2__icon" aria-hidden="true">
-            <!-- Spark -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2l1.2 4.2L17 7.4l-3.6 2 1.1 4.1L12 11.5 9.5 13.5l1.1-4.1-3.6-2 3.8-1.2L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M5 21l.8-2.7L8.5 17l-2.7-.8L5 13.5l-.8 2.7L1.5 17l2.7.8L5 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="whyV2__reasonBody">
-            <h3 class="whyV2__h">A premium value-add for parents</h3>
-            <p class="whyV2__p">
-              Give families a real academic advantage through your club—without adding work for your coaches.
-            </p>
-          </div>
-          <span class="whyV2__edge whyV2__edge--blue" aria-hidden="true"></span>
-        </article>
-
-      </div>
-    </div>
-
-    <!-- CTA panel -->
-    <div class="whyV2__cta">
-      <div class="whyV2__ctaText">
-        <h3 class="whyV2__ctaH">Want to see what qualifies inside your facility?</h3>
-        <p class="whyV2__ctaP">Partner setup starts in under 3 minutes.</p>
-      </div>
-      <div class="whyV2__ctaBtns">
-        <a class="btn btn--primary" href="#apply">Become a Partner</a>
-        <a class="btn btn--ghost" href="#learn">How it works</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-<section class="mq" id="partner-application" aria-label="Momentum partner application">
-  <div class="mq__container">
-
-    <header class="mq__top">
-      <div class="mq__topLeft">
-        <div class="mq__pill">Partner application</div>
-        <h2 class="mq__title">See what your facility qualifies for</h2>
-        <p class="mq__sub">A quick guided flow. No busywork.</p>
-      </div>
-
-      <div class="mq__progress" aria-label="Progress">
-        <div class="mq__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <span class="mq__barFill" style="width:0%"></span>
-        </div>
-        <div class="mq__meta">
-          <span class="mq__step">Step <b id="mqStepNow">1</b> of <b id="mqStepTotal">7</b></span>
-          <span class="mq__hint" id="mqHint">Facility + primary contact</span>
-        </div>
-      </div>
-    </header>
-
-    <form class="mq__card" id="momentumPartnerQuiz" novalidate>
-      <input type="hidden" name="source" value="momentum-site">
-      <input type="hidden" name="score" id="mqScore" value="">
-      <input type="hidden" name="qualifies" id="mqQualifies" value="">
-
-      <!-- STEP 1 -->
-      <section class="mq__step is-active" data-title="Facility + primary contact">
-        <div class="mq__grid2">
-          <div class="mq__field">
-            <label class="mq__label">Club / facility name</label>
-            <input class="mq__input" name="facility_name" type="text" placeholder="Organization name" required>
-          </div>
-          <div class="mq__field">
-            <label class="mq__label">Primary contact name</label>
-            <input class="mq__input" name="contact_name" type="text" placeholder="Full name" required>
-          </div>
-          <div class="mq__field">
-            <label class="mq__label">Email</label>
-            <input class="mq__input" name="email" type="email" placeholder="name@email.com" required>
-          </div>
-          <div class="mq__field">
-            <label class="mq__label">Phone</label>
-            <input class="mq__input" name="phone" type="tel" placeholder="(###) ###-####">
-          </div>
+        <div class="rail" aria-hidden="true">
+          <span class="rail__fill" id="railFill"></span>
         </div>
 
-        <div class="mq__grid2">
-          <div class="mq__field">
-            <label class="mq__label">Primary sport(s)</label>
-            <input class="mq__input" name="primary_sports" type="text" placeholder="Soccer, basketball, volleyball…" required>
+        <div class="events" id="timelineEvents">
+          <article class="event" data-event>
+            <div class="event__dot" aria-hidden="true"></div>
+            <div class="event__card">
+              <div class="event__kicker">Step 1</div>
+              <h3 class="event__h">Explore the model</h3>
+              <p class="event__p">
+                See how your current training structure maps to verified high school credit.
+              </p>
+            </div>
+          </article>
+
+          <article class="event" data-event>
+            <div class="event__dot" aria-hidden="true"></div>
+            <div class="event__card">
+              <div class="event__kicker">Step 2</div>
+              <h3 class="event__h">Submit your partner application</h3>
+              <p class="event__p">
+                Share your facility profile, sports offered, and weekly training format.
+              </p>
+            </div>
+          </article>
+
+          <article class="event" data-event>
+            <div class="event__dot" aria-hidden="true"></div>
+            <div class="event__card">
+              <div class="event__kicker">Step 3</div>
+              <h3 class="event__h">Join your onboarding call</h3>
+              <p class="event__p">
+                We align program eligibility, documentation, and rollout priorities.
+              </p>
+            </div>
+          </article>
+
+          <article class="event" data-event>
+            <div class="event__dot" aria-hidden="true"></div>
+            <div class="event__card">
+              <div class="event__kicker">Step 4</div>
+              <h3 class="event__h">Activate your facility</h3>
+              <p class="event__p">
+                Momentum is integrated into your existing training environment.
+              </p>
+            </div>
+          </article>
+
+          <article class="event" data-event>
+            <div class="event__dot" aria-hidden="true"></div>
+            <div class="event__card">
+              <div class="event__kicker">Step 5</div>
+              <h3 class="event__h">Enroll athletes + verify weekly</h3>
+              <p class="event__p">
+                Simple check-ins keep each athlete's credit record consistent and transcript-ready.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="whyV2" id="why" aria-label="Why clubs partner with Momentum">
+      <div class="container whyV2__inner">
+        <header class="whyV2__header">
+          <p class="whyV2__eyebrow">For clubs and facilities</p>
+          <h2 class="whyV2__title">
+            Why clubs choose
+            <span class="whyV2__accent">Momentum</span>
+          </h2>
+          <p class="whyV2__lead">
+            Add accredited education to your current training program while preserving your coaching system and standards.
+          </p>
+        </header>
+
+        <div class="whyV2__split">
+          <aside class="whyV2__proof" aria-label="Momentum proof points">
+            <div class="whyV2__proofTop">
+              <div class="whyV2__mark" aria-hidden="true">
+                <span class="whyV2__dot whyV2__dot--red"></span>
+                <span class="whyV2__dot whyV2__dot--blue"></span>
+              </div>
+
+              <h3 class="whyV2__proofH">Plug-in model. Verified outcomes.</h3>
+              <p class="whyV2__proofP">
+                Momentum aligns training structure to accredited coursework and handles verification workflows,
+                so athletes can earn recognized credit through your facility.
+              </p>
+            </div>
+
+            <div class="whyV2__proofStats" role="list">
+              <div class="whyV2__stat" role="listitem">
+                <div class="whyV2__statK">~3 minutes</div>
+                <div class="whyV2__statL">Typical partner application time</div>
+              </div>
+              <div class="whyV2__stat" role="listitem">
+                <div class="whyV2__statK">No disruption</div>
+                <div class="whyV2__statL">Keep schedules, coaching, and programming intact</div>
+              </div>
+              <div class="whyV2__stat" role="listitem">
+                <div class="whyV2__statK">Guided rollout</div>
+                <div class="whyV2__statL">Clear onboarding milestones from day one</div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="whyV2__reasons" aria-label="Reasons clubs choose Momentum">
+            <article class="whyV2__reason" data-why>
+              <div class="whyV2__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2.5l7 3.4v6.2c0 5-3.1 9.4-7 10.9-3.9-1.5-7-5.9-7-10.9V5.9l7-3.4Z" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M9.2 12.2l1.9 1.9 3.8-4.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="whyV2__reasonBody">
+                <h3 class="whyV2__h">Accredited and transcript-ready</h3>
+                <p class="whyV2__p">Documentation and verification built for school recognition.</p>
+              </div>
+              <span class="whyV2__edge whyV2__edge--red" aria-hidden="true"></span>
+            </article>
+
+            <article class="whyV2__reason" data-why>
+              <div class="whyV2__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9Z" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="whyV2__reasonBody">
+                <h3 class="whyV2__h">Built for real facilities</h3>
+                <p class="whyV2__p">A partner flow your staff can explain and maintain with confidence.</p>
+              </div>
+              <span class="whyV2__edge whyV2__edge--blue" aria-hidden="true"></span>
+            </article>
+
+            <article class="whyV2__reason" data-why>
+              <div class="whyV2__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M14 3v4a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M8 12h8M8 16h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="whyV2__reasonBody">
+                <h3 class="whyV2__h">Clean weekly verification</h3>
+                <p class="whyV2__p">Simple confirmations keep credit records audit-friendly and dependable.</p>
+              </div>
+              <span class="whyV2__edge whyV2__edge--red" aria-hidden="true"></span>
+            </article>
+
+            <article class="whyV2__reason" data-why>
+              <div class="whyV2__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2l1.2 4.2L17 7.4l-3.6 2 1.1 4.1L12 11.5 9.5 13.5l1.1-4.1-3.6-2 3.8-1.2L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                  <path d="M5 21l.8-2.7L8.5 17l-2.7-.8L5 13.5l-.8 2.7L1.5 17l2.7.8L5 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="whyV2__reasonBody">
+                <h3 class="whyV2__h">Premium parent value-add</h3>
+                <p class="whyV2__p">Offer families a real academic advantage without extra coach workload.</p>
+              </div>
+              <span class="whyV2__edge whyV2__edge--blue" aria-hidden="true"></span>
+            </article>
+          </div>
+        </div>
+
+        <div class="whyV2__cta">
+          <div class="whyV2__ctaText">
+            <h3 class="whyV2__ctaH">Want to see what qualifies inside your facility?</h3>
+            <p class="whyV2__ctaP">Start your partner application in minutes.</p>
+          </div>
+          <div class="whyV2__ctaBtns">
+            <a class="btn btn--primary" href="#partner-application">Become a Partner</a>
+            <a class="btn btn--ghost" href="#learn">How It Works</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mq" id="partner-application" aria-label="Momentum partner application">
+      <div class="mq__container">
+        <header class="mq__top">
+          <div class="mq__topLeft">
+            <div class="mq__pill">Partner application</div>
+            <h2 class="mq__title">See what your facility qualifies for</h2>
+            <p class="mq__sub">Fast guided intake. No busywork.</p>
           </div>
 
-          <div class="mq__field">
-            <label class="mq__label">Athlete age range served</label>
-            <div class="mq__choices mq__choices--grid">
-              <label class="mq__choice">
-                <input type="radio" name="age_range" value="10–12" required>
-                <span>10–12</span>
-              </label>
-              <label class="mq__choice">
-                <input type="radio" name="age_range" value="13–14">
-                <span>13–14</span>
-              </label>
-              <label class="mq__choice">
-                <input type="radio" name="age_range" value="15–16">
-                <span>15–16</span>
-              </label>
-              <label class="mq__choice">
-                <input type="radio" name="age_range" value="17–18">
-                <span>17–18</span>
-              </label>
+          <div class="mq__progress" aria-label="Progress">
+            <div class="mq__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <span class="mq__barFill" style="width:0%"></span>
+            </div>
+            <div class="mq__meta">
+              <span class="mq__step">Step <b id="mqStepNow">1</b> of <b id="mqStepTotal">7</b></span>
+              <span class="mq__hint" id="mqHint">Facility + primary contact</span>
             </div>
           </div>
-        </div>
+        </header>
 
-        <div class="mq__grid2">
-          <div class="mq__field">
-            <label class="mq__label">City</label>
-            <input class="mq__input" name="city" type="text" placeholder="City" required>
-          </div>
-          <div class="mq__field">
-            <label class="mq__label">State</label>
-            <input class="mq__input" name="state" type="text" placeholder="State" required>
-          </div>
-        </div>
-      </section>
+        <form class="mq__card" id="momentumPartnerQuiz" novalidate>
+          <input type="hidden" name="source" value="momentum-site" />
+          <input type="hidden" name="score" id="mqScore" value="" />
+          <input type="hidden" name="qualifies" id="mqQualifies" value="" />
 
-      <!-- STEP 2 -->
-      <section class="mq__step" data-title="Training structure">
-        <div class="mq__q">
-          <div class="mq__qTitle">Team training sessions per week</div>
-          <div class="mq__qSub">On average, how many organized training sessions do your teams run weekly?</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="training_sessions_per_week" value="1–2" required>
-              <span>1–2</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="training_sessions_per_week" value="3–4">
-              <span>3–4</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="training_sessions_per_week" value="5+">
-              <span>5+</span>
-            </label>
-          </div>
-        </div>
+          <section class="mq__step is-active" data-title="Facility + primary contact">
+            <div class="mq__grid2">
+              <div class="mq__field">
+                <label class="mq__label">Club / facility name</label>
+                <input class="mq__input" name="facility_name" type="text" placeholder="Organization name" required />
+              </div>
+              <div class="mq__field">
+                <label class="mq__label">Primary contact name</label>
+                <input class="mq__input" name="contact_name" type="text" placeholder="Full name" required />
+              </div>
+              <div class="mq__field">
+                <label class="mq__label">Email</label>
+                <input class="mq__input" name="email" type="email" placeholder="name@email.com" required />
+              </div>
+              <div class="mq__field">
+                <label class="mq__label">Phone</label>
+                <input class="mq__input" name="phone" type="tel" placeholder="(###) ###-####" />
+              </div>
+            </div>
 
-        <div class="mq__q">
-          <div class="mq__qTitle">Average session length</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="session_length" value="Under 60 minutes" required>
-              <span>Under 60 minutes</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="session_length" value="60–90 minutes">
-              <span>60–90 minutes</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="session_length" value="90+ minutes">
-              <span>90+ minutes</span>
-            </label>
-          </div>
-        </div>
+            <div class="mq__grid2">
+              <div class="mq__field">
+                <label class="mq__label">Primary sport(s)</label>
+                <input class="mq__input" name="primary_sports" type="text" placeholder="Soccer, basketball, volleyball..." required />
+              </div>
 
-        <div class="mq__q">
-          <div class="mq__qTitle">What does training typically include?</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Sport-specific drills"><span>Sport-specific drills</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Strength training / conditioning"><span>Strength / conditioning</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Speed / agility work"><span>Speed / agility</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Technical skills development"><span>Technical skills</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Scrimmage or competitive play"><span>Scrimmage / play</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Film or performance review"><span>Film / review</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Coach feedback / evaluation"><span>Coach feedback</span></label>
-          </div>
-        </div>
-      </section>
+              <div class="mq__field">
+                <label class="mq__label">Athlete age range served</label>
+                <div class="mq__choices mq__choices--grid">
+                  <label class="mq__choice"><input type="radio" name="age_range" value="10-12" required /><span>10-12</span></label>
+                  <label class="mq__choice"><input type="radio" name="age_range" value="13-14" /><span>13-14</span></label>
+                  <label class="mq__choice"><input type="radio" name="age_range" value="15-16" /><span>15-16</span></label>
+                  <label class="mq__choice"><input type="radio" name="age_range" value="17-18" /><span>17-18</span></label>
+                </div>
+              </div>
+            </div>
 
-      <!-- STEP 3 -->
-      <section class="mq__step" data-title="Competition schedule">
-        <div class="mq__q">
-          <div class="mq__qTitle">Games or competitions per week</div>
-          <div class="mq__qSub">Across your teams, what’s typical during season?</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="games_per_week" value="0–1" required>
-              <span>0–1</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="games_per_week" value="2–3">
-              <span>2–3</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="games_per_week" value="4+">
-              <span>4+</span>
-            </label>
-          </div>
-        </div>
+            <div class="mq__grid2">
+              <div class="mq__field">
+                <label class="mq__label">City</label>
+                <input class="mq__input" name="city" type="text" placeholder="City" required />
+              </div>
+              <div class="mq__field">
+                <label class="mq__label">State</label>
+                <input class="mq__input" name="state" type="text" placeholder="State" required />
+              </div>
+            </div>
+          </section>
 
-        <div class="mq__q">
-          <div class="mq__qTitle">Where do your teams compete?</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="competition_types" value="League play"><span>League play</span></label>
-            <label class="mq__chip"><input type="checkbox" name="competition_types" value="Regional tournaments"><span>Regional tournaments</span></label>
-            <label class="mq__chip"><input type="checkbox" name="competition_types" value="National tournaments"><span>National tournaments</span></label>
-            <label class="mq__chip"><input type="checkbox" name="competition_types" value="Showcases / combines"><span>Showcases / combines</span></label>
-          </div>
-        </div>
-      </section>
+          <section class="mq__step" data-title="Training structure">
+            <div class="mq__q">
+              <div class="mq__qTitle">Team training sessions per week</div>
+              <div class="mq__qSub">On average, how many organized sessions run weekly?</div>
+              <div class="mq__choices">
+                <label class="mq__choice"><input type="radio" name="training_sessions_per_week" value="1-2" required /><span>1-2</span></label>
+                <label class="mq__choice"><input type="radio" name="training_sessions_per_week" value="3-4" /><span>3-4</span></label>
+                <label class="mq__choice"><input type="radio" name="training_sessions_per_week" value="5+" /><span>5+</span></label>
+              </div>
+            </div>
 
-      <!-- STEP 4 -->
-      <section class="mq__step" data-title="Strength + recovery">
-        <div class="mq__q">
-          <div class="mq__qTitle">Strength or conditioning offered?</div>
-          <div class="mq__qSub">Do you offer structured S&amp;C or conditioning as part of your program?</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="strength_conditioning" value="Yes (coach-led)" required>
-              <span>Yes (coach-led)</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="strength_conditioning" value="Yes (partner / trainer-led)">
-              <span>Yes (partner / trainer-led)</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="strength_conditioning" value="No">
-              <span>No</span>
-            </label>
-          </div>
-        </div>
+            <div class="mq__q">
+              <div class="mq__qTitle">Average session length</div>
+              <div class="mq__choices">
+                <label class="mq__choice"><input type="radio" name="session_length" value="Under 60 minutes" required /><span>Under 60 minutes</span></label>
+                <label class="mq__choice"><input type="radio" name="session_length" value="60-90 minutes" /><span>60-90 minutes</span></label>
+                <label class="mq__choice"><input type="radio" name="session_length" value="90+ minutes" /><span>90+ minutes</span></label>
+              </div>
+            </div>
 
-        <div class="mq__q">
-          <div class="mq__qTitle">Recovery practices coached</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Stretching / mobility"><span>Stretching / mobility</span></label>
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Warm-up & cool-down routines"><span>Warm-up / cool-down</span></label>
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Injury prevention education"><span>Injury prevention</span></label>
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Rest days"><span>Rest days</span></label>
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Hydration guidance"><span>Hydration guidance</span></label>
-          </div>
-        </div>
-      </section>
+            <div class="mq__q">
+              <div class="mq__qTitle">What does training usually include?</div>
+              <div class="mq__qSub">Select all that apply.</div>
+              <div class="mq__chips">
+                <label class="mq__chip"><input type="checkbox" name="session_includes" value="Sport-specific drills" /><span>Sport-specific drills</span></label>
+                <label class="mq__chip"><input type="checkbox" name="session_includes" value="Strength training / conditioning" /><span>Strength / conditioning</span></label>
+                <label class="mq__chip"><input type="checkbox" name="session_includes" value="Speed / agility work" /><span>Speed / agility</span></label>
+                <label class="mq__chip"><input type="checkbox" name="session_includes" value="Technical skills development" /><span>Technical skills</span></label>
+                <label class="mq__chip"><input type="checkbox" name="session_includes" value="Scrimmage or competitive play" /><span>Scrimmage / play</span></label>
+                <label class="mq__chip"><input type="checkbox" name="session_includes" value="Film or performance review" /><span>Film / review</span></label>
+                <label class="mq__chip"><input type="checkbox" name="session_includes" value="Coach feedback / evaluation" /><span>Coach feedback</span></label>
+              </div>
+            </div>
+          </section>
 
-      <!-- STEP 5 -->
-      <section class="mq__step" data-title="Nutrition + wellness">
-        <div class="mq__q">
-          <div class="mq__qTitle">Nutrition or wellness coaching?</div>
-          <div class="mq__qSub">Do coaches or staff address nutrition, sleep, or performance habits?</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="nutrition_guidance" value="Yes (formal instruction)" required>
-              <span>Yes (formal instruction)</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="nutrition_guidance" value="Yes (informal coaching conversations)">
-              <span>Yes (informal coaching)</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="nutrition_guidance" value="No">
-              <span>No</span>
-            </label>
-          </div>
-        </div>
+          <section class="mq__step" data-title="Competition schedule">
+            <div class="mq__q">
+              <div class="mq__qTitle">Games or competitions per week</div>
+              <div class="mq__qSub">During season, what is typical?</div>
+              <div class="mq__choices">
+                <label class="mq__choice"><input type="radio" name="games_per_week" value="0-1" required /><span>0-1</span></label>
+                <label class="mq__choice"><input type="radio" name="games_per_week" value="2-3" /><span>2-3</span></label>
+                <label class="mq__choice"><input type="radio" name="games_per_week" value="4+" /><span>4+</span></label>
+              </div>
+            </div>
 
-        <div class="mq__q">
-          <div class="mq__qTitle">Topics you cover</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Fueling before games"><span>Fueling before games</span></label>
-            <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Recovery nutrition"><span>Recovery nutrition</span></label>
-            <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Hydration habits"><span>Hydration habits</span></label>
-            <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Sleep importance"><span>Sleep importance</span></label>
-          </div>
-        </div>
-      </section>
+            <div class="mq__q">
+              <div class="mq__qTitle">Where do your teams compete?</div>
+              <div class="mq__qSub">Select all that apply.</div>
+              <div class="mq__chips">
+                <label class="mq__chip"><input type="checkbox" name="competition_types" value="League play" /><span>League play</span></label>
+                <label class="mq__chip"><input type="checkbox" name="competition_types" value="Regional tournaments" /><span>Regional tournaments</span></label>
+                <label class="mq__chip"><input type="checkbox" name="competition_types" value="National tournaments" /><span>National tournaments</span></label>
+                <label class="mq__chip"><input type="checkbox" name="competition_types" value="Showcases / combines" /><span>Showcases / combines</span></label>
+              </div>
+            </div>
+          </section>
 
-      <!-- STEP 6 -->
-      <section class="mq__step" data-title="Leadership + development">
-        <div class="mq__q">
-          <div class="mq__qTitle">Leadership development opportunities</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Team captains"><span>Team captains</span></label>
-            <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Mentoring younger athletes"><span>Mentoring younger athletes</span></label>
-            <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Helping run drills"><span>Helping run drills</span></label>
-            <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Leading warm-ups"><span>Leading warm-ups</span></label>
-          </div>
-        </div>
+          <section class="mq__step" data-title="Strength + recovery">
+            <div class="mq__q">
+              <div class="mq__qTitle">Strength or conditioning offered?</div>
+              <div class="mq__qSub">Is structured S&amp;C part of your current model?</div>
+              <div class="mq__choices">
+                <label class="mq__choice"><input type="radio" name="strength_conditioning" value="Yes (coach-led)" required /><span>Yes (coach-led)</span></label>
+                <label class="mq__choice"><input type="radio" name="strength_conditioning" value="Yes (partner / trainer-led)" /><span>Yes (partner / trainer-led)</span></label>
+                <label class="mq__choice"><input type="radio" name="strength_conditioning" value="No" /><span>No</span></label>
+              </div>
+            </div>
 
-        <div class="mq__q">
-          <div class="mq__qTitle">Character emphasis</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Accountability"><span>Accountability</span></label>
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Sportsmanship"><span>Sportsmanship</span></label>
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Team communication"><span>Team communication</span></label>
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Goal setting"><span>Goal setting</span></label>
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Respect for coaches & teammates"><span>Respect</span></label>
-          </div>
-        </div>
+            <div class="mq__q">
+              <div class="mq__qTitle">Recovery practices coached</div>
+              <div class="mq__qSub">Select all that apply.</div>
+              <div class="mq__chips">
+                <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Stretching / mobility" /><span>Stretching / mobility</span></label>
+                <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Warm-up & cool-down routines" /><span>Warm-up / cool-down</span></label>
+                <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Injury prevention education" /><span>Injury prevention</span></label>
+                <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Rest days" /><span>Rest days</span></label>
+                <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Hydration guidance" /><span>Hydration guidance</span></label>
+              </div>
+            </div>
+          </section>
 
-        <div class="mq__q">
-          <div class="mq__qTitle">Life skills coached</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="Time management"><span>Time management</span></label>
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="Discipline"><span>Discipline</span></label>
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="Mental toughness"><span>Mental toughness</span></label>
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="College preparation"><span>College preparation</span></label>
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="Personal responsibility"><span>Personal responsibility</span></label>
-          </div>
-        </div>
-      </section>
+          <section class="mq__step" data-title="Nutrition + wellness">
+            <div class="mq__q">
+              <div class="mq__qTitle">Nutrition or wellness coaching?</div>
+              <div class="mq__qSub">Do coaches discuss fueling, sleep, or performance habits?</div>
+              <div class="mq__choices">
+                <label class="mq__choice"><input type="radio" name="nutrition_guidance" value="Yes (formal instruction)" required /><span>Yes (formal instruction)</span></label>
+                <label class="mq__choice"><input type="radio" name="nutrition_guidance" value="Yes (informal coaching conversations)" /><span>Yes (informal coaching)</span></label>
+                <label class="mq__choice"><input type="radio" name="nutrition_guidance" value="No" /><span>No</span></label>
+              </div>
+            </div>
 
-      <!-- STEP 7 -->
-      <section class="mq__step" data-title="Mindset + notes">
-        <div class="mq__q">
-          <div class="mq__qTitle">Mental performance topics</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Focus"><span>Focus</span></label>
-            <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Confidence"><span>Confidence</span></label>
-            <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Handling pressure"><span>Handling pressure</span></label>
-            <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Game mindset"><span>Game mindset</span></label>
-          </div>
-        </div>
+            <div class="mq__q">
+              <div class="mq__qTitle">Topics you cover</div>
+              <div class="mq__qSub">Select all that apply.</div>
+              <div class="mq__chips">
+                <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Fueling before games" /><span>Fueling before games</span></label>
+                <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Recovery nutrition" /><span>Recovery nutrition</span></label>
+                <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Hydration habits" /><span>Hydration habits</span></label>
+                <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Sleep importance" /><span>Sleep importance</span></label>
+              </div>
+            </div>
+          </section>
 
-        <div class="mq__field">
-          <label class="mq__label">Anything we should know?</label>
-          <textarea class="mq__textarea" name="notes" rows="4" placeholder="Program details, season schedule, facility model, school/counselor requirements, or anything you'd like us to consider."></textarea>
-        </div>
+          <section class="mq__step" data-title="Leadership + development">
+            <div class="mq__q">
+              <div class="mq__qTitle">Leadership development opportunities</div>
+              <div class="mq__qSub">Select all that apply.</div>
+              <div class="mq__chips">
+                <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Team captains" /><span>Team captains</span></label>
+                <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Mentoring younger athletes" /><span>Mentoring younger athletes</span></label>
+                <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Helping run drills" /><span>Helping run drills</span></label>
+                <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Leading warm-ups" /><span>Leading warm-ups</span></label>
+              </div>
+            </div>
 
-        <div class="mq__fine">
-          By submitting, you agree Momentum can contact you with next steps.
-        </div>
-      </section>
+            <div class="mq__q">
+              <div class="mq__qTitle">Character emphasis</div>
+              <div class="mq__qSub">Select all that apply.</div>
+              <div class="mq__chips">
+                <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Accountability" /><span>Accountability</span></label>
+                <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Sportsmanship" /><span>Sportsmanship</span></label>
+                <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Team communication" /><span>Team communication</span></label>
+                <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Goal setting" /><span>Goal setting</span></label>
+                <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Respect for coaches & teammates" /><span>Respect</span></label>
+              </div>
+            </div>
 
-      <!-- SUBMIT SCREEN -->
-      <section class="mq__step" id="mqSubmitStep" data-title="Submitting">
-        <div class="mq__submit">
-          <div class="mq__spinner" aria-hidden="true"></div>
-          <h3 class="mq__submitH" id="mqSubmitTitle">Submitting…</h3>
-          <p class="mq__submitP" id="mqSubmitMsg">Saving your answers.</p>
-          <button class="mq__btn mq__btn--ghost" type="button" id="mqTryAgain" style="display:none;">Try again</button>
-        </div>
-      </section>
+            <div class="mq__q">
+              <div class="mq__qTitle">Life skills coached</div>
+              <div class="mq__qSub">Select all that apply.</div>
+              <div class="mq__chips">
+                <label class="mq__chip"><input type="checkbox" name="life_skills" value="Time management" /><span>Time management</span></label>
+                <label class="mq__chip"><input type="checkbox" name="life_skills" value="Discipline" /><span>Discipline</span></label>
+                <label class="mq__chip"><input type="checkbox" name="life_skills" value="Mental toughness" /><span>Mental toughness</span></label>
+                <label class="mq__chip"><input type="checkbox" name="life_skills" value="College preparation" /><span>College preparation</span></label>
+                <label class="mq__chip"><input type="checkbox" name="life_skills" value="Personal responsibility" /><span>Personal responsibility</span></label>
+              </div>
+            </div>
+          </section>
 
+          <section class="mq__step" data-title="Mindset + notes">
+            <div class="mq__q">
+              <div class="mq__qTitle">Mental performance topics</div>
+              <div class="mq__qSub">Select all that apply.</div>
+              <div class="mq__chips">
+                <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Focus" /><span>Focus</span></label>
+                <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Confidence" /><span>Confidence</span></label>
+                <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Handling pressure" /><span>Handling pressure</span></label>
+                <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Game mindset" /><span>Game mindset</span></label>
+              </div>
+            </div>
 
-      <!-- NAV -->
-      <footer class="mq__nav">
-        <button class="mq__btn mq__btn--ghost" type="button" id="mqBack">Back</button>
-        <button class="mq__btn mq__btn--primary" type="button" id="mqNext">Continue</button>
-        <button class="mq__btn mq__btn--primary" type="button" id="mqSubmitBtn" style="display:none;">Submit</button>
-      </footer>
-    </form>
+            <div class="mq__field">
+              <label class="mq__label">Anything we should know?</label>
+              <textarea
+                class="mq__textarea"
+                name="notes"
+                rows="4"
+                placeholder="Program model, season schedule, facility setup, or anything you want us to consider."
+              ></textarea>
+            </div>
 
-  </div>
-</section>
+            <div class="mq__fine">
+              By submitting, you agree that Momentum may contact you with partner next steps.
+            </div>
+          </section>
 
-<section class="nextWrap" id="next" aria-label="What happens next">
-  <div class="nextInner">
+          <section class="mq__step" id="mqSubmitStep" data-title="Submitting">
+            <div class="mq__submit">
+              <div class="mq__spinner" aria-hidden="true"></div>
+              <h3 class="mq__submitH" id="mqSubmitTitle">Submitting...</h3>
+              <p class="mq__submitP" id="mqSubmitMsg">Saving your answers.</p>
+              <button class="mq__btn mq__btn--ghost" type="button" id="mqTryAgain" style="display:none;">Try again</button>
+            </div>
+          </section>
 
-    <header class="nextHead">
-      <p class="nextEyebrow">Next steps</p>
-      <h2 class="nextH">What happens next</h2>
-      <p class="nextP">
-        We review partner applications in the order they’re submitted. If you want a faster answer and a clear rollout plan,
-        book a Priority Partner Call to move to the front of the onboarding queue.
-      </p>
-    </header>
-
-    <div class="nextRail" aria-hidden="true"></div>
-
-    <div class="nextGrid" role="list">
-      <article class="nextCard" role="listitem">
-        <div class="nextNum"><span>1</span></div>
-        <div class="nextTitle">Application received</div>
-        <div class="nextBody">
-          Your facility details, training structure, and programs are now in our review queue.
-        </div>
-      </article>
-
-      <article class="nextCard" role="listitem">
-        <div class="nextNum nextNum--blue"><span>2</span></div>
-        <div class="nextTitle">We map programs → credits</div>
-        <div class="nextBody">
-          We translate your weekly training model into course eligibility so you know exactly what can count for athletes.
-        </div>
-      </article>
-
-      <article class="nextCard" role="listitem">
-        <div class="nextNum"><span>3</span></div>
-        <div class="nextTitle">You get a clear rollout plan</div>
-        <div class="nextBody">
-          You’ll receive next steps, how athlete enrollment works, and the fastest path to activating Momentum inside your facility.
-        </div>
-      </article>
-    </div>
-
-    <aside class="nextCTA" aria-label="Priority partner call">
-      <div class="nextCTAcopy">
-        <div class="nextCTAline1">Want priority onboarding?</div>
-        <div class="nextCTAline2">
-          Booking a call moves you to the front of the onboarding queue. Priority partner slots are limited each week.
-        </div>
+          <footer class="mq__nav">
+            <button class="mq__btn mq__btn--ghost" type="button" id="mqBack">Back</button>
+            <button class="mq__btn mq__btn--primary" type="button" id="mqNext">Continue</button>
+            <button class="mq__btn mq__btn--primary" type="button" id="mqSubmitBtn" style="display:none;">Submit</button>
+          </footer>
+        </form>
       </div>
+    </section>
 
-      <div class="nextCTAbtns">
-        <a class="btn btn--primary" href="https://calendly.com/tricitycanvasproducts/30min">Book Priority Partner Call</a>
-        <a class="btn btn--ghost" href="#why">Back to Why Momentum</a>
-      </div>
-    </aside>
+    <section class="nextWrap" id="next" aria-label="What happens next">
+      <div class="nextInner">
+        <header class="nextHead">
+          <p class="nextEyebrow">Next steps</p>
+          <h2 class="nextH">What happens after you apply</h2>
+          <p class="nextP">
+            Applications are reviewed in order. For faster decisions and a clear rollout plan,
+            book a Priority Partner Call and move to the front of the onboarding queue.
+          </p>
+        </header>
 
-  </div>
-</section>
+        <div class="nextRail" aria-hidden="true"></div>
 
-<footer class="momentumFooter" aria-label="Momentum footer">
-  <div class="mfInner">
+        <div class="nextGrid" role="list">
+          <article class="nextCard" role="listitem">
+            <div class="nextNum"><span>1</span></div>
+            <div class="nextTitle">Application received</div>
+            <div class="nextBody">
+              Your facility profile and training model enter our partner review queue.
+            </div>
+          </article>
 
-    <div class="mfTop">
-      <div class="mfBrand">
-        <div class="mfLogo">MOMENTUM<span>.</span></div>
-        <p class="mfThanks">
-          Thank you for trusting Momentum with your athlete’s future.
-          We’re honored to help turn dedication into opportunity.
-        </p>
-      </div>
+          <article class="nextCard" role="listitem">
+            <div class="nextNum nextNum--blue"><span>2</span></div>
+            <div class="nextTitle">Program-to-credit mapping</div>
+            <div class="nextBody">
+              We map your structure to course eligibility and confirm what can count.
+            </div>
+          </article>
 
-      <div class="mfContact">
-        <div class="mfLabel">Contact</div>
-        <a href="mailto:info@momentumportal.com">hq@momentum-athlete.com</a>
-        <div class="mfAddr">
-          3240 W Chain of Rocks Rd<br>
-          St. Louis, MO
+          <article class="nextCard" role="listitem">
+            <div class="nextNum"><span>3</span></div>
+            <div class="nextTitle">Rollout plan delivered</div>
+            <div class="nextBody">
+              You receive activation steps, enrollment flow, and documentation guidance.
+            </div>
+          </article>
         </div>
+
+        <aside class="nextCTA" aria-label="Priority partner call">
+          <div class="nextCTAcopy">
+            <div class="nextCTAline1">Want priority onboarding?</div>
+            <div class="nextCTAline2">
+              Priority call slots are limited each week and move your facility to the front of onboarding.
+            </div>
+          </div>
+
+          <div class="nextCTAbtns">
+            <a class="btn btn--primary" href="https://calendly.com/tricitycanvasproducts/30min">Book Priority Partner Call</a>
+            <a class="btn btn--ghost" href="#why">Back to Why Momentum</a>
+          </div>
+        </aside>
       </div>
-    </div>
-
-    <div class="mfBottom">
-      © <span id="mfYear"></span> Momentum. All rights reserved.
-    </div>
-
-  </div>
-</footer>
-
-<script>
-document.getElementById("mfYear").textContent = new Date().getFullYear();
-</script>
-
-
+    </section>
   </main>
 
-  <script src="club-app.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <footer class="momentumFooter" aria-label="Momentum footer">
+    <div class="mfInner">
+      <div class="mfTop">
+        <div class="mfBrand">
+          <div class="mfLogo">MOMENTUM<span>.</span></div>
+          <p class="mfThanks">
+            Thank you for trusting Momentum with your athletes and families.
+            We help turn training discipline into verified academic opportunity.
+          </p>
+        </div>
+
+        <div class="mfContact">
+          <div class="mfLabel">Contact</div>
+          <a href="mailto:hq@momentum-athlete.com">hq@momentum-athlete.com</a>
+          <div class="mfAddr">
+            3240 W Chain of Rocks Rd<br />
+            St. Louis, MO
+          </div>
+        </div>
+      </div>
+
+      <div class="mfBottom">
+        © <span id="mfYear"></span> Momentum. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("mfYear").textContent = new Date().getFullYear();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="./club-app.js" defer></script>
 </body>
 </html>
