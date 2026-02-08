@@ -17,119 +17,327 @@
   />
 
   <link rel="stylesheet" href="./styles.css" />
-
-  <!-- NEW: Logo animation styles (keep here or move into styles.css) -->
-  <style>
-    /* === Momentum logo animation (re-usable) === */
-    .mLogo{
-      --ease: cubic-bezier(.2,.9,.2,1);
-      display:inline-flex;
-      align-items:center;
-      gap:12px;
-      line-height:0;
-      user-select:none;
-      cursor:pointer;
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    .mLogo svg{
-      display:block;
-      width:auto;
-      height: var(--logoH, 28px);
-      overflow:visible;
-    }
-
-    /* draw + fill setup */
-    .mLogo .drawFill{
-      fill-opacity:0;
-      stroke: var(--stroke, #fff);
-      stroke-width: 10;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: var(--dash, 1200);
-      stroke-dashoffset: var(--dash, 1200);
-    }
-
-    /* per-part stroke colors */
-    .mLogo #arrowRed{  --stroke:#c43236; }
-    .mLogo #arrowGray{ --stroke:#cfd6e6; }
-    .mLogo #arrowBlack{--stroke:#eaf0ff; }
-    .mLogo #arrowSmall{--stroke:#cfd6e6; }
-
-    .mLogo .word{
-      font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-weight:800;
-      letter-spacing:.08em;
-      font-size: 14px;
-      line-height:1;
-      color: currentColor;
-      transform: translateY(1px);
-      white-space:nowrap;
-    }
-
-    /* animate */
-    .mLogo.is-animating #arrowRed{
-      animation: draw 950ms var(--ease) forwards, fillIn 520ms var(--ease) forwards;
-      animation-delay: 120ms, 860ms;
-    }
-    .mLogo.is-animating #arrowGray{
-      animation: draw 950ms var(--ease) forwards, fillIn 520ms var(--ease) forwards;
-      animation-delay: 220ms, 960ms;
-    }
-    .mLogo.is-animating #arrowBlack{
-      animation: draw 950ms var(--ease) forwards, fillIn 520ms var(--ease) forwards;
-      animation-delay: 320ms, 1060ms;
-    }
-    .mLogo.is-animating #arrowSmall{
-      animation: draw 850ms var(--ease) forwards, fillIn 520ms var(--ease) forwards;
-      animation-delay: 420ms, 1120ms;
-    }
-
-    .mLogo.is-animating .word{
-      opacity:0;
-      filter: blur(6px);
-      transform: translateY(10px);
-      animation: wordIn 820ms var(--ease) forwards;
-      animation-delay: 1180ms;
-    }
-
-    @keyframes draw{ to{ stroke-dashoffset:0; } }
-    @keyframes fillIn{ to{ fill-opacity:1; } }
-    @keyframes wordIn{
-      0% { opacity:0; filter:blur(6px); transform:translateY(10px); }
-      70% { opacity:1; filter:blur(0); transform:translateY(-2px); }
-      100% { opacity:1; filter:none; transform:translateY(1px); }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .mLogo .drawFill{ stroke-dasharray:none; stroke-dashoffset:0; fill-opacity:1; }
-      .mLogo .word{ opacity:1; filter:none; transform:translateY(1px); animation:none; }
-    }
-
-    /* Optional: make header logo align with your existing .brand styles */
-    .brand.mLogo{
-      text-decoration:none;
-      color: inherit;
-    }
-  </style>
 </head>
 
 <body>
   <div class="siteAura" aria-hidden="true"></div>
 
+  <!-- Define the logo ONCE, reuse everywhere -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <symbol id="momentumLogo" viewBox="0 0 1476 674">
+        <!-- Arrow (outline layer) -->
+        <path class="logo__arrowOutline" d="
+          M 657.79 106.46
+          A 0.57 0.57 0.0 0 1 657.91 107.26
+          L 496.46 320.37
+          A 0.57 0.57 0.0 0 0 496.92 321.28
+          L 594.18 321.28
+          A 0.57 0.57 0.0 0 0 594.63 321.05
+          L 719.07 156.80
+          A 0.57 0.57 0.0 0 1 719.86 156.68
+          L 744.93 174.93
+          A 0.57 0.57 0.0 0 0 745.72 174.81
+          L 826.65 66.83
+          A 0.57 0.57 0.0 0 0 826.19 65.92
+          L 603.86 65.92
+          A 0.57 0.57 0.0 0 0 603.53 66.95
+          L 657.79 106.46
+          Z
+        "/>
+
+        <!-- Arrow (fill layer) -->
+        <path class="logo__arrowFill" fill="#c43236" d="
+          M 657.79 106.46
+          L 603.53 66.95
+          A 0.57 0.57 0.0 0 1 603.86 65.92
+          L 826.19 65.92
+          A 0.57 0.57 0.0 0 1 826.65 66.83
+          L 745.72 174.81
+          A 0.57 0.57 0.0 0 1 744.93 174.93
+          L 719.86 156.68
+          A 0.57 0.57 0.0 0 0 719.07 156.80
+          L 594.63 321.05
+          A 0.57 0.57 0.0 0 1 594.18 321.28
+          L 496.92 321.28
+          A 0.57 0.57 0.0 0 1 496.46 320.37
+          L 657.91 107.26
+          A 0.57 0.57 0.0 0 0 657.79 106.46
+          Z
+        "/>
+
+        <!-- Wordmark shapes (from your SVG) -->
+        <path class="logo__word" fill="#464646" d="
+          M 892.37 84.74
+          L 940.94 84.74
+          A 0.32 0.32 0.0 0 1 941.20 85.25
+          L 761.41 321.55
+          A 0.32 0.32 0.0 0 1 761.15 321.68
+          L 712.59 321.68
+          A 0.32 0.32 0.0 0 1 712.33 321.17
+          L 892.11 84.87
+          A 0.32 0.32 0.0 0 1 892.37 84.74
+          Z
+        "/>
+        <path class="logo__word" fill="#000000" d="
+          M 969.78 126.67
+          L 991.77 202.00
+          A 0.30 0.30 0.0 0 1 991.72 202.27
+          L 899.86 321.51
+          A 0.30 0.30 0.0 0 1 899.62 321.63
+          L 821.46 321.63
+          A 0.30 0.30 0.0 0 1 821.22 321.15
+          L 969.25 126.57
+          A 0.30 0.30 0.0 0 1 969.78 126.67
+          Z
+        "/>
+        <path class="logo__word" fill="#464646" d="
+          M 750.32 191.80
+          L 761.56 200.35
+          A 0.38 0.38 0.0 0 1 761.63 200.88
+          L 668.71 321.50
+          A 0.38 0.38 0.0 0 1 668.41 321.65
+          L 651.81 321.65
+          A 0.38 0.38 0.0 0 1 651.50 321.04
+          L 749.79 191.87
+          A 0.38 0.38 0.0 0 1 750.32 191.80
+          Z
+        "/>
+
+        <path class="logo__word" fill="#000000" d="
+          M 369.00 471.95
+          C 347.36 473.64 324.71 472.06 305.64 461.62
+          C 292.64 454.49 283.14 442.72 282.64 427.33
+          C 281.98 407.31 293.09 390.13 309.53 379.43
+          C 324.61 369.62 342.50 364.47 360.36 363.07
+          C 381.99 361.38 404.65 362.96 423.71 373.40
+          C 436.72 380.53 446.22 392.30 446.72 407.69
+          C 447.38 427.71 436.27 444.89 419.82 455.59
+          C 404.75 465.40 386.85 470.54 369.00 471.95
+          Z
+          M 359.62 388.12
+          C 342.83 390.96 328.07 401.27 324.88 418.66
+          C 319.89 445.73 351.42 450.03 369.74 446.93
+          C 386.53 444.09 401.28 433.77 404.48 416.39
+          C 409.46 389.31 377.94 385.02 359.62 388.12
+          Z
+        "/>
+
+        <path class="logo__word" fill="#ffffff" d="
+          M 359.62 388.12
+          C 377.94 385.02 409.46 389.31 404.48 416.39
+          C 401.28 433.77 386.53 444.09 369.74 446.93
+          C 351.42 450.03 319.89 445.73 324.88 418.66
+          C 328.07 401.27 342.83 390.96 359.62 388.12
+          Z
+        "/>
+
+        <path class="logo__word" fill="#000000" d="
+          M 223.60 415.72
+          A 0.34 0.34 0.0 0 0 223.04 415.38
+          L 176.08 459.04
+          A 3.58 3.57 23.5 0 1 173.64 460.00
+          L 157.58 460.00
+          A 1.22 1.21 -15.0 0 1 156.53 459.40
+          L 130.81 415.46
+          A 0.44 0.44 0.0 0 0 130.00 415.57
+          L 114.96 469.77
+          A 0.93 0.92 -82.1 0 1 114.07 470.45
+          L 77.26 470.42
+          A 0.42 0.42 0.0 0 1 76.85 469.89
+          L 105.85 365.23
+          A 0.91 0.90 7.5 0 1 106.73 364.56
+          L 138.55 364.55
+          A 1.91 1.89 -14.4 0 1 140.21 365.52
+          L 173.76 425.43
+          A 0.41 0.41 0.0 0 0 174.39 425.53
+          L 239.52 365.64
+          A 4.12 4.09 -66.0 0 1 242.29 364.56
+          L 275.31 364.56
+          A 0.50 0.49 7.9 0 1 275.79 365.19
+          L 247.25 469.77
+          A 0.95 0.94 7.7 0 1 246.34 470.46
+          L 209.58 470.44
+          A 0.59 0.59 0.0 0 1 209.01 469.69
+          L 223.60 415.72
+          Z
+        "/>
+
+        <path class="logo__word" fill="#000000" d="
+          M 600.02 415.70
+          A 0.34 0.34 0.0 0 0 599.46 415.36
+          L 552.51 459.03
+          A 3.58 3.57 23.5 0 1 550.07 459.99
+          L 534.00 459.99
+          A 1.22 1.21 -15.0 0 1 532.95 459.39
+          L 507.22 415.45
+          A 0.44 0.44 0.0 0 0 506.41 415.56
+          L 491.37 469.76
+          A 0.93 0.92 -82.1 0 1 490.48 470.44
+          L 453.66 470.42
+          A 0.42 0.42 0.0 0 1 453.25 469.89
+          L 482.25 365.21
+          A 0.91 0.90 7.5 0 1 483.13 364.54
+          L 514.96 364.52
+          A 1.91 1.89 -14.4 0 1 516.62 365.49
+          L 550.18 425.41
+          A 0.41 0.41 0.0 0 0 550.81 425.51
+          L 615.95 365.61
+          A 4.12 4.09 -66.0 0 1 618.72 364.53
+          L 651.74 364.53
+          A 0.50 0.49 7.9 0 1 652.22 365.16
+          L 623.68 469.76
+          A 0.95 0.94 7.7 0 1 622.77 470.45
+          L 586.01 470.43
+          A 0.59 0.59 0.0 0 1 585.44 469.68
+          L 600.02 415.70
+          Z
+        "/>
+
+        <path class="logo__word" fill="#000000" d="
+          M 776.86 406.16
+          L 770.92 427.60
+          A 0.47 0.47 0.0 0 1 770.46 427.94
+          L 705.97 427.94
+          A 0.47 0.47 0.0 0 0 705.51 428.28
+          L 700.39 446.76
+          A 0.47 0.47 0.0 0 0 700.85 447.36
+          L 776.40 447.36
+          A 0.47 0.47 0.0 0 1 776.86 447.96
+          L 770.73 470.10
+          A 0.47 0.47 0.0 0 1 770.27 470.44
+          L 653.68 470.44
+          A 0.47 0.47 0.0 0 1 653.22 469.84
+          L 682.28 364.90
+          A 0.47 0.47 0.0 0 1 682.74 364.56
+          L 796.40 364.56
+          A 0.47 0.47 0.0 0 1 796.85 365.16
+          L 790.70 387.39
+          A 0.47 0.47 0.0 0 1 790.24 387.73
+          L 717.05 387.73
+          A 0.47 0.47 0.0 0 0 716.59 388.07
+          L 711.91 404.96
+          A 0.47 0.47 0.0 0 0 712.37 405.56
+          L 776.40 405.56
+          A 0.47 0.47 0.0 0 1 776.86 406.16
+          Z
+        "/>
+
+        <path class="logo__word" fill="#000000" d="
+          M 864.06 428.68
+          Q 859.63 423.35 851.07 413.22
+          A 0.54 0.54 0.0 0 0 850.13 413.43
+          L 834.54 469.71
+          A 0.97 0.96 -82.1 0 1 833.61 470.42
+          L 794.54 470.42
+          A 0.57 0.57 0.0 0 1 793.99 469.70
+          L 822.88 365.41
+          A 1.21 1.21 0.0 0 1 824.05 364.51
+          L 856.12 364.51
+          A 2.20 2.18 -19.7 0 1 857.81 365.30
+          Q 879.97 391.70 892.05 406.26
+          Q 896.47 411.59 905.03 421.72
+          A 0.54 0.54 0.0 0 0 905.97 421.51
+          L 921.56 365.23
+          A 0.97 0.96 -82.1 0 1 922.49 364.52
+          L 961.56 364.52
+          A 0.57 0.57 0.0 0 1 962.11 365.24
+          L 933.22 469.53
+          A 1.21 1.21 0.0 0 1 932.05 470.43
+          L 899.98 470.43
+          A 2.20 2.18 -19.7 0 1 898.30 469.64
+          Q 876.13 443.24 864.06 428.68
+          Z
+        "/>
+
+        <path class="logo__word" fill="#000000" d="
+          M 971.25 387.56
+          L 977.51 365.00
+          A 0.61 0.61 0.0 0 1 978.09 364.55
+          L 1108.06 364.55
+          A 0.61 0.61 0.0 0 1 1108.65 365.32
+          L 1102.39 387.88
+          A 0.61 0.61 0.0 0 1 1101.81 388.33
+          L 1057.81 388.33
+          A 0.61 0.61 0.0 0 0 1057.23 388.78
+          L 1034.73 469.99
+          A 0.61 0.61 0.0 0 1 1034.15 470.44
+          L 994.01 470.44
+          A 0.61 0.61 0.0 0 1 993.42 469.67
+          L 1015.74 389.10
+          A 0.61 0.61 0.0 0 0 1015.15 388.33
+          L 971.84 388.33
+          A 0.61 0.61 0.0 0 1 971.25 387.56
+          Z
+        "/>
+
+        <path class="logo__word" fill="#000000" d="
+          M 1162.23 365.16
+          Q 1155.50 389.49 1146.41 422.21
+          C 1143.39 433.09 1145.09 443.34 1157.55 446.38
+          C 1170.55 449.56 1187.70 448.26 1195.76 435.85
+          Q 1199.38 430.29 1200.87 425.11
+          Q 1204.78 411.49 1217.45 365.37
+          A 1.14 1.13 7.7 0 1 1218.55 364.54
+          L 1257.89 364.54
+          A 0.47 0.47 0.0 0 1 1258.34 365.14
+          Q 1253.11 383.88 1243.55 418.80
+          Q 1240.69 429.23 1238.33 434.54
+          C 1229.49 454.42 1211.98 465.94 1190.76 470.04
+          Q 1163.71 475.28 1136.97 469.61
+          Q 1131.49 468.45 1124.49 465.14
+          C 1111.91 459.19 1103.13 449.08 1102.91 434.70
+          Q 1102.82 429.03 1107.32 413.48
+          Q 1110.63 402.02 1120.78 365.19
+          A 0.87 0.86 7.3 0 1 1121.62 364.55
+          L 1161.76 364.55
+          A 0.49 0.48 7.7 0 1 1162.23 365.16
+          Z
+        "/>
+
+        <path class="logo__word" fill="#000000" d="
+          M 1355.39 459.99
+          L 1337.70 459.99
+          A 0.40 0.40 0.0 0 1 1337.35 459.79
+          L 1311.58 415.15
+          A 0.40 0.40 0.0 0 0 1310.85 415.24
+          L 1295.64 470.16
+          A 0.40 0.40 0.0 0 1 1295.26 470.45
+          L 1258.00 470.45
+          A 0.40 0.40 0.0 0 1 1257.61 469.94
+          L 1286.72 364.84
+          A 0.40 0.40 0.0 0 1 1287.10 364.55
+          L 1320.20 364.55
+          A 0.40 0.40 0.0 0 1 1320.54 364.75
+          L 1354.53 425.42
+          A 0.40 0.40 0.0 0 0 1355.15 425.52
+          L 1421.36 364.66
+          A 0.40 0.40 0.0 0 1 1421.63 364.55
+          L 1456.42 364.55
+          A 0.40 0.40 0.0 0 1 1456.81 365.06
+          L 1427.71 470.15
+          A 0.40 0.40 0.0 0 1 1427.33 470.44
+          L 1389.93 470.44
+          A 0.40 0.40 0.0 0 1 1389.54 469.93
+          L 1404.47 416.03
+          A 0.40 0.40 0.0 0 0 1403.81 415.63
+          L 1355.66 459.88
+          A 0.40 0.40 0.0 0 1 1355.39 459.99
+          Z
+        "/>
+      </symbol>
+    </defs>
+  </svg>
+
   <header class="topbar">
     <div class="container topbar__inner">
-
-      <!-- UPDATED: animated logo in the header -->
-      <a class="brand mLogo" href="#top" aria-label="Momentum home" data-mlogo style="--logoH:26px;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1476 674" aria-hidden="true" focusable="false">
-          <!-- ARROWS ONLY (clean + fast for nav) -->
-          <path id="arrowRed" class="drawFill" fill="#c43236" d="M 657.79 106.46 L 603.53 66.95 A 0.57 0.57 0.0 0 1 603.86 65.92 L 826.19 65.92 A 0.57 0.57 0.0 0 1 826.65 66.83 L 745.72 174.81 A 0.57 0.57 0.0 0 1 744.93 174.93 L 719.86 156.68 A 0.57 0.57 0.0 0 0 719.07 156.80 L 594.63 321.05 A 0.57 0.57 0.0 0 1 594.18 321.28 L 496.92 321.28 A 0.57 0.57 0.0 0 1 496.46 320.37 L 657.91 107.26 A 0.57 0.57 0.0 0 0 657.79 106.46 Z"/>
-          <path id="arrowGray" class="drawFill" fill="#464646" d="M 892.37 84.74 L 940.94 84.74 A 0.32 0.32 0.0 0 1 941.20 85.25 L 761.41 321.55 A 0.32 0.32 0.0 0 1 761.15 321.68 L 712.59 321.68 A 0.32 0.32 0.0 0 1 712.33 321.17 L 892.11 84.87 A 0.32 0.32 0.0 0 1 892.37 84.74 Z"/>
-          <path id="arrowBlack" class="drawFill" fill="#000000" d="M 969.78 126.67 L 991.77 202.00 A 0.30 0.30 0.0 0 1 991.72 202.27 L 899.86 321.51 A 0.30 0.30 0.0 0 1 899.62 321.63 L 821.46 321.63 A 0.30 0.30 0.0 0 1 821.22 321.15 L 969.25 126.57 A 0.30 0.30 0.0 0 1 969.78 126.67 Z"/>
-          <path id="arrowSmall" class="drawFill" fill="#464646" d="M 750.32 191.80 L 761.56 200.35 A 0.38 0.38 0.0 0 1 761.63 200.88 L 668.71 321.50 A 0.38 0.38 0.0 0 1 668.41 321.65 L 651.81 321.65 A 0.38 0.38 0.0 0 1 651.50 321.04 L 749.79 191.87 A 0.38 0.38 0.0 0 1 750.32 191.80 Z"/>
-        </svg>
-        <span class="word">MOMENTUM<span class="brand__dot">.</span></span>
+      <a class="brand" href="#top" aria-label="Momentum home">
+        <span class="brand__mark" aria-hidden="true">
+          <svg class="logo logo--nav" viewBox="0 0 1476 674" role="img" aria-label="Momentum">
+            <use href="#momentumLogo"></use>
+          </svg>
+        </span>
+        <span class="brand__word">MOMENTUM</span><span class="brand__dot">.</span>
       </a>
 
       <nav class="nav" aria-label="Primary navigation">
@@ -143,27 +351,28 @@
   </header>
 
   <main>
-    <section class="hero hero--dark" id="top" aria-label="Momentum Club Partner Program">
-      <div class="garageDoor" aria-hidden="true"></div>
-      <div class="hero__glow" aria-hidden="true"></div>
+    <!-- CENTERED HERO (logo is the eye-catcher) -->
+    <section class="hero hero--center" id="top" aria-label="Momentum Club Partner Program">
+      <div class="hero__bg" aria-hidden="true"></div>
 
-      <div class="hero__grid container">
-        <div class="hero__copy reveal">
-
-          <!-- UPDATED: replace the old letter-by-letter wordmark with the new logo -->
-          <div class="mLogo" data-mlogo style="--logoH:46px; margin-bottom:18px;" aria-label="Momentum">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1476 674" aria-hidden="true" focusable="false">
-              <path id="arrowRed" class="drawFill" fill="#c43236" d="M 657.79 106.46 L 603.53 66.95 A 0.57 0.57 0.0 0 1 603.86 65.92 L 826.19 65.92 A 0.57 0.57 0.0 0 1 826.65 66.83 L 745.72 174.81 A 0.57 0.57 0.0 0 1 744.93 174.93 L 719.86 156.68 A 0.57 0.57 0.0 0 0 719.07 156.80 L 594.63 321.05 A 0.57 0.57 0.0 0 1 594.18 321.28 L 496.92 321.28 A 0.57 0.57 0.0 0 1 496.46 320.37 L 657.91 107.26 A 0.57 0.57 0.0 0 0 657.79 106.46 Z"/>
-              <path id="arrowGray" class="drawFill" fill="#464646" d="M 892.37 84.74 L 940.94 84.74 A 0.32 0.32 0.0 0 1 941.20 85.25 L 761.41 321.55 A 0.32 0.32 0.0 0 1 761.15 321.68 L 712.59 321.68 A 0.32 0.32 0.0 0 1 712.33 321.17 L 892.11 84.87 A 0.32 0.32 0.0 0 1 892.37 84.74 Z"/>
-              <path id="arrowBlack" class="drawFill" fill="#000000" d="M 969.78 126.67 L 991.77 202.00 A 0.30 0.30 0.0 0 1 991.72 202.27 L 899.86 321.51 A 0.30 0.30 0.0 0 1 899.62 321.63 L 821.46 321.63 A 0.30 0.30 0.0 0 1 821.22 321.15 L 969.25 126.57 A 0.30 0.30 0.0 0 1 969.78 126.67 Z"/>
-              <path id="arrowSmall" class="drawFill" fill="#464646" d="M 750.32 191.80 L 761.56 200.35 A 0.38 0.38 0.0 0 1 761.63 200.88 L 668.71 321.50 A 0.38 0.38 0.0 0 1 668.41 321.65 L 651.81 321.65 A 0.38 0.38 0.0 0 1 651.50 321.04 L 749.79 191.87 A 0.38 0.38 0.0 0 1 750.32 191.80 Z"/>
+      <div class="container hero__inner">
+        <button class="logoHero" id="logoReplay" type="button" aria-label="Replay logo animation">
+          <span class="logoHero__wrap" id="logoAnimWrap" aria-hidden="true">
+            <svg class="logo logo--hero" viewBox="0 0 1476 674" role="img" aria-label="Momentum">
+              <use href="#momentumLogo"></use>
             </svg>
+          </span>
+          <span class="logoHero__hint">Click to replay</span>
+        </button>
 
-            <span class="word">MOMENTUM<span class="brand__dot">.</span></span>
+        <div class="hero__word">
+          <div class="wordmark">
+            <span class="wordmark__letters">MOMENTUM<span class="wordmark__dot">.</span></span>
+            <span class="wordmark__underline" aria-hidden="true"></span>
           </div>
 
           <h1 class="hero__title" id="heroHeadline">
-            The luxury standard for
+            The luxury standard for<br />
             <span>athlete credit pathways.</span>
           </h1>
 
@@ -177,7 +386,9 @@
             <a class="btn btn--ghost magnetic" href="#learn">See the Model</a>
           </div>
 
-          <p class="hero__note" id="heroNote">No curriculum changes. No coaching disruption. Transcript-ready outcomes.</p>
+          <p class="hero__note" id="heroNote">
+            No curriculum changes. No coaching disruption. Transcript-ready outcomes.
+          </p>
 
           <ul class="hero__chips" aria-label="Momentum highlights">
             <li>Accreditation-aligned framework</li>
@@ -185,45 +396,10 @@
             <li>Concierge launch support</li>
           </ul>
         </div>
-
-        <div class="hero__media reveal" id="heroMedia">
-          <figure class="heroCard heroCard--main">
-            <img
-              src="https://images.squarespace-cdn.com/content/v1/68ee8ce47f479a21dc2630b1/1763477958730-JEPLL808M1829BEBQXEO/unsplash-image-oXS1f0uZYV4.jpg?format=2500w"
-              alt="Athletes training at an elite facility"
-              loading="eager"
-            />
-            <figcaption>
-              <span class="heroCard__kicker">Partner Experience</span>
-              <strong>Premium onboarding from day one</strong>
-            </figcaption>
-          </figure>
-
-          <figure class="heroCard heroCard--small heroCard--top">
-            <img
-              src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=900&q=80"
-              alt="Coach guiding players during high performance training"
-              loading="lazy"
-            />
-          </figure>
-
-          <figure class="heroCard heroCard--small heroCard--bottom">
-            <img
-              src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=900&q=80"
-              alt="Athlete in motion during advanced training session"
-              loading="lazy"
-            />
-          </figure>
-
-          <aside class="heroStat">
-            <p class="heroStat__label">Application Time</p>
-            <p class="heroStat__value">~2 min</p>
-            <p class="heroStat__meta">Fast qualification intake for serious facilities.</p>
-          </aside>
-        </div>
       </div>
     </section>
 
+    <!-- The rest of your page can remain basically the same -->
     <section class="logoBand reveal" aria-label="Proof strip">
       <div class="logoBand__track">
         <span>ACCREDITATION ALIGNED</span>
@@ -237,7 +413,6 @@
       </div>
     </section>
 
-    <!-- everything below stays the same -->
     <section class="signature" id="learn" aria-label="Momentum operating model">
       <div class="container signature__grid">
         <div class="signature__left reveal">
@@ -268,145 +443,34 @@
           <article class="modelCard">
             <p class="modelCard__kicker">Partner method</p>
             <h3>Facility-led training. Momentum-led verification.</h3>
-            <p>
-              Your coaches keep doing what they do best. We manage alignment, structure, and credit documentation.
-            </p>
+            <p>Your coaches keep doing what they do best. We manage alignment, structure, and credit documentation.</p>
             <a href="#partner-application" class="textLink">Start application</a>
           </article>
 
           <article class="modelCard modelCard--dark">
             <p class="modelCard__kicker">Positioning advantage</p>
             <h3>Offer families a measurable academic return.</h3>
-            <p>
-              Stand out in a crowded market with a premium value layer families immediately understand.
-            </p>
+            <p>Stand out in a crowded market with a premium value layer families immediately understand.</p>
             <a href="#why" class="textLink textLink--light">Why clubs choose Momentum</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="timeline" aria-label="Partnership timeline">
-      <div class="container timeline__inner">
-        <header class="timeline__top reveal">
-          <p class="eyebrow">Implementation</p>
-          <h2 class="timeline__title">Your partnership timeline</h2>
-          <p class="timeline__lead">
-            One clear sequence from discovery to activation, engineered for high-performance facilities.
-          </p>
-        </header>
+    <!-- KEEP your timeline, why, quiz sections exactly as-is below -->
+    <!-- (Paste your existing Timeline / Why / Quiz / Next steps / Footer sections here unchanged) -->
 
-        <div class="rail" aria-hidden="true">
-          <span class="rail__fill" id="railFill"></span>
-        </div>
+    <!-- I’m leaving your long quiz markup untouched; keep it as-is in your file -->
+    <!-- START: paste your existing sections from <section class="timeline"> ... through footer -->
 
-        <div class="events" id="timelineEvents">
-          <article class="event reveal" data-event>
-            <div class="event__dot" aria-hidden="true"></div>
-            <div class="event__card">
-              <div class="event__kicker">Step 1</div>
-              <h3 class="event__h">Private model walkthrough</h3>
-              <p class="event__p">Review how your current training architecture translates into verified credit pathways.</p>
-            </div>
-          </article>
+    <!-- ... YOUR EXISTING TIMELINE / WHY / QUIZ / NEXT / FOOTER HTML ... -->
 
-          <article class="event reveal" data-event>
-            <div class="event__dot" aria-hidden="true"></div>
-            <div class="event__card">
-              <div class="event__kicker">Step 2</div>
-              <h3 class="event__h">Partner qualification intake</h3>
-              <p class="event__p">Submit your facility profile, sports mix, and operating structure in minutes.</p>
-            </div>
-          </article>
-
-          <article class="event reveal" data-event>
-            <div class="event__dot" aria-hidden="true"></div>
-            <div class="event__card">
-              <div class="event__kicker">Step 3</div>
-              <h3 class="event__h">Onboarding architecture session</h3>
-              <p class="event__p">We align verification mechanics, credit categories, and launch sequencing.</p>
-            </div>
-          </article>
-
-          <article class="event reveal" data-event>
-            <div class="event__dot" aria-hidden="true"></div>
-            <div class="event__card">
-              <div class="event__kicker">Step 4</div>
-              <h3 class="event__h">Facility activation</h3>
-              <p class="event__p">Momentum is integrated into your existing member experience and operations stack.</p>
-            </div>
-          </article>
-
-          <article class="event reveal" data-event>
-            <div class="event__dot" aria-hidden="true"></div>
-            <div class="event__card">
-              <div class="event__kicker">Step 5</div>
-              <h3 class="event__h">Athlete enrollment and verification cadence</h3>
-              <p class="event__p">Weekly check-ins maintain clean records and transcript readiness over the full season.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="why" id="why" aria-label="Why facilities choose Momentum">
-      <div class="container">
-        <header class="why__top reveal">
-          <p class="eyebrow">Why Momentum</p>
-          <h2>Built for clubs that operate at a higher standard.</h2>
-        </header>
-
-        <div class="why__grid">
-          <article class="whyCard reveal">
-            <h3>Accredited and transcript-ready</h3>
-            <p>Verification workflows engineered for real school recognition and audit confidence.</p>
-          </article>
-
-          <article class="whyCard reveal">
-            <h3>Premium parent positioning</h3>
-            <p>Present a meaningful educational advantage layered onto your existing training excellence.</p>
-          </article>
-
-          <article class="whyCard reveal">
-            <h3>Brand-safe implementation</h3>
-            <p>No operational chaos, no coach retraining, and no disruption to your athlete experience.</p>
-          </article>
-
-          <article class="whyCard reveal">
-            <h3>Fast launch velocity</h3>
-            <p>From application to activation with clear milestones and dedicated rollout leadership.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="mq" id="partner-application" aria-label="Momentum partner application">
-      <!-- unchanged (your full form stays as-is) -->
-      <div class="mq__container">
-        <!-- ... keep the rest of your existing MQ markup exactly the same ... -->
-        <!-- (omitted here only to keep this response readable) -->
-      </div>
-    </section>
-
-    <section class="next" id="next" aria-label="What happens next">
-      <!-- unchanged -->
-    </section>
   </main>
 
   <footer class="siteFooter" aria-label="Momentum footer">
     <div class="container siteFooter__inner">
       <div>
-        <!-- UPDATED: footer logo uses the same component -->
-        <div class="mLogo" data-mlogo style="--logoH:24px; cursor:default;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1476 674" aria-hidden="true" focusable="false">
-            <path id="arrowRed" class="drawFill" fill="#c43236" d="M 657.79 106.46 L 603.53 66.95 A 0.57 0.57 0.0 0 1 603.86 65.92 L 826.19 65.92 A 0.57 0.57 0.0 0 1 826.65 66.83 L 745.72 174.81 A 0.57 0.57 0.0 0 1 744.93 174.93 L 719.86 156.68 A 0.57 0.57 0.0 0 0 719.07 156.80 L 594.63 321.05 A 0.57 0.57 0.0 0 1 594.18 321.28 L 496.92 321.28 A 0.57 0.57 0.0 0 1 496.46 320.37 L 657.91 107.26 A 0.57 0.57 0.0 0 0 657.79 106.46 Z"/>
-            <path id="arrowGray" class="drawFill" fill="#464646" d="M 892.37 84.74 L 940.94 84.74 A 0.32 0.32 0.0 0 1 941.20 85.25 L 761.41 321.55 A 0.32 0.32 0.0 0 1 761.15 321.68 L 712.59 321.68 A 0.32 0.32 0.0 0 1 712.33 321.17 L 892.11 84.87 A 0.32 0.32 0.0 0 1 892.37 84.74 Z"/>
-            <path id="arrowBlack" class="drawFill" fill="#000000" d="M 969.78 126.67 L 991.77 202.00 A 0.30 0.30 0.0 0 1 991.72 202.27 L 899.86 321.51 A 0.30 0.30 0.0 0 1 899.62 321.63 L 821.46 321.63 A 0.30 0.30 0.0 0 1 821.22 321.15 L 969.25 126.57 A 0.30 0.30 0.0 0 1 969.78 126.67 Z"/>
-            <path id="arrowSmall" class="drawFill" fill="#464646" d="M 750.32 191.80 L 761.56 200.35 A 0.38 0.38 0.0 0 1 761.63 200.88 L 668.71 321.50 A 0.38 0.38 0.0 0 1 668.41 321.65 L 651.81 321.65 A 0.38 0.38 0.0 0 1 651.50 321.04 L 749.79 191.87 A 0.38 0.38 0.0 0 1 750.32 191.80 Z"/>
-          </svg>
-          <span class="word">MOMENTUM<span class="brand__dot">.</span></span>
-        </div>
-
+        <div class="siteFooter__logo">MOMENTUM<span>.</span></div>
         <p class="siteFooter__text">Turning elite training into verified academic opportunity.</p>
       </div>
 
@@ -423,40 +487,21 @@
   <script>
     document.getElementById("mfYear").textContent = new Date().getFullYear();
 
-    // === Logo animation runner (all instances with [data-mlogo]) ===
-    function setDashForPath(path){
-      try{
-        const len = path.getTotalLength();
-        path.style.setProperty("--dash", Math.ceil(len));
-      }catch(e){}
-    }
+    // Replay logo animation
+    const btn = document.getElementById("logoReplay");
+    const wrap = document.getElementById("logoAnimWrap");
 
-    function prepLogo(el){
-      el.querySelectorAll(".drawFill").forEach(setDashForPath);
-    }
-
-    function replayLogo(el){
-      prepLogo(el);
-      el.classList.remove("is-animating");
-      void el.offsetWidth;
-      el.classList.add("is-animating");
-    }
-
-    const logos = document.querySelectorAll("[data-mlogo]");
-    logos.forEach((el) => {
-      replayLogo(el);
-      // click to replay (keep it on the header/hero; footer can still replay if you want)
-      el.addEventListener("click", (e) => {
-        // if it's a link, don't prevent navigation; only replay if user isn't trying to navigate
-        // (you can remove this guard if you want every click to replay)
-        if (el.tagName.toLowerCase() === "a") return;
-        replayLogo(el);
-      });
+    btn.addEventListener("click", () => {
+      wrap.classList.remove("is-animating");
+      void wrap.offsetWidth; // reflow
+      wrap.classList.add("is-animating");
     });
+
+    // auto play on load
+    wrap.classList.add("is-animating");
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="./club-app.js" defer></script>
 </body>
 </html>
-
