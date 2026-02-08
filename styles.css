@@ -3152,3 +3152,278 @@ section:empty{
     opacity 700ms ease,
     transform 900ms cubic-bezier(.16,1,.3,1);
 }
+
+
+/* =========================
+   WHY (Black / Red / White)
+   High-end, editorial, no “SaaS cards”
+========================= */
+
+.whyBlk{
+  --bg0:#050607;
+  --bg1:#0b0e11;
+  --ink:#f3f4f6;
+  --muted:rgba(243,244,246,.72);
+  --line:rgba(255,255,255,.10);
+  --line2:rgba(255,255,255,.14);
+  --red:#c43236;
+
+  position:relative;
+  overflow:hidden;
+  padding: clamp(76px, 9vh, 120px) 0;
+  background: linear-gradient(180deg, var(--bg0), var(--bg1));
+  color: var(--ink);
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* Subtle brand atmosphere (no neon, no gamer glow) */
+.whyBlk::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  background:
+    radial-gradient(900px 520px at 14% 18%, rgba(196,50,54,.22), transparent 60%),
+    radial-gradient(820px 520px at 88% 26%, rgba(255,255,255,.10), transparent 62%),
+    radial-gradient(1100px 720px at 50% 120%, rgba(42,46,53,.55), transparent 62%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.whyBlk__inner{ position:relative; z-index:1; }
+
+/* Header */
+.whyBlk__header{
+  max-width: 920px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.whyBlk__eyebrow{
+  margin: 0 0 12px;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgba(243,244,246,.62);
+}
+
+.whyBlk__title{
+  margin: 0;
+  font-family: "Bodoni Moda", serif;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  font-size: clamp(38px, 4.8vw, 64px);
+  line-height: 1.05;
+}
+
+.whyBlk__accent{
+  position:relative;
+  display:inline-block;
+  padding: 0 .06em;
+}
+
+.whyBlk__accent::after{
+  content:"";
+  position:absolute;
+  left: 0;
+  right: 0;
+  bottom: .08em;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(196,50,54,.95), transparent);
+  opacity: .9;
+}
+
+.whyBlk__lead{
+  margin: 14px auto 0;
+  max-width: 760px;
+  color: rgba(243,244,246,.72);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* Grid */
+.whyBlk__grid{
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+/* Proof panel */
+.whyBlk__proof{
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 22px 70px rgba(0,0,0,.35);
+  position: relative;
+  overflow:hidden;
+}
+
+/* single signature: thin red rule on the left */
+.whyBlk__proof::before{
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 3px;
+  background: linear-gradient(to bottom, rgba(196,50,54,.95), rgba(196,50,54,.22));
+}
+
+.whyBlk__proofTop{ padding-left: 6px; }
+
+.whyBlk__sig{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom: 14px;
+}
+
+.whyBlk__sigLine{
+  width: 56px;
+  height: 1px;
+  background: rgba(243,244,246,.22);
+}
+
+.whyBlk__sigDot{
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--red);
+  box-shadow: 0 0 0 6px rgba(196,50,54,.12);
+}
+
+.whyBlk__proofH{
+  margin: 0;
+  font-family: "Bodoni Moda", serif;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  font-size: 26px;
+  line-height: 1.12;
+}
+
+.whyBlk__proofP{
+  margin: 10px 0 0;
+  color: rgba(243,244,246,.70);
+  line-height: 1.65;
+}
+
+/* Stats inside proof */
+.whyBlk__stats{
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.whyBlk__stat{
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 16px;
+  padding: 14px 14px;
+}
+
+.whyBlk__statK{
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.whyBlk__statL{
+  margin-top: 4px;
+  color: rgba(243,244,246,.62);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Reasons (editorial rows, not “cards”) */
+.whyBlk__reasons{
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.02);
+  border-radius: 22px;
+  overflow:hidden;
+  box-shadow: 0 22px 70px rgba(0,0,0,.30);
+}
+
+.whyBlk__reason{
+  padding: 18px 18px;
+}
+
+.whyBlk__reason + .whyBlk__reason{
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.whyBlk__reasonHdr{
+  display:flex;
+  gap: 14px;
+  align-items: baseline;
+}
+
+.whyBlk__num{
+  font-family: "Bodoni Moda", serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: rgba(243,244,246,.38);
+  line-height: 1;
+  min-width: 30px;
+}
+
+.whyBlk__h{
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -.01em;
+}
+
+.whyBlk__p{
+  margin: 8px 0 0 44px; /* aligns under title (after number) */
+  color: rgba(243,244,246,.70);
+  line-height: 1.65;
+}
+
+/* CTA */
+.whyBlk__cta{
+  margin-top: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 22px;
+  padding: 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+  box-shadow: 0 22px 70px rgba(0,0,0,.28);
+}
+
+.whyBlk__ctaH{ margin:0; font-size: 18px; }
+.whyBlk__ctaP{ margin: 4px 0 0; color: rgba(243,244,246,.62); font-size: 13px; }
+
+.whyBlk__ctaBtns{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Motion tuning inside dark section (calm, not snappy) */
+.whyBlk .reveal{
+  transition:
+    opacity 720ms ease,
+    transform 950ms cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .whyBlk__grid{
+    grid-template-columns: 1fr;
+  }
+  .whyBlk__header{
+    text-align: left;
+    margin-bottom: 26px;
+  }
+  .whyBlk__lead{ margin-left: 0; margin-right: 0; }
+}
+
+@media (max-width: 560px){
+  .whyBlk__p{ margin-left: 0; }
+  .whyBlk__reasonHdr{ align-items: flex-start; }
+  .whyBlk__cta{ flex-direction: column; align-items: flex-start; }
+}
+
