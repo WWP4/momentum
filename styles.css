@@ -2425,3 +2425,10 @@ section:empty{
   border-color:rgba(70,100,199,.22);
   background:rgba(70,100,199,.09);
 }
+
+
+.logoSvg.play .draw{
+  animation:
+    strokeDraw var(--drawDur, 5200ms) cubic-bezier(.12,.78,.12,1) forwards,
+    fillIn var(--fillDur, 1500ms) cubic-bezier(.18,.85,.18,1) forwards;
+}
