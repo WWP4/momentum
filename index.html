@@ -588,43 +588,45 @@
   </main>
 
   <script>
-    // Slow, elegant outline->fill. No click-to-replay. Plays once on load.
-    const svg = document.getElementById('momentumLogo');
+  const svg = document.getElementById('momentumLogo');
 
-    function prepAndPlay(){
-      const paths = Array.from(svg.querySelectorAll('.draw'));
+  function prepAndPlay(){
+    const paths = Array.from(svg.querySelectorAll('.draw'));
 
-      // Premium pacing
-      const baseDelay = 200;     // ms
-      const step = 110;          // ms stagger between pieces (slower than before)
-      const drawDur = 2400;      // ms stroke draw
-      const fillDur = 900;       // ms fill in
+    // MUCH slower + premium pacing
+    const baseDelay = 450;      // ms before anything starts
+    const step = 160;           // ms stagger between pieces (still intentional, not frantic)
+    const drawDur = 5200;       // ms stroke draw (big change)
+    const fillDur = 1500;       // ms fill fade
+    const fillDelayRed = 3200;  // ms after stroke starts (red fills earlier)
+    const fillDelayOther = 3600;// ms after stroke starts (others fill a touch later)
 
-      paths.forEach((p, i) => {
-        let len = 1000;
-        try { len = Math.ceil(p.getTotalLength()); } catch(e) {}
+    paths.forEach((p, i) => {
+      let len = 1000;
+      try { len = Math.ceil(p.getTotalLength()); } catch(e) {}
 
-        p.style.setProperty('--len', len);
-        p.style.strokeDasharray = len;
-        p.style.strokeDashoffset = len;
+      p.style.setProperty('--len', len);
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
 
-        p.style.setProperty('--drawDur', drawDur + 'ms');
-        p.style.setProperty('--fillDur', fillDur + 'ms');
+      p.style.setProperty('--drawDur', drawDur + 'ms');
+      p.style.setProperty('--fillDur', fillDur + 'ms');
 
-        const delay = baseDelay + (i * step);
-        p.style.setProperty('--delay', delay + 'ms');
+      const delay = baseDelay + (i * step);
+      p.style.setProperty('--delay', delay + 'ms');
 
-        // Fill timing: red settles a touch earlier, blacks a touch later
-        const fillDelay = p.classList.contains('is-red') ? 1500 : 1650;
-        p.style.setProperty('--fillDelay', fillDelay + 'ms');
-      });
+      const fillDelay = p.classList.contains('is-red') ? fillDelayRed : fillDelayOther;
+      p.style.setProperty('--fillDelay', fillDelay + 'ms');
+    });
 
-      svg.classList.remove('play');
-      void svg.getBoundingClientRect(); // reflow
-      svg.classList.add('play');
-    }
+    svg.classList.remove('play');
+    void svg.getBoundingClientRect();
+    svg.classList.add('play');
+  }
 
-    window.addEventListener('load', prepAndPlay);
-  </script>
+  window.addEventListener('load', prepAndPlay);
+</script>
+
+ 
 </body>
 </html>
