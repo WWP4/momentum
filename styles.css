@@ -2432,3 +2432,29 @@ section:empty{
     strokeDraw var(--drawDur, 5200ms) cubic-bezier(.12,.78,.12,1) forwards,
     fillIn var(--fillDur, 1500ms) cubic-bezier(.18,.85,.18,1) forwards;
 }
+
+.headlineRule{
+  display:block;
+  width:92px;
+  height:1px;
+  margin:22px auto 0;
+  background:linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,.6),
+    transparent
+  );
+  transform:scaleX(0);
+  transform-origin:50% 50%;
+  opacity:0;
+}
+
+.hero.loaded .headlineRule{
+  animation: ruleIn 1400ms cubic-bezier(.16,1,.3,1) forwards;
+  animation-delay: 6200ms; /* after logo finishes */
+}
+
+@keyframes ruleIn{
+  to{ transform:scaleX(1); opacity:1; }
+}
+
