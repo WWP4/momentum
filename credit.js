@@ -1,13 +1,29 @@
+// credit.js — rewritten to match your current credits.html exactly
+// (No legacy IDs required; modal close works; credits inline populates)
+
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  const CREDIT_HOURS = 116; // your rule
-  const DEFAULT_BOOKING_URL = "https://calendly.com/YOUR-ADVISOR-LINK"; // replace
-  const DEFAULT_DEPOSIT_URL = "https://YOURPAYMENTLINK.com?amount=";   // replace
+  // Rule: 116 hours = 1 credit
+  const CREDIT_HOURS = 116;
+
+  // Session storage key from your eligibility form
+  const PAYLOAD_KEY = "mqEligibilityPayload";
+
+  const fmtInt = (n) => new Intl.NumberFormat().format(Math.round(n));
+
+  const readPayload = () => {
+    try {
+      return JSON.parse(sessionStorage.getItem(PAYLOAD_KEY) || "null");
+    } catch {
+      return null;
+    }
+  };
 
   const lengthToMinutes = (label) => {
-    // Keep in sync with your form values
     if (!label) return 0;
+    // Keep in sync with your form values
     if (label.includes("Under 60")) return 50;
     if (label.includes("60-90") || label.includes("60–90")) return 75;
     if (label.includes("90+")) return 95;
@@ -23,32 +39,6 @@
     return Number.isFinite(n) ? n : 0;
   };
 
-  const fmtInt = (n) => new Intl.NumberFormat().format(Math.round(n));
-
-  const readPayload = () => {
-    try {
-      return JSON.parse(sessionStorage.getItem("mqEligibilityPayload") || "null");
-    } catch {
-      return null;
-    }
-  };
-
-  const estimatePrice = (credits) => {
-    // Replace with your real model later.
-    // This just creates a believable range for the UI.
-    if (!Number.isFinite(credits) || credits <= 0) return { low: 0, high: 0 };
-
-    // Example: base + per-credit band (placeholder)
-    const base = 299;
-    const perCreditLow = 450;
-    const perCreditHigh = 750;
-
-    const low = base + credits * perCreditLow;
-    const high = base + credits * perCreditHigh;
-
-    return { low, high };
-  };
-
   const noteFor = (credits) => {
     if (credits >= 2) return "Strong volume. Your program may support multiple credits pending verification.";
     if (credits >= 1) return "Good fit range. Next step is an advisory call to confirm verification requirements.";
@@ -56,53 +46,109 @@
     return "Low estimated volume. You can still proceed — an advisor can outline pathways to qualify.";
   };
 
+  // Deposit URL updater:
+  // - If href contains "{amount}", it replaces it.
+  // - Else, sets/updates ?amount= in querystring.
+  const setDepositAmountOnLink = (aEl, amount) => {
+    if (!aEl) return;
+
+    try {
+      const raw = aEl.getAttribute("href") || "";
+      if (!raw) return;
+
+      // Placeholder replacement
+      if (raw.includes("{amount}")) {
+        aEl.setAttribute("href", raw.replaceAll("{amount}", encodeURIComponent(String(amount))));
+        return;
+      }
+
+      // Querystring update
+      const u = new URL(raw, window.location.origin);
+      u.searchParams.set("amount", String(amount));
+      aEl.setAttribute("href", u.toString());
+    } catch {
+      // If URL parsing fails (rare), fall back to appending
+      const raw = aEl.getAttribute("href") || "";
+      const sep = raw.includes("?") ? "&" : "?";
+      aEl.setAttribute("href", `${raw}${sep}amount=${encodeURIComponent(String(amount))}`);
+    }
+  };
+
   document.addEventListener("DOMContentLoaded", () => {
-    const payload = readPayload();
+    // Nodes used by your current HTML
+    const hoursEl = $("#ccHours");
+    const creditsEl = $("#ccCredits");
+    const minutesEl = $("#ccMinutes");
+    const noteEl = $("#ccNote");
+    const creditsInlineEl = $("#ccCreditsInline");
 
-    // Wire CTAs (even if missing payload)
-    const book = $("#ccBook");
-    if (book) book.href = DEFAULT_BOOKING_URL;
-
+    // Modal nodes
     const depositBtn = $("#ccDepositBtn");
     const modal = $("#ccModal");
     const depositLink = $("#ccDepositLink");
+    const chips = $$("[data-deposit]");
 
     const openModal = () => {
       if (!modal) return;
       modal.setAttribute("aria-hidden", "false");
+
+      // Ensure some amount is selected by default
+      const active = chips.find((c) => c.classList.contains("is-active")) || chips[0];
+      if (active) {
+        const amt = active.getAttribute("data-deposit");
+        if (amt) setDepositAmountOnLink(depositLink, amt);
+      }
+
+      // Optional: prevent background scroll while open
+      document.documentElement.style.overflow = "hidden";
     };
+
     const closeModal = () => {
       if (!modal) return;
       modal.setAttribute("aria-hidden", "true");
+      document.documentElement.style.overflow = "";
     };
 
+    // Open modal
     if (depositBtn) depositBtn.addEventListener("click", openModal);
 
+    // Close modal on any element with [data-close] (matches your HTML)
     if (modal) {
       modal.addEventListener("click", (e) => {
         const t = e.target;
-        if (t && t.getAttribute && t.getAttribute("data-close") === "1") closeModal();
+        if (!(t instanceof Element)) return;
+        if (t.closest("[data-close]")) closeModal();
       });
     }
 
+    // Escape closes modal
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeModal();
     });
 
-    document.querySelectorAll("[data-deposit]").forEach((btn) => {
+    // Chip selection updates deposit link + active UI
+    const setActiveChip = (btn) => {
+      chips.forEach((c) => c.classList.remove("is-active"));
+      btn.classList.add("is-active");
+    };
+
+    chips.forEach((btn) => {
       btn.addEventListener("click", () => {
         const amt = btn.getAttribute("data-deposit");
-        if (depositLink) depositLink.href = `${DEFAULT_DEPOSIT_URL}${encodeURIComponent(amt)}`;
+        setActiveChip(btn);
+        if (amt) setDepositAmountOnLink(depositLink, amt);
       });
     });
 
-    // If no payload, show fallback
+    // ===== Populate estimate =====
+    const payload = readPayload();
+
     if (!payload) {
-      $("#ccHours").textContent = "—";
-      $("#ccCredits").textContent = "—";
-      $("#ccMinutes").textContent = "—";
-      $("#ccPrice").textContent = "—";
-      $("#ccNote").textContent = "We couldn’t find your eligibility answers. Please go back and submit the form again.";
+      if (hoursEl) hoursEl.textContent = "—";
+      if (creditsEl) creditsEl.textContent = "—";
+      if (minutesEl) minutesEl.textContent = "—";
+      if (creditsInlineEl) creditsInlineEl.textContent = "—";
+      if (noteEl) noteEl.textContent = "We couldn’t find your eligibility answers. Please go back and submit the form again.";
       return;
     }
 
@@ -114,19 +160,10 @@
     const hours = minutes / 60;
     const credits = hours / CREDIT_HOURS;
 
-    // Display
-    $("#ccMinutes").textContent = fmtInt(minutes);
-    $("#ccHours").textContent = fmtInt(hours);
-    $("#ccCredits").textContent = credits >= 0.1 ? credits.toFixed(1) : credits.toFixed(2);
-    $("#ccNote").textContent = noteFor(credits);
-
-    const { low, high } = estimatePrice(credits);
-    if (low <= 0) {
-      $("#ccPrice").textContent = "Advisor review required";
-      $("#ccPriceFine").textContent = "We’ll confirm pricing and eligibility on the call.";
-    } else {
-      $("#ccPrice").textContent = `$${fmtInt(low)} – $${fmtInt(high)}`;
-      $("#ccPriceFine").textContent = "Final pricing is confirmed after eligibility review and verification requirements.";
-    }
+    if (minutesEl) minutesEl.textContent = fmtInt(minutes);
+    if (hoursEl) hoursEl.textContent = fmtInt(hours);
+    if (creditsEl) creditsEl.textContent = credits >= 0.1 ? credits.toFixed(1) : credits.toFixed(2);
+    if (creditsInlineEl) creditsInlineEl.textContent = credits >= 0.1 ? `${credits.toFixed(1)} credits` : `${credits.toFixed(2)} credits`;
+    if (noteEl) noteEl.textContent = noteFor(credits);
   });
 })();
