@@ -215,8 +215,11 @@
             "Thanks for applying. We will contact you with guidance on the best next partner steps.",
         };
         submitMsg.textContent = tierCopy[qualifies] || tierCopy.moderate;
-      }
-    };
+          // REDIRECT TO CREDIT CALCULATOR
+  setTimeout(() => {
+    window.location.href = "/credits.html";
+  }, 900);
+};
 
     const showSubmitError = () => {
       if (submitTitle) submitTitle.textContent = "We could not submit right now";
@@ -245,6 +248,16 @@
 
       const { qualifies } = computeScore();
       const payload = getPayload();
+
+      // Save eligibility data for credit calculator page
+sessionStorage.setItem(
+  "mqEligibilityPayload",
+  JSON.stringify({
+    ...payload,
+    qualifies
+  })
+);
+
 
       showSubmitStep();
       setSubmittingUI(true);
