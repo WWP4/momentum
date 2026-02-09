@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Momentum — Credit Estimate</title>
+
+  <!-- Keep your existing base styling (if you use it elsewhere) -->
   <link rel="stylesheet" href="/form.css" />
   <link rel="stylesheet" href="/credits.css" />
 </head>
@@ -11,46 +13,119 @@
 <body>
   <main class="cc">
     <div class="cc__shell">
-      <header class="cc__top">
-        <p class="cc__kicker">Estimate</p>
-        <h1 class="cc__h1">Your training may qualify for academic credit</h1>
-        <p class="cc__sub">This is an estimate based on what you entered. Verification happens after you proceed.</p>
-      </header>
 
-      <section class="cc__grid">
-        <!-- Left: Results -->
-        <div class="cc__card">
-          <div class="cc__cardTop">
-            <div class="cc__label">Estimated annual training</div>
-            <div class="cc__big" id="ccHours">—</div>
-            <div class="cc__muted">hours / year</div>
-          </div>
-
-          <div class="cc__divider"></div>
-
-          <div class="cc__row">
-            <div class="cc__rowLeft">
-              <div class="cc__rowTitle">Estimated credits</div>
-              <div class="cc__rowSub">Based on 116 hours = 1 credit</div>
-            </div>
-            <div class="cc__rowRight" id="ccCredits">—</div>
-          </div>
-
-          <div class="cc__divider"></div>
-
-          <div class="cc__row">
-            <div class="cc__rowLeft">
-              <div class="cc__rowTitle">Minutes counted</div>
-              <div class="cc__rowSub">Used for calculation</div>
-            </div>
-            <div class="cc__rowRight" id="ccMinutes">—</div>
-          </div>
-
-          <div class="cc__note" id="ccNote"></div>
+      <!-- Top bar -->
+      <header class="ccTop">
+        <div class="ccBrand" aria-label="Momentum">
+          <div class="ccWord">MOMENTUM<span>.</span></div>
         </div>
 
-        <!-- Right: Next steps -->
-        <div class="cc__side">
+        <div class="ccPill" aria-label="Status">
+          <span class="ccPillDot" aria-hidden="true"></span>
+          Application received
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <section class="ccHero">
+        <p class="cc__kicker">Estimate</p>
+        <h1 class="cc__h1">Your training may qualify for academic credit</h1>
+        <p class="cc__sub">
+          This is an estimate based on what you entered. Verification happens after you proceed.
+        </p>
+      </section>
+
+      <!-- Main content -->
+      <section class="cc__grid cc__grid--combo">
+
+        <!-- LEFT: Calculator + pricing -->
+        <div class="ccCol">
+
+          <!-- Calculator card -->
+          <div class="cc__card">
+            <div class="cc__cardTop">
+              <div class="cc__label">Estimated annual training</div>
+              <div class="cc__big" id="ccHours">—</div>
+              <div class="cc__muted">hours / year</div>
+            </div>
+
+            <div class="cc__divider"></div>
+
+            <div class="cc__row">
+              <div class="cc__rowLeft">
+                <div class="cc__rowTitle">Estimated credits</div>
+                <div class="cc__rowSub">Based on 116 hours = 1 credit</div>
+              </div>
+              <div class="cc__rowRight" id="ccCredits">—</div>
+            </div>
+
+            <div class="cc__divider"></div>
+
+            <div class="cc__row">
+              <div class="cc__rowLeft">
+                <div class="cc__rowTitle">Minutes counted</div>
+                <div class="cc__rowSub">Used for calculation</div>
+              </div>
+              <div class="cc__rowRight" id="ccMinutes">—</div>
+            </div>
+
+            <div class="cc__note" id="ccNote"></div>
+          </div>
+
+          <!-- Pricing panel (NO full quote, $395/credit only) -->
+          <div class="cc__panel">
+            <div class="cc__panelTitle">Credit pricing</div>
+
+            <div class="cc__price">
+              $395 <span class="cc__per">/ credit</span>
+            </div>
+
+            <p class="cc__muted cc__muted--p">
+              Pricing is per academic credit earned. Final credit count is confirmed during verification.
+            </p>
+
+            <div class="cc__divider"></div>
+
+            <div class="cc__row">
+              <div class="cc__rowLeft">
+                <div class="cc__rowTitle">Your estimate</div>
+                <div class="cc__rowSub">Credits based on training volume</div>
+              </div>
+              <div class="cc__rowRight" id="ccCreditsInline">—</div>
+            </div>
+
+            <div class="cc__note">
+              We’ll confirm documentation requirements and finalize credits on the advisory call.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Video + next steps -->
+        <aside class="ccCol">
+
+          <!-- Video card -->
+          <div class="cc__panel">
+            <div class="cc__panelTitle">Momentum overview</div>
+
+            <div class="ccVideo" aria-label="Momentum overview video">
+              <iframe
+                src="https://www.youtube.com/embed/yDswWl8bqgc?rel=0"
+                title="Momentum Overview"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+
+            <div class="ccNextStrip" aria-label="What happens next">
+              <div>
+                <div class="ccNextKicker">What happens next</div>
+                <div class="ccNextText">We confirm eligibility, then you choose enrollment.</div>
+              </div>
+              <div class="ccTag">Deposit holds your spot</div>
+            </div>
+          </div>
+
+          <!-- Next steps + CTAs -->
           <div class="cc__panel">
             <div class="cc__panelTitle">Next steps</div>
 
@@ -61,50 +136,57 @@
             </ol>
 
             <div class="cc__ctaRow">
-              <a class="cc__btn cc__btn--primary" id="ccBook" href="#" target="_blank" rel="noopener">Book advisory call</a>
-              <button class="cc__btn cc__btn--ghost" id="ccDepositBtn" type="button">Place deposit</button>
+              <!-- Replace href if needed -->
+              <a class="cc__btn cc__btn--primary"
+                 id="ccBook"
+                 href="https://calendly.com/tricitycanvasproducts/30min"
+                 target="_blank" rel="noopener">
+                Book advisory call
+              </a>
+
+              <!-- Replace href if needed -->
+              <a class="cc__btn cc__btn--ghost"
+                 id="ccDepositDirect"
+                 href="https://buy.stripe.com/fZu8wQe9Sgdg7x9e2saR201"
+                 target="_blank" rel="noopener">
+                Place deposit
+              </a>
             </div>
 
-            <div class="cc__fine">Deposit is applied toward your total cost if you proceed.</div>
+            <div class="cc__fine">
+              Deposits are optional. Eligibility and credits are confirmed before final enrollment.
+            </div>
           </div>
 
-          <div class="cc__panel">
-            <div class="cc__panelTitle">Estimated cost range</div>
-            <div class="cc__price" id="ccPrice">—</div>
-            <div class="cc__fine" id="ccPriceFine">Final pricing is confirmed after eligibility review.</div>
-          </div>
-        </div>
+        </aside>
+
       </section>
 
-      <!-- Deposit modal (simple) -->
-      <div class="cc__modal" id="ccModal" aria-hidden="true">
-        <div class="cc__modalBackdrop" data-close="1"></div>
-        <div class="cc__modalCard" role="dialog" aria-modal="true" aria-label="Place deposit">
-          <div class="cc__modalTitle">Place your deposit</div>
-          <p class="cc__modalSub">Choose a deposit amount. This is applied toward total cost after eligibility confirmation.</p>
-
-          <div class="cc__depositChoices">
-            <button class="cc__chip" data-deposit="100">$100</button>
-            <button class="cc__chip" data-deposit="125">$125</button>
-            <button class="cc__chip" data-deposit="150">$150</button>
-          </div>
-
-          <div class="cc__modalActions">
-            <button class="cc__btn cc__btn--ghost" data-close="1">Cancel</button>
-            <a class="cc__btn cc__btn--primary" id="ccDepositLink" href="#" target="_blank" rel="noopener">Continue to payment</a>
-          </div>
-
-          <div class="cc__fine">You’ll be redirected to secure payment.</div>
-        </div>
-      </div>
-
+      <!-- Footer -->
       <footer class="cc__footer">
         <a class="cc__back" href="/eligibility.html">Back to eligibility</a>
         <span class="cc__footerNote">Momentum — credit estimates are not guarantees until verified.</span>
       </footer>
+
     </div>
   </main>
 
   <script src="/credit.js" defer></script>
+
+  <!-- Tiny helper: mirror ccCredits into ccCreditsInline without changing your JS -->
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const a = document.getElementById("ccCredits");
+      const b = document.getElementById("ccCreditsInline");
+      if (!a || !b) return;
+
+      const sync = () => { b.textContent = a.textContent || "—"; };
+      sync();
+
+      // In case credits.js updates after paint, watch for changes
+      const obs = new MutationObserver(sync);
+      obs.observe(a, { childList: true, characterData: true, subtree: true });
+    });
+  </script>
 </body>
 </html>
