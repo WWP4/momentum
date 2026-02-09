@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Momentum — Check Eligibility</title>
+
+  <!-- Keep your existing styles -->
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <main class="mq" aria-label="Momentum eligibility check">
+    <div class="mq__shell">
+
+      <header class="mq__top">
+        <p class="mq__kicker">Eligibility</p>
+        <h1 class="mq__h1">See how many credits your training may qualify for</h1>
+        <p class="mq__sub">Takes ~60 seconds. No documents required yet.</p>
+      </header>
+
+      <!-- If your JS uses a progress bar, keep these IDs/classes -->
+      <div class="mq__progress" aria-label="Progress">
+        <div class="mq__progressBar" id="mqProgressBar" style="width:0%"></div>
+      </div>
+
+      <form class="mq__form" id="mqForm" autocomplete="on">
+
+        <!-- STEP 1 -->
+        <section class="mq__step is-active" data-title="Facility + contact">
+          <div class="mq__grid2">
+            <div class="mq__field">
+              <label class="mq__label">Club / facility name</label>
+              <input class="mq__input" name="facility_name" type="text" placeholder="Organization name" required>
+            </div>
+
+            <div class="mq__field">
+              <label class="mq__label">Primary contact name</label>
+              <input class="mq__input" name="contact_name" type="text" placeholder="Full name" required>
+            </div>
+
+            <div class="mq__field">
+              <label class="mq__label">Email</label>
+              <input class="mq__input" name="email" type="email" placeholder="name@email.com" required>
+            </div>
+
+            <div class="mq__field">
+              <label class="mq__label">Phone (optional)</label>
+              <input class="mq__input" name="phone" type="tel" placeholder="(###) ###-####">
+            </div>
+          </div>
+
+          <div class="mq__grid2">
+            <div class="mq__field">
+              <label class="mq__label">Primary sport(s)</label>
+              <input class="mq__input" name="primary_sports" type="text" placeholder="Soccer, basketball, volleyball…" required>
+            </div>
+
+            <div class="mq__field">
+              <label class="mq__label">Athlete age range served</label>
+              <div class="mq__choices mq__choices--grid">
+                <label class="mq__choice"><input type="radio" name="age_range" value="10–12" required><span>10–12</span></label>
+                <label class="mq__choice"><input type="radio" name="age_range" value="13–14"><span>13–14</span></label>
+                <label class="mq__choice"><input type="radio" name="age_range" value="15–16"><span>15–16</span></label>
+                <label class="mq__choice"><input type="radio" name="age_range" value="17–18"><span>17–18</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mq__grid2">
+            <div class="mq__field">
+              <label class="mq__label">City</label>
+              <input class="mq__input" name="city" type="text" placeholder="City" required>
+            </div>
+            <div class="mq__field">
+              <label class="mq__label">State</label>
+              <input class="mq__input" name="state" type="text" placeholder="State" required>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section class="mq__step" data-title="Training volume">
+          <div class="mq__q">
+            <div class="mq__qTitle">Team training sessions per week</div>
+            <div class="mq__choices">
+              <label class="mq__choice"><input type="radio" name="training_sessions_per_week" value="1–2" required><span>1–2</span></label>
+              <label class="mq__choice"><input type="radio" name="training_sessions_per_week" value="3–4"><span>3–4</span></label>
+              <label class="mq__choice"><input type="radio" name="training_sessions_per_week" value="5+"><span>5+</span></label>
+            </div>
+          </div>
+
+          <div class="mq__q">
+            <div class="mq__qTitle">Average session length</div>
+            <div class="mq__choices">
+              <label class="mq__choice"><input type="radio" name="session_length" value="Under 60 minutes" required><span>Under 60 minutes</span></label>
+              <label class="mq__choice"><input type="radio" name="session_length" value="60–90 minutes"><span>60–90 minutes</span></label>
+              <label class="mq__choice"><input type="radio" name="session_length" value="90+ minutes"><span>90+ minutes</span></label>
+            </div>
+          </div>
+
+          <!-- This is the one key field your calculator needs.
+               If your club-app.js doesn't expect it yet, we’ll add support there. -->
+          <div class="mq__field">
+            <label class="mq__label">Weeks of training per year</label>
+            <input class="mq__input" name="weeks_per_year" type="number" min="1" max="52" placeholder="e.g., 40" required>
+            <div class="mq__help">Estimate your typical season length if you’re seasonal.</div>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section class="mq__step" data-title="Verification">
+          <div class="mq__q">
+            <div class="mq__qTitle">Is training coach-led and scheduled?</div>
+            <div class="mq__choices">
+              <label class="mq__choice"><input type="radio" name="coach_led" value="Yes" required><span>Yes</span></label>
+              <label class="mq__choice"><input type="radio" name="coach_led" value="No"><span>No</span></label>
+              <label class="mq__choice"><input type="radio" name="coach_led" value="Not sure"><span>Not sure</span></label>
+            </div>
+          </div>
+
+          <div class="mq__q">
+            <div class="mq__qTitle">Can training hours be verified later?</div>
+            <div class="mq__qSub">Examples: attendance logs, schedules, coach confirmation.</div>
+            <div class="mq__choices">
+              <label class="mq__choice"><input type="radio" name="can_verify" value="Yes" required><span>Yes</span></label>
+              <label class="mq__choice"><input type="radio" name="can_verify" value="Not sure"><span>Not sure</span></label>
+              <label class="mq__choice"><input type="radio" name="can_verify" value="No"><span>No</span></label>
+            </div>
+          </div>
+
+          <div class="mq__field">
+            <label class="mq__label">Anything we should know? (optional)</label>
+            <textarea class="mq__textarea" name="notes" rows="4" placeholder="Season schedule, documentation requirements, or anything you’d like us to consider."></textarea>
+          </div>
+
+          <div class="mq__fine">
+            By submitting, you agree Momentum can contact you with next steps. No documents required yet.
+          </div>
+        </section>
+
+        <!-- SUBMIT SCREEN (keep exactly as your JS expects) -->
+        <section class="mq__step" id="mqSubmitStep" data-title="Submitting">
+          <div class="mq__submit">
+            <div class="mq__spinner" aria-hidden="true"></div>
+            <h3 class="mq__submitH" id="mqSubmitTitle">Submitting…</h3>
+            <p class="mq__submitP" id="mqSubmitMsg">Saving your answers.</p>
+            <button class="mq__btn mq__btn--ghost" type="button" id="mqTryAgain" style="display:none;">Try again</button>
+          </div>
+        </section>
+
+        <!-- NAV (keep IDs) -->
+        <footer class="mq__nav">
+          <button class="mq__btn mq__btn--ghost" type="button" id="mqBack">Back</button>
+          <div class="mq__spacer"></div>
+          <button class="mq__btn mq__btn--primary" type="button" id="mqNext">Continue</button>
+        </footer>
+
+      </form>
+
+      <p class="mq__privacy">
+        We use this to estimate credit eligibility. Verification happens after you choose to proceed.
+      </p>
+
+    </div>
+  </main>
+
+  <!-- Load Supabase BEFORE your app code -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="club-app.js" defer></script>
+</body>
+</html>
