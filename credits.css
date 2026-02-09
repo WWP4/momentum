@@ -244,3 +244,92 @@ body{ background:var(--bg); margin:0; font-family:Inter,system-ui,-apple-system,
   gap:10px;
   margin-top:16px;
 }
+
+/* --- Make the video card actually feel premium --- */
+.cc__panel--video{
+  padding: 18px;
+}
+
+.cc__panelTop{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 12px;
+}
+
+.cc__panelEyebrow{
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.cc__panelMeta{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.ccVideo{
+  border-radius: 16px;
+  overflow:hidden;
+  border: 1px solid rgba(15,23,42,.10);
+  background:#000;
+}
+
+.ccVideo--hero{
+  aspect-ratio: 16 / 9;
+}
+
+.ccVideo iframe{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* Clean, tight “what happens next” strip */
+.ccMiniNext{
+  margin-top: 12px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,.08);
+  background: #fafafa;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+.ccMiniNext__title{
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.ccMiniNext__text{
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.25;
+}
+
+.ccMiniNext__tag{
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(225,29,72,.25);
+  background: rgba(225,29,72,.06);
+  color: #b1123b;
+  font-weight: 800;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.ccHero{
+  padding-top: 18px;
+}
+.ccTop{
+  padding: 16px 26px;
+}
+
