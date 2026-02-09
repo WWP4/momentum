@@ -1,15 +1,20 @@
+(() => {
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) =>
+    Array.from(root.querySelectorAll(selector));
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initFormFlow();
+  });
+
   function initFormFlow() {
     const form = $("#momentumPartnerQuiz");
-    if (!form) {
-      return;
-    }
+    if (!form) return;
 
     const allSteps = $$(".mq__step", form);
     const submitStep = $("#mqSubmitStep", form);
     const steps = allSteps.filter((step) => step !== submitStep);
-    if (!steps.length) {
-      return;
-    }
+    if (!steps.length) return;
 
     const progressBar = $(".mq__barFill");
     const progressNode = $(".mq__bar");
@@ -29,7 +34,7 @@
     let current = 0;
     let submitting = false;
 
-    stepTotal.textContent = String(steps.length);
+    if (stepTotal) stepTotal.textContent = String(steps.length);
 
     const setRequiredGroups = (step) => {
       const requiredRadios = new Set(
@@ -51,7 +56,10 @@
       clearBadStates(step);
       let valid = true;
 
-      const requiredTextLike = $$('input[required]:not([type="radio"]), textarea[required], select[required]', step);
+      const requiredTextLike = $$(
+        'input[required]:not([type="radio"]), textarea[required], select[required]',
+        step
+      );
       requiredTextLike.forEach((input) => {
         if (!String(input.value || "").trim()) {
           valid = false;
@@ -61,13 +69,15 @@
 
       const requiredGroups = setRequiredGroups(step);
       requiredGroups.forEach((groupName) => {
-        const checked = step.querySelector(`input[type="radio"][name="${groupName}"]:checked`);
+        const checked = step.querySelector(
+          `input[type="radio"][name="${groupName}"]:checked`
+        );
         if (!checked) {
           valid = false;
-          const first = step.querySelector(`input[type="radio"][name="${groupName}"]`);
-          if (first) {
-            markBad(first);
-          }
+          const first = step.querySelector(
+            `input[type="radio"][name="${groupName}"]`
+          );
+          if (first) markBad(first);
         }
       });
 
@@ -79,28 +89,18 @@
         step.classList.toggle("is-active", i === index);
       });
 
-      if (submitStep) {
-        submitStep.classList.remove("is-active");
-      }
+      if (submitStep) submitStep.classList.remove("is-active");
 
       current = index;
-      const percent = ((current + 1) / steps.length) * 100;
-      if (progressBar) {
-        progressBar.style.width = `${percent}%`;
-      }
-      if (progressNode) {
-        progressNode.setAttribute("aria-valuenow", String(Math.round(percent)));
-      }
-      if (stepNow) {
-        stepNow.textContent = String(current + 1);
-      }
-      if (hint) {
-        hint.textContent = steps[current].dataset.title || "";
-      }
 
-      if (backBtn) {
-        backBtn.disabled = current === 0 || submitting;
-      }
+      const percent = ((current + 1) / steps.length) * 100;
+      if (progressBar) progressBar.style.width = `${percent}%`;
+      if (progressNode)
+        progressNode.setAttribute("aria-valuenow", String(Math.round(percent)));
+      if (stepNow) stepNow.textContent = String(current + 1);
+      if (hint) hint.textContent = steps[current].dataset.title || "";
+
+      if (backBtn) backBtn.disabled = current === 0 || submitting;
 
       const onLast = current === steps.length - 1;
       if (nextBtn) {
@@ -115,7 +115,11 @@
 
     const scoreMap = {
       training_sessions_per_week: { "1-2": 1, "3-4": 2, "5+": 3 },
-      session_length: { "Under 60 minutes": 1, "60-90 minutes": 2, "90+ minutes": 3 },
+      session_length: {
+        "Under 60 minutes": 1,
+        "60-90 minutes": 2,
+        "90+ minutes": 3,
+      },
       games_per_week: { "0-1": 1, "2-3": 2, "4+": 3 },
       strength_conditioning: {
         "Yes (coach-led)": 3,
@@ -156,12 +160,8 @@
 
       const qualifies = score >= 14 ? "high" : score >= 8 ? "moderate" : "early";
 
-      if (scoreField) {
-        scoreField.value = String(score);
-      }
-      if (qualifiesField) {
-        qualifiesField.value = qualifies;
-      }
+      if (scoreField) scoreField.value = String(score);
+      if (qualifiesField) qualifiesField.value = qualifies;
 
       return { score, qualifies };
     };
@@ -172,11 +172,8 @@
 
       data.forEach((value, key) => {
         if (Object.prototype.hasOwnProperty.call(payload, key)) {
-          if (Array.isArray(payload[key])) {
-            payload[key].push(value);
-          } else {
-            payload[key] = [payload[key], value];
-          }
+          if (Array.isArray(payload[key])) payload[key].push(value);
+          else payload[key] = [payload[key], value];
         } else {
           payload[key] = value;
         }
@@ -189,57 +186,44 @@
     const setSubmittingUI = (isSubmitting) => {
       submitting = isSubmitting;
 
-      if (backBtn) {
-        backBtn.disabled = isSubmitting || current === 0;
-      }
-      if (nextBtn) {
-        nextBtn.disabled = isSubmitting;
-      }
-      if (submitBtn) {
-        submitBtn.disabled = isSubmitting;
-      }
+      if (backBtn) backBtn.disabled = isSubmitting || current === 0;
+      if (nextBtn) nextBtn.disabled = isSubmitting;
+      if (submitBtn) submitBtn.disabled = isSubmitting;
     };
 
     const showSubmitStep = () => {
       steps.forEach((step) => step.classList.remove("is-active"));
-      if (submitStep) {
-        submitStep.classList.add("is-active");
-      }
-      if (submitTitle) {
-        submitTitle.textContent = "Submitting your profile...";
-      }
-      if (submitMsg) {
-        submitMsg.textContent = "Reviewing your responses for partner qualification.";
-      }
-      if (tryAgainBtn) {
-        tryAgainBtn.style.display = "none";
-      }
+      if (submitStep) submitStep.classList.add("is-active");
+
+      if (submitTitle) submitTitle.textContent = "Submitting your profile...";
+      if (submitMsg)
+        submitMsg.textContent =
+          "Reviewing your responses for partner qualification.";
+      if (tryAgainBtn) tryAgainBtn.style.display = "none";
     };
 
     const showSubmitSuccess = (qualifies) => {
-      if (submitTitle) {
-        submitTitle.textContent = "Application received";
-      }
+      if (submitTitle) submitTitle.textContent = "Application received";
+
       if (submitMsg) {
         const tierCopy = {
-          high: "Your profile looks like a strong fit. Our partner team will contact you with priority next steps.",
-          moderate: "Your profile is in review. We will follow up with your qualification path and recommended rollout.",
-          early: "Thanks for applying. We will contact you with guidance on the best next partner steps.",
+          high:
+            "Your profile looks like a strong fit. Our partner team will contact you with priority next steps.",
+          moderate:
+            "Your profile is in review. We will follow up with your qualification path and recommended rollout.",
+          early:
+            "Thanks for applying. We will contact you with guidance on the best next partner steps.",
         };
         submitMsg.textContent = tierCopy[qualifies] || tierCopy.moderate;
       }
     };
 
     const showSubmitError = () => {
-      if (submitTitle) {
-        submitTitle.textContent = "We could not submit right now";
-      }
-      if (submitMsg) {
-        submitMsg.textContent = "Please try again. Your form data is still saved in this browser session.";
-      }
-      if (tryAgainBtn) {
-        tryAgainBtn.style.display = "inline-flex";
-      }
+      if (submitTitle) submitTitle.textContent = "We could not submit right now";
+      if (submitMsg)
+        submitMsg.textContent =
+          "Please try again. Your form data is still saved in this browser session.";
+      if (tryAgainBtn) tryAgainBtn.style.display = "inline-flex";
     };
 
     const submitToBackend = async (payload) => {
@@ -249,9 +233,7 @@
       if (window.supabase && supabaseUrl && supabaseAnonKey) {
         const client = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
         const { error } = await client.from("partner_applications").insert(payload);
-        if (error) {
-          throw error;
-        }
+        if (error) throw error;
         return;
       }
 
@@ -259,9 +241,7 @@
     };
 
     const handleSubmit = async () => {
-      if (!validateStep(steps[current])) {
-        return;
-      }
+      if (!validateStep(steps[current])) return;
 
       const { qualifies } = computeScore();
       const payload = getPayload();
@@ -282,33 +262,21 @@
 
     if (backBtn) {
       backBtn.addEventListener("click", () => {
-        if (submitting) {
-          return;
-        }
-        if (current > 0) {
-          showStep(current - 1);
-        }
+        if (submitting) return;
+        if (current > 0) showStep(current - 1);
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
-        if (submitting) {
-          return;
-        }
+        if (submitting) return;
         const step = steps[current];
-        if (!validateStep(step)) {
-          return;
-        }
-        if (current < steps.length - 1) {
-          showStep(current + 1);
-        }
+        if (!validateStep(step)) return;
+        if (current < steps.length - 1) showStep(current + 1);
       });
     }
 
-    if (submitBtn) {
-      submitBtn.addEventListener("click", handleSubmit);
-    }
+    if (submitBtn) submitBtn.addEventListener("click", handleSubmit);
 
     if (tryAgainBtn) {
       tryAgainBtn.addEventListener("click", () => {
@@ -323,15 +291,11 @@
     $$("input, textarea, select", form).forEach((input) => {
       input.addEventListener("change", () => {
         const holder = input.closest(".mq__choice, .mq__chip, .mq__field");
-        if (holder) {
-          holder.classList.remove("mq__bad");
-        }
+        if (holder) holder.classList.remove("mq__bad");
       });
       input.addEventListener("input", () => {
         const holder = input.closest(".mq__choice, .mq__chip, .mq__field");
-        if (holder) {
-          holder.classList.remove("mq__bad");
-        }
+        if (holder) holder.classList.remove("mq__bad");
       });
     });
 
