@@ -203,23 +203,30 @@
     };
 
     const showSubmitSuccess = (qualifies) => {
-      if (submitTitle) submitTitle.textContent = "Application received";
+  if (submitTitle) {
+    submitTitle.textContent = "Application received";
+  }
 
-      if (submitMsg) {
-        const tierCopy = {
-          high:
-            "Your profile looks like a strong fit. Our partner team will contact you with priority next steps.",
-          moderate:
-            "Your profile is in review. We will follow up with your qualification path and recommended rollout.",
-          early:
-            "Thanks for applying. We will contact you with guidance on the best next partner steps.",
-        };
-        submitMsg.textContent = tierCopy[qualifies] || tierCopy.moderate;
-          // REDIRECT TO CREDIT CALCULATOR
+  if (submitMsg) {
+    const tierCopy = {
+      high:
+        "Your profile looks like a strong fit. Preparing your credit estimate…",
+      moderate:
+        "Your profile is in review. Preparing your credit estimate…",
+      early:
+        "Thanks for applying. Preparing your credit estimate…",
+    };
+
+    submitMsg.textContent =
+      tierCopy[qualifies] || tierCopy.moderate;
+  }
+
+  // REDIRECT TO CREDIT CALCULATOR
   setTimeout(() => {
     window.location.href = "/credits.html";
   }, 900);
 };
+
 
     const showSubmitError = () => {
       if (submitTitle) submitTitle.textContent = "We could not submit right now";
