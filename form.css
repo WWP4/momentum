@@ -1,0 +1,356 @@
+/* form.css — page-scoped overrides for eligibility / partner forms */
+
+/* ---------- Theme tokens ---------- */
+:root{
+  --form-bg: #050607;
+  --form-panel: rgba(255,255,255,.06);
+  --form-panel-2: rgba(255,255,255,.04);
+  --form-border: rgba(255,255,255,.10);
+  --form-border-2: rgba(255,255,255,.14);
+  --form-ink: rgba(255,255,255,.92);
+  --form-muted: rgba(255,255,255,.62);
+  --form-faint: rgba(255,255,255,.38);
+  --form-accent: #e31b2f; /* Momentum red */
+  --form-accent-2: #ff3b4f;
+  --form-shadow: 0 18px 60px rgba(0,0,0,.55);
+  --form-radius: 18px;
+}
+
+/* ---------- Page frame ---------- */
+body{
+  background: var(--form-bg);
+  color: var(--form-ink);
+}
+
+/* Optional: kills “white page” feeling if your base CSS sets body bg */
+.mq{
+  min-height: 100vh;
+  padding: 28px 18px 34px;
+  background:
+    radial-gradient(900px 500px at 12% 18%, rgba(227,27,47,.24), transparent 60%),
+    radial-gradient(700px 420px at 78% 22%, rgba(255,59,79,.10), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.02), transparent 46%);
+}
+
+/* Center + premium card */
+.mq__shell{
+  max-width: 1100px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border: 1px solid var(--form-border);
+  border-radius: 26px;
+  box-shadow: var(--form-shadow);
+  overflow: hidden;
+}
+
+/* ---------- Top header ---------- */
+.mq__top{
+  padding: 26px 28px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.mq__kicker{
+  color: var(--form-muted);
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+}
+
+.mq__h1{
+  margin: 0;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.mq__sub{
+  margin-top: 10px;
+  color: var(--form-muted);
+  font-size: 14px;
+}
+
+/* If you have the “takes 60 seconds” floating text, make it subtle */
+.mq__sub,
+.mq__top .mq__sub{
+  max-width: 64ch;
+}
+
+/* ---------- Progress bar ---------- */
+.mq__bar,
+.mq__progress{
+  height: 10px;
+  background: rgba(255,255,255,.05);
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.mq__barFill,
+.mq__progressBar{
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--form-accent), var(--form-accent-2));
+  box-shadow: 0 0 0 1px rgba(227,27,47,.22), 0 10px 30px rgba(227,27,47,.18);
+}
+
+/* ---------- Form body spacing ---------- */
+.mq__form{
+  padding: 22px 28px 10px;
+}
+
+.mq__step{
+  display: none;
+  animation: formStepIn .28s ease-out both;
+}
+
+.mq__step.is-active{
+  display: block;
+}
+
+@keyframes formStepIn{
+  from{ opacity: 0; transform: translateY(8px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* Grid: tighten layout + prevent “huge whitespace rows” */
+.mq__grid2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 14px;
+}
+
+@media (max-width: 920px){
+  .mq__grid2{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Labels & helpers ---------- */
+.mq__label{
+  display: block;
+  color: var(--form-muted);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
+
+.mq__help{
+  margin-top: 8px;
+  color: var(--form-faint);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+/* ---------- Inputs ---------- */
+.mq__input,
+.mq__textarea,
+select.mq__input{
+  width: 100%;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  padding: 14px 14px;
+  color: var(--form-ink);
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.mq__textarea{
+  min-height: 110px;
+  resize: vertical;
+}
+
+.mq__input::placeholder,
+.mq__textarea::placeholder{
+  color: rgba(255,255,255,.36);
+}
+
+.mq__input:focus,
+.mq__textarea:focus{
+  border-color: rgba(227,27,47,.55);
+  box-shadow: 0 0 0 4px rgba(227,27,47,.18);
+}
+
+/* Bad state you already use */
+.mq__bad{
+  border-color: rgba(255,59,79,.75) !important;
+  box-shadow: 0 0 0 4px rgba(255,59,79,.18) !important;
+}
+
+/* ---------- Choice cards (radios) ---------- */
+.mq__choices{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mq__choices--grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 920px){
+  .mq__choices--grid{ grid-template-columns: 1fr; }
+}
+
+.mq__choice{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.22);
+  cursor: pointer;
+  user-select: none;
+  transition: border-color .16s ease, background .16s ease, transform .16s ease;
+  min-width: 180px;
+}
+
+.mq__choice:hover{
+  border-color: rgba(255,255,255,.18);
+  background: rgba(0,0,0,.30);
+  transform: translateY(-1px);
+}
+
+.mq__choice input{
+  accent-color: var(--form-accent);
+}
+
+.mq__choice span{
+  color: var(--form-ink);
+  font-size: 14px;
+}
+
+.mq__choice:has(input:checked){
+  border-color: rgba(227,27,47,.65);
+  background: linear-gradient(180deg, rgba(227,27,47,.16), rgba(0,0,0,.22));
+  box-shadow: 0 0 0 1px rgba(227,27,47,.18);
+}
+
+/* ---------- Chip choices (checkbox chips) ---------- */
+.mq__chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mq__chip{
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.20);
+  border-radius: 999px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color .16s ease, background .16s ease;
+}
+
+.mq__chip span{
+  color: var(--form-ink);
+  font-size: 13.5px;
+}
+
+.mq__chip input{
+  margin-right: 8px;
+  accent-color: var(--form-accent);
+}
+
+.mq__chip:has(input:checked){
+  border-color: rgba(227,27,47,.60);
+  background: rgba(227,27,47,.12);
+}
+
+/* ---------- Fine print ---------- */
+.mq__fine,
+.mq__privacy{
+  color: rgba(255,255,255,.55);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.mq__privacy{
+  padding: 14px 28px 22px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* ---------- Bottom nav ---------- */
+.mq__nav{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 28px 22px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.18));
+}
+
+.mq__spacer{ flex: 1; }
+
+.mq__btn{
+  border-radius: 999px;
+  padding: 12px 16px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease, background .16s ease;
+}
+
+.mq__btn:disabled{
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.mq__btn--primary{
+  background: linear-gradient(90deg, var(--form-accent), var(--form-accent-2));
+  color: #fff;
+  border: 0;
+  box-shadow: 0 14px 35px rgba(227,27,47,.22);
+}
+
+.mq__btn--primary:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 18px 44px rgba(227,27,47,.28);
+}
+
+.mq__btn--ghost{
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.88);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.mq__btn--ghost:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.16);
+}
+
+/* ---------- Submit screen ---------- */
+.mq__submit{
+  padding: 34px 28px;
+  text-align: left;
+}
+
+.mq__submitH{
+  margin: 10px 0 6px;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+
+.mq__submitP{
+  margin: 0;
+  color: var(--form-muted);
+  font-size: 14px;
+  max-width: 70ch;
+}
+
+/* Make spinner look premium if present */
+.mq__spinner{
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,.22);
+  border-top-color: var(--form-accent);
+  animation: spin .85s linear infinite;
+}
+
+@keyframes spin{
+  to{ transform: rotate(360deg); }
+}
