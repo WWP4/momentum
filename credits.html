@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Momentum — Credit Estimate</title>
 
-  <!-- Keep your existing base styling (if you use it elsewhere) -->
+  <!-- Your existing base + page styles -->
   <link rel="stylesheet" href="/form.css" />
   <link rel="stylesheet" href="/credits.css" />
 </head>
 
 <body>
-  <main class="cc">
+  <main class="cc" aria-label="Credit estimate">
     <div class="cc__shell">
 
       <!-- Top bar -->
-      <header class="ccTop">
+      <header class="ccTop" role="banner">
         <div class="ccBrand" aria-label="Momentum">
           <div class="ccWord">MOMENTUM<span>.</span></div>
         </div>
@@ -27,7 +27,7 @@
       </header>
 
       <!-- Hero -->
-      <section class="ccHero">
+      <section class="ccHero" aria-label="Estimate summary">
         <p class="cc__kicker">Estimate</p>
         <h1 class="cc__h1">Your training may qualify for academic credit</h1>
         <p class="cc__sub">
@@ -35,45 +35,60 @@
         </p>
       </section>
 
-      <!-- Main content -->
-      <section class="cc__grid cc__grid--combo">
+      <!-- Content -->
+      <section class="cc__grid cc__grid--combo" aria-label="Estimate details">
 
-        <!-- LEFT: Calculator + pricing -->
-        <div class="ccCol">
+        <!-- LEFT COLUMN -->
+        <div class="ccCol" aria-label="Estimate breakdown">
 
-          <!-- Calculator card -->
-          <div class="cc__card">
-            <div class="cc__cardTop">
-              <div class="cc__label">Estimated annual training</div>
-              <div class="cc__big" id="ccHours">—</div>
-              <div class="cc__muted">hours / year</div>
-            </div>
+          <!-- HERO RESULT CARD (primary) -->
+          <section class="cc__card cc__card--hero" aria-label="Estimated credits">
+            <div class="ccHeroResult">
+              <div class="ccHeroResult__label">Estimated credits</div>
 
-            <div class="cc__divider"></div>
+              <!-- KEEP THIS ID (your JS writes here) -->
+              <div class="ccHeroResult__value" id="ccCredits">—</div>
 
-            <div class="cc__row">
-              <div class="cc__rowLeft">
-                <div class="cc__rowTitle">Estimated credits</div>
-                <div class="cc__rowSub">Based on 116 hours = 1 credit</div>
+              <div class="ccHeroResult__sub">
+                Based on <strong>116 hours = 1 credit</strong>
               </div>
-              <div class="cc__rowRight" id="ccCredits">—</div>
             </div>
 
-            <div class="cc__divider"></div>
+            <div class="cc__divider" aria-hidden="true"></div>
 
-            <div class="cc__row">
-              <div class="cc__rowLeft">
-                <div class="cc__rowTitle">Minutes counted</div>
-                <div class="cc__rowSub">Used for calculation</div>
+            <div class="ccHeroStats" role="list" aria-label="Calculation inputs">
+              <div class="ccHeroStat" role="listitem">
+                <div class="ccHeroStat__meta">
+                  <div class="ccHeroStat__title">Estimated annual training</div>
+                  <div class="ccHeroStat__hint">Hours per year</div>
+                </div>
+
+                <!-- KEEP THIS ID -->
+                <div class="ccHeroStat__value">
+                  <span id="ccHours">—</span>
+                  <span class="ccHeroStat__unit">hrs</span>
+                </div>
               </div>
-              <div class="cc__rowRight" id="ccMinutes">—</div>
+
+              <div class="ccHeroStat" role="listitem">
+                <div class="ccHeroStat__meta">
+                  <div class="ccHeroStat__title">Minutes counted</div>
+                  <div class="ccHeroStat__hint">Used for calculation</div>
+                </div>
+
+                <!-- KEEP THIS ID -->
+                <div class="ccHeroStat__value">
+                  <span id="ccMinutes">—</span>
+                </div>
+              </div>
             </div>
 
+            <!-- KEEP THIS ID -->
             <div class="cc__note" id="ccNote"></div>
-          </div>
+          </section>
 
-          <!-- Pricing panel (NO full quote, $395/credit only) -->
-          <div class="cc__panel">
+          <!-- PRICING (supporting, still important) -->
+          <section class="cc__panel cc__panel--pricing" aria-label="Credit pricing">
             <div class="cc__panelTitle">Credit pricing</div>
 
             <div class="cc__price">
@@ -84,52 +99,54 @@
               Pricing is per academic credit earned. Final credit count is confirmed during verification.
             </p>
 
-            <div class="cc__divider"></div>
+            <div class="cc__divider" aria-hidden="true"></div>
 
-            <div class="cc__row">
+            <div class="cc__row" aria-label="Your estimate">
               <div class="cc__rowLeft">
                 <div class="cc__rowTitle">Your estimate</div>
                 <div class="cc__rowSub">Credits based on training volume</div>
               </div>
+
+              <!-- KEEP THIS ID (synced from ccCredits below) -->
               <div class="cc__rowRight" id="ccCreditsInline">—</div>
             </div>
 
             <div class="cc__note">
               We’ll confirm documentation requirements and finalize credits on the advisory call.
             </div>
-          </div>
+          </section>
 
         </div>
 
+        <!-- RIGHT COLUMN -->
+        <aside class="cc__side" aria-label="Next actions">
 
+          <!-- PARENTS VIDEO -->
+          <section class="cc__panel cc__panel--video" aria-label="Share with parents">
+            <div class="cc__panelTop">
+              <div class="cc__panelEyebrow">Share with parents</div>
+              <div class="cc__panelMeta">2 min • Explains how credit works</div>
+            </div>
 
-        <div class="cc__panel cc__panel--video">
-  <div class="cc__panelTop">
-    <div class="cc__panelEyebrow">Share with parents</div>
-    <div class="cc__panelMeta">2 min • Explains how credit works</div>
-  </div>
+            <div class="ccVideo ccVideo--hero" aria-label="Parent explainer video">
+              <iframe
+                src="https://www.youtube.com/embed/yDswWl8bqgc?rel=0"
+                title="Momentum — Parent explainer"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
 
-  <div class="ccVideo ccVideo--hero" aria-label="Parent explainer video">
-    <iframe
-      src="https://www.youtube.com/embed/yDswWl8bqgc?rel=0"
-      title="Momentum — Parent explainer"
-      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen></iframe>
-  </div>
+            <div class="ccMiniNext" aria-label="What happens next">
+              <div class="ccMiniNext__left">
+                <div class="ccMiniNext__title">What happens next</div>
+                <div class="ccMiniNext__text">We confirm eligibility, then your club chooses enrollment.</div>
+              </div>
+              <div class="ccMiniNext__tag">Deposit holds your spot</div>
+            </div>
+          </section>
 
-  <div class="ccMiniNext" aria-label="What happens next">
-    <div class="ccMiniNext__left">
-      <div class="ccMiniNext__title">What happens next</div>
-      <div class="ccMiniNext__text">We confirm eligibility, then your club chooses enrollment.</div>
-    </div>
-    <div class="ccMiniNext__tag">Deposit holds your spot</div>
-  </div>
-</div>
-
-
-
-          <!-- Next steps + CTAs -->
-          <div class="cc__panel">
+          <!-- NEXT STEPS + CTA -->
+          <section class="cc__panel" aria-label="Next steps">
             <div class="cc__panelTitle">Next steps</div>
 
             <ol class="cc__steps">
@@ -138,8 +155,7 @@
               <li><strong>Verification:</strong> submit logs/schedules/coach confirmation.</li>
             </ol>
 
-            <div class="cc__ctaRow">
-              <!-- Replace href if needed -->
+            <div class="cc__ctaRow" aria-label="Actions">
               <a class="cc__btn cc__btn--primary"
                  id="ccBook"
                  href="https://calendly.com/tricitycanvasproducts/30min"
@@ -147,7 +163,6 @@
                 Book advisory call
               </a>
 
-              <!-- Replace href if needed -->
               <a class="cc__btn cc__btn--ghost"
                  id="ccDepositDirect"
                  href="https://buy.stripe.com/fZu8wQe9Sgdg7x9e2saR201"
@@ -159,14 +174,13 @@
             <div class="cc__fine">
               Deposits are optional. Eligibility and credits are confirmed before final enrollment.
             </div>
-          </div>
+          </section>
 
         </aside>
-
       </section>
 
       <!-- Footer -->
-      <footer class="cc__footer">
+      <footer class="cc__footer" role="contentinfo">
         <a class="cc__back" href="/eligibility.html">Back to eligibility</a>
         <span class="cc__footerNote">Momentum — credit estimates are not guarantees until verified.</span>
       </footer>
@@ -186,7 +200,6 @@
       const sync = () => { b.textContent = a.textContent || "—"; };
       sync();
 
-      // In case credits.js updates after paint, watch for changes
       const obs = new MutationObserver(sync);
       obs.observe(a, { childList: true, characterData: true, subtree: true });
     });
