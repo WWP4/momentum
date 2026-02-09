@@ -9,7 +9,6 @@
     initWhyArrive();
     initHeroParallax();
     initMagneticButtons();
-    initFormFlow();
 
     requestAnimationFrame(() => {
       document.body.classList.add("is-loaded");
