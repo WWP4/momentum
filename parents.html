@@ -1,587 +1,809 @@
-<!-- index.html (hero-only starter) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Momentum — Parent Program</title>
-  <meta name="description" content="Apply to Momentum. Turn your athlete’s training into verified high school credit." />
+  <title>Momentum | Club Partner Program</title>
+  <meta name="description" hookup content="Momentum helps sports clubs convert structured athlete training into verified high school credit with premium partner onboarding." />
+<link rel="stylesheet" href="./styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;1,600;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#050607;
+      --ink:#f3f4f6;
+      --muted:rgba(243,244,246,.70);
+      --line:rgba(255,255,255,.10);
 
-  <link rel="stylesheet" href="./styles.css" />
+      --red:#c43236;     /* brand red */
+      --graphite:#2a2e35;/* deep gray */
+
+      --max:1160px;
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{width:min(var(--max), calc(100% - 48px)); margin-inline:auto}
+
+    /* ===== Topbar ===== */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(140%) blur(12px);
+      background:linear-gradient(to bottom, rgba(5,6,7,.86), rgba(5,6,7,.62));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .topbar__inner{
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:14px;
+    }
+    .brandDot{
+      width:7px; height:7px; border-radius:999px; background:var(--red);
+      box-shadow:0 0 0 6px rgba(196,50,54,.14);
+      flex:0 0 auto;
+    }
+
+    .nav{
+      display:flex;
+      gap:22px;
+      align-items:center;
+      color:rgba(243,244,246,.78);
+      font-weight:600;
+      font-size:14px;
+    }
+    .nav a{opacity:.9}
+    .nav a:hover{opacity:1}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      color:var(--ink);
+      font-weight:700;
+      font-size:14px;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18)}
+    .btn--primary{
+      background:linear-gradient(135deg, rgba(196,50,54,.95), rgba(196,50,54,.70));
+      border-color:rgba(196,50,54,.55);
+      box-shadow:0 18px 60px rgba(196,50,54,.18);
+    }
+    .btn--primary:hover{background:linear-gradient(135deg, rgba(196,50,54,1), rgba(196,50,54,.78))}
+
+    /* ===== Hero ===== */
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      padding: clamp(64px, 9vh, 96px) 0 44px; /* feels like the older centered design */
+    }
+    /* NO BLUE: black + red + gray only */
+    .hero::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(900px 520px at 12% 20%, rgba(196,50,54,.42), transparent 60%),
+        radial-gradient(820px 540px at 86% 20%, rgba(255,255,255,.10), transparent 62%),
+        radial-gradient(1000px 680px at 55% 110%, rgba(42,46,53,.60), transparent 55%),
+        linear-gradient(to bottom, rgba(5,6,7,.55), rgba(5,6,7,1));
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .hero__inner{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      display:grid;
+      justify-items:center;
+      gap:18px;
+      padding:0;
+    }
+
+    /* --- Logo sits HIGHER (top third) --- */
+    .logoWrap{
+      width:min(520px, 82vw);
+      margin-top: clamp(-24px, -2vh, -10px); /* nudges it higher */
+      margin-bottom: 10px;
+      position:relative;
+    }
+
+    /* subtle aura behind logo (NOT a pill) */
+    .logoWrap::after{
+      content:"";
+      position:absolute;
+      left:50%; top:52%;
+      transform:translate(-50%,-50%);
+      width:130%;
+      height:130%;
+      background:radial-gradient(closest-side, rgba(196,50,54,.22), transparent 70%);
+      filter:blur(18px);
+      opacity:.9;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .logoSvg{
+      width:100%;
+      height:auto;
+      display:block;
+      opacity:1; /* make sure it shows */
+    }
+
+    /* ===== Elegant outline -> fill animation =====
+       Slow + premium: longer draw, soft ease, modest stagger
+    */
+    .logoSvg .draw{
+      fill-opacity:0;
+      stroke:rgba(255,255,255,.78);
+      stroke-width:2.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      vector-effect:non-scaling-stroke;
+      paint-order:stroke;
+    }
+    .logoSvg .draw.is-red{ stroke:rgba(196,50,54,.95); }
+    .logoSvg .draw.is-dark{ stroke:rgba(220,220,220,.60); }
+
+    .logoSvg.play .draw{
+      animation:
+        strokeDraw var(--drawDur, 2200ms) cubic-bezier(.18,.72,.18,1) forwards,
+        fillIn var(--fillDur, 900ms) cubic-bezier(.2,.8,.2,1) forwards;
+      animation-delay:
+        var(--delay, 0ms),
+        calc(var(--delay, 0ms) + var(--fillDelay, 1550ms));
+    }
+
+    @keyframes strokeDraw{
+      from{ stroke-dashoffset: var(--len, 1000); }
+      to  { stroke-dashoffset: 0; }
+    }
+    @keyframes fillIn{
+      to{ fill-opacity:1; }
+    }
+
+    /* ===== Typography ===== */
+    .kicker{
+      margin-top:2px;
+      font-weight:800;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      font-size:12px;
+      color:rgba(243,244,246,.68);
+    }
+
+    h1{
+      font-family:"Bodoni Moda", serif;
+      font-weight:700;
+      letter-spacing:-.02em;
+      margin:0;
+      font-size:clamp(44px, 6.0vw, 84px);
+      line-height:1.02;
+    }
+
+    .hero__sub{
+      max-width:760px;
+      margin:0;
+      color:var(--muted);
+      font-size:clamp(16px, 1.6vw, 18px);
+      line-height:1.6;
+    }
+
+    .hero__actions{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
+    .hero__note{
+      margin:6px 0 0;
+      color:rgba(243,244,246,.52);
+      font-size:13px;
+    }
+
+    .chips{
+      margin:18px 0 0;
+      padding:0;
+      list-style:none;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .chips li{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:rgba(243,244,246,.72);
+      font-weight:700;
+      font-size:13px;
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .logoSvg .draw{stroke-dasharray:none !important; stroke-dashoffset:0 !important; fill-opacity:1}
+      .logoSvg.play .draw{animation:none !important}
+    }
+
+    /* small screens */
+    @media (max-width:720px){
+      .topbar__inner{height:66px}
+      .nav{display:none}
+      .hero{padding:56px 0 36px}
+      .logoWrap{width:min(440px, 90vw)}
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Minimal topbar (optional) -->
   <header class="topbar">
     <div class="container topbar__inner">
-      <a class="brand" href="#" aria-label="Momentum home">
-        <span class="brand__word">MOMENTUM</span><span class="brand__dot">.</span>
+      <a class="brand" href="#top" aria-label="Momentum home">
+        <span>MOMENTUM</span><span class="brandDot" aria-hidden="true"></span>
       </a>
 
-      <nav class="nav">
-        <a href="#learn">Learn</a>
-        <a class="nav__cta" href="#apply">Apply</a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#learn">Model</a>
+        <a href="#why">Why us</a>
+        <a href="#partner-application">Apply</a>
       </nav>
+
+      <a class="btn" href="#partner-application">Partner Application</a>
     </div>
   </header>
 
-  <!-- HERO -->
-  <main>
-    <section class="heroType" id="top" aria-label="Momentum Parent Program">
-      <div class="heroType__bg" aria-hidden="true"></div>
-      <div class="heroType__bg" aria-hidden="true"></div>
-<div class="heroType__reveal" aria-hidden="true"></div>
+  <main id="top">
+    <section class="hero" aria-label="Momentum Club Partner Program">
+     <div class="container hero__inner heroGate">
+        <!-- LOGO (higher, no pill, no “click to replay”) -->
+        <div class="logoWrap" aria-label="Momentum logo">
+          <svg class="logoSvg" id="momentumLogo"
+               xmlns="http://www.w3.org/2000/svg" version="1.1"
+               viewBox="0.00 0.00 1476.00 674.00" role="img" aria-label="Momentum logo">
+            <!-- Red mark -->
+            <path class="draw is-red" fill="#c43236" d="
+              M 657.79 106.46
+              L 603.53 66.95
+              A 0.57 0.57 0.0 0 1 603.86 65.92
+              L 826.19 65.92
+              A 0.57 0.57 0.0 0 1 826.65 66.83
+              L 745.72 174.81
+              A 0.57 0.57 0.0 0 1 744.93 174.93
+              L 719.86 156.68
+              A 0.57 0.57 0.0 0 0 719.07 156.80
+              L 594.63 321.05
+              A 0.57 0.57 0.0 0 1 594.18 321.28
+              L 496.92 321.28
+              A 0.57 0.57 0.0 0 1 496.46 320.37
+              L 657.91 107.26
+              A 0.57 0.57 0.0 0 0 657.79 106.46
+              Z" />
 
+            <!-- Grays -->
+            <path class="draw is-dark" fill="#464646" d="
+              M 892.37 84.74
+              L 940.94 84.74
+              A 0.32 0.32 0.0 0 1 941.20 85.25
+              L 761.41 321.55
+              A 0.32 0.32 0.0 0 1 761.15 321.68
+              L 712.59 321.68
+              A 0.32 0.32 0.0 0 1 712.33 321.17
+              L 892.11 84.87
+              A 0.32 0.32 0.0 0 1 892.37 84.74
+              Z" />
+            <path class="draw is-dark" fill="#464646" d="
+              M 750.32 191.80
+              L 761.56 200.35
+              A 0.38 0.38 0.0 0 1 761.63 200.88
+              L 668.71 321.50
+              A 0.38 0.38 0.0 0 1 668.41 321.65
+              L 651.81 321.65
+              A 0.38 0.38 0.0 0 1 651.50 321.04
+              L 749.79 191.87
+              A 0.38 0.38 0.0 0 1 750.32 191.80
+              Z" />
 
-      <div class="container heroType__inner">
-        <!-- Animated wordmark -->
-        <div class="wordmark" aria-label="Momentum">
-          <span class="wordmark__letters" id="wordmarkLetters" aria-hidden="true"></span>
-          <span class="wordmark__underline" aria-hidden="true"></span>
+            <!-- Blacks (wordmark shapes) -->
+            <path class="draw" fill="#000000" d="
+              M 969.78 126.67
+              L 991.77 202.00
+              A 0.30 0.30 0.0 0 1 991.72 202.27
+              L 899.86 321.51
+              A 0.30 0.30 0.0 0 1 899.62 321.63
+              L 821.46 321.63
+              A 0.30 0.30 0.0 0 1 821.22 321.15
+              L 969.25 126.57
+              A 0.30 0.30 0.0 0 1 969.78 126.67
+              Z" />
+
+            <path class="draw" fill="#000000" d="
+              M 369.00 471.95
+              C 347.36 473.64 324.71 472.06 305.64 461.62
+              C 292.64 454.49 283.14 442.72 282.64 427.33
+              C 281.98 407.31 293.09 390.13 309.53 379.43
+              C 324.61 369.62 342.50 364.47 360.36 363.07
+              C 381.99 361.38 404.65 362.96 423.71 373.40
+              C 436.72 380.53 446.22 392.30 446.72 407.69
+              C 447.38 427.71 436.27 444.89 419.82 455.59
+              C 404.75 465.40 386.85 470.54 369.00 471.95
+              Z
+              M 359.62 388.12
+              C 342.83 390.96 328.07 401.27 324.88 418.66
+              C 319.89 445.73 351.42 450.03 369.74 446.93
+              C 386.53 444.09 401.28 433.77 404.48 416.39
+              C 409.46 389.31 377.94 385.02 359.62 388.12
+              Z" />
+
+            <path class="draw" fill="#000000" d="
+              M 223.60 415.72
+              A 0.34 0.34 0.0 0 0 223.04 415.38
+              L 176.08 459.04
+              A 3.58 3.57 23.5 0 1 173.64 460.00
+              L 157.58 460.00
+              A 1.22 1.21 -15.0 0 1 156.53 459.40
+              L 130.81 415.46
+              A 0.44 0.44 0.0 0 0 130.00 415.57
+              L 114.96 469.77
+              A 0.93 0.92 -82.1 0 1 114.07 470.45
+              L 77.26 470.42
+              A 0.42 0.42 0.0 0 1 76.85 469.89
+              L 105.85 365.23
+              A 0.91 0.90 7.5 0 1 106.73 364.56
+              L 138.55 364.55
+              A 1.91 1.89 -14.4 0 1 140.21 365.52
+              L 173.76 425.43
+              A 0.41 0.41 0.0 0 0 174.39 425.53
+              L 239.52 365.64
+              A 4.12 4.09 -66.0 0 1 242.29 364.56
+              L 275.31 364.56
+              A 0.50 0.49 7.9 0 1 275.79 365.19
+              L 247.25 469.77
+              A 0.95 0.94 7.7 0 1 246.34 470.46
+              L 209.58 470.44
+              A 0.59 0.59 0.0 0 1 209.01 469.69
+              L 223.60 415.72
+              Z" />
+
+            <path class="draw" fill="#000000" d="
+              M 600.02 415.70
+              A 0.34 0.34 0.0 0 0 599.46 415.36
+              L 552.51 459.03
+              A 3.58 3.57 23.5 0 1 550.07 459.99
+              L 534.00 459.99
+              A 1.22 1.21 -15.0 0 1 532.95 459.39
+              L 507.22 415.45
+              A 0.44 0.44 0.0 0 0 506.41 415.56
+              L 491.37 469.76
+              A 0.93 0.92 -82.1 0 1 490.48 470.44
+              L 453.66 470.42
+              A 0.42 0.42 0.0 0 1 453.25 469.89
+              L 482.25 365.21
+              A 0.91 0.90 7.5 0 1 483.13 364.54
+              L 514.96 364.52
+              A 1.91 1.89 -14.4 0 1 516.62 365.49
+              L 550.18 425.41
+              A 0.41 0.41 0.0 0 0 550.81 425.51
+              L 615.95 365.61
+              A 4.12 4.09 -66.0 0 1 618.72 364.53
+              L 651.74 364.53
+              A 0.50 0.49 7.9 0 1 652.22 365.16
+              L 623.68 469.76
+              A 0.95 0.94 7.7 0 1 622.77 470.45
+              L 586.01 470.43
+              A 0.59 0.59 0.0 0 1 585.44 469.68
+              L 600.02 415.70
+              Z" />
+
+            <path class="draw" fill="#000000" d="
+              M 776.86 406.16
+              L 770.92 427.60
+              A 0.47 0.47 0.0 0 1 770.46 427.94
+              L 705.97 427.94
+              A 0.47 0.47 0.0 0 0 705.51 428.28
+              L 700.39 446.76
+              A 0.47 0.47 0.0 0 0 700.85 447.36
+              L 776.40 447.36
+              A 0.47 0.47 0.0 0 1 776.86 447.96
+              L 770.73 470.10
+              A 0.47 0.47 0.0 0 1 770.27 470.44
+              L 653.68 470.44
+              A 0.47 0.47 0.0 0 1 653.22 469.84
+              L 682.28 364.90
+              A 0.47 0.47 0.0 0 1 682.74 364.56
+              L 796.40 364.56
+              A 0.47 0.47 0.0 0 1 796.85 365.16
+              L 790.70 387.39
+              A 0.47 0.47 0.0 0 1 790.24 387.73
+              L 717.05 387.73
+              A 0.47 0.47 0.0 0 0 716.59 388.07
+              L 711.91 404.96
+              A 0.47 0.47 0.0 0 0 712.37 405.56
+              L 776.40 405.56
+              A 0.47 0.47 0.0 0 1 776.86 406.16
+              Z" />
+
+            <path class="draw" fill="#000000" d="
+              M 864.06 428.68
+              Q 859.63 423.35 851.07 413.22
+              A 0.54 0.54 0.0 0 0 850.13 413.43
+              L 834.54 469.71
+              A 0.97 0.96 -82.1 0 1 833.61 470.42
+              L 794.54 470.42
+              A 0.57 0.57 0.0 0 1 793.99 469.70
+              L 822.88 365.41
+              A 1.21 1.21 0.0 0 1 824.05 364.51
+              L 856.12 364.51
+              A 2.20 2.18 -19.7 0 1 857.81 365.30
+              Q 879.97 391.70 892.05 406.26
+              Q 896.47 411.59 905.03 421.72
+              A 0.54 0.54 0.0 0 0 905.97 421.51
+              L 921.56 365.23
+              A 0.97 0.96 -82.1 0 1 922.49 364.52
+              L 961.56 364.52
+              A 0.57 0.57 0.0 0 1 962.11 365.24
+              L 933.22 469.53
+              A 1.21 1.21 0.0 0 1 932.05 470.43
+              L 899.98 470.43
+              A 2.20 2.18 -19.7 0 1 898.30 469.64
+              Q 876.13 443.24 864.06 428.68
+              Z" />
+
+            <path class="draw" fill="#000000" d="
+              M 971.25 387.56
+              L 977.51 365.00
+              A 0.61 0.61 0.0 0 1 978.09 364.55
+              L 1108.06 364.55
+              A 0.61 0.61 0.0 0 1 1108.65 365.32
+              L 1102.39 387.88
+              A 0.61 0.61 0.0 0 1 1101.81 388.33
+              L 1057.81 388.33
+              A 0.61 0.61 0.0 0 0 1057.23 388.78
+              L 1034.73 469.99
+              A 0.61 0.61 0.0 0 1 1034.15 470.44
+              L 994.01 470.44
+              A 0.61 0.61 0.0 0 1 993.42 469.67
+              L 1015.74 389.10
+              A 0.61 0.61 0.0 0 0 1015.15 388.33
+              L 971.84 388.33
+              A 0.61 0.61 0.0 0 1 971.25 387.56
+              Z" />
+
+            <path class="draw" fill="#000000" d="
+              M 1162.23 365.16
+              Q 1155.50 389.49 1146.41 422.21
+              C 1143.39 433.09 1145.09 443.34 1157.55 446.38
+              C 1170.55 449.56 1187.70 448.26 1195.76 435.85
+              Q 1199.38 430.29 1200.87 425.11
+              Q 1204.78 411.49 1217.45 365.37
+              A 1.14 1.13 7.7 0 1 1218.55 364.54
+              L 1257.89 364.54
+              A 0.47 0.47 0.0 0 1 1258.34 365.14
+              Q 1253.11 383.88 1243.55 418.80
+              Q 1240.69 429.23 1238.33 434.54
+              C 1229.49 454.42 1211.98 465.94 1190.76 470.04
+              Q 1163.71 475.28 1136.97 469.61
+              Q 1131.49 468.45 1124.49 465.14
+              C 1111.91 459.19 1103.13 449.08 1102.91 434.70
+              Q 1102.82 429.03 1107.32 413.48
+              Q 1110.63 402.02 1120.78 365.19
+              A 0.87 0.86 7.3 0 1 1121.62 364.55
+              L 1161.76 364.55
+              A 0.49 0.48 7.7 0 1 1162.23 365.16
+              Z" />
+
+            <path class="draw" fill="#000000" d="
+              M 1355.39 459.99
+              L 1337.70 459.99
+              A 0.40 0.40 0.0 0 1 1337.35 459.79
+              L 1311.58 415.15
+              A 0.40 0.40 0.0 0 0 1310.85 415.24
+              L 1295.64 470.16
+              A 0.40 0.40 0.0 0 1 1295.26 470.45
+              L 1258.00 470.45
+              A 0.40 0.40 0.0 0 1 1257.61 469.94
+              L 1286.72 364.84
+              A 0.40 0.40 0.0 0 1 1287.10 364.55
+              L 1320.20 364.55
+              A 0.40 0.40 0.0 0 1 1320.54 364.75
+              L 1354.53 425.42
+              A 0.40 0.40 0.0 0 0 1355.15 425.52
+              L 1421.36 364.66
+              A 0.40 0.40 0.0 0 1 1421.63 364.55
+              L 1456.42 364.55
+              A 0.40 0.40 0.0 0 1 1456.81 365.06
+              L 1427.71 470.15
+              A 0.40 0.40 0.0 0 1 1427.33 470.44
+              L 1389.93 470.44
+              A 0.40 0.40 0.0 0 1 1389.54 469.93
+              L 1404.47 416.03
+              A 0.40 0.40 0.0 0 0 1403.81 415.63
+              L 1355.66 459.88
+              A 0.40 0.40 0.0 0 1 1355.39 459.99
+              Z" />
+          </svg>
         </div>
 
-        <h1 class="heroType__headline" id="heroHeadline">
-          Bring Momentum to your athlete’s transcript.
-        </h1>
 
-        <p class="heroType__sub" id="heroSub">
-          We turn the structured training your athlete is already completing into verified high school credit —
-          without adding practices and without adding extra workload.
-        </p>
+<h1 class="hero__title reveal r-up">
+  Bring Momentum<br />
+  To Your Athletes.
+</h1>
 
-        <div class="heroType__actions" id="heroActions">
-          <a class="btn btn--primary" href="#apply">Apply Now</a>
-          <a class="btn btn--ghost" href="#learn">Learn More</a>
-        </div>
+<span class="headlineRule reveal r-fade" aria-hidden="true"></span>
 
-        <div class="heroType__note" id="heroNote">
-          No new classes. No added work. Just recognition for what your athlete already does.
-        </div>
+<p class="hero__sub reveal r-up">
+  We transform elite training inside your facility into verified academic credit,
+  with concierge onboarding that protects your brand and coaching model.
+</p>
+
+<div class="hero__actions reveal r-up">
+  <a class="btn btn--primary" href="#partner-application">Become a Partner</a>
+  <a class="btn btn--ghost" href="#learn">See the Model</a>
+</div>
+
+<p class="hero__note reveal r-up">
+  No curriculum changes. No coaching disruption. Transcript-ready outcomes.
+</p>
+
+<ul class="chips reveal r-up" aria-label="Momentum highlights">
+  <li>Accreditation-aligned framework</li>
+  <li>Weekly verification workflow</li>
+  <li>Concierge launch support</li>
+</ul>
+
+
+
       </div>
     </section>
 
- <section class="timeline" id="learn" aria-label="The Momentum timeline">
-  <div class="container timeline__inner">
-    <div class="timeline__top">
-      <h2 class="timeline__title">Your Momentum timeline</h2>
-      <p class="timeline__lead">
-        A clear path from learning more to credit on the transcript—without added practices or busywork.
-      </p>
-    </div>
 
-    <div class="rail" aria-hidden="true">
-      <span class="rail__fill" id="railFill"></span>
-    </div>
+<section class="ledger" id="learn" aria-label="Momentum accreditation pathway">
+  <div class="container ledger__inner">
 
-    <div class="events" id="timelineEvents">
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 1</div>
-          <h3 class="event__h">Learn</h3>
-          <p class="event__p">See how training translates into verified high school credit and what your athlete qualifies for.</p>
-        </div>
-      </article>
-
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 2</div>
-          <h3 class="event__h">Submit application</h3>
-          <p class="event__p">Share sport, grade, and weekly training schedule. Most families finish in under 2 minutes.</p>
-        </div>
-      </article>
-
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 3</div>
-          <h3 class="event__h">Quick onboarding call</h3>
-          <p class="event__p">We confirm details, answer questions, and outline the exact credits your athlete will earn.</p>
-        </div>
-      </article>
-
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 4</div>
-          <h3 class="event__h">Reserve your spot</h3>
-          <p class="event__p">Enrollment is confirmed and your athlete’s seat is secured for the term.</p>
-        </div>
-      </article>
-
-      <article class="event" data-event>
-        <div class="event__dot" aria-hidden="true"></div>
-        <div class="event__card">
-          <div class="event__kicker">Step 5</div>
-          <h3 class="event__h">Start + simple check-ins</h3>
-          <p class="event__p">Easy weekly confirmations keep everything verified and transcript-ready.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="whyV2" id="why" aria-label="Why parents choose Momentum">
-  <div class="container whyV2__inner">
-
-    <!-- Top header -->
-    <header class="whyV2__header">
-      <p class="whyV2__eyebrow">For parents</p>
-
-      <h2 class="whyV2__title">
-       Why parents choose
-<span class="whyV2__accent">
-  Momentum
-  <span class="whyV2__underline"></span>
-</span>
-
-      </h2>
-
-      <p class="whyV2__lead">
-        Turn the training your athlete is already doing into verified high school credit—without adding stress to your week.
+    <header class="ledger__header">
+      <span class="ledger__eyebrow">THE MODEL</span>
+      <h2 class="ledger__title">The accreditation pathway</h2>
+      <p class="ledger__lead">
+        A formal review process that converts qualified training into verified academic credit —
+        without altering how you operate.
       </p>
     </header>
 
-    <!-- Premium split layout -->
-    <div class="whyV2__split">
+    <div class="ledger__stages">
 
-      <!-- Left: proof panel -->
-      <aside class="whyV2__proof" aria-label="Momentum proof points">
-        <div class="whyV2__proofTop">
-          <div class="whyV2__mark" aria-hidden="true">
-            <span class="whyV2__dot whyV2__dot--red"></span>
-            <span class="whyV2__dot whyV2__dot--blue"></span>
-          </div>
-
-          <h3 class="whyV2__proofH">
-            Clear, guided, transcript-ready.
-          </h3>
-
-          <p class="whyV2__proofP">
-            Momentum aligns athletic training with accredited coursework and provides documentation that schools and counselors can recognize.
+      <article class="stage reveal r-up">
+        <div class="stage__index">01</div>
+        <div class="stage__body">
+          <h3>Application</h3>
+          <p>
+            Facilities submit core details about training structure, athlete age ranges,
+            and weekly cadence.
           </p>
+          <ul>
+            <li>Facility + primary contact</li>
+            <li>Sports offered</li>
+            <li>Weekly training schedule</li>
+          </ul>
         </div>
+      </article>
 
-        <div class="whyV2__proofStats" role="list">
-          <div class="whyV2__stat" role="listitem">
-            <div class="whyV2__statK">2 minutes</div>
-            <div class="whyV2__statL">Typical application time</div>
-          </div>
-          <div class="whyV2__stat" role="listitem">
-            <div class="whyV2__statK">No busywork</div>
-            <div class="whyV2__statL">No new practices or extra training</div>
-          </div>
-          <div class="whyV2__stat" role="listitem">
-            <div class="whyV2__statK">Guided support</div>
-            <div class="whyV2__statL">Fast answers + clear next steps</div>
-          </div>
+      <article class="stage reveal r-up">
+        <div class="stage__index">02</div>
+        <div class="stage__body">
+          <h3>Eligibility review</h3>
+          <p>
+            Momentum evaluates whether existing programs meet high school credit standards.
+          </p>
+          <ul>
+            <li>Hours and instructional alignment</li>
+            <li>Supervision requirements</li>
+            <li>Documentation readiness</li>
+          </ul>
         </div>
+      </article>
+
+      <article class="stage reveal r-up">
+        <div class="stage__index">03</div>
+        <div class="stage__body">
+          <h3>Program approval</h3>
+          <p>
+            Approved programs are mapped to accredited coursework and prepared for launch.
+          </p>
+          <ul>
+            <li>Credit mapping</li>
+            <li>Verification workflow</li>
+            <li>Reporting format</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="stage reveal r-up">
+        <div class="stage__index">04</div>
+        <div class="stage__body">
+          <h3>Credit issuance</h3>
+          <p>
+            Upon enrollment and payment, credits are issued through accredited partners.
+          </p>
+          <ul>
+            <li>Transcript-ready records</li>
+            <li>Institutional delivery</li>
+            <li>School-facing documentation</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="stage reveal r-up">
+        <div class="stage__index">05</div>
+        <div class="stage__body">
+          <h3>Ongoing verification</h3>
+          <p>
+            Simple weekly confirmations maintain compliance and audit readiness.
+          </p>
+          <ul>
+            <li>Weekly attestations</li>
+            <li>Audit-safe records</li>
+            <li>Continuous eligibility</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<section class="whyLux" id="why" aria-label="Why clubs partner with Momentum">
+  <div class="container whyLux__inner">
+
+    <header class="whyLux__header reveal r-up">
+      <p class="whyLux__eyebrow">For clubs & facilities</p>
+      <h2 class="whyLux__title">
+        Why clubs choose <span class="whyLux__accent">Momentum</span>
+      </h2>
+      <p class="whyLux__lead">
+        Accredited education, integrated into your training—without changing how you coach or operate.
+      </p>
+    </header>
+
+    <div class="whyLux__grid">
+
+      <!-- Manifesto / authority block -->
+      <aside class="whyLux__manifesto reveal r-up" aria-label="Momentum positioning">
+        <p class="whyLux__stamp" aria-hidden="true">MOMENTUM STANDARD</p>
+
+        <h3 class="whyLux__mTitle">
+          A partner model built to hold up under scrutiny.
+        </h3>
+
+        <p class="whyLux__mBody">
+          We don’t “add a program.” We formalize what you already do—aligning structured training with accredited coursework,
+          then maintaining verification so credits are transcript-ready.
+        </p>
+
+        <div class="whyLux__rule" aria-hidden="true"></div>
+
+        <dl class="whyLux__defs">
+          <div class="whyLux__def">
+            <dt>Accreditation-aligned</dt>
+            <dd>Documentation schools can recognize.</dd>
+          </div>
+          <div class="whyLux__def">
+            <dt>Brand-safe integration</dt>
+            <dd>No disruption to your coaching model.</dd>
+          </div>
+          <div class="whyLux__def">
+            <dt>Ongoing verification</dt>
+            <dd>Audit-friendly records over time.</dd>
+          </div>
+        </dl>
       </aside>
 
-      <!-- Right: reasons list -->
-      <div class="whyV2__reasons" aria-label="Reasons parents choose Momentum">
-
-        <article class="whyV2__reason" data-why>
-          <div class="whyV2__icon" aria-hidden="true">
-            <!-- Shield -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2.5l7 3.4v6.2c0 5-3.1 9.4-7 10.9-3.9-1.5-7-5.9-7-10.9V5.9l7-3.4Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M9.2 12.2l1.9 1.9 3.8-4.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+      <!-- Reasons as editorial rows -->
+      <div class="whyLux__reasons" aria-label="Reasons clubs choose Momentum">
+        <article class="whyLux__row reveal r-up">
+          <div class="whyLux__no" aria-hidden="true">01</div>
+          <div class="whyLux__rowBody">
+            <h3 class="whyLux__h">Accredited and transcript-ready</h3>
+            <p class="whyLux__p">Verified alignment and documentation designed for legitimacy—not marketing.</p>
           </div>
-          <div class="whyV2__reasonBody">
-            <h3 class="whyV2__h">Verified and transcript-ready</h3>
-            <p class="whyV2__p">
-              Documentation and course alignment that schools can recognize.
-            </p>
-          </div>
-          <span class="whyV2__edge whyV2__edge--red" aria-hidden="true"></span>
         </article>
 
-        <article class="whyV2__reason" data-why>
-          <div class="whyV2__icon" aria-hidden="true">
-            <!-- Clock -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <article class="whyLux__row reveal r-up">
+          <div class="whyLux__no" aria-hidden="true">02</div>
+          <div class="whyLux__rowBody">
+            <h3 class="whyLux__h">Built for real facilities</h3>
+            <p class="whyLux__p">Easy to activate and simple to maintain—without adding workload to coaches.</p>
           </div>
-          <div class="whyV2__reasonBody">
-            <h3 class="whyV2__h">Built for real families</h3>
-            <p class="whyV2__p">
-              Simple steps, clear expectations, and a guided process.
-            </p>
-          </div>
-          <span class="whyV2__edge whyV2__edge--blue" aria-hidden="true"></span>
         </article>
 
-        <article class="whyV2__reason" data-why>
-          <div class="whyV2__icon" aria-hidden="true">
-            <!-- File -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M14 3v4a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M8 12h8M8 16h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+        <article class="whyLux__row reveal r-up">
+          <div class="whyLux__no" aria-hidden="true">03</div>
+          <div class="whyLux__rowBody">
+            <h3 class="whyLux__h">Clean verification with simple check-ins</h3>
+            <p class="whyLux__p">Weekly confirmations keep credits consistent, audit-friendly, and reliable.</p>
           </div>
-          <div class="whyV2__reasonBody">
-            <h3 class="whyV2__h">Simple proof + check-ins</h3>
-            <p class="whyV2__p">
-              Weekly confirmations keep credits clean and consistent.
-            </p>
-          </div>
-          <span class="whyV2__edge whyV2__edge--red" aria-hidden="true"></span>
         </article>
 
-        <article class="whyV2__reason" data-why>
-          <div class="whyV2__icon" aria-hidden="true">
-            <!-- Spark -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2l1.2 4.2L17 7.4l-3.6 2 1.1 4.1L12 11.5 9.5 13.5l1.1-4.1-3.6-2 3.8-1.2L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M5 21l.8-2.7L8.5 17l-2.7-.8L5 13.5l-.8 2.7L1.5 17l2.7.8L5 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-            </svg>
+        <article class="whyLux__row reveal r-up">
+          <div class="whyLux__no" aria-hidden="true">04</div>
+          <div class="whyLux__rowBody">
+            <h3 class="whyLux__h">A premium value-add for parents</h3>
+            <p class="whyLux__p">A real academic advantage delivered through your club—without operational friction.</p>
           </div>
-          <div class="whyV2__reasonBody">
-            <h3 class="whyV2__h">Support that removes stress</h3>
-            <p class="whyV2__p">
-              Clear next steps, fast answers, and a guided path to enrollment.
-            </p>
-          </div>
-          <span class="whyV2__edge whyV2__edge--blue" aria-hidden="true"></span>
         </article>
-
       </div>
     </div>
 
-    <!-- CTA panel -->
-    <div class="whyV2__cta">
-      <div class="whyV2__ctaText">
-        <h3 class="whyV2__ctaH">Ready to see what your athlete qualifies for?</h3>
-        <p class="whyV2__ctaP">Start takes under 2 minutes.</p>
+    <!-- Proof strip + CTA -->
+    <footer class="whyLux__footer reveal r-up" aria-label="Partner proof and call to action">
+      <div class="whyLux__proof">
+        <div class="whyLux__proofItem">
+          <div class="whyLux__k">3 minutes</div>
+          <div class="whyLux__l">Typical partner application</div>
+        </div>
+        <div class="whyLux__proofItem">
+          <div class="whyLux__k">No disruption</div>
+          <div class="whyLux__l">No schedule or practice changes</div>
+        </div>
+        <div class="whyLux__proofItem">
+          <div class="whyLux__k">Guided rollout</div>
+          <div class="whyLux__l">Concierge onboarding + next steps</div>
+        </div>
       </div>
-      <div class="whyV2__ctaBtns">
-        <a class="btn btn--primary" href="#apply">Start application</a>
-        <a class="btn btn--ghost" href="#learn">Learn more</a>
+
+      <div class="whyLux__cta">
+        <div class="whyLux__ctaText">
+          <h3 class="whyLux__ctaH">Want to see what qualifies inside your facility?</h3>
+          <p class="whyLux__ctaP">Partner setup starts in under 3 minutes.</p>
+        </div>
+        <div class="whyLux__ctaBtns">
+          <a class="btn btn--primary" href="#partner-application">Become a Partner</a>
+          <a class="btn btn--ghost" href="#learn">How it works</a>
+        </div>
       </div>
-    </div>
+    </footer>
 
   </div>
 </section>
 
-<section class="mq" id="parent-application" aria-label="Momentum parent application">
-  <div class="mq__container">
 
-    <header class="mq__top">
-      <div class="mq__topLeft">
-        <div class="mq__pill">Parent application</div>
-        <h2 class="mq__title">See what your athlete qualifies for</h2>
-        <p class="mq__sub">A quick guided flow. No busywork.</p>
-      </div>
 
-      <div class="mq__progress" aria-label="Progress">
-        <div class="mq__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <span class="mq__barFill" style="width:0%"></span>
-        </div>
-        <div class="mq__meta">
-          <span class="mq__step">Step <b id="mqStepNow">1</b> of <b id="mqStepTotal">7</b></span>
-          <span class="mq__hint" id="mqHint">Parent + athlete info</span>
-        </div>
-      </div>
-    </header>
-
-    <form class="mq__card" id="momentumParentQuiz" novalidate>
-      <input type="hidden" name="source" value="momentum-site">
-      <input type="hidden" name="score" id="mqScore" value="">
-      <input type="hidden" name="qualifies" id="mqQualifies" value="">
-
-      <!-- STEP 1 -->
-      <section class="mq__step is-active" data-title="Parent + athlete info">
-        <div class="mq__grid2">
-          <div class="mq__field">
-            <label class="mq__label">Parent / guardian name</label>
-            <input class="mq__input" name="parent_name" type="text" placeholder="Full name" required>
-          </div>
-          <div class="mq__field">
-            <label class="mq__label">Email</label>
-            <input class="mq__input" name="email" type="email" placeholder="name@email.com" required>
-          </div>
-          <div class="mq__field">
-            <label class="mq__label">Phone</label>
-            <input class="mq__input" name="phone" type="tel" placeholder="(###) ###-####">
-          </div>
-          <div class="mq__field">
-            <label class="mq__label">Athlete name</label>
-            <input class="mq__input" name="athlete_name" type="text" placeholder="Athlete name">
-          </div>
-        </div>
-
-        <div class="mq__grid2">
-          <div class="mq__field">
-            <label class="mq__label">Age group</label>
-            <div class="mq__choices mq__choices--grid">
-              <label class="mq__choice">
-                <input type="radio" name="athlete_age_group" value="10–12" required>
-                <span>10–12</span>
-              </label>
-              <label class="mq__choice">
-                <input type="radio" name="athlete_age_group" value="13–14">
-                <span>13–14</span>
-              </label>
-              <label class="mq__choice">
-                <input type="radio" name="athlete_age_group" value="15–16">
-                <span>15–16</span>
-              </label>
-              <label class="mq__choice">
-                <input type="radio" name="athlete_age_group" value="17–18">
-                <span>17–18</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="mq__field">
-            <label class="mq__label">Primary sport</label>
-            <input class="mq__input" name="primary_sport" type="text" placeholder="Soccer, basketball, volleyball…" required>
-          </div>
-        </div>
-
-        <div class="mq__grid2">
-          <div class="mq__field">
-            <label class="mq__label">City</label>
-            <input class="mq__input" name="city" type="text" placeholder="City" required>
-          </div>
-          <div class="mq__field">
-            <label class="mq__label">State</label>
-            <input class="mq__input" name="state" type="text" placeholder="State" required>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 2 -->
-      <section class="mq__step" data-title="Weekly training volume">
-        <div class="mq__q">
-          <div class="mq__qTitle">Training sessions per week</div>
-          <div class="mq__qSub">On average, how many organized sessions does your athlete attend?</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="training_sessions_per_week" value="1–2" required>
-              <span>1–2</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="training_sessions_per_week" value="3–4">
-              <span>3–4</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="training_sessions_per_week" value="5+">
-              <span>5+</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="mq__q">
-          <div class="mq__qTitle">Average session length</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="session_length" value="Under 60 minutes" required>
-              <span>Under 60 minutes</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="session_length" value="60–90 minutes">
-              <span>60–90 minutes</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="session_length" value="90+ minutes">
-              <span>90+ minutes</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="mq__q">
-          <div class="mq__qTitle">What does training typically include?</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Sport-specific drills"><span>Sport-specific drills</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Strength training / conditioning"><span>Strength / conditioning</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Speed / agility work"><span>Speed / agility</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Technical skills development"><span>Technical skills</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Scrimmage or competitive play"><span>Scrimmage / play</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Film or performance review"><span>Film / review</span></label>
-            <label class="mq__chip"><input type="checkbox" name="session_includes" value="Coach feedback / evaluation"><span>Coach feedback</span></label>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 3 -->
-      <section class="mq__step" data-title="Competition">
-        <div class="mq__q">
-          <div class="mq__qTitle">Games or competitions per week</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="games_per_week" value="0–1" required>
-              <span>0–1</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="games_per_week" value="2–3">
-              <span>2–3</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="games_per_week" value="4+">
-              <span>4+</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="mq__q">
-          <div class="mq__qTitle">Where do they compete?</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="competition_types" value="League play"><span>League play</span></label>
-            <label class="mq__chip"><input type="checkbox" name="competition_types" value="Regional tournaments"><span>Regional tournaments</span></label>
-            <label class="mq__chip"><input type="checkbox" name="competition_types" value="National tournaments"><span>National tournaments</span></label>
-            <label class="mq__chip"><input type="checkbox" name="competition_types" value="Showcases / combines"><span>Showcases / combines</span></label>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 4 -->
-      <section class="mq__step" data-title="Strength + recovery">
-        <div class="mq__q">
-          <div class="mq__qTitle">Strength or conditioning?</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="strength_conditioning" value="Yes (coach-led)" required>
-              <span>Yes (coach-led)</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="strength_conditioning" value="Yes (self-guided)">
-              <span>Yes (self-guided)</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="strength_conditioning" value="No">
-              <span>No</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="mq__q">
-          <div class="mq__qTitle">Recovery practices</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Stretching / mobility"><span>Stretching / mobility</span></label>
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Warm-up & cool-down routines"><span>Warm-up / cool-down</span></label>
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Injury prevention education"><span>Injury prevention</span></label>
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Rest days"><span>Rest days</span></label>
-            <label class="mq__chip"><input type="checkbox" name="recovery_practices" value="Hydration guidance"><span>Hydration guidance</span></label>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 5 -->
-      <section class="mq__step" data-title="Nutrition + wellness">
-        <div class="mq__q">
-          <div class="mq__qTitle">Nutrition guidance at home or with coaches?</div>
-          <div class="mq__choices">
-            <label class="mq__choice">
-              <input type="radio" name="nutrition_guidance" value="Yes (formal instruction)" required>
-              <span>Yes (formal instruction)</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="nutrition_guidance" value="Yes (informal coaching conversations)">
-              <span>Yes (informal coaching)</span>
-            </label>
-            <label class="mq__choice">
-              <input type="radio" name="nutrition_guidance" value="No">
-              <span>No</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="mq__q">
-          <div class="mq__qTitle">What do they learn about?</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Fueling before games"><span>Fueling before games</span></label>
-            <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Recovery nutrition"><span>Recovery nutrition</span></label>
-            <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Hydration habits"><span>Hydration habits</span></label>
-            <label class="mq__chip"><input type="checkbox" name="nutrition_topics" value="Sleep importance"><span>Sleep importance</span></label>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 6 -->
-      <section class="mq__step" data-title="Leadership + character">
-        <div class="mq__q">
-          <div class="mq__qTitle">Leadership responsibilities</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Team captains"><span>Team captains</span></label>
-            <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Mentoring younger players"><span>Mentoring younger players</span></label>
-            <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Helping run drills"><span>Helping run drills</span></label>
-            <label class="mq__chip"><input type="checkbox" name="leadership_roles" value="Leading warm-ups"><span>Leading warm-ups</span></label>
-          </div>
-        </div>
-
-        <div class="mq__q">
-          <div class="mq__qTitle">Character emphasis</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Accountability"><span>Accountability</span></label>
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Sportsmanship"><span>Sportsmanship</span></label>
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Team communication"><span>Team communication</span></label>
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Goal setting"><span>Goal setting</span></label>
-            <label class="mq__chip"><input type="checkbox" name="character_emphasis" value="Respect for coaches & teammates"><span>Respect</span></label>
-          </div>
-        </div>
-
-        <div class="mq__q">
-          <div class="mq__qTitle">Life skills coached</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="Time management"><span>Time management</span></label>
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="Discipline"><span>Discipline</span></label>
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="Mental toughness"><span>Mental toughness</span></label>
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="College preparation"><span>College preparation</span></label>
-            <label class="mq__chip"><input type="checkbox" name="life_skills" value="Personal responsibility"><span>Personal responsibility</span></label>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 7 -->
-      <section class="mq__step" data-title="Mindset + notes">
-        <div class="mq__q">
-          <div class="mq__qTitle">Mental performance topics</div>
-          <div class="mq__qSub">Select all that apply.</div>
-          <div class="mq__chips">
-            <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Focus"><span>Focus</span></label>
-            <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Confidence"><span>Confidence</span></label>
-            <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Handling pressure"><span>Handling pressure</span></label>
-            <label class="mq__chip"><input type="checkbox" name="mental_performance" value="Game mindset"><span>Game mindset</span></label>
-          </div>
-        </div>
-
-        <div class="mq__field">
-          <label class="mq__label">Anything we should know?</label>
-          <textarea class="mq__textarea" name="notes" rows="4" placeholder="Goals, schedule, school situation, counselor requirements, etc."></textarea>
-        </div>
-
-        <div class="mq__fine">
-          By submitting, you agree Momentum can contact you with next steps.
-        </div>
-      </section>
-
-      <!-- SUBMIT SCREEN -->
-      <section class="mq__step" id="mqSubmitStep" data-title="Submitting">
-        <div class="mq__submit">
-          <div class="mq__spinner" aria-hidden="true"></div>
-          <h3 class="mq__submitH" id="mqSubmitTitle">Submitting…</h3>
-          <p class="mq__submitP" id="mqSubmitMsg">Saving your answers.</p>
-          <button class="mq__btn mq__btn--ghost" type="button" id="mqTryAgain" style="display:none;">Try again</button>
-        </div>
-      </section>
 
       <!-- NAV -->
       <footer class="mq__nav">
@@ -594,62 +816,143 @@
   </div>
 </section>
 
-<section class="nextWrap" id="next" aria-label="What happens next">
-  <div class="nextInner">
+<!-- NEXT (Redesigned) -->
+<section class="nextV3" id="next" aria-label="How Momentum works">
+  <div class="nextV3__inner">
 
-    <header class="nextHead">
-      <p class="nextEyebrow">Next steps</p>
-      <h2 class="nextH">What happens next</h2>
-      <p class="nextP">
-        We review applications in the order they’re submitted. If you want a faster answer and a clear plan,
-        book a Priority Call to move to the front of the review queue.
+    <header class="nextV3__head">
+      <p class="nextV3__eyebrow">How it works</p>
+      <h2 class="nextV3__h">Clarity in 3 steps — then eligibility in minutes</h2>
+      <p class="nextV3__p">
+        Momentum turns elite training into verified academic credit without changing how you coach.
+        We map your programs, confirm what counts, and give you a rollout plan your families understand.
       </p>
+
+      <div class="nextV3__headCtas">
+        <a class="nextV3__btn nextV3__btn--primary" href="/eligibility.html">
+          Check your athletes’ eligibility
+        </a>
+        <a class="nextV3__btn nextV3__btn--ghost" href="#why">
+          Why Momentum
+        </a>
+      </div>
     </header>
 
-    <div class="nextRail" aria-hidden="true"></div>
+    <!-- Proof strip -->
+    <div class="nextV3__proof" aria-label="Momentum strengths">
+      <div class="nextV3__proofItem">
+        <span class="nextV3__dot" aria-hidden="true"></span>
+        <span><strong>Accreditation-aligned</strong> mapping (not “hours guessed”).</span>
+      </div>
+      <div class="nextV3__proofItem">
+        <span class="nextV3__dot" aria-hidden="true"></span>
+        <span><strong>Verification workflow</strong> built for coaches + admins.</span>
+      </div>
+      <div class="nextV3__proofItem">
+        <span class="nextV3__dot" aria-hidden="true"></span>
+        <span><strong>Parent-ready</strong> documentation and guidance.</span>
+      </div>
+    </div>
 
-    <div class="nextGrid" role="list">
-      <article class="nextCard" role="listitem">
-        <div class="nextNum"><span>1</span></div>
-        <div class="nextTitle">Application received</div>
-        <div class="nextBody">
-          Your athlete’s sport, training schedule, and goals are now in our review queue.
+    <!-- Steps -->
+    <div class="nextV3__grid" role="list" aria-label="What happens next">
+      <article class="nextV3__card" role="listitem">
+        <div class="nextV3__top">
+          <div class="nextV3__badge"><span>01</span></div>
+          <div class="nextV3__icon" aria-hidden="true">
+            <!-- inbox / intake -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 4h16v10l-3 3h-3l-2 2h-2l-2-2H7l-3-3V4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M4 14h5l2 2h2l2-2h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 class="nextV3__title">Program intake</h3>
+        <p class="nextV3__body">
+          We capture your training structure (sessions, season length, programs) and what families care about most.
+        </p>
+
+        <ul class="nextV3__list" aria-label="Strengths in step 1">
+          <li>Coach-first inputs</li>
+          <li>Facility-friendly setup</li>
+          <li>No curriculum change</li>
+        </ul>
+      </article>
+
+      <article class="nextV3__card nextV3__card--featured" role="listitem">
+        <div class="nextV3__top">
+          <div class="nextV3__badge nextV3__badge--red"><span>02</span></div>
+          <div class="nextV3__icon nextV3__icon--red" aria-hidden="true">
+            <!-- mapping / pathway -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M6 7h6M6 12h10M6 17h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M18 6v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M18 18l-2-2m2 2l2-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 class="nextV3__title">We map training → credit</h3>
+        <p class="nextV3__body">
+          We translate your weekly model into eligibility criteria, so you know exactly what can count — and why.
+        </p>
+
+        <div class="nextV3__mini">
+          <div class="nextV3__miniLabel">What you get</div>
+          <div class="nextV3__miniValue">Clear credit estimate + requirements</div>
         </div>
       </article>
 
-      <article class="nextCard" role="listitem">
-        <div class="nextNum nextNum--blue"><span>2</span></div>
-        <div class="nextTitle">We map training → credits</div>
-        <div class="nextBody">
-          We translate weekly training into course eligibility so you know exactly what can count.
+      <article class="nextV3__card" role="listitem">
+        <div class="nextV3__top">
+          <div class="nextV3__badge"><span>03</span></div>
+          <div class="nextV3__icon" aria-hidden="true">
+            <!-- rollout -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M6 19V5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M6 8h12l-3-3m3 3l-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 19v-6m4 6v-9m4 9v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
         </div>
-      </article>
 
-      <article class="nextCard" role="listitem">
-        <div class="nextNum"><span>3</span></div>
-        <div class="nextTitle">You get a clear plan</div>
-        <div class="nextBody">
-          You’ll receive next steps, what to submit, and the fastest path to enrollment — without confusion.
-        </div>
+        <h3 class="nextV3__title">Rollout plan + enrollment</h3>
+        <p class="nextV3__body">
+          You get a practical rollout: parent communication, enrollment flow, and the fastest path to activation.
+        </p>
+
+        <ul class="nextV3__list" aria-label="Strengths in step 3">
+          <li>Parent-ready explainer</li>
+          <li>Verification checklist</li>
+          <li>Onboarding sequence</li>
+        </ul>
       </article>
     </div>
 
-    <aside class="nextCTA" aria-label="Priority review call">
-      <div class="nextCTAcopy">
-        <div class="nextCTAline1">Want priority review?</div>
-        <div class="nextCTAline2">
-          Booking a call moves you to the front of the review queue. Priority slots are limited each week.
+    <!-- Bottom CTA bar -->
+    <aside class="nextV3__cta" aria-label="Eligibility call to action">
+      <div class="nextV3__ctaCopy">
+        <div class="nextV3__ctaKicker">Fastest next step</div>
+        <div class="nextV3__ctaTitle">Check your athletes’ eligibility</div>
+        <div class="nextV3__ctaText">
+          Takes ~2 minutes. You’ll get an estimate and the exact verification requirements for your facility.
         </div>
       </div>
 
-      <div class="nextCTAbtns">
-        <a class="btn btn--primary" href="https://calendly.com/tricitycanvasproducts/30min">Book Priority Call</a>
-        <a class="btn btn--ghost" href="#why">Back to Why Momentum</a>
+      <div class="nextV3__ctaBtns">
+        <a class="nextV3__btn nextV3__btn--primary nextV3__btn--wide" href="/eligibility.html">
+          Check your athletes’ eligibility
+        </a>
+        <a class="nextV3__btn nextV3__btn--ghost" href="#pricing">
+          See pricing
+        </a>
       </div>
     </aside>
 
   </div>
 </section>
+
 
 <footer class="momentumFooter" aria-label="Momentum footer">
   <div class="mfInner">
@@ -680,14 +983,50 @@
   </div>
 </footer>
 
-<script>
-document.getElementById("mfYear").textContent = new Date().getFullYear();
-</script>
-
 
   </main>
-
-  <script src="./app.js"></script>
+ <script src="club-app.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+  const svg = document.getElementById('momentumLogo');
+
+  function prepAndPlay(){
+    const paths = Array.from(svg.querySelectorAll('.draw'));
+
+    // MUCH slower + premium pacing
+    const baseDelay = 450;      // ms before anything starts
+    const step = 160;           // ms stagger between pieces (still intentional, not frantic)
+    const drawDur = 5200;       // ms stroke draw (big change)
+    const fillDur = 1500;       // ms fill fade
+    const fillDelayRed = 3200;  // ms after stroke starts (red fills earlier)
+    const fillDelayOther = 3600;// ms after stroke starts (others fill a touch later)
+
+    paths.forEach((p, i) => {
+      let len = 1000;
+      try { len = Math.ceil(p.getTotalLength()); } catch(e) {}
+
+      p.style.setProperty('--len', len);
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+
+      p.style.setProperty('--drawDur', drawDur + 'ms');
+      p.style.setProperty('--fillDur', fillDur + 'ms');
+
+      const delay = baseDelay + (i * step);
+      p.style.setProperty('--delay', delay + 'ms');
+
+      const fillDelay = p.classList.contains('is-red') ? fillDelayRed : fillDelayOther;
+      p.style.setProperty('--fillDelay', fillDelay + 'ms');
+    });
+
+    svg.classList.remove('play');
+    void svg.getBoundingClientRect();
+    svg.classList.add('play');
+  }
+
+  window.addEventListener('load', prepAndPlay);
+</script>
+
+ 
 </body>
 </html>
