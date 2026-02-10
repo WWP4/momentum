@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Momentum | Club Partner Program</title>
-  <meta name="description" hookup content="Momentum helps sports clubs convert structured athlete training into verified high school credit with premium partner onboarding." />
-<link rel="stylesheet" href="./styles.css" />
+  <title>Momentum | Parent Credit Pathway</title>
+  <meta name="description" content="Momentum helps parents turn structured athlete training into verified high school credit with a clear, guided enrollment and transcript-ready documentation." />
+  <link rel="stylesheet" href="./styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -17,8 +17,8 @@
       --muted:rgba(243,244,246,.70);
       --line:rgba(255,255,255,.10);
 
-      --red:#c43236;     /* brand red */
-      --graphite:#2a2e35;/* deep gray */
+      --red:#c43236;
+      --graphite:#2a2e35;
 
       --max:1160px;
       --radius:22px;
@@ -105,9 +105,8 @@
       position:relative;
       overflow:hidden;
       border-bottom:1px solid rgba(255,255,255,.06);
-      padding: clamp(64px, 9vh, 96px) 0 44px; /* feels like the older centered design */
+      padding: clamp(64px, 9vh, 96px) 0 44px;
     }
-    /* NO BLUE: black + red + gray only */
     .hero::before{
       content:"";
       position:absolute; inset:-1px;
@@ -130,15 +129,12 @@
       padding:0;
     }
 
-    /* --- Logo sits HIGHER (top third) --- */
     .logoWrap{
       width:min(520px, 82vw);
-      margin-top: clamp(-24px, -2vh, -10px); /* nudges it higher */
+      margin-top: clamp(-24px, -2vh, -10px);
       margin-bottom: 10px;
       position:relative;
     }
-
-    /* subtle aura behind logo (NOT a pill) */
     .logoWrap::after{
       content:"";
       position:absolute;
@@ -152,17 +148,13 @@
       pointer-events:none;
       z-index:-1;
     }
-
     .logoSvg{
       width:100%;
       height:auto;
       display:block;
-      opacity:1; /* make sure it shows */
+      opacity:1;
     }
 
-    /* ===== Elegant outline -> fill animation =====
-       Slow + premium: longer draw, soft ease, modest stagger
-    */
     .logoSvg .draw{
       fill-opacity:0;
       stroke:rgba(255,255,255,.78);
@@ -192,7 +184,6 @@
       to{ fill-opacity:1; }
     }
 
-    /* ===== Typography ===== */
     .kicker{
       margin-top:2px;
       font-weight:800;
@@ -252,13 +243,11 @@
       font-size:13px;
     }
 
-    /* reduced motion */
     @media (prefers-reduced-motion: reduce){
       .logoSvg .draw{stroke-dasharray:none !important; stroke-dashoffset:0 !important; fill-opacity:1}
       .logoSvg.play .draw{animation:none !important}
     }
 
-    /* small screens */
     @media (max-width:720px){
       .topbar__inner{height:66px}
       .nav{display:none}
@@ -276,19 +265,18 @@
       </a>
 
       <nav class="nav" aria-label="Primary navigation">
-        <a href="#learn">Model</a>
-        <a href="#why">Why us</a>
-        <a href="#partner-application">Apply</a>
+        <a href="#learn">How it works</a>
+        <a href="#why">Why Momentum</a>
+        <a href="#partner-application">Get started</a>
       </nav>
 
-      <a class="btn" href="#partner-application">Partner Application</a>
+      <a class="btn" href="#partner-application">Start eligibility</a>
     </div>
   </header>
 
   <main id="top">
-    <section class="hero" aria-label="Momentum Club Partner Program">
-     <div class="container hero__inner heroGate">
-        <!-- LOGO (higher, no pill, no “click to replay”) -->
+    <section class="hero" aria-label="Momentum parent credit pathway">
+      <div class="container hero__inner heroGate">
         <div class="logoWrap" aria-label="Momentum logo">
           <svg class="logoSvg" id="momentumLogo"
                xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -556,477 +544,450 @@
           </svg>
         </div>
 
+        <h1 class="hero__title reveal r-up">
+          Turn training hours<br />
+          Into high school credit.
+        </h1>
 
-<h1 class="hero__title reveal r-up">
-  Bring Momentum<br />
-  To Your Athletes.
-</h1>
+        <span class="headlineRule reveal r-fade" aria-hidden="true"></span>
 
-<span class="headlineRule reveal r-fade" aria-hidden="true"></span>
+        <p class="hero__sub reveal r-up">
+          Momentum helps families convert structured athletic training into verified academic credit,
+          with clear requirements, guided enrollment, and transcript-ready documentation.
+        </p>
 
-<p class="hero__sub reveal r-up">
-  We transform elite training inside your facility into verified academic credit,
-  with concierge onboarding that protects your brand and coaching model.
-</p>
+        <div class="hero__actions reveal r-up">
+          <a class="btn btn--primary" href="#partner-application">Check eligibility</a>
+          <a class="btn btn--ghost" href="#learn">See the process</a>
+        </div>
 
-<div class="hero__actions reveal r-up">
-  <a class="btn btn--primary" href="#partner-application">Become a Partner</a>
-  <a class="btn btn--ghost" href="#learn">See the Model</a>
-</div>
+        <p class="hero__note reveal r-up">
+          No new training program. No school guesswork. Documentation built to stand up to review.
+        </p>
 
-<p class="hero__note reveal r-up">
-  No curriculum changes. No coaching disruption. Transcript-ready outcomes.
-</p>
+        <ul class="chips reveal r-up" aria-label="Momentum highlights">
+          <li>Accreditation-aligned framework</li>
+          <li>Simple weekly verification</li>
+          <li>Guided family onboarding</li>
+        </ul>
+      </div>
+    </section>
 
-<ul class="chips reveal r-up" aria-label="Momentum highlights">
-  <li>Accreditation-aligned framework</li>
-  <li>Weekly verification workflow</li>
-  <li>Concierge launch support</li>
-</ul>
+    <section class="ledger" id="learn" aria-label="How Momentum converts training into credit">
+      <div class="container ledger__inner">
 
+        <header class="ledger__header">
+          <span class="ledger__eyebrow">THE PROCESS</span>
+          <h2 class="ledger__title">How training becomes credit</h2>
+          <p class="ledger__lead">
+            A formal review and documentation pathway that turns qualified training into verified high school credit —
+            without changing your athlete’s routine.
+          </p>
+        </header>
 
+        <div class="ledger__stages">
+
+          <article class="stage reveal r-up">
+            <div class="stage__index">01</div>
+            <div class="stage__body">
+              <h3>Family intake</h3>
+              <p>
+                You share the basics about your athlete’s training schedule, season length, and program structure.
+              </p>
+              <ul>
+                <li>Sport + level</li>
+                <li>Weekly training schedule</li>
+                <li>Season length + participation</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="stage reveal r-up">
+            <div class="stage__index">02</div>
+            <div class="stage__body">
+              <h3>Eligibility review</h3>
+              <p>
+                Momentum evaluates whether the training meets high school credit requirements and what documentation is needed.
+              </p>
+              <ul>
+                <li>Hours and instructional alignment</li>
+                <li>Supervision / structure requirements</li>
+                <li>Documentation readiness</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="stage reveal r-up">
+            <div class="stage__index">03</div>
+            <div class="stage__body">
+              <h3>Credit mapping</h3>
+              <p>
+                If eligible, your training is mapped to accredited coursework and prepared for issuance.
+              </p>
+              <ul>
+                <li>Course mapping</li>
+                <li>Verification workflow</li>
+                <li>School-facing documentation</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="stage reveal r-up">
+            <div class="stage__index">04</div>
+            <div class="stage__body">
+              <h3>Credit issuance</h3>
+              <p>
+                After enrollment and payment, credits are issued through accredited partners with transcript-ready records.
+              </p>
+              <ul>
+                <li>Transcript-ready records</li>
+                <li>Institutional delivery</li>
+                <li>Verification documentation</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="stage reveal r-up">
+            <div class="stage__index">05</div>
+            <div class="stage__body">
+              <h3>Ongoing verification</h3>
+              <p>
+                Simple weekly confirmations keep everything compliant and audit-ready throughout the term.
+              </p>
+              <ul>
+                <li>Weekly attestations</li>
+                <li>Audit-safe records</li>
+                <li>Continuous eligibility</li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="whyLux" id="why" aria-label="Why parents choose Momentum">
+      <div class="container whyLux__inner">
+
+        <header class="whyLux__header reveal r-up">
+          <p class="whyLux__eyebrow">For parents & athletes</p>
+          <h2 class="whyLux__title">
+            Why families choose <span class="whyLux__accent">Momentum</span>
+          </h2>
+          <p class="whyLux__lead">
+            A legitimate academic pathway tied to real training—delivered with clarity, documentation, and support.
+          </p>
+        </header>
+
+        <div class="whyLux__grid">
+
+          <aside class="whyLux__manifesto reveal r-up" aria-label="Momentum positioning">
+            <p class="whyLux__stamp" aria-hidden="true">MOMENTUM STANDARD</p>
+
+            <h3 class="whyLux__mTitle">
+              Built for legitimacy, not hype.
+            </h3>
+
+            <p class="whyLux__mBody">
+              Momentum doesn’t replace coaches or “add classes.”
+              We formalize existing training into an accreditation-aligned pathway, then maintain verification so credits stay transcript-ready.
+            </p>
+
+            <div class="whyLux__rule" aria-hidden="true"></div>
+
+            <dl class="whyLux__defs">
+              <div class="whyLux__def">
+                <dt>Accreditation-aligned</dt>
+                <dd>Documentation designed to hold up under review.</dd>
+              </div>
+              <div class="whyLux__def">
+                <dt>Clear requirements</dt>
+                <dd>No guessing what qualifies or what schools will accept.</dd>
+              </div>
+              <div class="whyLux__def">
+                <dt>Ongoing verification</dt>
+                <dd>Consistent records over time, not one-off promises.</dd>
+              </div>
+            </dl>
+          </aside>
+
+          <div class="whyLux__reasons" aria-label="Reasons parents choose Momentum">
+            <article class="whyLux__row reveal r-up">
+              <div class="whyLux__no" aria-hidden="true">01</div>
+              <div class="whyLux__rowBody">
+                <h3 class="whyLux__h">Transcript-ready credit</h3>
+                <p class="whyLux__p">Accreditation-aligned mapping and documentation built for legitimacy—not marketing.</p>
+              </div>
+            </article>
+
+            <article class="whyLux__row reveal r-up">
+              <div class="whyLux__no" aria-hidden="true">02</div>
+              <div class="whyLux__rowBody">
+                <h3 class="whyLux__h">No disruption to training</h3>
+                <p class="whyLux__p">Your athlete keeps their routine. Momentum adds structure and verification around what they already do.</p>
+              </div>
+            </article>
+
+            <article class="whyLux__row reveal r-up">
+              <div class="whyLux__no" aria-hidden="true">03</div>
+              <div class="whyLux__rowBody">
+                <h3 class="whyLux__h">Simple weekly verification</h3>
+                <p class="whyLux__p">Light-touch check-ins keep credits consistent, audit-friendly, and reliable.</p>
+              </div>
+            </article>
+
+            <article class="whyLux__row reveal r-up">
+              <div class="whyLux__no" aria-hidden="true">04</div>
+              <div class="whyLux__rowBody">
+                <h3 class="whyLux__h">A real academic advantage</h3>
+                <p class="whyLux__p">Turn dedication into opportunity—with a clear pathway families can understand and use.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <footer class="whyLux__footer reveal r-up" aria-label="Parent proof and call to action">
+          <div class="whyLux__proof">
+            <div class="whyLux__proofItem">
+              <div class="whyLux__k">2 minutes</div>
+              <div class="whyLux__l">Typical eligibility check</div>
+            </div>
+            <div class="whyLux__proofItem">
+              <div class="whyLux__k">No disruption</div>
+              <div class="whyLux__l">No schedule or practice changes</div>
+            </div>
+            <div class="whyLux__proofItem">
+              <div class="whyLux__k">Guided setup</div>
+              <div class="whyLux__l">Clear steps + documentation</div>
+            </div>
+          </div>
+
+          <div class="whyLux__cta">
+            <div class="whyLux__ctaText">
+              <h3 class="whyLux__ctaH">Want to see what qualifies for your athlete?</h3>
+              <p class="whyLux__ctaP">Start with a quick eligibility check.</p>
+            </div>
+            <div class="whyLux__ctaBtns">
+              <a class="btn btn--primary" href="#partner-application">Check eligibility</a>
+              <a class="btn btn--ghost" href="#learn">How it works</a>
+            </div>
+          </div>
+        </footer>
 
       </div>
     </section>
 
-
-<section class="ledger" id="learn" aria-label="Momentum accreditation pathway">
-  <div class="container ledger__inner">
-
-    <header class="ledger__header">
-      <span class="ledger__eyebrow">THE MODEL</span>
-      <h2 class="ledger__title">The accreditation pathway</h2>
-      <p class="ledger__lead">
-        A formal review process that converts qualified training into verified academic credit —
-        without altering how you operate.
-      </p>
-    </header>
-
-    <div class="ledger__stages">
-
-      <article class="stage reveal r-up">
-        <div class="stage__index">01</div>
-        <div class="stage__body">
-          <h3>Application</h3>
-          <p>
-            Facilities submit core details about training structure, athlete age ranges,
-            and weekly cadence.
-          </p>
-          <ul>
-            <li>Facility + primary contact</li>
-            <li>Sports offered</li>
-            <li>Weekly training schedule</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="stage reveal r-up">
-        <div class="stage__index">02</div>
-        <div class="stage__body">
-          <h3>Eligibility review</h3>
-          <p>
-            Momentum evaluates whether existing programs meet high school credit standards.
-          </p>
-          <ul>
-            <li>Hours and instructional alignment</li>
-            <li>Supervision requirements</li>
-            <li>Documentation readiness</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="stage reveal r-up">
-        <div class="stage__index">03</div>
-        <div class="stage__body">
-          <h3>Program approval</h3>
-          <p>
-            Approved programs are mapped to accredited coursework and prepared for launch.
-          </p>
-          <ul>
-            <li>Credit mapping</li>
-            <li>Verification workflow</li>
-            <li>Reporting format</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="stage reveal r-up">
-        <div class="stage__index">04</div>
-        <div class="stage__body">
-          <h3>Credit issuance</h3>
-          <p>
-            Upon enrollment and payment, credits are issued through accredited partners.
-          </p>
-          <ul>
-            <li>Transcript-ready records</li>
-            <li>Institutional delivery</li>
-            <li>School-facing documentation</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="stage reveal r-up">
-        <div class="stage__index">05</div>
-        <div class="stage__body">
-          <h3>Ongoing verification</h3>
-          <p>
-            Simple weekly confirmations maintain compliance and audit readiness.
-          </p>
-          <ul>
-            <li>Weekly attestations</li>
-            <li>Audit-safe records</li>
-            <li>Continuous eligibility</li>
-          </ul>
-        </div>
-      </article>
-
+    <!-- NAV (kept as-is structurally; only wording changed where visible) -->
+    <footer class="mq__nav">
+      <button class="mq__btn mq__btn--ghost" type="button" id="mqBack">Back</button>
+      <button class="mq__btn mq__btn--primary" type="button" id="mqNext">Continue</button>
+      <button class="mq__btn mq__btn--primary" type="button" id="mqSubmitBtn" style="display:none;">Submit</button>
+    </footer>
+    </form>
     </div>
+    </section>
 
-  </div>
-</section>
+    <section class="nextV3" id="next" aria-label="How Momentum works">
+      <div class="nextV3__inner">
 
+        <header class="nextV3__head">
+          <p class="nextV3__eyebrow">How it works</p>
+          <h2 class="nextV3__h">Clarity in 3 steps — eligibility in minutes</h2>
+          <p class="nextV3__p">
+            Momentum turns structured training into verified academic credit without changing your athlete’s routine.
+            We map what counts, confirm requirements, and give you a clear plan you can use with confidence.
+          </p>
 
-
-
-<section class="whyLux" id="why" aria-label="Why clubs partner with Momentum">
-  <div class="container whyLux__inner">
-
-    <header class="whyLux__header reveal r-up">
-      <p class="whyLux__eyebrow">For clubs & facilities</p>
-      <h2 class="whyLux__title">
-        Why clubs choose <span class="whyLux__accent">Momentum</span>
-      </h2>
-      <p class="whyLux__lead">
-        Accredited education, integrated into your training—without changing how you coach or operate.
-      </p>
-    </header>
-
-    <div class="whyLux__grid">
-
-      <!-- Manifesto / authority block -->
-      <aside class="whyLux__manifesto reveal r-up" aria-label="Momentum positioning">
-        <p class="whyLux__stamp" aria-hidden="true">MOMENTUM STANDARD</p>
-
-        <h3 class="whyLux__mTitle">
-          A partner model built to hold up under scrutiny.
-        </h3>
-
-        <p class="whyLux__mBody">
-          We don’t “add a program.” We formalize what you already do—aligning structured training with accredited coursework,
-          then maintaining verification so credits are transcript-ready.
-        </p>
-
-        <div class="whyLux__rule" aria-hidden="true"></div>
-
-        <dl class="whyLux__defs">
-          <div class="whyLux__def">
-            <dt>Accreditation-aligned</dt>
-            <dd>Documentation schools can recognize.</dd>
+          <div class="nextV3__headCtas">
+            <a class="nextV3__btn nextV3__btn--primary" href="/eligibility.html">
+              Check your athlete’s eligibility
+            </a>
+            <a class="nextV3__btn nextV3__btn--ghost" href="#why">
+              Why Momentum
+            </a>
           </div>
-          <div class="whyLux__def">
-            <dt>Brand-safe integration</dt>
-            <dd>No disruption to your coaching model.</dd>
-          </div>
-          <div class="whyLux__def">
-            <dt>Ongoing verification</dt>
-            <dd>Audit-friendly records over time.</dd>
-          </div>
-        </dl>
-      </aside>
+        </header>
 
-      <!-- Reasons as editorial rows -->
-      <div class="whyLux__reasons" aria-label="Reasons clubs choose Momentum">
-        <article class="whyLux__row reveal r-up">
-          <div class="whyLux__no" aria-hidden="true">01</div>
-          <div class="whyLux__rowBody">
-            <h3 class="whyLux__h">Accredited and transcript-ready</h3>
-            <p class="whyLux__p">Verified alignment and documentation designed for legitimacy—not marketing.</p>
+        <div class="nextV3__proof" aria-label="Momentum strengths">
+          <div class="nextV3__proofItem">
+            <span class="nextV3__dot" aria-hidden="true"></span>
+            <span><strong>Accreditation-aligned</strong> mapping (not “hours guessed”).</span>
           </div>
-        </article>
+          <div class="nextV3__proofItem">
+            <span class="nextV3__dot" aria-hidden="true"></span>
+            <span><strong>Verification workflow</strong> that’s simple to maintain.</span>
+          </div>
+          <div class="nextV3__proofItem">
+            <span class="nextV3__dot" aria-hidden="true"></span>
+            <span><strong>Parent-ready</strong> documentation and guidance.</span>
+          </div>
+        </div>
 
-        <article class="whyLux__row reveal r-up">
-          <div class="whyLux__no" aria-hidden="true">02</div>
-          <div class="whyLux__rowBody">
-            <h3 class="whyLux__h">Built for real facilities</h3>
-            <p class="whyLux__p">Easy to activate and simple to maintain—without adding workload to coaches.</p>
-          </div>
-        </article>
+        <div class="nextV3__grid" role="list" aria-label="What happens next">
+          <article class="nextV3__card" role="listitem">
+            <div class="nextV3__top">
+              <div class="nextV3__badge"><span>01</span></div>
+              <div class="nextV3__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 4h16v10l-3 3h-3l-2 2h-2l-2-2H7l-3-3V4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M4 14h5l2 2h2l2-2h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
 
-        <article class="whyLux__row reveal r-up">
-          <div class="whyLux__no" aria-hidden="true">03</div>
-          <div class="whyLux__rowBody">
-            <h3 class="whyLux__h">Clean verification with simple check-ins</h3>
-            <p class="whyLux__p">Weekly confirmations keep credits consistent, audit-friendly, and reliable.</p>
-          </div>
-        </article>
+            <h3 class="nextV3__title">Eligibility intake</h3>
+            <p class="nextV3__body">
+              We capture your athlete’s training structure (sessions, season length, program type) and the details schools typically require.
+            </p>
 
-        <article class="whyLux__row reveal r-up">
-          <div class="whyLux__no" aria-hidden="true">04</div>
-          <div class="whyLux__rowBody">
-            <h3 class="whyLux__h">A premium value-add for parents</h3>
-            <p class="whyLux__p">A real academic advantage delivered through your club—without operational friction.</p>
+            <ul class="nextV3__list" aria-label="Strengths in step 1">
+              <li>Parent-friendly inputs</li>
+              <li>Clear requirements</li>
+              <li>No curriculum change</li>
+            </ul>
+          </article>
+
+          <article class="nextV3__card nextV3__card--featured" role="listitem">
+            <div class="nextV3__top">
+              <div class="nextV3__badge nextV3__badge--red"><span>02</span></div>
+              <div class="nextV3__icon nextV3__icon--red" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M6 7h6M6 12h10M6 17h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M18 6v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M18 18l-2-2m2 2l2-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <h3 class="nextV3__title">We map training → credit</h3>
+            <p class="nextV3__body">
+              We translate your athlete’s training into eligibility criteria, so you know what can count — and why.
+            </p>
+
+            <div class="nextV3__mini">
+              <div class="nextV3__miniLabel">What you get</div>
+              <div class="nextV3__miniValue">Credit estimate + exact requirements</div>
+            </div>
+          </article>
+
+          <article class="nextV3__card" role="listitem">
+            <div class="nextV3__top">
+              <div class="nextV3__badge"><span>03</span></div>
+              <div class="nextV3__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M6 19V5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M6 8h12l-3-3m3 3l-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M10 19v-6m4 6v-9m4 9v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <h3 class="nextV3__title">Enrollment + documentation</h3>
+            <p class="nextV3__body">
+              You get a clear enrollment flow, parent-ready explanations, and the documentation needed to support issuance and verification.
+            </p>
+
+            <ul class="nextV3__list" aria-label="Strengths in step 3">
+              <li>Parent-ready explainer</li>
+              <li>Verification checklist</li>
+              <li>Guided onboarding</li>
+            </ul>
+          </article>
+        </div>
+
+        <aside class="nextV3__cta" aria-label="Eligibility call to action">
+          <div class="nextV3__ctaCopy">
+            <div class="nextV3__ctaKicker">Fastest next step</div>
+            <div class="nextV3__ctaTitle">Check your athlete’s eligibility</div>
+            <div class="nextV3__ctaText">
+              Takes ~2 minutes. You’ll get an estimate and the exact verification requirements to move forward.
+            </div>
           </div>
-        </article>
+
+          <div class="nextV3__ctaBtns">
+            <a class="nextV3__btn nextV3__btn--primary nextV3__btn--wide" href="/eligibility.html">
+              Check your athlete’s eligibility
+            </a>
+            <a class="nextV3__btn nextV3__btn--ghost" href="#pricing">
+              See pricing
+            </a>
+          </div>
+        </aside>
+
       </div>
-    </div>
+    </section>
 
-    <!-- Proof strip + CTA -->
-    <footer class="whyLux__footer reveal r-up" aria-label="Partner proof and call to action">
-      <div class="whyLux__proof">
-        <div class="whyLux__proofItem">
-          <div class="whyLux__k">3 minutes</div>
-          <div class="whyLux__l">Typical partner application</div>
-        </div>
-        <div class="whyLux__proofItem">
-          <div class="whyLux__k">No disruption</div>
-          <div class="whyLux__l">No schedule or practice changes</div>
-        </div>
-        <div class="whyLux__proofItem">
-          <div class="whyLux__k">Guided rollout</div>
-          <div class="whyLux__l">Concierge onboarding + next steps</div>
-        </div>
-      </div>
+    <footer class="momentumFooter" aria-label="Momentum footer">
+      <div class="mfInner">
 
-      <div class="whyLux__cta">
-        <div class="whyLux__ctaText">
-          <h3 class="whyLux__ctaH">Want to see what qualifies inside your facility?</h3>
-          <p class="whyLux__ctaP">Partner setup starts in under 3 minutes.</p>
+        <div class="mfTop">
+          <div class="mfBrand">
+            <div class="mfLogo">MOMENTUM<span>.</span></div>
+            <p class="mfThanks">
+              Thank you for trusting Momentum with your athlete’s future.
+              We’re honored to help turn dedication into opportunity.
+            </p>
+          </div>
+
+          <div class="mfContact">
+            <div class="mfLabel">Contact</div>
+            <a href="mailto:info@momentumportal.com">hq@momentum-athlete.com</a>
+            <div class="mfAddr">
+              3240 W Chain of Rocks Rd<br>
+              St. Louis, MO
+            </div>
+          </div>
         </div>
-        <div class="whyLux__ctaBtns">
-          <a class="btn btn--primary" href="#partner-application">Become a Partner</a>
-          <a class="btn btn--ghost" href="#learn">How it works</a>
+
+        <div class="mfBottom">
+          © <span id="mfYear"></span> Momentum. All rights reserved.
         </div>
+
       </div>
     </footer>
 
-  </div>
-</section>
-
-
-
-
-      <!-- NAV -->
-      <footer class="mq__nav">
-        <button class="mq__btn mq__btn--ghost" type="button" id="mqBack">Back</button>
-        <button class="mq__btn mq__btn--primary" type="button" id="mqNext">Continue</button>
-        <button class="mq__btn mq__btn--primary" type="button" id="mqSubmitBtn" style="display:none;">Submit</button>
-      </footer>
-    </form>
-
-  </div>
-</section>
-
-<!-- NEXT (Redesigned) -->
-<section class="nextV3" id="next" aria-label="How Momentum works">
-  <div class="nextV3__inner">
-
-    <header class="nextV3__head">
-      <p class="nextV3__eyebrow">How it works</p>
-      <h2 class="nextV3__h">Clarity in 3 steps — then eligibility in minutes</h2>
-      <p class="nextV3__p">
-        Momentum turns elite training into verified academic credit without changing how you coach.
-        We map your programs, confirm what counts, and give you a rollout plan your families understand.
-      </p>
-
-      <div class="nextV3__headCtas">
-        <a class="nextV3__btn nextV3__btn--primary" href="/eligibility.html">
-          Check your athletes’ eligibility
-        </a>
-        <a class="nextV3__btn nextV3__btn--ghost" href="#why">
-          Why Momentum
-        </a>
-      </div>
-    </header>
-
-    <!-- Proof strip -->
-    <div class="nextV3__proof" aria-label="Momentum strengths">
-      <div class="nextV3__proofItem">
-        <span class="nextV3__dot" aria-hidden="true"></span>
-        <span><strong>Accreditation-aligned</strong> mapping (not “hours guessed”).</span>
-      </div>
-      <div class="nextV3__proofItem">
-        <span class="nextV3__dot" aria-hidden="true"></span>
-        <span><strong>Verification workflow</strong> built for coaches + admins.</span>
-      </div>
-      <div class="nextV3__proofItem">
-        <span class="nextV3__dot" aria-hidden="true"></span>
-        <span><strong>Parent-ready</strong> documentation and guidance.</span>
-      </div>
-    </div>
-
-    <!-- Steps -->
-    <div class="nextV3__grid" role="list" aria-label="What happens next">
-      <article class="nextV3__card" role="listitem">
-        <div class="nextV3__top">
-          <div class="nextV3__badge"><span>01</span></div>
-          <div class="nextV3__icon" aria-hidden="true">
-            <!-- inbox / intake -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M4 4h16v10l-3 3h-3l-2 2h-2l-2-2H7l-3-3V4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M4 14h5l2 2h2l2-2h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <h3 class="nextV3__title">Program intake</h3>
-        <p class="nextV3__body">
-          We capture your training structure (sessions, season length, programs) and what families care about most.
-        </p>
-
-        <ul class="nextV3__list" aria-label="Strengths in step 1">
-          <li>Coach-first inputs</li>
-          <li>Facility-friendly setup</li>
-          <li>No curriculum change</li>
-        </ul>
-      </article>
-
-      <article class="nextV3__card nextV3__card--featured" role="listitem">
-        <div class="nextV3__top">
-          <div class="nextV3__badge nextV3__badge--red"><span>02</span></div>
-          <div class="nextV3__icon nextV3__icon--red" aria-hidden="true">
-            <!-- mapping / pathway -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M6 7h6M6 12h10M6 17h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M18 6v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M18 18l-2-2m2 2l2-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <h3 class="nextV3__title">We map training → credit</h3>
-        <p class="nextV3__body">
-          We translate your weekly model into eligibility criteria, so you know exactly what can count — and why.
-        </p>
-
-        <div class="nextV3__mini">
-          <div class="nextV3__miniLabel">What you get</div>
-          <div class="nextV3__miniValue">Clear credit estimate + requirements</div>
-        </div>
-      </article>
-
-      <article class="nextV3__card" role="listitem">
-        <div class="nextV3__top">
-          <div class="nextV3__badge"><span>03</span></div>
-          <div class="nextV3__icon" aria-hidden="true">
-            <!-- rollout -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M6 19V5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M6 8h12l-3-3m3 3l-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10 19v-6m4 6v-9m4 9v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <h3 class="nextV3__title">Rollout plan + enrollment</h3>
-        <p class="nextV3__body">
-          You get a practical rollout: parent communication, enrollment flow, and the fastest path to activation.
-        </p>
-
-        <ul class="nextV3__list" aria-label="Strengths in step 3">
-          <li>Parent-ready explainer</li>
-          <li>Verification checklist</li>
-          <li>Onboarding sequence</li>
-        </ul>
-      </article>
-    </div>
-
-    <!-- Bottom CTA bar -->
-    <aside class="nextV3__cta" aria-label="Eligibility call to action">
-      <div class="nextV3__ctaCopy">
-        <div class="nextV3__ctaKicker">Fastest next step</div>
-        <div class="nextV3__ctaTitle">Check your athletes’ eligibility</div>
-        <div class="nextV3__ctaText">
-          Takes ~2 minutes. You’ll get an estimate and the exact verification requirements for your facility.
-        </div>
-      </div>
-
-      <div class="nextV3__ctaBtns">
-        <a class="nextV3__btn nextV3__btn--primary nextV3__btn--wide" href="/eligibility.html">
-          Check your athletes’ eligibility
-        </a>
-        <a class="nextV3__btn nextV3__btn--ghost" href="#pricing">
-          See pricing
-        </a>
-      </div>
-    </aside>
-
-  </div>
-</section>
-
-
-<footer class="momentumFooter" aria-label="Momentum footer">
-  <div class="mfInner">
-
-    <div class="mfTop">
-      <div class="mfBrand">
-        <div class="mfLogo">MOMENTUM<span>.</span></div>
-        <p class="mfThanks">
-          Thank you for trusting Momentum with your athlete’s future.
-          We’re honored to help turn dedication into opportunity.
-        </p>
-      </div>
-
-      <div class="mfContact">
-        <div class="mfLabel">Contact</div>
-        <a href="mailto:info@momentumportal.com">hq@momentum-athlete.com</a>
-        <div class="mfAddr">
-          3240 W Chain of Rocks Rd<br>
-          St. Louis, MO
-        </div>
-      </div>
-    </div>
-
-    <div class="mfBottom">
-      © <span id="mfYear"></span> Momentum. All rights reserved.
-    </div>
-
-  </div>
-</footer>
-
-
   </main>
- <script src="club-app.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="club-app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-  const svg = document.getElementById('momentumLogo');
+    const svg = document.getElementById('momentumLogo');
 
-  function prepAndPlay(){
-    const paths = Array.from(svg.querySelectorAll('.draw'));
+    function prepAndPlay(){
+      const paths = Array.from(svg.querySelectorAll('.draw'));
 
-    // MUCH slower + premium pacing
-    const baseDelay = 450;      // ms before anything starts
-    const step = 160;           // ms stagger between pieces (still intentional, not frantic)
-    const drawDur = 5200;       // ms stroke draw (big change)
-    const fillDur = 1500;       // ms fill fade
-    const fillDelayRed = 3200;  // ms after stroke starts (red fills earlier)
-    const fillDelayOther = 3600;// ms after stroke starts (others fill a touch later)
+      const baseDelay = 450;
+      const step = 160;
+      const drawDur = 5200;
+      const fillDur = 1500;
+      const fillDelayRed = 3200;
+      const fillDelayOther = 3600;
 
-    paths.forEach((p, i) => {
-      let len = 1000;
-      try { len = Math.ceil(p.getTotalLength()); } catch(e) {}
+      paths.forEach((p, i) => {
+        let len = 1000;
+        try { len = Math.ceil(p.getTotalLength()); } catch(e) {}
 
-      p.style.setProperty('--len', len);
-      p.style.strokeDasharray = len;
-      p.style.strokeDashoffset = len;
+        p.style.setProperty('--len', len);
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = len;
 
-      p.style.setProperty('--drawDur', drawDur + 'ms');
-      p.style.setProperty('--fillDur', fillDur + 'ms');
+        p.style.setProperty('--drawDur', drawDur + 'ms');
+        p.style.setProperty('--fillDur', fillDur + 'ms');
 
-      const delay = baseDelay + (i * step);
-      p.style.setProperty('--delay', delay + 'ms');
+        const delay = baseDelay + (i * step);
+        p.style.setProperty('--delay', delay + 'ms');
 
-      const fillDelay = p.classList.contains('is-red') ? fillDelayRed : fillDelayOther;
-      p.style.setProperty('--fillDelay', fillDelay + 'ms');
-    });
+        const fillDelay = p.classList.contains('is-red') ? fillDelayRed : fillDelayOther;
+        p.style.setProperty('--fillDelay', fillDelay + 'ms');
+      });
 
-    svg.classList.remove('play');
-    void svg.getBoundingClientRect();
-    svg.classList.add('play');
-  }
+      svg.classList.remove('play');
+      void svg.getBoundingClientRect();
+      svg.classList.add('play');
+    }
 
-  window.addEventListener('load', prepAndPlay);
-</script>
-
- 
+    window.addEventListener('load', prepAndPlay);
+  </script>
 </body>
 </html>
+
