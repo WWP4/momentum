@@ -4737,3 +4737,78 @@ section:empty{
 }
 
 
+/* =========================
+   FOOTER — RED / WHITE
+   ========================= */
+
+.mfRed{
+  background: #d91522; /* strong red */
+  color: #ffffff;
+  padding: 32px 0 22px;
+}
+
+.mfRed__inner{
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+/* Top row */
+.mfRed__row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Brand */
+.mfRed__logo{
+  font-weight: 900;
+  letter-spacing: .18em;
+  font-size: 14px;
+}
+
+.mfRed__logo span{
+  font-weight: 900;
+}
+
+.mfRed__tag{
+  margin-top: 8px;
+  font-size: 13px;
+  opacity: .85;
+  max-width: 420px;
+}
+
+/* Contact */
+.mfRed__contact{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.mfRed__contact a{
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity .15s ease;
+}
+
+.mfRed__contact a:hover{
+  opacity: .8;
+}
+
+.mfRed__divider{
+  opacity: .6;
+}
+
+/* Bottom */
+.mfRed__bottom{
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.25);
+  font-size: 12px;
+  opacity: .8;
+}
+
+
