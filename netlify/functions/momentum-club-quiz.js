@@ -153,18 +153,18 @@ function buildCustomerEmailHTML({ name, qualifies, score, calendlyUrl, supportEm
   const greeting = name ? `Hi ${escapeHtml(name)},` : "Hi,";
 
   const statusLine = (() => {
-    if (!qualifies) return "We’ve received your submission and your Educator Advisor will review it.";
+    if (!qualifies) return "We’ve received your submission and your Academic Advisor will review it.";
     const q = qualifies.toLowerCase();
-    if (q === "high") return "We’ve received your submission — you may be in a strong range. Your Educator Advisor will confirm details.";
-    if (q === "moderate") return "We’ve received your submission — your Educator Advisor will confirm requirements and next steps.";
-    if (q === "early") return "We’ve received your submission — your Educator Advisor will help you understand what’s needed to qualify.";
-    return "We’ve received your submission and your Educator Advisor will review it.";
+    if (q === "high") return "We’ve received your submission — you may be in a strong range. Your Academic Advisor will confirm details.";
+    if (q === "moderate") return "We’ve received your submission — your Academic Advisor will confirm requirements and next steps.";
+    if (q === "early") return "We’ve received your submission — your Academic Advisor will help you understand what’s needed to qualify.";
+    return "We’ve received your submission and your Academic Advisor will review it.";
   })();
 
   const rows = [
     score !== "" ? row("Score", escapeHtml(String(score))) : "",
     qualifies ? row("Status", escapeHtml(qualifies)) : "",
-    row("Next step", "Book a call with your Educator Advisor"),
+    row("Next step", "Book a call with your Academic Advisor"),
     row("Timing", "Choose any available time on the calendar"),
   ].filter(Boolean).join("");
 
@@ -226,7 +226,7 @@ function buildCustomerEmailHTML({ name, qualifies, score, calendlyUrl, supportEm
             <td style="padding:18px 0 0 0;">
               <a href="${calendlyUrl}"
                  style="display:inline-block;font-family:Montserrat,Arial,sans-serif;font-weight:900;font-size:14px;letter-spacing:.02em;text-decoration:none;background:${BLACK};color:#ffffff;padding:12px 16px;border-radius:12px;">
-                Book a call with your Educator Advisor
+                Book a call with your Academic Advisor
               </a>
               <div style="font-family:Montserrat,Arial,sans-serif;color:${MUTED};font-size:12px;line-height:1.6;margin-top:10px;">
                 Prefer email? Reply here or contact <a href="mailto:${supportEmail}" style="color:${BLACK};font-weight:900;text-decoration:none;">${supportEmail}</a>.
@@ -372,7 +372,7 @@ async function maybeSendSms({ phone, name, calendlyUrl }) {
   const first = name ? `Hi ${name.split(" ")[0]}, ` : "Hi, ";
   const body =
     `${first}we received your Momentum submission.\n` +
-    `Book a call with your Educator Advisor:\n${calendlyUrl}\n` +
+    `Book a call with your Academic Advisor:\n${calendlyUrl}\n` +
     `Questions? Reply to your email from Momentum.`;
 
   const url = `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`;
