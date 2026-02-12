@@ -223,16 +223,29 @@
 
     /* ---------- Backend insert (Supabase + fallback) ---------- */
 
-    const submitToBackend = async (payload) => {
-      const supabaseUrl = window.MOMENTUM_SUPABASE_URL;
-      const supabaseAnonKey = window.MOMENTUM_SUPABASE_ANON_KEY;
+   const submitToBackend = async (payload) => {
+  const supabaseUrl = window.SUPABASE_URL;
+  const supabaseAnonKey = window.SUPABASE_API;
 
-      if (window.supabase && supabaseUrl && supabaseAnonKey) {
-        const client = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-        const { error } = await client.from("partner_applications").insert(payload);
-        if (error) throw error;
-        return;
-      }
+  if (!window.supabase || !supabaseUrl || !supabaseAnonKey) {
+    throw new Error("Supabase not configured properly.");
+  }
+
+  const client = window.supabase.createClient(
+    supabaseUrl,
+    supabaseAnonKey
+  );
+
+  // ⚠️ IMPORTANT: change to the correct table
+  const { error } = await client
+    .from("partner_applications") // or "club_applications"
+    .insert([payload]); // v2 expects array
+
+  if (error) {
+    console.error("Supabase insert error:", error);
+    throw error;
+  }
+};
 
       // fallback: simulate
       await new Promise((resolve) => setTimeout(resolve, 1200));
