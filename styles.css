@@ -4440,3 +4440,300 @@ section:empty{
 .resRow__btn--ghost:hover{
   background: #f4f6f8;
 }
+
+/* =========================
+   HOW IT WORKS — BLACK, CLEAN
+   ========================= */
+
+.howBlk{
+  background: #070809;
+  color: rgba(255,255,255,.92);
+  padding: clamp(56px, 7vw, 96px) 0;
+}
+
+.howBlk__inner{
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+/* Header */
+.howBlk__eyebrow{
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.62);
+}
+
+.howBlk__headGrid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (min-width: 920px){
+  .howBlk__headGrid{
+    grid-template-columns: 1.05fr .95fr;
+    gap: 26px;
+  }
+}
+
+.howBlk__title{
+  margin: 0;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.howBlk__lead{
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,.72);
+  max-width: 52ch;
+}
+
+.howBlk__ctas{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* Buttons */
+.howBlk__btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 850;
+  font-size: 14px;
+  border: 1px solid rgba(255,255,255,.16);
+  transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+}
+
+.howBlk__btn:hover{ transform: translateY(-1px); }
+
+.howBlk__btn--primary{
+  background: #ffffff;
+  color: #0b0c10;
+  border-color: rgba(255,255,255,.0);
+}
+
+.howBlk__btn--primary:hover{ opacity: .95; }
+
+.howBlk__btn--link{
+  height: auto;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: rgba(255,255,255,.78);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.howBlk__btn--link:hover{
+  transform: none;
+  color: rgba(255,255,255,.92);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.howBlk__btn--wide{
+  padding: 0 18px;
+}
+
+/* Proof line */
+.howBlk__proof{
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  color: rgba(255,255,255,.68);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.howBlk__proofItem strong{
+  color: rgba(255,255,255,.90);
+  font-weight: 900;
+}
+
+.howBlk__sep{
+  color: rgba(255,255,255,.28);
+}
+
+/* Steps (timeline list) */
+.howBlk__steps{
+  list-style: none;
+  padding: 0;
+  margin: 34px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.howBlk__step{
+  position: relative;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  background: transparent; /* no glass */
+}
+
+@media (min-width: 860px){
+  .howBlk__step{
+    padding: 22px;
+    gap: 18px;
+  }
+}
+
+.howBlk__rail{
+  position: absolute;
+  left: 28px;
+  top: 18px;
+  bottom: 18px;
+  width: 1px;
+  background: rgba(255,255,255,.08);
+}
+
+.howBlk__num{
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.86);
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  z-index: 1;
+}
+
+.howBlk__content{
+  padding-top: 2px;
+}
+
+.howBlk__stepTitle{
+  margin: 2px 0 8px;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.howBlk__stepText{
+  margin: 0 0 12px;
+  color: rgba(255,255,255,.70);
+  line-height: 1.65;
+  font-size: 14px;
+  max-width: 70ch;
+}
+
+/* bullets */
+.howBlk__bullets{
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(255,255,255,.72);
+  display: grid;
+  gap: 6px;
+  font-size: 13.5px;
+}
+
+/* Step 2 accent (subtle, not corny) */
+.howBlk__step--accent{
+  border-color: rgba(255,255,255,.18);
+}
+
+.howBlk__step--accent .howBlk__num{
+  border-color: rgba(255,255,255,.18);
+}
+
+.howBlk__deliverable{
+  border-top: 1px solid rgba(255,255,255,.10);
+  margin-top: 10px;
+  padding-top: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.howBlk__deliverableLabel{
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  font-weight: 900;
+}
+
+.howBlk__deliverableValue{
+  font-weight: 900;
+  color: rgba(255,255,255,.90);
+  font-size: 14px;
+}
+
+/* CTA bar */
+.howBlk__bar{
+  margin-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  padding-top: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.howBlk__barKicker{
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  font-weight: 900;
+}
+
+.howBlk__barTitle{
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 950;
+  letter-spacing: -0.01em;
+}
+
+.howBlk__barText{
+  margin-top: 6px;
+  color: rgba(255,255,255,.70);
+  font-size: 13.5px;
+  line-height: 1.6;
+  max-width: 60ch;
+}
+
+.howBlk__barActions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Focus */
+.howBlk__btn:focus-visible{
+  outline: 2px solid rgba(255,255,255,.75);
+  outline-offset: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .howBlk__btn{ transition: none !important; }
+  .howBlk__btn:hover{ transform: none !important; }
+}
+
+
