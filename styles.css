@@ -4811,4 +4811,7 @@ section:empty{
   opacity: .8;
 }
 
+* {
+  font-family: 'Montserrat', sans-serif !important;
+}
 
