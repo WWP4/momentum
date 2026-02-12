@@ -221,35 +221,27 @@
       if (tryAgainBtn) tryAgainBtn.style.display = "inline-flex";
     };
 
-    /* ---------- Backend insert (Supabase + fallback) ---------- */
+   /* ---------- Backend insert (Supabase) ---------- */
 
-   const submitToBackend = async (payload) => {
+const submitToBackend = async (payload) => {
   const supabaseUrl = window.SUPABASE_URL;
   const supabaseAnonKey = window.SUPABASE_API;
 
   if (!window.supabase || !supabaseUrl || !supabaseAnonKey) {
-    throw new Error("Supabase not configured properly.");
+    throw new Error("Supabase not configured properly (missing SUPABASE_URL or SUPABASE_API).");
   }
 
-  const client = window.supabase.createClient(
-    supabaseUrl,
-    supabaseAnonKey
-  );
+  const client = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-  // ⚠️ IMPORTANT: change to the correct table
-  const { error } = await client
-    .from("partner_applications") // or "club_applications"
-    .insert([payload]); // v2 expects array
+  // IMPORTANT: pick the real table you actually have
+  const TABLE = "partner_applications"; // or "club_applications"
 
+  const { error } = await client.from(TABLE).insert([payload]);
   if (error) {
     console.error("Supabase insert error:", error);
     throw error;
   }
 };
-
-      // fallback: simulate
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-    };
 
     /* ---------- Automated email (Netlify function) ---------- */
     const sendAutomatedEmail = async (payload, qualifies) => {
