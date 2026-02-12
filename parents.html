@@ -777,185 +777,215 @@
       </div>
     </section>
 
-    <!-- NAV (kept as-is structurally; only wording changed where visible) -->
-    <footer class="mq__nav">
-      <button class="mq__btn mq__btn--ghost" type="button" id="mqBack">Back</button>
-      <button class="mq__btn mq__btn--primary" type="button" id="mqNext">Continue</button>
-      <button class="mq__btn mq__btn--primary" type="button" id="mqSubmitBtn" style="display:none;">Submit</button>
-    </footer>
-    </form>
-    </div>
-    </section>
+   <section class="resLibrary" id="parent-resources" aria-label="Helpful resources">
+  <div class="resLibrary__inner">
 
-    <section class="parentResources" id="parent-resources" aria-label="Helpful resources">
-  <div class="parentResources__inner">
-    <header class="parentResources__head">
-      <p class="parentResources__eyebrow">Helpful resources</p>
-      <h2 class="parentResources__title">Everything parents ask for (in one place)</h2>
-      <p class="parentResources__sub">
-        Quick, official PDFs you can save, share, or reference anytime. Opens in a new tab.
-      </p>
-    </header>
+    <div class="resLibrary__layout">
 
-    <div class="parentResources__grid" role="list">
-      <!-- COURSE CATALOG -->
-      <article class="parentResources__card" role="listitem">
-        <div class="parentResources__meta">
-          <span class="parentResources__tag">Program overview</span>
-          <h3 class="parentResources__cardTitle">Course Catalog</h3>
-          <p class="parentResources__desc">
-            See available courses, credit options, and what training hours convert into.
-          </p>
-        </div>
-        <div class="parentResources__actions">
-          <a
-            class="parentResources__btn parentResources__btn--primary"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc8d806f3ff3bdfe7ba9d/1767885016652/Course+Catalog+Momentum-2.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Course Catalog PDF"
-          >
-            Open PDF
-          </a>
-          <a
-            class="parentResources__btn parentResources__btn--ghost"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc8d806f3ff3bdfe7ba9d/1767885016652/Course+Catalog+Momentum-2.pdf"
-            download
-            aria-label="Download Course Catalog PDF"
-          >
-            Download
-          </a>
-        </div>
-      </article>
+      <!-- Left: premium intro panel -->
+      <aside class="resLibrary__intro">
+        <p class="resLibrary__eyebrow">Parent resources</p>
 
-      <!-- COGNIA EXPLAINED -->
-      <article class="parentResources__card" role="listitem">
-        <div class="parentResources__meta">
-          <span class="parentResources__tag">Accreditation</span>
-          <h3 class="parentResources__cardTitle">Cognia Explained</h3>
-          <p class="parentResources__desc">
-            A simple breakdown of Cognia and why accreditation matters for transcripts.
-          </p>
-        </div>
-        <div class="parentResources__actions">
-          <a
-            class="parentResources__btn parentResources__btn--primary"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc90b2192a21241c90add/1767885067814/Cognia+Explained.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Cognia Explained PDF"
-          >
-            Open PDF
-          </a>
-          <a
-            class="parentResources__btn parentResources__btn--ghost"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc90b2192a21241c90add/1767885067814/Cognia+Explained.pdf"
-            download
-            aria-label="Download Cognia Explained PDF"
-          >
-            Download
-          </a>
-        </div>
-      </article>
+        <h2 class="resLibrary__title">
+          Official PDFs, organized for quick answers.
+        </h2>
 
-      <!-- PARENT GUIDE -->
-      <article class="parentResources__card" role="listitem">
-        <div class="parentResources__meta">
-          <span class="parentResources__tag">Start here</span>
-          <h3 class="parentResources__cardTitle">Parent Guide</h3>
-          <p class="parentResources__desc">
-            The parent-facing walkthrough: enrollment, verification, and what to expect.
-          </p>
-        </div>
-        <div class="parentResources__actions">
-          <a
-            class="parentResources__btn parentResources__btn--primary"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc990e9730015378fe7e9/1767885200043/Parent+Guide.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Parent Guide PDF"
-          >
-            Open PDF
-          </a>
-          <a
-            class="parentResources__btn parentResources__btn--ghost"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc990e9730015378fe7e9/1767885200043/Parent+Guide.pdf"
-            download
-            aria-label="Download Parent Guide PDF"
-          >
-            Download
-          </a>
-        </div>
-      </article>
+        <p class="resLibrary__lead">
+          Save these for later. Each file opens in a new tab and is ready to forward to a school counselor if needed.
+        </p>
 
-      <!-- TRANSCRIPT DELIVERY -->
-      <article class="parentResources__card" role="listitem">
-        <div class="parentResources__meta">
-          <span class="parentResources__tag">Transcripts</span>
-          <h3 class="parentResources__cardTitle">Transcript Delivery &amp; Account Setup</h3>
-          <p class="parentResources__desc">
-            How accounts are created and how transcripts are delivered and requested.
-          </p>
+        <div class="resLibrary__trust">
+          <div class="resLibrary__trustItem">
+            <span class="resLibrary__dot" aria-hidden="true"></span>
+            Clear, transcript-ready documentation
+          </div>
+          <div class="resLibrary__trustItem">
+            <span class="resLibrary__dot" aria-hidden="true"></span>
+            Accreditation + process explained simply
+          </div>
+          <div class="resLibrary__trustItem">
+            <span class="resLibrary__dot" aria-hidden="true"></span>
+            Step-by-step parent guidance
+          </div>
         </div>
-        <div class="parentResources__actions">
-          <a
-            class="parentResources__btn parentResources__btn--primary"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc9e046bf9736ea96c1d5/1767885280644/Transcript+Delivery+%26+Account+Setup.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Transcript Delivery and Account Setup PDF"
-          >
-            Open PDF
-          </a>
-          <a
-            class="parentResources__btn parentResources__btn--ghost"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc9e046bf9736ea96c1d5/1767885280644/Transcript+Delivery+%26+Account+Setup.pdf"
-            download
-            aria-label="Download Transcript Delivery and Account Setup PDF"
-          >
-            Download
-          </a>
-        </div>
-      </article>
 
-      <!-- WHAT HAPPENS AFTER ENROLLMENT -->
-      <article class="parentResources__card" role="listitem">
-        <div class="parentResources__meta">
-          <span class="parentResources__tag">Next steps</span>
-          <h3 class="parentResources__cardTitle">What Happens After Enrollment</h3>
-          <p class="parentResources__desc">
-            A clear timeline: verification, communication, and when credits are finalized.
-          </p>
-        </div>
-        <div class="parentResources__actions">
-          <a
-            class="parentResources__btn parentResources__btn--primary"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fca08dcf5464427915c02/1767885320143/What+Happens+After+Enrollment.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open What Happens After Enrollment PDF"
-          >
-            Open PDF
+        <div class="resLibrary__ctaWrap">
+          <a class="resLibrary__cta" href="/parent-form.html">
+            Check your athlete’s eligibility
           </a>
-          <a
-            class="parentResources__btn parentResources__btn--ghost"
-            href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fca08dcf5464427915c02/1767885320143/What+Happens+After+Enrollment.pdf"
-            download
-            aria-label="Download What Happens After Enrollment PDF"
-          >
-            Download
-          </a>
+          <p class="resLibrary__ctaNote">Most families complete this in under 2 minutes.</p>
         </div>
-      </article>
-    </div>
+      </aside>
 
-    <div class="parentResources__footer">
-      <p class="parentResources__footerText">
-        Want us to confirm eligibility first?
-      </p>
-      <a class="parentResources__cta" href="/parent-form.html">
-        Check your athlete’s eligibility
-      </a>
+      <!-- Right: resources list -->
+      <div class="resLibrary__list" role="list">
+
+        <!-- 1 -->
+        <article class="resRow" role="listitem">
+          <div class="resRow__left">
+            <span class="resRow__pill">Program overview</span>
+            <h3 class="resRow__name">Course Catalog</h3>
+            <p class="resRow__desc">
+              Available courses, credit options, and how training hours convert into credit.
+            </p>
+          </div>
+          <div class="resRow__right">
+            <span class="resRow__badge" aria-hidden="true">PDF</span>
+            <div class="resRow__actions">
+              <a
+                class="resRow__btn resRow__btn--primary"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc8d806f3ff3bdfe7ba9d/1767885016652/Course+Catalog+Momentum-2.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Course Catalog PDF"
+              >
+                Open
+              </a>
+              <a
+                class="resRow__btn resRow__btn--ghost"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc8d806f3ff3bdfe7ba9d/1767885016652/Course+Catalog+Momentum-2.pdf"
+                download
+                aria-label="Download Course Catalog PDF"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="resRow" role="listitem">
+          <div class="resRow__left">
+            <span class="resRow__pill">Accreditation</span>
+            <h3 class="resRow__name">Cognia Explained</h3>
+            <p class="resRow__desc">
+              What Cognia is and why accreditation matters for transcripts and acceptance.
+            </p>
+          </div>
+          <div class="resRow__right">
+            <span class="resRow__badge" aria-hidden="true">PDF</span>
+            <div class="resRow__actions">
+              <a
+                class="resRow__btn resRow__btn--primary"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc90b2192a21241c90add/1767885067814/Cognia+Explained.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Cognia Explained PDF"
+              >
+                Open
+              </a>
+              <a
+                class="resRow__btn resRow__btn--ghost"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc90b2192a21241c90add/1767885067814/Cognia+Explained.pdf"
+                download
+                aria-label="Download Cognia Explained PDF"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="resRow" role="listitem">
+          <div class="resRow__left">
+            <span class="resRow__pill">Start here</span>
+            <h3 class="resRow__name">Parent Guide</h3>
+            <p class="resRow__desc">
+              Enrollment, verification, and what parents should expect week-to-week.
+            </p>
+          </div>
+          <div class="resRow__right">
+            <span class="resRow__badge" aria-hidden="true">PDF</span>
+            <div class="resRow__actions">
+              <a
+                class="resRow__btn resRow__btn--primary"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc990e9730015378fe7e9/1767885200043/Parent+Guide.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Parent Guide PDF"
+              >
+                Open
+              </a>
+              <a
+                class="resRow__btn resRow__btn--ghost"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc990e9730015378fe7e9/1767885200043/Parent+Guide.pdf"
+                download
+                aria-label="Download Parent Guide PDF"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="resRow" role="listitem">
+          <div class="resRow__left">
+            <span class="resRow__pill">Transcripts</span>
+            <h3 class="resRow__name">Transcript Delivery &amp; Account Setup</h3>
+            <p class="resRow__desc">
+              How accounts are set up and how transcript requests and delivery work.
+            </p>
+          </div>
+          <div class="resRow__right">
+            <span class="resRow__badge" aria-hidden="true">PDF</span>
+            <div class="resRow__actions">
+              <a
+                class="resRow__btn resRow__btn--primary"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc9e046bf9736ea96c1d5/1767885280644/Transcript+Delivery+%26+Account+Setup.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Transcript Delivery and Account Setup PDF"
+              >
+                Open
+              </a>
+              <a
+                class="resRow__btn resRow__btn--ghost"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fc9e046bf9736ea96c1d5/1767885280644/Transcript+Delivery+%26+Account+Setup.pdf"
+                download
+                aria-label="Download Transcript Delivery and Account Setup PDF"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="resRow" role="listitem">
+          <div class="resRow__left">
+            <span class="resRow__pill">Next steps</span>
+            <h3 class="resRow__name">What Happens After Enrollment</h3>
+            <p class="resRow__desc">
+              A clear timeline: verification, communication, and when credits are finalized.
+            </p>
+          </div>
+          <div class="resRow__right">
+            <span class="resRow__badge" aria-hidden="true">PDF</span>
+            <div class="resRow__actions">
+              <a
+                class="resRow__btn resRow__btn--primary"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fca08dcf5464427915c02/1767885320143/What+Happens+After+Enrollment.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open What Happens After Enrollment PDF"
+              >
+                Open
+              </a>
+              <a
+                class="resRow__btn resRow__btn--ghost"
+                href="https://static1.squarespace.com/static/68ee8ce47f479a21dc2630b1/t/695fca08dcf5464427915c02/1767885320143/What+Happens+After+Enrollment.pdf"
+                download
+                aria-label="Download What Happens After Enrollment PDF"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
     </div>
   </div>
 </section>
