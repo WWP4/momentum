@@ -1,7 +1,6 @@
 (() => {
   const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) =>
-    Array.from(root.querySelectorAll(selector));
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
   document.addEventListener("DOMContentLoaded", () => {
     initFormFlow();
@@ -36,6 +35,8 @@
 
     if (stepTotal) stepTotal.textContent = String(steps.length);
 
+    /* ---------- Validation ---------- */
+
     const setRequiredGroups = (step) => {
       const requiredRadios = new Set(
         $$("input[type='radio'][required]", step).map((input) => input.name)
@@ -60,6 +61,7 @@
         'input[required]:not([type="radio"]), textarea[required], select[required]',
         step
       );
+
       requiredTextLike.forEach((input) => {
         if (!String(input.value || "").trim()) {
           valid = false;
@@ -74,9 +76,7 @@
         );
         if (!checked) {
           valid = false;
-          const first = step.querySelector(
-            `input[type="radio"][name="${groupName}"]`
-          );
+          const first = step.querySelector(`input[type="radio"][name="${groupName}"]`);
           if (first) markBad(first);
         }
       });
@@ -84,19 +84,17 @@
       return valid;
     };
 
-    const showStep = (index) => {
-      steps.forEach((step, i) => {
-        step.classList.toggle("is-active", i === index);
-      });
+    /* ---------- Step UI ---------- */
 
+    const showStep = (index) => {
+      steps.forEach((step, i) => step.classList.toggle("is-active", i === index));
       if (submitStep) submitStep.classList.remove("is-active");
 
       current = index;
 
       const percent = ((current + 1) / steps.length) * 100;
       if (progressBar) progressBar.style.width = `${percent}%`;
-      if (progressNode)
-        progressNode.setAttribute("aria-valuenow", String(Math.round(percent)));
+      if (progressNode) progressNode.setAttribute("aria-valuenow", String(Math.round(percent)));
       if (stepNow) stepNow.textContent = String(current + 1);
       if (hint) hint.textContent = steps[current].dataset.title || "";
 
@@ -113,13 +111,11 @@
       }
     };
 
+    /* ---------- Scoring ---------- */
+
     const scoreMap = {
       training_sessions_per_week: { "1-2": 1, "3-4": 2, "5+": 3 },
-      session_length: {
-        "Under 60 minutes": 1,
-        "60-90 minutes": 2,
-        "90+ minutes": 3,
-      },
+      session_length: { "Under 60 minutes": 1, "60-90 minutes": 2, "90+ minutes": 3 },
       games_per_week: { "0-1": 1, "2-3": 2, "4+": 3 },
       strength_conditioning: {
         "Yes (coach-led)": 3,
@@ -139,9 +135,7 @@
 
       Object.entries(scoreMap).forEach(([field, map]) => {
         const value = data.get(field);
-        if (value && Object.prototype.hasOwnProperty.call(map, value)) {
-          score += map[value];
-        }
+        if (value && Object.prototype.hasOwnProperty.call(map, value)) score += map[value];
       });
 
       const addCheckboxPoints = (name, max) => {
@@ -166,6 +160,8 @@
       return { score, qualifies };
     };
 
+    /* ---------- Payload ---------- */
+
     const getPayload = () => {
       const data = new FormData(form);
       const payload = {};
@@ -183,9 +179,10 @@
       return payload;
     };
 
+    /* ---------- Submit UI ---------- */
+
     const setSubmittingUI = (isSubmitting) => {
       submitting = isSubmitting;
-
       if (backBtn) backBtn.disabled = isSubmitting || current === 0;
       if (nextBtn) nextBtn.disabled = isSubmitting;
       if (submitBtn) submitBtn.disabled = isSubmitting;
@@ -196,37 +193,25 @@
       if (submitStep) submitStep.classList.add("is-active");
 
       if (submitTitle) submitTitle.textContent = "Submitting your profile...";
-      if (submitMsg)
-        submitMsg.textContent =
-          "Reviewing your responses for partner qualification.";
+      if (submitMsg) submitMsg.textContent = "Reviewing your responses.";
       if (tryAgainBtn) tryAgainBtn.style.display = "none";
     };
 
     const showSubmitSuccess = (qualifies) => {
-  if (submitTitle) {
-    submitTitle.textContent = "Application received";
-  }
+      if (submitTitle) submitTitle.textContent = "Submitted";
+      if (submitMsg) {
+        const tierCopy = {
+          high: "Submission received. Preparing your credit estimate…",
+          moderate: "Submission received. Preparing your credit estimate…",
+          early: "Submission received. Preparing your credit estimate…",
+        };
+        submitMsg.textContent = tierCopy[qualifies] || tierCopy.moderate;
+      }
 
-  if (submitMsg) {
-    const tierCopy = {
-      high:
-        "Your profile looks like a strong fit. Preparing your credit estimate…",
-      moderate:
-        "Your profile is in review. Preparing your credit estimate…",
-      early:
-        "Thanks for applying. Preparing your credit estimate…",
+      setTimeout(() => {
+        window.location.href = "/credits.html";
+      }, 900);
     };
-
-    submitMsg.textContent =
-      tierCopy[qualifies] || tierCopy.moderate;
-  }
-
-  // REDIRECT TO CREDIT CALCULATOR
-  setTimeout(() => {
-    window.location.href = "/credits.html";
-  }, 900);
-};
-
 
     const showSubmitError = () => {
       if (submitTitle) submitTitle.textContent = "We could not submit right now";
@@ -235,6 +220,8 @@
           "Please try again. Your form data is still saved in this browser session.";
       if (tryAgainBtn) tryAgainBtn.style.display = "inline-flex";
     };
+
+    /* ---------- Backend insert (Supabase + fallback) ---------- */
 
     const submitToBackend = async (payload) => {
       const supabaseUrl = window.MOMENTUM_SUPABASE_URL;
@@ -247,8 +234,38 @@
         return;
       }
 
+      // fallback: simulate
       await new Promise((resolve) => setTimeout(resolve, 1200));
     };
+
+    /* ---------- Automated email (Netlify function) ---------- */
+    const sendAutomatedEmail = async (payload, qualifies) => {
+      try {
+        // Best-effort: do not block the user flow
+        const body = {
+          ...payload,
+          qualifies,
+          email_type: "customer_next_steps",
+          source: "eligibility_submit",
+        };
+
+        const res = await fetch("/.netlify/functions/momentum-club-quiz", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+
+        // If your function returns JSON, try to parse for logging
+        if (!res.ok) {
+          const out = await res.json().catch(() => ({}));
+          console.warn("Automated email function error:", out);
+        }
+      } catch (err) {
+        console.warn("Automated email failed:", err);
+      }
+    };
+
+    /* ---------- Submit handler ---------- */
 
     const handleSubmit = async () => {
       if (!validateStep(steps[current])) return;
@@ -257,20 +274,20 @@
       const payload = getPayload();
 
       // Save eligibility data for credit calculator page
-sessionStorage.setItem(
-  "mqEligibilityPayload",
-  JSON.stringify({
-    ...payload,
-    qualifies
-  })
-);
-
+      sessionStorage.setItem(
+        "mqEligibilityPayload",
+        JSON.stringify({ ...payload, qualifies })
+      );
 
       showSubmitStep();
       setSubmittingUI(true);
 
       try {
         await submitToBackend(payload);
+
+        // fire-and-forget email (do NOT await)
+        sendAutomatedEmail(payload, qualifies);
+
         showSubmitSuccess(qualifies);
       } catch (error) {
         console.error("Momentum submit error", error);
@@ -279,6 +296,8 @@ sessionStorage.setItem(
         setSubmittingUI(false);
       }
     };
+
+    /* ---------- Events ---------- */
 
     if (backBtn) {
       backBtn.addEventListener("click", () => {
@@ -304,9 +323,7 @@ sessionStorage.setItem(
       });
     }
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-    });
+    form.addEventListener("submit", (event) => event.preventDefault());
 
     $$("input, textarea, select", form).forEach((input) => {
       input.addEventListener("change", () => {
