@@ -176,6 +176,7 @@
       });
 
       payload.created_at = new Date().toISOString();
+      payload.source = payload.source || "eligibility";
       return payload;
     };
 
@@ -215,43 +216,95 @@
 
     const showSubmitError = () => {
       if (submitTitle) submitTitle.textContent = "We could not submit right now";
-      if (submitMsg)
+      if (submitMsg) {
         submitMsg.textContent =
           "Please try again. Your form data is still saved in this browser session.";
+      }
       if (tryAgainBtn) tryAgainBtn.style.display = "inline-flex";
     };
 
-   /* ---------- Backend insert (Supabase) ---------- */
+    /* ---------- DB payload mapper (matches partner_applications schema) ---------- */
 
-const submitToBackend = async (payload) => {
-  const supabaseUrl = window.SUPABASE_URL;
-  const supabaseAnonKey = window.SUPABASE_API;
+    const toArrayOrNull = (v) => {
+      if (Array.isArray(v)) return v.length ? v : null;
+      if (typeof v === "string" && v.trim()) return [v.trim()];
+      return null;
+    };
 
-  if (!window.supabase || !supabaseUrl || !supabaseAnonKey) {
-    throw new Error("Supabase not configured properly (missing SUPABASE_URL or SUPABASE_API).");
-  }
+    const buildDbPayload = (payload, qualifiesTier, score) => {
+      return {
+        // Let DB default handle id/created_at if you want. Keeping created_at is ok too.
+        created_at: new Date().toISOString(),
 
-  const client = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+        facility_name: payload.facility_name ?? payload.organization ?? null,
+        contact_name: payload.contact_name ?? payload.primary_contact_name ?? null,
+        email: payload.email ?? null,
+        phone: payload.phone ?? null,
 
-  // IMPORTANT: pick the real table you actually have
-  const TABLE = "partner_applications"; // or "club_applications"
+        primary_sports: payload.primary_sports ?? null,
+        age_range: payload.age_range ?? null,
+        city: payload.city ?? null,
+        state: payload.state ?? null,
 
-  const { error } = await client.from(TABLE).insert([payload]);
-  if (error) {
-    console.error("Supabase insert error:", error);
-    throw error;
-  }
-};
+        training_sessions_per_week: payload.training_sessions_per_week ?? null,
+        session_length: payload.session_length ?? null,
+        session_includes: toArrayOrNull(payload.session_includes),
+
+        games_per_week: payload.games_per_week ?? null,
+        competition_types: toArrayOrNull(payload.competition_types),
+
+        strength_conditioning: payload.strength_conditioning ?? null,
+        recovery_practices: toArrayOrNull(payload.recovery_practices),
+
+        nutrition_guidance: payload.nutrition_guidance ?? null,
+        nutrition_topics: toArrayOrNull(payload.nutrition_topics),
+
+        leadership_roles: toArrayOrNull(payload.leadership_roles),
+        character_emphasis: toArrayOrNull(payload.character_emphasis),
+        life_skills: toArrayOrNull(payload.life_skills),
+        mental_performance: toArrayOrNull(payload.mental_performance),
+
+        notes: payload.notes ?? null,
+
+        // Schema: qualifies boolean, score integer
+        qualifies: qualifiesTier === "high" || qualifiesTier === "moderate",
+        score: Number.isFinite(score) ? score : null,
+
+        source: payload.source ?? "eligibility",
+      };
+    };
+
+    /* ---------- Backend insert (Supabase) ---------- */
+
+    const submitToBackend = async (dbPayload) => {
+      const supabaseUrl = window.SUPABASE_URL;
+      const supabaseAnonKey = window.SUPABASE_API;
+
+      if (!window.supabase || !supabaseUrl || !supabaseAnonKey) {
+        throw new Error("Supabase not configured properly (missing SUPABASE_URL or SUPABASE_API).");
+      }
+
+      const client = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+      const { error } = await client.from("partner_applications").insert([dbPayload]);
+
+      if (error) {
+        console.error("Supabase insert error:", error);
+        throw error;
+      }
+    };
 
     /* ---------- Automated email (Netlify function) ---------- */
-    const sendAutomatedEmail = async (payload, qualifies) => {
+
+    const sendAutomatedEmail = async (payload, qualifiesTier, score) => {
       try {
         // Best-effort: do not block the user flow
         const body = {
           ...payload,
-          qualifies,
+          qualifies: qualifiesTier,
+          score,
+          source: payload.source || "eligibility",
           email_type: "customer_next_steps",
-          source: "eligibility_submit",
         };
 
         const res = await fetch("/.netlify/functions/momentum-club-quiz", {
@@ -260,7 +313,6 @@ const submitToBackend = async (payload) => {
           body: JSON.stringify(body),
         });
 
-        // If your function returns JSON, try to parse for logging
         if (!res.ok) {
           const out = await res.json().catch(() => ({}));
           console.warn("Automated email function error:", out);
@@ -275,23 +327,25 @@ const submitToBackend = async (payload) => {
     const handleSubmit = async () => {
       if (!validateStep(steps[current])) return;
 
-      const { qualifies } = computeScore();
+      const { qualifies, score } = computeScore();
       const payload = getPayload();
 
-      // Save eligibility data for credit calculator page
+      // Save for credit calculator page
       sessionStorage.setItem(
         "mqEligibilityPayload",
-        JSON.stringify({ ...payload, qualifies })
+        JSON.stringify({ ...payload, qualifies, score })
       );
 
       showSubmitStep();
       setSubmittingUI(true);
 
       try {
-        await submitToBackend(payload);
+        const dbPayload = buildDbPayload(payload, qualifies, score);
+
+        await submitToBackend(dbPayload);
 
         // fire-and-forget email (do NOT await)
-        sendAutomatedEmail(payload, qualifies);
+        sendAutomatedEmail(payload, qualifies, score);
 
         showSubmitSuccess(qualifies);
       } catch (error) {
