@@ -123,7 +123,6 @@
           <div class="cc__legacy" aria-hidden="true" style="display:none">
             <div id="ccPrice"></div>
             <div id="ccPriceFine"></div>
-            <a id="ccDepositLink" href="https://buy.stripe.com/fZu8wQe9Sgdg7x9e2saR201" target="_blank" rel="noopener"></a>
           </div>
 
         </div>
@@ -151,7 +150,6 @@
                 <div class="ccMiniNext__title">What happens next</div>
                 <div class="ccMiniNext__text">We confirm eligibility, then your club can choose enrollment.</div>
               </div>
-              <div class="ccMiniNext__tag">Deposit holds your spot</div>
             </div>
           </div>
 
@@ -161,7 +159,6 @@
 
             <ol class="cc__steps">
               <li><strong>Advisor call:</strong> confirm eligibility + explain verification.</li>
-              <li><strong>Deposit:</strong> reserve onboarding and start documentation.</li>
               <li><strong>Verification:</strong> submit logs/schedules/coach confirmation.</li>
             </ol>
 
@@ -172,14 +169,12 @@
                 Book advisory call
               </a>
 
-              <!-- IMPORTANT: keep this ID for credit.js -->
-              <button class="cc__btn cc__btn--ghost" id="ccDepositBtn" type="button">
-                Place deposit
+              
               </button>
             </div>
 
             <div class="cc__fine">
-              Deposits are optional. Eligibility and credits are confirmed before final enrollment.
+            Eligibility and credits are confirmed before final enrollment.
             </div>
           </div>
 
@@ -198,11 +193,9 @@
   <!-- Deposit modal (credit.js expects #ccModal + data-close + #ccDepositLink) -->
   <div class="ccModal" id="ccModal" aria-hidden="true">
     <div class="ccModal__backdrop" data-close></div>
-    <div class="ccModal__dialog" role="dialog" aria-modal="true" aria-label="Place deposit">
       <div class="ccModal__head">
         <div>
           <div class="ccModal__title">Reserve your spot</div>
-          <div class="ccModal__sub">Deposit applies toward enrollment after verification.</div>
         </div>
         <button class="ccModal__x" type="button" data-close aria-label="Close">×</button>
       </div>
@@ -248,8 +241,7 @@
     </div>
 
     <div class="mThanks__actions">
-      <button class="mThanks__btn mThanks__btn--primary" id="mThanksDeposit">
-        Place deposit to hold spot
+  
       </button>
       <a class="mThanks__btn mThanks__btn--ghost" href="/eligibility.html">
         Review eligibility details
@@ -257,7 +249,7 @@
     </div>
 
     <p class="mThanks__fine">
-      Deposits are optional. Eligibility and credits are confirmed before final enrollment.
+     Eligibility and credits are confirmed before final enrollment.
     </p>
 
     <div class="mThanks__share">
