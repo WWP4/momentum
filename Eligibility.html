@@ -17,7 +17,7 @@
           <p class="mq__kicker">Eligibility</p>
 
           <div class="mq__topMeta">
-            <span class="mq__metaPill">~60 seconds</span>
+            <span class="mq__metaPill">~3 minutes</span>
             <span class="mq__metaPill">No documents yet</span>
           </div>
         </div>
@@ -27,7 +27,7 @@
 
         <div class="mq__topProgress">
           <div class="mq__topProgressLeft">
-            <span class="mq__stepText">Step <strong id="mqStepNow">1</strong> of <strong id="mqStepTotal">3</strong></span>
+            <span class="mq__stepText">Step <strong id="mqStepNow">1</strong> of <strong id="mqStepTotal">7</strong></span>
             <span class="mq__dot">•</span>
             <span id="mqHint" class="mq__hint">Facility + contact</span>
           </div>
@@ -135,7 +135,7 @@
 
               <div class="mq__railCard">
                 <div class="mq__railCardTitle">Tip</div>
-                <div class="mq__railCardBody">Use your “typical” in-season pattern. You can refine later during verification.</div>
+                <div class="mq__railCardBody">Use your typical in-season pattern. You can refine later during verification.</div>
               </div>
 
               <div class="mq__railFine">We only need estimates right now.</div>
@@ -182,11 +182,192 @@
         </section>
 
         <!-- STEP 3 -->
-        <section class="mq__step" data-title="Verification">
+        <section class="mq__step" data-title="Recovery + wellness">
           <div class="mq__layout">
             <aside class="mq__rail">
               <div class="mq__railTop">
                 <div class="mq__railTag">Step 3</div>
+                <div class="mq__railTitle">Recovery</div>
+                <div class="mq__railSub">How your program supports athlete wellness.</div>
+              </div>
+
+              <div class="mq__railCard">
+                <div class="mq__railCardTitle">Why it matters</div>
+                <div class="mq__railCardBody">Recovery guidance can strengthen how your training maps to wellness-related credit categories.</div>
+              </div>
+
+              <div class="mq__railFine">Select all that apply.</div>
+            </aside>
+
+            <div class="mq__main">
+              <div class="mq__q">
+                <div class="mq__qTitle">Does your program provide athletes with recovery guidance?</div>
+                <div class="mq__qSub">Check all that apply.</div>
+                <div class="mq__choices mq__choices--grid">
+                  <label class="mq__choice"><input type="checkbox" name="recovery_guidance[]" value="Stretching / mobility"><span>Stretching / mobility</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="recovery_guidance[]" value="Cool-down routines"><span>Cool-down routines</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="recovery_guidance[]" value="Rest days"><span>Rest days</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="recovery_guidance[]" value="Hydration guidance"><span>Hydration guidance</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 4 -->
+        <section class="mq__step" data-title="Nutrition + wellness">
+          <div class="mq__layout">
+            <aside class="mq__rail">
+              <div class="mq__railTop">
+                <div class="mq__railTag">Step 4</div>
+                <div class="mq__railTitle">Nutrition</div>
+                <div class="mq__railSub">Guidance athletes receive around fueling and health.</div>
+              </div>
+
+              <div class="mq__railCard">
+                <div class="mq__railCardTitle">Mapped areas</div>
+                <ul class="mq__railList">
+                  <li>Nutrition</li>
+                  <li>Health</li>
+                  <li>Wellness habits</li>
+                </ul>
+              </div>
+
+              <div class="mq__railFine">Use the closest answer that fits your program.</div>
+            </aside>
+
+            <div class="mq__main">
+              <div class="mq__q">
+                <div class="mq__qTitle">Does your program provide guidance on nutrition or hydration?</div>
+                <div class="mq__choices">
+                  <label class="mq__choice"><input type="radio" name="nutrition_guidance_level" value="Yes - formal instruction" required><span>Yes — formal instruction</span></label>
+                  <label class="mq__choice"><input type="radio" name="nutrition_guidance_level" value="Yes - informal coaching conversations"><span>Yes — informal coaching conversations</span></label>
+                  <label class="mq__choice"><input type="radio" name="nutrition_guidance_level" value="No"><span>No</span></label>
+                </div>
+              </div>
+
+              <div class="mq__q" style="margin-top:16px;">
+                <div class="mq__qTitle">Do athletes receive education on any of the following?</div>
+                <div class="mq__qSub">Check all that apply.</div>
+                <div class="mq__choices mq__choices--grid">
+                  <label class="mq__choice"><input type="checkbox" name="nutrition_education[]" value="Fueling before games"><span>Fueling before games</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="nutrition_education[]" value="Recovery nutrition"><span>Recovery nutrition</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="nutrition_education[]" value="Hydration habits"><span>Hydration habits</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="nutrition_education[]" value="Sleep importance"><span>Sleep importance</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 5 -->
+        <section class="mq__step" data-title="Leadership + development">
+          <div class="mq__layout">
+            <aside class="mq__rail">
+              <div class="mq__railTop">
+                <div class="mq__railTag">Step 5</div>
+                <div class="mq__railTitle">Leadership</div>
+                <div class="mq__railSub">Character, responsibility, and personal development.</div>
+              </div>
+
+              <div class="mq__railCard">
+                <div class="mq__railCardTitle">Why it matters</div>
+                <div class="mq__railCardBody">Leadership and life-skill development can help unlock additional credit categories.</div>
+              </div>
+
+              <div class="mq__railFine">Select all that apply.</div>
+            </aside>
+
+            <div class="mq__main">
+              <div class="mq__q">
+                <div class="mq__qTitle">Do athletes have leadership responsibilities?</div>
+                <div class="mq__choices mq__choices--grid">
+                  <label class="mq__choice"><input type="checkbox" name="leadership_responsibilities[]" value="Team captains"><span>Team captains</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="leadership_responsibilities[]" value="Mentoring younger players"><span>Mentoring younger players</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="leadership_responsibilities[]" value="Helping run drills"><span>Helping run drills</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="leadership_responsibilities[]" value="Leading warm-ups"><span>Leading warm-ups</span></label>
+                </div>
+              </div>
+
+              <div class="mq__q" style="margin-top:16px;">
+                <div class="mq__qTitle">Does your program emphasize character development?</div>
+                <div class="mq__qSub">Check all that apply.</div>
+                <div class="mq__choices mq__choices--grid">
+                  <label class="mq__choice"><input type="checkbox" name="character_development[]" value="Accountability"><span>Accountability</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="character_development[]" value="Sportsmanship"><span>Sportsmanship</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="character_development[]" value="Team communication"><span>Team communication</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="character_development[]" value="Goal setting"><span>Goal setting</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="character_development[]" value="Respect for coaches and teammates"><span>Respect for coaches and teammates</span></label>
+                </div>
+              </div>
+
+              <div class="mq__q" style="margin-top:16px;">
+                <div class="mq__qTitle">Do coaches actively teach life skills?</div>
+                <div class="mq__qSub">Check all that apply.</div>
+                <div class="mq__choices mq__choices--grid">
+                  <label class="mq__choice"><input type="checkbox" name="life_skills[]" value="Time management"><span>Time management</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="life_skills[]" value="Discipline"><span>Discipline</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="life_skills[]" value="Mental toughness"><span>Mental toughness</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="life_skills[]" value="College preparation"><span>College preparation</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="life_skills[]" value="Personal responsibility"><span>Personal responsibility</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 6 -->
+        <section class="mq__step" data-title="Coaching + education">
+          <div class="mq__layout">
+            <aside class="mq__rail">
+              <div class="mq__railTop">
+                <div class="mq__railTag">Step 6</div>
+                <div class="mq__railTitle">Coaching</div>
+                <div class="mq__railSub">Teaching, mentoring, and mental performance concepts.</div>
+              </div>
+
+              <div class="mq__railCard">
+                <div class="mq__railCardTitle">Mapped areas</div>
+                <ul class="mq__railList">
+                  <li>Coaching</li>
+                  <li>Psychology</li>
+                  <li>Mentoring</li>
+                </ul>
+              </div>
+
+              <div class="mq__railFine">This helps show educational value beyond physical training.</div>
+            </aside>
+
+            <div class="mq__main">
+              <div class="mq__q">
+                <div class="mq__qTitle">Do athletes assist coaches or younger players?</div>
+                <div class="mq__choices">
+                  <label class="mq__choice"><input type="radio" name="assist_coaches_younger_players" value="Yes regularly" required><span>Yes regularly</span></label>
+                  <label class="mq__choice"><input type="radio" name="assist_coaches_younger_players" value="Occasionally"><span>Occasionally</span></label>
+                  <label class="mq__choice"><input type="radio" name="assist_coaches_younger_players" value="No"><span>No</span></label>
+                </div>
+              </div>
+
+              <div class="mq__q" style="margin-top:16px;">
+                <div class="mq__qTitle">Are athletes taught mental performance concepts?</div>
+                <div class="mq__qSub">Check all that apply.</div>
+                <div class="mq__choices mq__choices--grid">
+                  <label class="mq__choice"><input type="checkbox" name="mental_performance[]" value="Focus"><span>Focus</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="mental_performance[]" value="Confidence"><span>Confidence</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="mental_performance[]" value="Handling pressure"><span>Handling pressure</span></label>
+                  <label class="mq__choice"><input type="checkbox" name="mental_performance[]" value="Game mindset"><span>Game mindset</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 7 -->
+        <section class="mq__step" data-title="Verification">
+          <div class="mq__layout">
+            <aside class="mq__rail">
+              <div class="mq__railTop">
+                <div class="mq__railTag">Step 7</div>
                 <div class="mq__railTitle">Verification</div>
                 <div class="mq__railSub">Make sure hours can be confirmed later.</div>
               </div>
@@ -265,14 +446,13 @@
     </div>
   </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-  window.SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
-  window.SUPABASE_API = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0ZmZja3phcnFjbnN0bnNrZWd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NTQ4MjMsImV4cCI6MjA4NTIzMDgyM30.IWAPHYfVQNuhZoe4mAtDcSYjKYGR7qdwhb6AedBzWnA";
-</script>
+  <script>
+    window.SUPABASE_URL = "https://qtffckzarqcnstnskegx.supabase.co";
+    window.SUPABASE_API = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInR5cCI6IkpXVCJ9";
+  </script>
 
-<script src="/form.js" defer></script>
-  
+  <script src="/form.js" defer></script>
 </body>
 </html>
