@@ -58,7 +58,7 @@
       let valid = true;
 
       const requiredTextLike = $$(
-        'input[required]:not([type="radio"]), textarea[required], select[required]',
+        'input[required]:not([type="radio"]):not([type="checkbox"]), textarea[required], select[required]',
         step
       );
 
@@ -72,11 +72,13 @@
       const requiredGroups = setRequiredGroups(step);
       requiredGroups.forEach((groupName) => {
         const checked = step.querySelector(
-          `input[type="radio"][name="${groupName}"]:checked`
+          `input[type="radio"][name="${CSS.escape(groupName)}"]:checked`
         );
         if (!checked) {
           valid = false;
-          const first = step.querySelector(`input[type="radio"][name="${groupName}"]`);
+          const first = step.querySelector(
+            `input[type="radio"][name="${CSS.escape(groupName)}"]`
+          );
           if (first) markBad(first);
         }
       });
@@ -94,7 +96,9 @@
 
       const percent = ((current + 1) / steps.length) * 100;
       if (progressBar) progressBar.style.width = `${percent}%`;
-      if (progressNode) progressNode.setAttribute("aria-valuenow", String(Math.round(percent)));
+      if (progressNode) {
+        progressNode.setAttribute("aria-valuenow", String(Math.round(percent)));
+      }
       if (stepNow) stepNow.textContent = String(current + 1);
       if (hint) hint.textContent = steps[current].dataset.title || "";
 
@@ -109,22 +113,48 @@
         submitBtn.style.display = onLast ? "inline-flex" : "none";
         submitBtn.disabled = submitting;
       }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     /* ---------- Scoring ---------- */
 
     const scoreMap = {
-      training_sessions_per_week: { "1-2": 1, "3-4": 2, "5+": 3 },
-      session_length: { "Under 60 minutes": 1, "60-90 minutes": 2, "90+ minutes": 3 },
-      games_per_week: { "0-1": 1, "2-3": 2, "4+": 3 },
-      strength_conditioning: {
-        "Yes (coach-led)": 3,
-        "Yes (partner / trainer-led)": 2,
+      training_sessions_per_week: {
+        "1-2": 1,
+        "3-4": 2,
+        "5+": 3,
+      },
+      session_length: {
+        "Under 60 minutes": 1,
+        "60-90 minutes": 2,
+        "90+ minutes": 3,
+      },
+      games_per_week: {
+        "0-1": 1,
+        "2-3": 2,
+        "4+": 3,
+      },
+      nutrition_guidance_level: {
+        "Yes - formal instruction": 3,
+        "Yes — formal instruction": 3,
+        "Yes - informal coaching conversations": 2,
+        "Yes — informal coaching conversations": 2,
         No: 0,
       },
-      nutrition_guidance: {
-        "Yes (formal instruction)": 3,
-        "Yes (informal coaching conversations)": 2,
+      assist_coaches_younger_players: {
+        "Yes regularly": 3,
+        Occasionally: 2,
+        No: 0,
+      },
+      coach_led: {
+        Yes: 2,
+        "Not sure": 1,
+        No: 0,
+      },
+      can_verify: {
+        Yes: 3,
+        "Not sure": 1,
         No: 0,
       },
     };
@@ -135,24 +165,31 @@
 
       Object.entries(scoreMap).forEach(([field, map]) => {
         const value = data.get(field);
-        if (value && Object.prototype.hasOwnProperty.call(map, value)) score += map[value];
+        if (value && Object.prototype.hasOwnProperty.call(map, value)) {
+          score += map[value];
+        }
       });
+
+      const weeksPerYear = Number(data.get("weeks_per_year"));
+      if (Number.isFinite(weeksPerYear)) {
+        if (weeksPerYear >= 40) score += 3;
+        else if (weeksPerYear >= 24) score += 2;
+        else if (weeksPerYear >= 10) score += 1;
+      }
 
       const addCheckboxPoints = (name, max) => {
         const count = data.getAll(name).length;
         score += Math.min(count, max);
       };
 
-      addCheckboxPoints("session_includes", 3);
-      addCheckboxPoints("competition_types", 2);
-      addCheckboxPoints("recovery_practices", 2);
-      addCheckboxPoints("nutrition_topics", 2);
-      addCheckboxPoints("leadership_roles", 2);
-      addCheckboxPoints("character_emphasis", 2);
+      addCheckboxPoints("recovery_guidance", 2);
+      addCheckboxPoints("nutrition_education", 2);
+      addCheckboxPoints("leadership_responsibilities", 2);
+      addCheckboxPoints("character_development", 2);
       addCheckboxPoints("life_skills", 2);
       addCheckboxPoints("mental_performance", 2);
 
-      const qualifies = score >= 14 ? "high" : score >= 8 ? "moderate" : "early";
+      const qualifies = score >= 16 ? "high" : score >= 9 ? "moderate" : "early";
 
       if (scoreField) scoreField.value = String(score);
       if (qualifiesField) qualifiesField.value = qualifies;
@@ -168,8 +205,11 @@
 
       data.forEach((value, key) => {
         if (Object.prototype.hasOwnProperty.call(payload, key)) {
-          if (Array.isArray(payload[key])) payload[key].push(value);
-          else payload[key] = [payload[key], value];
+          if (Array.isArray(payload[key])) {
+            payload[key].push(value);
+          } else {
+            payload[key] = [payload[key], value];
+          }
         } else {
           payload[key] = value;
         }
@@ -223,21 +263,20 @@
       if (tryAgainBtn) tryAgainBtn.style.display = "inline-flex";
     };
 
-    /* ---------- DB payload mapper (matches partner_applications schema) ---------- */
+    /* ---------- DB payload mapper ---------- */
 
-    const toArrayOrNull = (v) => {
-      if (Array.isArray(v)) return v.length ? v : null;
-      if (typeof v === "string" && v.trim()) return [v.trim()];
+    const toArrayOrNull = (value) => {
+      if (Array.isArray(value)) return value.length ? value : null;
+      if (typeof value === "string" && value.trim()) return [value.trim()];
       return null;
     };
 
     const buildDbPayload = (payload, qualifiesTier, score) => {
       return {
-        // Let DB default handle id/created_at if you want. Keeping created_at is ok too.
         created_at: new Date().toISOString(),
 
-        facility_name: payload.facility_name ?? payload.organization ?? null,
-        contact_name: payload.contact_name ?? payload.primary_contact_name ?? null,
+        facility_name: payload.facility_name ?? null,
+        contact_name: payload.contact_name ?? null,
         email: payload.email ?? null,
         phone: payload.phone ?? null,
 
@@ -248,25 +287,34 @@
 
         training_sessions_per_week: payload.training_sessions_per_week ?? null,
         session_length: payload.session_length ?? null,
-        session_includes: toArrayOrNull(payload.session_includes),
+        weeks_per_year: payload.weeks_per_year
+          ? Number(payload.weeks_per_year)
+          : null,
+
+        session_includes: null,
 
         games_per_week: payload.games_per_week ?? null,
-        competition_types: toArrayOrNull(payload.competition_types),
+        competition_types: null,
 
-        strength_conditioning: payload.strength_conditioning ?? null,
-        recovery_practices: toArrayOrNull(payload.recovery_practices),
+        strength_conditioning: null,
+        recovery_practices: toArrayOrNull(payload.recovery_guidance),
 
-        nutrition_guidance: payload.nutrition_guidance ?? null,
-        nutrition_topics: toArrayOrNull(payload.nutrition_topics),
+        nutrition_guidance: payload.nutrition_guidance_level ?? null,
+        nutrition_topics: toArrayOrNull(payload.nutrition_education),
 
-        leadership_roles: toArrayOrNull(payload.leadership_roles),
-        character_emphasis: toArrayOrNull(payload.character_emphasis),
+        leadership_roles: toArrayOrNull(payload.leadership_responsibilities),
+        character_emphasis: toArrayOrNull(payload.character_development),
         life_skills: toArrayOrNull(payload.life_skills),
         mental_performance: toArrayOrNull(payload.mental_performance),
 
+        assist_coaches_younger_players:
+          payload.assist_coaches_younger_players ?? null,
+
+        coach_led: payload.coach_led ?? null,
+        can_verify: payload.can_verify ?? null,
+
         notes: payload.notes ?? null,
 
-        // Schema: qualifies boolean, score integer
         qualifies: qualifiesTier === "high" || qualifiesTier === "moderate",
         score: Number.isFinite(score) ? score : null,
 
@@ -281,12 +329,16 @@
       const supabaseAnonKey = window.SUPABASE_API;
 
       if (!window.supabase || !supabaseUrl || !supabaseAnonKey) {
-        throw new Error("Supabase not configured properly (missing SUPABASE_URL or SUPABASE_API).");
+        throw new Error(
+          "Supabase not configured properly (missing SUPABASE_URL or SUPABASE_API)."
+        );
       }
 
       const client = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-      const { error } = await client.from("partner_applications").insert([dbPayload]);
+      const { error } = await client
+        .from("partner_applications")
+        .insert([dbPayload]);
 
       if (error) {
         console.error("Supabase insert error:", error);
@@ -294,11 +346,10 @@
       }
     };
 
-    /* ---------- Automated email (Netlify function) ---------- */
+    /* ---------- Automated email ---------- */
 
     const sendAutomatedEmail = async (payload, qualifiesTier, score) => {
       try {
-        // Best-effort: do not block the user flow
         const body = {
           ...payload,
           qualifies: qualifiesTier,
@@ -330,7 +381,6 @@
       const { qualifies, score } = computeScore();
       const payload = getPayload();
 
-      // Save for credit calculator page
       sessionStorage.setItem(
         "mqEligibilityPayload",
         JSON.stringify({ ...payload, qualifies, score })
@@ -344,7 +394,6 @@
 
         await submitToBackend(dbPayload);
 
-        // fire-and-forget email (do NOT await)
         sendAutomatedEmail(payload, qualifies, score);
 
         showSubmitSuccess(qualifies);
@@ -374,7 +423,9 @@
       });
     }
 
-    if (submitBtn) submitBtn.addEventListener("click", handleSubmit);
+    if (submitBtn) {
+      submitBtn.addEventListener("click", handleSubmit);
+    }
 
     if (tryAgainBtn) {
       tryAgainBtn.addEventListener("click", () => {
@@ -382,13 +433,16 @@
       });
     }
 
-    form.addEventListener("submit", (event) => event.preventDefault());
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+    });
 
     $$("input, textarea, select", form).forEach((input) => {
       input.addEventListener("change", () => {
         const holder = input.closest(".mq__choice, .mq__chip, .mq__field");
         if (holder) holder.classList.remove("mq__bad");
       });
+
       input.addEventListener("input", () => {
         const holder = input.closest(".mq__choice, .mq__chip, .mq__field");
         if (holder) holder.classList.remove("mq__bad");
