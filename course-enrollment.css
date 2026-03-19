@@ -1,0 +1,344 @@
+:root {
+  --bg: #f4f6fb;
+  --paper: #ffffff;
+  --ink: #13233d;
+  --muted: #5d6c84;
+  --line: #d9e2ef;
+  --soft: #eef3fa;
+  --primary: #e63946;
+  --primary-dark: #c92c38;
+  --shadow: 0 20px 60px rgba(16, 30, 54, 0.10);
+  --radius-xl: 24px;
+  --radius-lg: 18px;
+  --radius-md: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #f7f9fd 0%, #eef3fa 100%);
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.enroll {
+  padding: 28px 16px 40px;
+}
+
+.enroll__shell {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.enrollTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.enrollWord {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.enrollWord span {
+  color: var(--primary);
+}
+
+.enrollBack {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.enrollHero {
+  margin-bottom: 28px;
+}
+
+.enroll__kicker {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.enroll__h1 {
+  margin: 0 0 10px;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.enroll__sub {
+  margin: 0;
+  max-width: 720px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 17px;
+}
+
+.enrollGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.enrollMain,
+.enrollSide {
+  display: grid;
+  gap: 20px;
+}
+
+.enCard,
+.enSideCard {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.enCard {
+  padding: 24px;
+}
+
+.enSideCard {
+  padding: 22px;
+  position: sticky;
+  top: 20px;
+}
+
+.enCard__eyebrow,
+.enSideCard__label,
+.enModal__eyebrow {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.enCard__title {
+  margin: 0 0 14px;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.enMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.enPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.enCard__desc,
+.enSideText,
+.enModal__text {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.enList {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink);
+  line-height: 1.8;
+}
+
+.enCheck {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.enCheck:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.enCheck input {
+  margin-top: 3px;
+}
+
+.enError {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: #fff2f2;
+  border: 1px solid #f2c7ca;
+  color: #8a1f28;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.enSummaryRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+.enSummaryRow span {
+  color: var(--muted);
+}
+
+.enDivider {
+  height: 1px;
+  background: var(--line);
+  margin: 10px 0 18px;
+}
+
+.enBtn {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease, background 0.12s ease;
+}
+
+.enBtn:hover {
+  transform: translateY(-1px);
+}
+
+.enBtn--primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.enBtn--primary:hover {
+  background: var(--primary-dark);
+}
+
+.enBtn--ghost {
+  margin-top: 12px;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.enFine {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.enModal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: none;
+}
+
+.enModal[aria-hidden="false"] {
+  display: block;
+}
+
+.enModal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 18, 35, 0.55);
+}
+
+.enModal__card {
+  position: relative;
+  z-index: 1;
+  width: min(620px, calc(100vw - 32px));
+  margin: 48px auto;
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.22);
+}
+
+.enModal__x {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--soft);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.enModal__title {
+  margin: 0 0 12px;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.enModal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.enModal__actions .enBtn {
+  margin-top: 0;
+}
+
+@media (max-width: 920px) {
+  .enrollGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .enSideCard {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .enrollTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .enCard,
+  .enSideCard,
+  .enModal__card {
+    padding: 20px;
+  }
+
+  .enModal__actions {
+    flex-direction: column;
+  }
+}
