@@ -538,3 +538,70 @@ body{
   cursor:pointer;
 }
 .mThanks__copy:hover{ background:#eef1f8; }
+
+.ccCourseGroup + .ccCourseGroup {
+  margin-top: 28px;
+}
+
+.ccCourseGroup__title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  color: #1f2a44;
+}
+
+.ccCourseGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.ccCourseCard {
+  border: 1px solid #d9e2f0;
+  border-radius: 18px;
+  padding: 18px;
+  background: #fff;
+}
+
+.ccCourseCard__metaRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.ccCourseCard__pill,
+.ccCourseCard__confidence,
+.ccCourseCard__qualify {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #f3f6fb;
+  color: #23314d;
+}
+
+.ccCourseCard__title {
+  font-size: 20px;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.ccCourseCard__desc {
+  margin: 0 0 12px;
+  color: #4c5a73;
+}
+
+.ccCourseCard__why {
+  font-size: 14px;
+  color: #2a3550;
+  line-height: 1.5;
+}
+
+.ccCourseCard__footer {
+  margin-top: 14px;
+}
