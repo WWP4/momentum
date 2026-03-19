@@ -406,108 +406,81 @@
       });
   };
 
-  const renderCourseMatches = (payload) => {
-    const section = $("#courseMatches");
-    const list = $("#courseMatchesList");
-    if (!section || !list) return;
+ const openCoursesModal = () => {
+  const modal = $("#ccCoursesModal");
+  if (!modal) return;
+  modal.setAttribute("aria-hidden", "false");
+  lockScroll();
+};
 
-    const matches = matchCourses(payload);
+const closeCoursesModal = () => {
+  const modal = $("#ccCoursesModal");
+  if (!modal) return;
+  modal.setAttribute("aria-hidden", "true");
+  unlockScroll();
+};
 
-    if (!matches.length) {
-      list.innerHTML = `
-        <div class="ccCourseCard">
-          <div class="ccCourseCard__title">No course matches available yet</div>
-          <p class="ccCourseCard__desc">Please review the eligibility form and try again.</p>
+const renderCourseMatches = (payload) => {
+  const list = $("#courseMatchesList");
+  if (!list) return;
+
+  const matches = matchCourses(payload);
+
+  if (!matches.length) {
+    list.innerHTML = `
+      <div class="ccCourseCard">
+        <div class="ccCourseCard__title">No course matches available yet</div>
+        <p class="ccCourseCard__desc">Please review the eligibility form and try again.</p>
+      </div>
+    `;
+    openCoursesModal();
+    return;
+  }
+
+  const topMatches = matches.filter((m) => m.group === "Top matches");
+  const additionalMatches = matches.filter((m) => m.group === "Additional eligible courses");
+  const qualificationLabel = getQualificationLabel(payload);
+
+  const renderCards = (items) =>
+    items.map(course => `
+      <article class="ccCourseCard">
+        <div class="ccCourseCard__metaRow">
+          <span class="ccCourseCard__pill">${course.category}</span>
+          <span class="ccCourseCard__confidence">${course.confidence}</span>
         </div>
-      `;
-      section.hidden = false;
-      return;
+        <h3 class="ccCourseCard__title">${course.title}</h3>
+        <p class="ccCourseCard__desc">${course.shortDescription}</p>
+        <div class="ccCourseCard__why">
+          <strong>Why it matched:</strong> ${course.reasons.join("; ")}
+        </div>
+        <div class="ccCourseCard__footer">
+          <span class="ccCourseCard__qualify">${qualificationLabel}</span>
+        </div>
+      </article>
+    `).join("");
+
+  list.innerHTML = `
+    ${
+      topMatches.length
+        ? `<div class="ccCourseGroup">
+            <div class="ccCourseGroup__title">Top matches</div>
+            <div class="ccCourseGrid">${renderCards(topMatches)}</div>
+           </div>`
+        : ""
     }
 
-    const topMatches = matches.filter((m) => m.group === "Top matches");
-    const additionalMatches = matches.filter((m) => m.group === "Additional eligible courses");
-    const qualificationLabel = getQualificationLabel(payload);
-
-    const renderCards = (items) =>
-      items
-        .map(
-          (course) => `
-            <article class="ccCourseCard">
-              <div class="ccCourseCard__metaRow">
-                <span class="ccCourseCard__pill">${course.category}</span>
-                <span class="ccCourseCard__confidence">${course.confidence}</span>
-              </div>
-              <h3 class="ccCourseCard__title">${course.title}</h3>
-              <p class="ccCourseCard__desc">${course.shortDescription}</p>
-              <div class="ccCourseCard__why">
-                <strong>Why it matched:</strong> ${course.reasons.join("; ")}
-              </div>
-              <div class="ccCourseCard__footer">
-                <span class="ccCourseCard__qualify">${qualificationLabel}</span>
-              </div>
-            </article>
-          `
-        )
-        .join("");
-
-    list.innerHTML = `
-      ${
-        topMatches.length
-          ? `
-          <div class="ccCourseGroup">
-            <div class="ccCourseGroup__title">Top matches</div>
-            <div class="ccCourseGrid">
-              ${renderCards(topMatches)}
-            </div>
-          </div>
-        `
-          : ""
-      }
-
-      ${
-        additionalMatches.length
-          ? `
-          <div class="ccCourseGroup">
+    ${
+      additionalMatches.length
+        ? `<div class="ccCourseGroup">
             <div class="ccCourseGroup__title">Additional eligible courses</div>
-            <div class="ccCourseGrid">
-              ${renderCards(additionalMatches)}
-            </div>
-          </div>
-        `
-          : ""
-      }
-    `;
+            <div class="ccCourseGrid">${renderCards(additionalMatches)}</div>
+           </div>`
+        : ""
+    }
+  `;
 
-    section.hidden = false;
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const hoursEl = $("#ccHours");
-    const creditsEl = $("#ccCredits");
-    const minutesEl = $("#ccMinutes");
-    const noteEl = $("#ccNote");
-    const creditsInlineEl = $("#ccCreditsInline");
-
-    const depositBtn = $("#ccDepositBtn");
-    const depositModal = $("#ccModal");
-    const depositLink = $("#ccDepositLink");
-    const chips = $$("[data-deposit]");
-
-    const seeCoursesBtn = $("#seeCoursesBtn");
-
-    const openDepositModal = () => {
-      if (!depositModal) return;
-      depositModal.setAttribute("aria-hidden", "false");
-
-      const active = chips.find((c) => c.classList.contains("is-active")) || chips[0];
-      if (active) {
-        const amt = active.getAttribute("data-deposit");
-        if (amt) setDepositAmountOnLink(depositLink, amt);
-      }
-
-      lockScroll();
-    };
+  openCoursesModal();
+};
 
     const closeDepositModal = () => {
       if (!depositModal) return;
