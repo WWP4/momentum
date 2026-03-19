@@ -33,7 +33,6 @@
   <main class="cc">
     <div class="cc__shell">
 
-      <!-- Top bar -->
       <header class="ccTop">
         <div class="ccBrand" aria-label="Momentum">
           <div class="ccWord">MOMENTUM<span>.</span></div>
@@ -45,7 +44,6 @@
         </div>
       </header>
 
-      <!-- Hero -->
       <section class="ccHero">
         <p class="cc__kicker">Estimate</p>
         <h1 class="cc__h1">Your training may qualify for academic credit</h1>
@@ -54,13 +52,10 @@
         </p>
       </section>
 
-      <!-- Main content -->
       <section class="cc__grid cc__grid--combo">
 
-        <!-- LEFT COLUMN -->
         <div class="ccCol">
 
-          <!-- Calculator card -->
           <div class="cc__card">
             <div class="cc__cardTop">
               <div class="cc__label">Estimated annual training</div>
@@ -91,7 +86,6 @@
             <div class="cc__note" id="ccNote"></div>
           </div>
 
-          <!-- Pricing panel -->
           <div class="cc__panel">
             <div class="cc__panelTitle">Credit pricing</div>
 
@@ -118,16 +112,6 @@
             </div>
           </div>
 
-          <!-- Recommended Courses Section -->
-          <section class="cc__panel" id="courseMatches" hidden>
-            <div class="cc__panelTitle">Recommended courses</div>
-            <p class="cc__muted cc__muted--p">
-              Based on the training structure you entered, these are the courses your athlete may qualify for.
-            </p>
-            <div id="courseMatchesList"></div>
-          </section>
-
-          <!-- Hidden legacy nodes -->
           <div class="cc__legacy" aria-hidden="true" style="display:none">
             <div id="ccPrice"></div>
             <div id="ccPriceFine"></div>
@@ -135,10 +119,8 @@
 
         </div>
 
-        <!-- RIGHT COLUMN -->
         <aside class="cc__side">
 
-          <!-- Video panel -->
           <div class="cc__panel cc__panel--video">
             <div class="cc__panelTop">
               <div class="cc__panelEyebrow">Share with parents</div>
@@ -161,7 +143,6 @@
             </div>
           </div>
 
-          <!-- Next steps -->
           <div class="cc__panel">
             <div class="cc__panelTitle">Next steps</div>
 
@@ -190,7 +171,6 @@
         </aside>
       </section>
 
-      <!-- Footer -->
       <footer class="cc__footer">
         <a class="cc__back" href="/eligibility.html">Back to eligibility</a>
         <span class="cc__footerNote">Momentum — credit estimates are not guarantees until verified.</span>
@@ -214,8 +194,24 @@
     </div>
   </div>
 
-  <!-- Your existing JS -->
-  <script src="/credit.js" defer></script>
+  <!-- Recommended Courses Modal -->
+  <div class="ccCoursesModal" id="ccCoursesModal" aria-hidden="true">
+    <div class="ccCoursesModal__backdrop" data-courses-close></div>
+
+    <div class="ccCoursesModal__card" role="dialog" aria-modal="true" aria-label="Recommended courses">
+      <button class="ccCoursesModal__x" type="button" data-courses-close aria-label="Close">×</button>
+
+      <div class="ccCoursesModal__head">
+        <div class="ccCoursesModal__eyebrow">Recommended courses</div>
+        <h3 class="ccCoursesModal__title">Courses your athlete may qualify for</h3>
+        <p class="ccCoursesModal__sub">
+          Based on the training structure you entered, these are the strongest course matches.
+        </p>
+      </div>
+
+      <div class="ccCoursesModal__body" id="courseMatchesList"></div>
+    </div>
+  </div>
 
   <!-- Qualified Thank You Modal -->
   <div class="mThanks" id="mThanks" aria-hidden="true">
@@ -277,5 +273,6 @@
     </div>
   </div>
 
+  <script src="/credit.js" defer></script>
 </body>
 </html>
