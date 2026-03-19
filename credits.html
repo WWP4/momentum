@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="credits.css" />
 
-   <!-- Meta Pixel Code -->
+  <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -19,15 +19,14 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '2411544165971588');
   fbq('track', 'PageView');
-    fbq('track', 'Lead');
-
+  fbq('track', 'Lead');
   </script>
+
   <noscript>
     <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=2411544165971588&ev=PageView&noscript=1"/>
+      src="https://www.facebook.com/tr?id=2411544165971588&ev=PageView&noscript=1"/>
   </noscript>
   <!-- End Meta Pixel Code -->
-  
 </head>
 
 <body>
@@ -61,7 +60,7 @@
         <!-- LEFT COLUMN -->
         <div class="ccCol">
 
-          <!-- Calculator card (IDs MUST stay for credit.js) -->
+          <!-- Calculator card -->
           <div class="cc__card">
             <div class="cc__cardTop">
               <div class="cc__label">Estimated annual training</div>
@@ -92,7 +91,7 @@
             <div class="cc__note" id="ccNote"></div>
           </div>
 
-          <!-- Pricing panel (NO range, just $395/credit) -->
+          <!-- Pricing panel -->
           <div class="cc__panel">
             <div class="cc__panelTitle">Credit pricing</div>
 
@@ -119,7 +118,16 @@
             </div>
           </div>
 
-          <!-- Hidden legacy nodes (credit.js may still reference these) -->
+          <!-- Recommended Courses Section -->
+          <section class="cc__panel" id="courseMatches" hidden>
+            <div class="cc__panelTitle">Recommended courses</div>
+            <p class="cc__muted cc__muted--p">
+              Based on the training structure you entered, these are the courses your athlete may qualify for.
+            </p>
+            <div id="courseMatchesList"></div>
+          </section>
+
+          <!-- Hidden legacy nodes -->
           <div class="cc__legacy" aria-hidden="true" style="display:none">
             <div id="ccPrice"></div>
             <div id="ccPriceFine"></div>
@@ -130,7 +138,7 @@
         <!-- RIGHT COLUMN -->
         <aside class="cc__side">
 
-          <!-- BIG VIDEO PANEL -->
+          <!-- Video panel -->
           <div class="cc__panel cc__panel--video">
             <div class="cc__panelTop">
               <div class="cc__panelEyebrow">Share with parents</div>
@@ -153,7 +161,7 @@
             </div>
           </div>
 
-          <!-- NEXT STEPS + CTA -->
+          <!-- Next steps -->
           <div class="cc__panel">
             <div class="cc__panelTitle">Next steps</div>
 
@@ -168,16 +176,14 @@
                  target="_blank" rel="noopener">
                 Book advisory call
               </a>
-
-              </button>
             </div>
 
             <button class="cc__btn cc__btn--secondary" id="seeCoursesBtn" type="button">
-  See recommended courses
-</button>
+              See recommended courses
+            </button>
 
             <div class="cc__fine">
-            Eligibility and credits are confirmed before final enrollment.
+              Eligibility and credits are confirmed before final enrollment.
             </div>
           </div>
 
@@ -193,86 +199,83 @@
     </div>
   </main>
 
-  <!-- Deposit modal (credit.js expects #ccModal + data-close + #ccDepositLink) -->
+  <!-- Deposit modal -->
   <div class="ccModal" id="ccModal" aria-hidden="true">
     <div class="ccModal__backdrop" data-close></div>
-      <div class="ccModal__head">
-        <div>
-          <div class="ccModal__title">Reserve your spot</div>
-        </div>
-        <button class="ccModal__x" type="button" data-close aria-label="Close">×</button>
+    <div class="ccModal__head">
+      <div>
+        <div class="ccModal__title">Reserve your spot</div>
       </div>
+      <button class="ccModal__x" type="button" data-close aria-label="Close">×</button>
+    </div>
 
-
-        <div class="ccModal__fine">
-          Eligibility and credits are confirmed before final enrollment. If you prefer, book the advisory call first.
-        </div>
-      </div>
+    <div class="ccModal__fine">
+      Eligibility and credits are confirmed before final enrollment. If you prefer, book the advisory call first.
+    </div>
+  </div>
 
   <!-- Your existing JS -->
   <script src="/credit.js" defer></script>
 
-    <!-- QUALIFIED THANK YOU MODAL -->
-<div class="mThanks" id="mThanks" aria-hidden="true">
-  <div class="mThanks__backdrop" data-close></div>
+  <!-- Qualified Thank You Modal -->
+  <div class="mThanks" id="mThanks" aria-hidden="true">
+    <div class="mThanks__backdrop" data-close></div>
 
-  <div class="mThanks__card" role="dialog" aria-modal="true" aria-label="Eligibility received">
-    <button class="mThanks__x" type="button" data-close aria-label="Close">×</button>
+    <div class="mThanks__card" role="dialog" aria-modal="true" aria-label="Eligibility received">
+      <button class="mThanks__x" type="button" data-close aria-label="Close">×</button>
 
-    <div class="mThanks__head">
-      <div class="mThanks__badge">✓</div>
-      <h3 class="mThanks__title">Your program qualifies</h3>
-      <p class="mThanks__sub">
-        Based on what you entered, your training volume supports academic credit.
-        We’ll confirm eligibility and verification requirements next.
+      <div class="mThanks__head">
+        <div class="mThanks__badge">✓</div>
+        <h3 class="mThanks__title">Your program qualifies</h3>
+        <p class="mThanks__sub">
+          Based on what you entered, your training volume supports academic credit.
+          We’ll confirm eligibility and verification requirements next.
+        </p>
+      </div>
+
+      <div class="mThanks__steps">
+        <div class="mThanks__step">
+          <span>1</span>
+          <p><strong>We review eligibility</strong> and confirm documentation requirements.</p>
+        </div>
+        <div class="mThanks__step">
+          <span>2</span>
+          <p><strong>You choose enrollment</strong> and timing that works for your facility.</p>
+        </div>
+        <div class="mThanks__step">
+          <span>3</span>
+          <p><strong>Verification begins</strong> (logs, schedules, coach confirmation).</p>
+        </div>
+      </div>
+
+      <div class="mThanks__actions">
+        <a class="mThanks__btn mThanks__btn--ghost" href="/eligibility.html">
+          Review eligibility details
+        </a>
+      </div>
+
+      <p class="mThanks__fine">
+        Eligibility and credits are confirmed before final enrollment.
       </p>
-    </div>
 
-    <div class="mThanks__steps">
-      <div class="mThanks__step">
-        <span>1</span>
-        <p><strong>We review eligibility</strong> and confirm documentation requirements.</p>
+      <div class="mThanks__share">
+        <div class="mThanks__shareHead">
+          Send this to a parent or administrator
+        </div>
+
+        <textarea
+          id="mThanksEmail"
+          class="mThanks__textarea"
+          rows="6"
+          aria-label="Copy email"
+        ></textarea>
+
+        <button class="mThanks__copy" id="mThanksCopy">
+          Copy email
+        </button>
       </div>
-      <div class="mThanks__step">
-        <span>2</span>
-        <p><strong>You choose enrollment</strong> and timing that works for your facility.</p>
-      </div>
-      <div class="mThanks__step">
-        <span>3</span>
-        <p><strong>Verification begins</strong> (logs, schedules, coach confirmation).</p>
-      </div>
-    </div>
-
-    <div class="mThanks__actions">
-  
-      </button>
-      <a class="mThanks__btn mThanks__btn--ghost" href="/eligibility.html">
-        Review eligibility details
-      </a>
-    </div>
-
-    <p class="mThanks__fine">
-     Eligibility and credits are confirmed before final enrollment.
-    </p>
-
-    <div class="mThanks__share">
-      <div class="mThanks__shareHead">
-        Send this to a parent or administrator
-      </div>
-
-      <textarea
-        id="mThanksEmail"
-        class="mThanks__textarea"
-        rows="6"
-        aria-label="Copy email"
-      ></textarea>
-
-      <button class="mThanks__copy" id="mThanksCopy">
-        Copy email
-      </button>
     </div>
   </div>
-</div>
 
 </body>
 </html>
