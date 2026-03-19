@@ -605,3 +605,156 @@ body{
 .ccCourseCard__footer {
   margin-top: 14px;
 }
+.ccModal,
+.ccCoursesModal,
+.mThanks {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: none;
+}
+
+.ccModal[aria-hidden="false"],
+.ccCoursesModal[aria-hidden="false"],
+.mThanks[aria-hidden="false"] {
+  display: block;
+}
+
+.ccModal__backdrop,
+.ccCoursesModal__backdrop,
+.mThanks__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.ccModal__head,
+.ccCoursesModal__card,
+.mThanks__card {
+  position: relative;
+  z-index: 1;
+}
+
+.ccCoursesModal__card {
+  width: min(960px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  margin: 24px auto;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
+}
+
+.ccCoursesModal__x {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: #eef3fb;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.ccCoursesModal__head {
+  padding-right: 52px;
+  margin-bottom: 20px;
+}
+
+.ccCoursesModal__eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5b6b84;
+  margin-bottom: 8px;
+}
+
+.ccCoursesModal__title {
+  margin: 0 0 8px;
+  font-size: 30px;
+  line-height: 1.15;
+  color: #16233b;
+}
+
+.ccCoursesModal__sub {
+  margin: 0;
+  color: #5b6b84;
+  line-height: 1.5;
+}
+
+.ccCoursesModal__body {
+  padding-top: 4px;
+}
+
+.ccCourseGroup + .ccCourseGroup {
+  margin-top: 28px;
+}
+
+.ccCourseGroup__title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  color: #1f2a44;
+}
+
+.ccCourseGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.ccCourseCard {
+  border: 1px solid #d9e2f0;
+  border-radius: 18px;
+  padding: 18px;
+  background: #fff;
+}
+
+.ccCourseCard__metaRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.ccCourseCard__pill,
+.ccCourseCard__confidence,
+.ccCourseCard__qualify {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #f3f6fb;
+  color: #23314d;
+}
+
+.ccCourseCard__title {
+  font-size: 20px;
+  line-height: 1.25;
+  margin: 0 0 8px;
+  color: #16233b;
+}
+
+.ccCourseCard__desc {
+  margin: 0 0 12px;
+  color: #4c5a73;
+  line-height: 1.5;
+}
+
+.ccCourseCard__why {
+  font-size: 14px;
+  color: #2a3550;
+  line-height: 1.5;
+}
+
+.ccCourseCard__footer {
+  margin-top: 14px;
+}
