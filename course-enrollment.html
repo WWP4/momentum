@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Momentum — Course Enrollment</title>
+  <link rel="stylesheet" href="/course-enrollment.css" />
+</head>
+<body>
+  <main class="enroll">
+    <div class="enroll__shell">
+
+      <header class="enrollTop">
+        <div class="enrollBrand" aria-label="Momentum">
+          <div class="enrollWord">MOMENTUM<span>.</span></div>
+        </div>
+
+        <a class="enrollBack" href="/credits.html">Back to credit estimate</a>
+      </header>
+
+      <section class="enrollHero">
+        <p class="enroll__kicker">Course enrollment</p>
+        <h1 class="enroll__h1">Confirm enrollment before course access</h1>
+        <p class="enroll__sub">
+          Review the course, acknowledge pricing and verification requirements, and continue to enrollment.
+        </p>
+      </section>
+
+      <section class="enrollGrid">
+        <div class="enrollMain">
+          <article class="enCard">
+            <div class="enCard__eyebrow">Selected course</div>
+            <h2 class="enCard__title" id="courseTitle">Loading course…</h2>
+            <div class="enMeta">
+              <span class="enPill" id="courseCategory">—</span>
+              <span class="enPill">1.0 credit</span>
+              <span class="enPill">$395 USD</span>
+            </div>
+            <p class="enCard__desc" id="courseDescription">
+              Please wait while the course details load.
+            </p>
+          </article>
+
+          <article class="enCard">
+            <div class="enCard__eyebrow">What this enrollment includes</div>
+            <ul class="enList">
+              <li>Access to one 1-credit Momentum academic course</li>
+              <li>Structured training-connected coursework</li>
+              <li>Reflection, written work, and assessment requirements</li>
+              <li>Completion documentation for school review</li>
+              <li>Verification process before final academic record issuance</li>
+            </ul>
+          </article>
+
+          <article class="enCard">
+            <div class="enCard__eyebrow">Acknowledgment</div>
+
+            <label class="enCheck">
+              <input type="checkbox" id="ackPrice" />
+              <span>
+                I understand this course is <strong>1.0 academic credit</strong> and enrollment is
+                <strong>$395 USD</strong>.
+              </span>
+            </label>
+
+            <label class="enCheck">
+              <input type="checkbox" id="ackVerification" />
+              <span>
+                I understand academic credit and documentation are only finalized after coursework
+                and verification requirements are completed.
+              </span>
+            </label>
+
+            <label class="enCheck">
+              <input type="checkbox" id="ackResponsibility" />
+              <span>
+                I understand this is an academic-style course built around structured training,
+                reflection, writing, and assessment — not simple sports participation.
+              </span>
+            </label>
+
+            <div class="enError" id="enrollError" hidden>
+              Please acknowledge all items before continuing.
+            </div>
+          </article>
+        </div>
+
+        <aside class="enrollSide">
+          <article class="enSideCard">
+            <div class="enSideCard__label">Enrollment summary</div>
+
+            <div class="enSummaryRow">
+              <span>Course</span>
+              <strong id="summaryCourse">—</strong>
+            </div>
+
+            <div class="enSummaryRow">
+              <span>Credit</span>
+              <strong>1.0</strong>
+            </div>
+
+            <div class="enSummaryRow">
+              <span>Price</span>
+              <strong>$395</strong>
+            </div>
+
+            <div class="enSummaryRow">
+              <span>Qualification</span>
+              <strong id="summaryQualification">—</strong>
+            </div>
+
+            <div class="enDivider"></div>
+
+            <button class="enBtn enBtn--primary" id="continueEnrollmentBtn" type="button">
+              Continue to payment
+            </button>
+
+            <button class="enBtn enBtn--ghost" id="saveSelectionBtn" type="button">
+              Save selection
+            </button>
+
+            <p class="enFine">
+              Course access should unlock only after enrollment and payment are completed.
+            </p>
+          </article>
+
+          <article class="enSideCard">
+            <div class="enSideCard__label">For school review later</div>
+            <p class="enSideText">
+              Completed courses should generate a structured academic record with course description,
+              credit value, completion details, and verification support.
+            </p>
+          </article>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <div class="enModal" id="enrollModal" aria-hidden="true">
+    <div class="enModal__backdrop" data-close-modal></div>
+    <div class="enModal__card" role="dialog" aria-modal="true" aria-label="Enrollment next steps">
+      <button class="enModal__x" type="button" data-close-modal aria-label="Close">×</button>
+
+      <div class="enModal__eyebrow">Next step</div>
+      <h3 class="enModal__title">Payment flow not connected yet</h3>
+      <p class="enModal__text">
+        This enrollment page is ready. The next step is connecting your payment provider and redirecting
+        enrolled students into the actual course experience.
+      </p>
+
+      <div class="enModal__actions">
+        <button class="enBtn enBtn--primary" id="mockProceedBtn" type="button">
+          Mock continue
+        </button>
+        <button class="enBtn enBtn--ghost" type="button" data-close-modal>
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/course-enrollment.js" defer></script>
+</body>
+</html>
