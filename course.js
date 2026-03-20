@@ -7,6 +7,7 @@ const els = {
   tagline: $("courseTagline"),
   credit: $("courseCredit"),
   courseId: $("courseId"),
+  moduleCount: $("courseModuleCount"),
   description: $("courseDescription"),
   overview: $("courseOverview"),
   learningOutcomes: $("learningOutcomes"),
@@ -21,7 +22,7 @@ const els = {
   gradingReflection: $("gradingReflection"),
   gradingFinal: $("gradingFinal"),
   requiredMaterials: $("requiredMaterials"),
-  startButton: document.querySelector(".primary-btn")
+  startButton: $("startCourseBtn") || document.querySelector(".primary-btn")
 };
 
 function slugify(value = "") {
@@ -31,6 +32,15 @@ function slugify(value = "") {
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 function getCourseIdFromUrl() {
@@ -49,26 +59,27 @@ function getStoredCourseId() {
     const selectedCourseRaw = sessionStorage.getItem("selectedCourse");
     if (selectedCourseRaw) {
       const selectedCourse = JSON.parse(selectedCourseRaw);
+
       if (selectedCourse?.id) return selectedCourse.id;
       if (selectedCourse?.courseId) return selectedCourse.courseId;
       if (selectedCourse?.title) return slugify(selectedCourse.title);
     }
-  } catch (err) {
-    console.warn("Could not parse selectedCourse from sessionStorage.", err);
+  } catch (error) {
+    console.warn("Could not parse selectedCourse from sessionStorage.", error);
   }
 
   try {
     const directId = sessionStorage.getItem("selectedCourseId");
     if (directId) return directId.trim();
-  } catch (err) {
-    console.warn("Could not read selectedCourseId from sessionStorage.", err);
+  } catch (error) {
+    console.warn("Could not read selectedCourseId from sessionStorage.", error);
   }
 
   return "";
 }
 
 function findCourse(courseId) {
-  if (!courseId) return null;
+  if (!courseId || !Array.isArray(COURSES)) return null;
 
   const normalizedId = slugify(courseId);
 
@@ -85,11 +96,11 @@ function setText(el, value, fallback = "Not provided yet.") {
   el.textContent = value || fallback;
 }
 
-function renderList(el, items = []) {
+function renderList(el, items = [], emptyText = "Not provided yet.") {
   if (!el) return;
 
   if (!Array.isArray(items) || items.length === 0) {
-    el.innerHTML = `<li>Not provided yet.</li>`;
+    el.innerHTML = `<li>${escapeHtml(emptyText)}</li>`;
     return;
   }
 
@@ -98,10 +109,34 @@ function renderList(el, items = []) {
     .join("");
 }
 
-function renderModules(el, modules = []) {
+function getModuleTitle(module, index) {
+  if (module?.title) return module.title;
+  return `Module ${index + 1}`;
+}
+
+function getModulePrompt(module) {
+  return (
+    module?.prompt ||
+    module?.description ||
+    module?.summary ||
+    "Module prompt coming soon."
+  );
+}
+
+function getModuleNumber(module, index) {
+  return module?.n || module?.number || index + 1;
+}
+
+function goToModule(courseId, moduleNumber = 1) {
+  window.location.href = `./module.html?course=${encodeURIComponent(courseId)}&module=${encodeURIComponent(moduleNumber)}`;
+}
+
+function renderModules(el, course) {
   if (!el) return;
 
-  if (!Array.isArray(modules) || modules.length === 0) {
+  const modules = Array.isArray(course?.modules) ? course.modules : [];
+
+  if (modules.length === 0) {
     el.innerHTML = `
       <article class="module-card">
         <div class="module-number">—</div>
@@ -113,38 +148,54 @@ function renderModules(el, modules = []) {
   }
 
   el.innerHTML = modules
-    .map((module) => {
-      const number = module.n ?? module.number ?? "";
-      const title = module.title || `Module ${number}`;
-      const prompt = module.prompt || "";
+    .map((module, index) => {
+      const number = getModuleNumber(module, index);
+      const title = getModuleTitle(module, index);
+      const prompt = getModulePrompt(module);
 
       return `
-        <article class="module-card">
-          <div class="module-number">${escapeHtml(String(number || "•"))}</div>
+        <article class="module-card" data-module="${escapeHtml(String(number))}" tabindex="0" role="button" aria-label="Open ${escapeHtml(title)}">
+          <div class="module-number">${escapeHtml(String(number))}</div>
           <h3>${escapeHtml(title)}</h3>
           <p>${escapeHtml(prompt)}</p>
         </article>
       `;
     })
     .join("");
-}
 
-function escapeHtml(value = "") {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  const cards = el.querySelectorAll(".module-card[data-module]");
+
+  cards.forEach((card) => {
+    const moduleNumber = card.dataset.module;
+
+    card.style.cursor = "pointer";
+
+    card.addEventListener("click", () => {
+      goToModule(course.id, moduleNumber);
+    });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        goToModule(course.id, moduleNumber);
+      }
+    });
+  });
 }
 
 function renderCourse(course) {
   document.title = `${course.title} | Momentum Course`;
 
   setText(els.title, course.title);
-  setText(els.tagline, course.tagline);
-  setText(els.credit, course.credit);
+  setText(els.tagline, course.tagline || course.description);
+  setText(els.credit, course.credit || "1.0");
   setText(els.courseId, course.id);
+
+  if (els.moduleCount) {
+    const count = Array.isArray(course.modules) ? course.modules.length : 0;
+    setText(els.moduleCount, `${count} Modules`, "0 Modules");
+  }
+
   setText(els.description, course.description);
   setText(els.overview, course.syllabus?.overview);
 
@@ -154,7 +205,8 @@ function renderCourse(course) {
   renderList(els.qualifyingMinutes, course.requirements?.qualifyingMinutes);
   renderList(els.athleteExpectations, course.requirements?.expectations);
   renderList(els.requiredMaterials, course.syllabus?.materials);
-  renderModules(els.modules, course.modules);
+
+  renderModules(els.modules, course);
 
   setText(els.gradingLab, course.grading?.lab);
   setText(els.gradingReflection, course.grading?.reflection);
@@ -163,10 +215,10 @@ function renderCourse(course) {
   setText(els.exitExamPrompt, course.exitExam?.prompt);
 
   if (els.startButton) {
+    els.startButton.disabled = false;
+    els.startButton.textContent = "Start Course";
     els.startButton.dataset.courseId = course.id;
-    els.startButton.addEventListener("click", () => {
-      alert(`Course unlocked: ${course.title}\n\nNext step: connect this button to your lesson/module view.`);
-    });
+    els.startButton.onclick = () => goToModule(course.id, 1);
   }
 }
 
@@ -180,6 +232,11 @@ function renderNotFound(requestedId) {
   );
   setText(els.credit, "—");
   setText(els.courseId, requestedId || "missing-course-id");
+
+  if (els.moduleCount) {
+    setText(els.moduleCount, "0 Modules");
+  }
+
   setText(
     els.description,
     "This usually means the course ID in the URL does not match your courses-data.js file."
@@ -198,14 +255,23 @@ function renderNotFound(requestedId) {
   renderList(els.weeklyExpectations, [
     "Fix the course ID mismatch",
     "Reload the page",
-    "Test enrollment flow again"
+    "Test the enrollment flow again"
   ]);
 
   renderList(els.creditRequirements, ["No course loaded"]);
   renderList(els.qualifyingMinutes, ["No course loaded"]);
   renderList(els.athleteExpectations, ["No course loaded"]);
   renderList(els.requiredMaterials, ["No course loaded"]);
-  renderModules(els.modules, []);
+
+  if (els.modules) {
+    els.modules.innerHTML = `
+      <article class="module-card">
+        <div class="module-number">—</div>
+        <h3>Course unavailable</h3>
+        <p>No modules can load until a valid course ID is passed into the URL.</p>
+      </article>
+    `;
+  }
 
   setText(els.gradingLab, "Not available");
   setText(els.gradingReflection, "Not available");
@@ -219,8 +285,6 @@ function renderNotFound(requestedId) {
   if (els.startButton) {
     els.startButton.disabled = true;
     els.startButton.textContent = "Course Unavailable";
-    els.startButton.style.opacity = "0.6";
-    els.startButton.style.cursor = "not-allowed";
   }
 }
 
@@ -235,6 +299,19 @@ function initCoursePage() {
     console.warn("No matching course found for:", resolvedCourseId);
     renderNotFound(resolvedCourseId);
     return;
+  }
+
+  try {
+    sessionStorage.setItem("selectedCourseId", course.id);
+    sessionStorage.setItem(
+      "selectedCourse",
+      JSON.stringify({
+        id: course.id,
+        title: course.title
+      })
+    );
+  } catch (error) {
+    console.warn("Could not save selected course to sessionStorage.", error);
   }
 
   renderCourse(course);
