@@ -236,37 +236,67 @@
       });
     }
 
-    if (continueEnrollmentBtn) {
-      continueEnrollmentBtn.addEventListener("click", () => {
-        const allChecked =
-          ackPrice?.checked &&
-          ackVerification?.checked &&
-          ackResponsibility?.checked;
+if (continueEnrollmentBtn) {
+  continueEnrollmentBtn.addEventListener("click", async () => {
+    const allChecked =
+      ackPrice?.checked &&
+      ackVerification?.checked &&
+      ackResponsibility?.checked;
 
-        if (!allChecked) {
-          if (enrollError) enrollError.hidden = false;
-          return;
-        }
-
-        if (enrollError) enrollError.hidden = true;
-
-        if (course) {
-          sessionStorage.setItem(
-            SELECTED_COURSE_KEY,
-            JSON.stringify({
-              id: courseId,
-              title: course.title,
-              category: course.category,
-              price: COURSE_PRICE,
-              credit: COURSE_CREDIT,
-              qualification: getQualificationLabel(payload),
-            })
-          );
-        }
-
-        openModal();
-      });
+    if (!allChecked) {
+      if (enrollError) enrollError.hidden = false;
+      return;
     }
+
+    if (enrollError) enrollError.hidden = true;
+
+    if (!course) {
+      alert("Course not found.");
+      return;
+    }
+
+    sessionStorage.setItem(
+      SELECTED_COURSE_KEY,
+      JSON.stringify({
+        id: courseId,
+        title: course.title,
+        category: course.category,
+        price: COURSE_PRICE,
+        credit: COURSE_CREDIT,
+        qualification: getQualificationLabel(payload),
+      })
+    );
+
+    try {
+      continueEnrollmentBtn.disabled = true;
+      continueEnrollmentBtn.textContent = "Redirecting...";
+
+      const res = await fetch("/.netlify/functions/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseId,
+          courseTitle: course.title,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "Could not start checkout.");
+      }
+
+      window.location.href = data.url;
+    } catch (error) {
+      console.error("Stripe checkout start error:", error);
+      alert("We could not start payment right now. Please try again.");
+      continueEnrollmentBtn.disabled = false;
+      continueEnrollmentBtn.textContent = "Continue to payment";
+    }
+  });
+}
 
     [ackPrice, ackVerification, ackResponsibility].forEach((input) => {
       input?.addEventListener("change", () => {
