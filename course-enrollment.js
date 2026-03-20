@@ -163,21 +163,23 @@
     }
   };
 
-  const openModal = () => {
-    const modal = $("#enrollModal");
-    if (!modal) return;
-    modal.setAttribute("aria-hidden", "false");
-    document.documentElement.style.overflow = "hidden";
-  };
-
-  const closeModal = () => {
-    const modal = $("#enrollModal");
-    if (!modal) return;
-    modal.setAttribute("aria-hidden", "true");
-    document.documentElement.style.overflow = "";
+  const saveSelectedCourse = ({ courseId, course, payload }) => {
+    sessionStorage.setItem(
+      SELECTED_COURSE_KEY,
+      JSON.stringify({
+        id: courseId,
+        title: course.title,
+        category: course.category,
+        price: COURSE_PRICE,
+        credit: COURSE_CREDIT,
+        qualification: getQualificationLabel(payload),
+      })
+    );
   };
 
   document.addEventListener("DOMContentLoaded", () => {
+    console.log("NEW course-enrollment.js loaded");
+
     const payload = getPayload();
     const courseId = getCourseId();
     const course = courses[courseId];
@@ -194,8 +196,6 @@
     const continueEnrollmentBtn = $("#continueEnrollmentBtn");
     const saveSelectionBtn = $("#saveSelectionBtn");
     const enrollError = $("#enrollError");
-    const enrollModal = $("#enrollModal");
-    const mockProceedBtn = $("#mockProceedBtn");
 
     if (!course) {
       if (courseTitle) courseTitle.textContent = "Course not found";
@@ -218,16 +218,7 @@
 
     if (saveSelectionBtn && course) {
       saveSelectionBtn.addEventListener("click", () => {
-        sessionStorage.setItem(
-          SELECTED_COURSE_KEY,
-          JSON.stringify({
-            id: courseId,
-            title: course.title,
-            category: course.category,
-            price: COURSE_PRICE,
-            credit: COURSE_CREDIT,
-          })
-        );
+        saveSelectedCourse({ courseId, course, payload });
 
         saveSelectionBtn.textContent = "Saved";
         window.setTimeout(() => {
@@ -236,94 +227,64 @@
       });
     }
 
-if (continueEnrollmentBtn) {
-  continueEnrollmentBtn.addEventListener("click", async () => {
-    const allChecked =
-      ackPrice?.checked &&
-      ackVerification?.checked &&
-      ackResponsibility?.checked;
+    if (continueEnrollmentBtn) {
+      continueEnrollmentBtn.addEventListener("click", async () => {
+        console.log("Continue to payment clicked");
 
-    if (!allChecked) {
-      if (enrollError) enrollError.hidden = false;
-      return;
-    }
+        const allChecked =
+          ackPrice?.checked &&
+          ackVerification?.checked &&
+          ackResponsibility?.checked;
 
-    if (enrollError) enrollError.hidden = true;
+        if (!allChecked) {
+          if (enrollError) enrollError.hidden = false;
+          return;
+        }
 
-    if (!course) {
-      alert("Course not found.");
-      return;
-    }
+        if (enrollError) enrollError.hidden = true;
 
-    sessionStorage.setItem(
-      SELECTED_COURSE_KEY,
-      JSON.stringify({
-        id: courseId,
-        title: course.title,
-        category: course.category,
-        price: COURSE_PRICE,
-        credit: COURSE_CREDIT,
-        qualification: getQualificationLabel(payload),
-      })
-    );
+        if (!course) {
+          alert("Course not found.");
+          return;
+        }
 
-    try {
-      continueEnrollmentBtn.disabled = true;
-      continueEnrollmentBtn.textContent = "Redirecting...";
+        saveSelectedCourse({ courseId, course, payload });
 
-      const res = await fetch("/.netlify/functions/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          courseId,
-          courseTitle: course.title,
-        }),
+        try {
+          continueEnrollmentBtn.disabled = true;
+          continueEnrollmentBtn.textContent = "Redirecting...";
+
+          const res = await fetch("/.netlify/functions/create-checkout-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              courseId,
+              courseTitle: course.title,
+            }),
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok || !data.url) {
+            throw new Error(data.error || "Could not start checkout.");
+          }
+
+          window.location.href = data.url;
+        } catch (error) {
+          console.error("Stripe checkout start error:", error);
+          alert("We could not start payment right now. Please try again.");
+          continueEnrollmentBtn.disabled = false;
+          continueEnrollmentBtn.textContent = "Continue to payment";
+        }
       });
-
-      const data = await res.json();
-
-      if (!res.ok || !data.url) {
-        throw new Error(data.error || "Could not start checkout.");
-      }
-
-      window.location.href = data.url;
-    } catch (error) {
-      console.error("Stripe checkout start error:", error);
-      alert("We could not start payment right now. Please try again.");
-      continueEnrollmentBtn.disabled = false;
-      continueEnrollmentBtn.textContent = "Continue to payment";
     }
-  });
-}
 
     [ackPrice, ackVerification, ackResponsibility].forEach((input) => {
       input?.addEventListener("change", () => {
         if (enrollError) enrollError.hidden = true;
       });
     });
-
-    if (enrollModal) {
-      enrollModal.addEventListener("click", (e) => {
-        const target = e.target;
-        if (!(target instanceof Element)) return;
-        if (target.closest("[data-close-modal]")) {
-          closeModal();
-        }
-      });
-    }
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        closeModal();
-      }
-    });
-
-    if (mockProceedBtn) {
-      mockProceedBtn.addEventListener("click", () => {
-        window.location.href = `/course.html?course=${encodeURIComponent(courseId || "")}`;
-      });
-    }
   });
 })();
