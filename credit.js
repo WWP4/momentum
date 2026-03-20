@@ -653,27 +653,40 @@
     );
     const qualificationLabel = getQualificationLabel(payload);
 
-    const renderCards = (items) =>
-      items
-        .map(
-          (course) => `
-            <article class="ccCourseCard">
-              <div class="ccCourseCard__metaRow">
-                <span class="ccCourseCard__pill">${course.category}</span>
-                <span class="ccCourseCard__confidence">${course.confidence}</span>
-              </div>
-              <h3 class="ccCourseCard__title">${course.title}</h3>
-              <p class="ccCourseCard__desc">${course.shortDescription}</p>
-              <div class="ccCourseCard__why">
-                <strong>Why it matched:</strong> ${course.reasons.join("; ")}
-              </div>
-              <div class="ccCourseCard__footer">
-                <span class="ccCourseCard__qualify">${qualificationLabel}</span>
-              </div>
-            </article>
-          `
-        )
-        .join("");
+   const renderCards = (items) =>
+  items
+    .map(
+      (course) => `
+        <article class="ccCourseCard">
+          <div class="ccCourseCard__metaRow">
+            <span class="ccCourseCard__pill">${course.category}</span>
+            <span class="ccCourseCard__confidence">${course.confidence}</span>
+          </div>
+
+          <h3 class="ccCourseCard__title">${course.title}</h3>
+
+          <p class="ccCourseCard__desc">${course.shortDescription}</p>
+
+          <div class="ccCourseCard__why">
+            <strong>Why it matched:</strong> ${course.reasons.join("; ")}
+          </div>
+
+          <div class="ccCourseCard__footer">
+            <span class="ccCourseCard__qualify">${qualificationLabel}</span>
+
+            <a 
+              href="/course-enrollment.html?course=${encodeURIComponent(course.id)}"
+              class="ccCourseCard__enrollBtn"
+              data-course-id="${course.id}"
+              data-course-title="${course.title}"
+            >
+              Enroll in this course
+            </a>
+          </div>
+        </article>
+      `
+    )
+    .join("");
 
     list.innerHTML = `
       ${
@@ -688,6 +701,18 @@
         `
           : ""
       }
+
+      document.querySelectorAll(".ccCourseCard__enrollBtn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const id = btn.getAttribute("data-course-id");
+    const title = btn.getAttribute("data-course-title");
+
+    sessionStorage.setItem(
+      "mqSelectedCourse",
+      JSON.stringify({ id, title })
+    );
+  });
+});
 
       ${
         additionalMatches.length
