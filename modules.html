@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Momentum Module</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="./module.css" />
+</head>
+<body>
+  <div class="module-shell">
+    <div class="module-frame">
+      <header class="module-topbar">
+        <a href="./course.html" class="back-link">← Back to Course</a>
+        <div class="module-brand">Momentum <span>Module</span></div>
+      </header>
+
+      <section class="module-hero">
+        <p class="module-kicker">Course Module</p>
+        <h1 id="moduleTitle">Module 1: Training Reflection</h1>
+        <p id="moduleSubtitle" class="module-subtitle">
+          Use this module to reflect on your athletic training and connect performance experience to academic learning.
+        </p>
+
+        <div class="module-meta">
+          <div class="meta-card">
+            <span class="meta-label">Course</span>
+            <span id="moduleCourseName" class="meta-value">Sports Training Performance</span>
+          </div>
+
+          <div class="meta-card">
+            <span class="meta-label">Module</span>
+            <span id="moduleNumber" class="meta-value">1 of 20</span>
+          </div>
+
+          <div class="meta-card">
+            <span class="meta-label">Type</span>
+            <span class="meta-value">Written Reflection</span>
+          </div>
+        </div>
+      </section>
+
+      <main class="module-main">
+        <div class="module-grid">
+          <div class="module-content">
+            <section class="card section-block">
+              <h2>Prompt</h2>
+              <p id="modulePrompt">
+                Describe one training session from this week and explain what you were working on, what challenges you faced, and what you learned from the experience.
+              </p>
+            </section>
+
+            <section class="card section-block">
+              <h2>Your Response</h2>
+              <textarea
+                id="moduleResponse"
+                class="response-textarea"
+                placeholder="Write your response here..."
+              ></textarea>
+            </section>
+
+            <section class="card section-block action-row">
+              <button id="saveModuleBtn" class="secondary-btn" type="button">Save Progress</button>
+              <button id="nextModuleBtn" class="primary-btn" type="button">Next Module</button>
+            </section>
+          </div>
+
+          <aside class="module-sidebar">
+            <section class="card side-card">
+              <h3>Objectives</h3>
+              <ul id="moduleObjectives" class="styled-list">
+                <li>Connect training experience to academic reflection</li>
+                <li>Demonstrate observation and analysis</li>
+                <li>Document measurable learning outcomes</li>
+              </ul>
+            </section>
+
+            <section class="card side-card">
+              <h3>What to Include</h3>
+              <ul id="moduleGuidance" class="styled-list">
+                <li>Specific training details</li>
+                <li>What improved or stayed difficult</li>
+                <li>How effort, discipline, or technique affected the outcome</li>
+              </ul>
+            </section>
+
+            <section class="card side-card">
+              <h3>Evidence Suggestions</h3>
+              <ul id="moduleEvidence" class="styled-list">
+                <li>Training logs</li>
+                <li>Coach verification</li>
+                <li>Workout notes</li>
+                <li>Performance metrics</li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="./module.js"></script>
+</body>
+</html>
