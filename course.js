@@ -138,11 +138,14 @@ function renderModules(el, course) {
 
   if (modules.length === 0) {
     el.innerHTML = `
-      <article class="module-card">
-        <div class="module-number">—</div>
-        <h3>Modules coming soon</h3>
-        <p>This course does not have module data loaded yet.</p>
-      </article>
+      <div class="module-row">
+        <div class="module-row-number">—</div>
+        <div class="module-row-content">
+          <div class="module-row-title">Modules coming soon</div>
+          <div class="module-row-text">This course does not have module data loaded yet.</div>
+        </div>
+        <div class="module-row-action"></div>
+      </div>
     `;
     return;
   }
@@ -154,31 +157,29 @@ function renderModules(el, course) {
       const prompt = getModulePrompt(module);
 
       return `
-        <article class="module-card" data-module="${escapeHtml(String(number))}" tabindex="0" role="button" aria-label="Open ${escapeHtml(title)}">
-          <div class="module-number">${escapeHtml(String(number))}</div>
-          <h3>${escapeHtml(title)}</h3>
-          <p>${escapeHtml(prompt)}</p>
-        </article>
+        <div class="module-row" data-module="${escapeHtml(String(number))}">
+          <div class="module-row-number">${escapeHtml(String(number))}</div>
+          <div class="module-row-content">
+            <div class="module-row-title">${escapeHtml(title)}</div>
+            <div class="module-row-text">${escapeHtml(prompt)}</div>
+          </div>
+          <div class="module-row-action">
+            <button type="button" class="open-module-btn" data-module="${escapeHtml(String(number))}">
+              Open
+            </button>
+          </div>
+        </div>
       `;
     })
     .join("");
 
-  const cards = el.querySelectorAll(".module-card[data-module]");
+  const buttons = el.querySelectorAll(".open-module-btn");
 
-  cards.forEach((card) => {
-    const moduleNumber = card.dataset.module;
+  buttons.forEach((button) => {
+    const moduleNumber = button.dataset.module;
 
-    card.style.cursor = "pointer";
-
-    card.addEventListener("click", () => {
+    button.addEventListener("click", () => {
       goToModule(course.id, moduleNumber);
-    });
-
-    card.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        goToModule(course.id, moduleNumber);
-      }
     });
   });
 }
