@@ -4,7 +4,6 @@ const $ = (id) => document.getElementById(id);
 
 const els = {
   title: $("moduleTitle"),
-  subtitle: $("moduleSubtitle"),
   courseName: $("moduleCourseName"),
   moduleNumber: $("moduleNumber"),
   prompt: $("modulePrompt"),
@@ -13,7 +12,8 @@ const els = {
   guidance: $("moduleGuidance"),
   evidence: $("moduleEvidence"),
   saveButton: $("saveModuleBtn"),
-  nextButton: $("nextModuleBtn")
+  nextButton: $("nextModuleBtn"),
+  backToCourseLink: $("backToCourseLink")
 };
 
 function slugify(value = "") {
@@ -36,6 +36,7 @@ function escapeHtml(value = "") {
 
 function getParams() {
   const params = new URLSearchParams(window.location.search);
+
   return {
     courseId: (params.get("course") || params.get("id") || params.get("courseId") || "").trim(),
     moduleParam: (params.get("module") || "1").trim()
@@ -131,25 +132,24 @@ function getStorageKey(courseId, moduleNumber) {
 function saveResponse(courseId, moduleNumber) {
   if (!els.response) return;
 
-  const key = getStorageKey(courseId, moduleNumber);
-  const value = els.response.value || "";
-
   try {
-    localStorage.setItem(key, value);
+    localStorage.setItem(
+      getStorageKey(courseId, moduleNumber),
+      els.response.value || ""
+    );
   } catch (error) {
-    console.warn("Could not save module response.", error);
+    console.warn("Could not save response.", error);
   }
 }
 
 function loadResponse(courseId, moduleNumber) {
   if (!els.response) return;
 
-  const key = getStorageKey(courseId, moduleNumber);
-
   try {
-    els.response.value = localStorage.getItem(key) || "";
+    els.response.value =
+      localStorage.getItem(getStorageKey(courseId, moduleNumber)) || "";
   } catch (error) {
-    console.warn("Could not load saved module response.", error);
+    console.warn("Could not load response.", error);
     els.response.value = "";
   }
 }
@@ -162,38 +162,25 @@ function goToCourse(courseId) {
   window.location.href = `./course.html?course=${encodeURIComponent(courseId)}`;
 }
 
-function updateBackLink(courseId) {
-  const backLink = document.querySelector(".back-link");
-  if (!backLink) return;
-
-  backLink.href = `./course.html?course=${encodeURIComponent(courseId)}`;
-}
-
-function renderNotFound(message = "Module not found.") {
+function renderNotFound(message) {
   document.title = "Module Not Found | Momentum";
 
   setText(els.title, "Module Not Found");
-  setText(els.subtitle, message);
   setText(els.courseName, "Unavailable");
   setText(els.moduleNumber, "—");
   setText(
     els.prompt,
-    "This module could not load because the course ID or module number is invalid."
+    message || "This module could not be loaded."
   );
 
-  renderList(els.objectives, [
+  renderList(els.guidance, [
     "Check the course ID in the URL",
     "Check the module number in the URL",
     "Confirm the module exists in courses-data.js"
   ]);
 
-  renderList(els.guidance, [
-    "Use a valid URL format",
-    "Reload the page after fixing the course slug",
-    "Make sure your course has module data"
-  ]);
-
-  renderList(els.evidence, ["No module loaded"]);
+  renderList(els.objectives, ["Module unavailable"]);
+  renderList(els.evidence, ["Module unavailable"]);
 
   if (els.response) {
     els.response.value = "";
@@ -218,18 +205,17 @@ function renderModule(course, module, moduleIndex) {
   document.title = `${getModuleTitle(module, moduleIndex)} | ${course.title}`;
 
   setText(els.title, getModuleTitle(module, moduleIndex));
-  setText(
-    els.subtitle,
-    module?.subtitle ||
-      "Reflect on your training and translate athletic experience into academic learning."
-  );
   setText(els.courseName, course.title);
   setText(els.moduleNumber, `${moduleNumber} of ${totalModules}`);
   setText(els.prompt, getModulePrompt(module));
 
-  renderList(els.objectives, getModuleObjectives(module));
   renderList(els.guidance, getModuleGuidance(module));
+  renderList(els.objectives, getModuleObjectives(module));
   renderList(els.evidence, getModuleEvidence(module));
+
+  if (els.backToCourseLink) {
+    els.backToCourseLink.href = `./course.html?course=${encodeURIComponent(course.id)}`;
+  }
 
   if (els.response) {
     els.response.disabled = false;
@@ -244,7 +230,7 @@ function renderModule(course, module, moduleIndex) {
       els.saveButton.textContent = "Saved";
       setTimeout(() => {
         els.saveButton.textContent = "Save Progress";
-      }, 1200);
+      }, 1000);
     };
   }
 
@@ -258,15 +244,13 @@ function renderModule(course, module, moduleIndex) {
         goToModule(course.id, moduleNumber + 1);
       };
     } else {
-      els.nextButton.textContent = "Back to Course";
+      els.nextButton.textContent = "Return to Course";
       els.nextButton.onclick = () => {
         saveResponse(course.id, moduleNumber);
         goToCourse(course.id);
       };
     }
   }
-
-  updateBackLink(course.id);
 }
 
 function initModulePage() {
@@ -297,7 +281,7 @@ function initModulePage() {
       })
     );
   } catch (error) {
-    console.warn("Could not save selected course.", error);
+    console.warn("Could not store selected course.", error);
   }
 
   renderModule(course, module, moduleIndex);
