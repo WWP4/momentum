@@ -1,4 +1,4 @@
-import { COURSES } from "./courses-data.js";
+import { COURSES } from "./ full-courses-data-.js";
 
 const $ = (id) => document.getElementById(id);
 
@@ -263,8 +263,8 @@ function renderNotFound(requestedId) {
 
   renderList(els.learningOutcomes, [
     "Confirm the URL contains ?course=your-course-id",
-    "Confirm that id exists in courses-data.js",
-    "Confirm the file import path for courses-data.js is correct"
+    "Confirm that id exists in  full-courses-data-.js",
+    "Confirm the file import path for  full-courses-data-.js is correct"
   ]);
 
   renderList(els.weeklyExpectations, [
