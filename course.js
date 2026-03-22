@@ -1,4 +1,4 @@
-import { COURSES } from "./ full-courses-data-.js";
+import { COURSES } from "./full-courses-data-.js";
 
 const $ = (id) => document.getElementById(id);
 
