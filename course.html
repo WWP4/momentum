@@ -135,6 +135,73 @@
     </main>
   </div>
 
+  <!-- Student Intake Modal -->
+  <div id="studentIntakeModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" id="studentIntakeBackdrop"></div>
+
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="studentIntakeTitle">
+      <button id="closeStudentIntakeBtn" class="modal-close" type="button" aria-label="Close">
+        ×
+      </button>
+
+      <div class="modal-content">
+        <div class="modal-eyebrow">Before You Begin</div>
+        <h2 id="studentIntakeTitle">Student Course Intake</h2>
+        <p class="modal-copy">
+          Enter the student information below before starting the course. This information will
+          be used for saved progress and transcript generation.
+        </p>
+
+        <form id="studentIntakeForm" novalidate>
+          <div class="form-group">
+            <label for="studentNameInput">Student Full Name</label>
+            <input
+              id="studentNameInput"
+              name="studentName"
+              type="text"
+              autocomplete="name"
+              placeholder="Enter student full name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="studentEmailInput">Student Email</label>
+            <input
+              id="studentEmailInput"
+              name="studentEmail"
+              type="email"
+              autocomplete="email"
+              placeholder="Enter student email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="studentIdInput">Student ID (optional)</label>
+            <input
+              id="studentIdInput"
+              name="studentId"
+              type="text"
+              placeholder="Leave blank to auto-generate"
+            />
+          </div>
+
+          <p id="studentIntakeError" class="form-error" hidden></p>
+
+          <div class="modal-actions">
+            <button id="cancelStudentIntakeBtn" class="secondary-btn" type="button">
+              Cancel
+            </button>
+            <button id="submitStudentIntakeBtn" class="primary-btn" type="submit">
+              Start Course
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="./course.js"></script>
 </body>
 </html>
