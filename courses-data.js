@@ -516,7 +516,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+    {
     id: "coaching-skills-athlete-mentorship",
     title: "Coaching Skills & Athlete Mentorship",
     credit: "1.0",
@@ -601,7 +601,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+    {
     id: "sports-theory-analysis",
     title: "Sports Theory & Analysis",
     credit: "1.0",
@@ -685,7 +685,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+    {
     id: "sports-psychology-basics",
     title: "Sports Psychology Basics",
     credit: "1.0",
@@ -771,7 +771,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+    {
     id: "sports-psychology-basics",
     title: "Sports Psychology Basics",
     credit: "1.0",
@@ -857,7 +857,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+   {
     id: "intro-to-coaching-theory",
     title: "Intro to Coaching Theory",
     credit: "1.0",
@@ -942,7 +942,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+    {
     id: "kinesiology-human-movement",
     title: "Kinesiology & Human Movement",
     credit: "1.0",
@@ -1110,7 +1110,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+    {
     id: "student-athlete-college-readiness",
     title: "Student–Athlete College Readiness",
     credit: "1.0",
@@ -1195,7 +1195,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+    {
     id: "leadership-in-sports-communities",
     title: "Leadership in Sports Communities",
     credit: "1.0",
@@ -1279,7 +1279,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+    {
     id: "time-management-high-performance-students",
     title: "Time Management for High-Performance Students",
     credit: "1.0",
@@ -1364,7 +1364,7 @@ export const COURSES = [
     }
   }
 
-  ,  {
+   {
     id: "personal-responsibility-goal-setting",
     title: "Personal Responsibility & Goal Setting",
     credit: "0.5–1.0",
@@ -1450,7 +1450,7 @@ export const COURSES = [
   }
 
 
-  ,  {
+    {
     id: "health-fitness-foundations",
     title: "Health & Fitness Foundations",
     credit: "1.0",
