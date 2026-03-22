@@ -1,129 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Momentum Module</title>
-  <link rel="stylesheet" href="./module.css" />
-</head>
 <body>
-  <div class="page-shell">
+  <div class="page">
+
     <header class="topbar">
-      <div class="topbar-left">
-        <div class="brand-mark">Momentum</div>
-        <div class="brand-copy">
-          <div class="platform-name">Academic Course Platform</div>
-          <a id="backToCourseLink" class="back-link" href="./course.html">← Back to Course Overview</a>
-        </div>
+      <div class="left">
+        <div class="brand">Momentum</div>
+        <a href="./course.html" class="back">Back to course</a>
       </div>
 
-      <div class="topbar-right">
-        <div class="progress-meta">
-          <span class="progress-label">Module Progress</span>
-          <span id="moduleNumber" class="progress-value">1 of 20</span>
-        </div>
-        <div class="progress-track">
-          <div id="progressFill" class="progress-fill" style="width: 5%;"></div>
-        </div>
+      <div class="right">
+        <span id="moduleNumber">1 of 20</span>
       </div>
     </header>
 
-    <main class="module-page">
-      <section class="hero-card">
-        <div class="hero-eyebrow">Course Module</div>
-        <h1 id="moduleTitle" class="hero-title">Module 1: Training Reflection</h1>
+    <main class="content">
 
-        <div class="hero-meta">
-          <div class="meta-pill">
-            <span class="meta-label">Course</span>
-            <span id="moduleCourseName" class="meta-value">Sports Training Performance</span>
-          </div>
-          <div class="meta-pill subtle">
-            <span class="meta-label">Response Type</span>
-            <span class="meta-value">Written Reflection</span>
-          </div>
+      <div class="module-head">
+        <h1 id="moduleTitle">Module 1: Training Reflection</h1>
+        <p class="course" id="moduleCourseName">Sports Training Performance</p>
+      </div>
+
+      <section class="prompt-block">
+        <p id="modulePrompt">
+          Describe one training session from this week and explain what you were working on, what challenges you faced, and what you learned.
+        </p>
+      </section>
+
+      <section class="response-block">
+        <label for="moduleResponse">Your response</label>
+
+        <textarea
+          id="moduleResponse"
+          placeholder="Write clearly and specifically..."
+        ></textarea>
+
+        <div class="response-footer">
+          <span id="wordCount">0 words</span>
         </div>
       </section>
 
-      <section class="content-grid">
-        <div class="info-column">
-          <article class="info-card emphasis">
-            <div class="card-label">Module Prompt</div>
-            <p id="modulePrompt" class="prompt-text">
-              Describe one training session from this week and explain what you were working on, what challenges you faced, and what you learned from the experience.
-            </p>
-          </article>
+      <div class="actions">
+        <button id="saveModuleBtn" class="btn secondary">Save</button>
+        <button id="nextModuleBtn" class="btn primary">Next</button>
+      </div>
 
-          <article class="info-card">
-            <div class="card-label">Instructions</div>
-            <ul id="moduleGuidance" class="styled-list">
-              <li>Be specific about the training session or time period.</li>
-              <li>Explain what you worked on and why it mattered.</li>
-              <li>Describe challenges, adjustments, and takeaways.</li>
-            </ul>
-          </article>
-
-          <article class="info-card split-card">
-            <div>
-              <div class="card-label">Learning Objectives</div>
-              <ul id="moduleObjectives" class="styled-list compact">
-                <li>Connect training activity to academic reflection.</li>
-                <li>Demonstrate analysis of effort, discipline, and performance.</li>
-                <li>Document measurable learning from athletic training.</li>
-              </ul>
-            </div>
-
-            <div class="split-divider"></div>
-
-            <div>
-              <div class="card-label">Suggested Evidence</div>
-              <ul id="moduleEvidence" class="styled-list compact">
-                <li>Training logs</li>
-                <li>Coach notes or verification</li>
-                <li>Workout records</li>
-                <li>Performance data</li>
-              </ul>
-            </div>
-          </article>
-        </div>
-
-        <aside class="response-column">
-          <section class="response-card">
-            <div class="response-header">
-              <div>
-                <div class="card-label">Written Response</div>
-                <h2 class="response-title">Submit your reflection</h2>
-              </div>
-              <div class="response-badge">Complete sentences</div>
-            </div>
-
-            <label class="response-label" for="moduleResponse">
-              Use specific examples from your training, adjustments, and results.
-            </label>
-
-            <div class="editor-shell">
-              <textarea
-                id="moduleResponse"
-                class="response-box"
-                placeholder="Start writing your response here..."
-              ></textarea>
-              <div class="editor-footer">
-                <span class="editor-tip">Aim for thoughtful, specific reflection.</span>
-                <span id="wordCount" class="word-count">0 words</span>
-              </div>
-            </div>
-
-            <div class="actions">
-              <button id="saveModuleBtn" class="btn btn-secondary" type="button">Save Progress</button>
-              <button id="nextModuleBtn" class="btn btn-primary" type="button">Next Module</button>
-            </div>
-          </section>
-        </aside>
-      </section>
     </main>
   </div>
 
   <script type="module" src="./full-courses-data.js"></script>
   <script type="module" src="./module.js"></script>
 </body>
-</html>
