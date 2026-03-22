@@ -16,7 +16,7 @@ const els = {
   backToCourseLink: $("backToCourseLink")
 };
 
-const LOGO_PATH = "./assets/momentum-logo.png";
+const LOGO_PATH = "./assets/assets/momentum-logo.png";
 
 const params = new URLSearchParams(window.location.search);
 const requestedCourseId = (params.get("course") || "").trim();
