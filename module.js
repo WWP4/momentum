@@ -442,7 +442,7 @@ function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
     doc.rect(0, 0, pageWidth, 10, "F");
 
     // Logo
-    doc.addImage(img, "PNG", left, 28, 130, 34);
+    doc.addImage(img, "PNG", left, 24, 220, 60);
 
     // Document title
     doc.setFont("helvetica", "bold");
