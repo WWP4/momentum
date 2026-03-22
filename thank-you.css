@@ -1,0 +1,182 @@
+:root {
+  --red: #c1121f;
+  --red-dark: #9f1020;
+  --black: #111111;
+  --text: #1d1d1d;
+  --muted: #666666;
+  --line: #e8e8e8;
+  --soft: #f7f7f7;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: var(--text);
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+.thankyou-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+}
+
+.thankyou-card {
+  width: 100%;
+  max-width: 760px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  padding: 40px 32px;
+}
+
+.icon-wrap {
+  margin-bottom: 18px;
+}
+
+.success-icon {
+  width: 72px;
+  height: 72px;
+  display: block;
+}
+
+.icon-circle {
+  fill: #fff5f5;
+  stroke: var(--red);
+  stroke-width: 4;
+}
+
+.icon-check {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+h1 {
+  margin: 0 0 14px;
+  font-size: 2rem;
+  line-height: 1.15;
+  color: var(--black);
+}
+
+.lead {
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.summary {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+  margin-bottom: 28px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.value {
+  color: var(--black);
+  font-weight: 600;
+  text-align: right;
+}
+
+.next-steps h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.next-steps ul {
+  margin: 0 0 28px;
+  padding-left: 20px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--red-dark);
+}
+
+.btn-secondary {
+  background: var(--soft);
+  color: var(--black);
+  border: 1px solid var(--line);
+}
+
+@media (max-width: 640px) {
+  .thankyou-card {
+    padding: 28px 20px;
+  }
+
+  h1 {
+    font-size: 1.65rem;
+  }
+
+  .summary-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .value {
+    text-align: left;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
