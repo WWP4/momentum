@@ -192,3 +192,137 @@ body {
     font-size: 28px;
   }
 }
+
+.modal.hidden {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.modal-panel {
+  position: relative;
+  width: min(560px, calc(100% - 32px));
+  margin: 64px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 28px 24px 24px;
+  z-index: 2;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: 0;
+  background: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c1121f;
+  margin-bottom: 10px;
+}
+
+.modal-content h2 {
+  margin: 0 0 10px;
+}
+
+.modal-copy {
+  margin: 0 0 20px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #111;
+}
+
+.form-group input {
+  height: 44px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  padding: 0 12px;
+  font: inherit;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #c1121f;
+  box-shadow: 0 0 0 2px rgba(193, 18, 31, 0.08);
+}
+
+.form-error {
+  color: #c1121f;
+  font-size: 0.92rem;
+  margin: 4px 0 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.secondary-btn,
+.primary-btn {
+  border-radius: 6px;
+  padding: 11px 16px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  background: #f5f5f5;
+  border: 1px solid #dddddd;
+  color: #111;
+}
+
+.primary-btn {
+  background: #c1121f;
+  border: 1px solid #c1121f;
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .modal-panel {
+    margin: 28px auto;
+    padding: 22px 18px 18px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .secondary-btn,
+  .primary-btn {
+    width: 100%;
+  }
+}
