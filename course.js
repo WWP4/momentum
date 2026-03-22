@@ -22,8 +22,20 @@ const els = {
   gradingReflection: $("gradingReflection"),
   gradingFinal: $("gradingFinal"),
   requiredMaterials: $("requiredMaterials"),
-  startButton: $("startCourseBtn") || document.querySelector(".primary-btn")
+  startButton: $("startCourseBtn"),
+
+  modal: $("studentIntakeModal"),
+  modalBackdrop: $("studentIntakeBackdrop"),
+  closeModalBtn: $("closeStudentIntakeBtn"),
+  cancelModalBtn: $("cancelStudentIntakeBtn"),
+  intakeForm: $("studentIntakeForm"),
+  studentNameInput: $("studentNameInput"),
+  studentEmailInput: $("studentEmailInput"),
+  studentIdInput: $("studentIdInput"),
+  intakeError: $("studentIntakeError")
 };
+
+let activeCourse = null;
 
 function slugify(value = "") {
   return String(value)
@@ -119,6 +131,7 @@ function getModulePrompt(module) {
     module?.prompt ||
     module?.description ||
     module?.summary ||
+    module?.questions?.[0] ||
     "Module prompt coming soon."
   );
 }
@@ -185,6 +198,7 @@ function renderModules(el, course) {
 }
 
 function renderCourse(course) {
+  activeCourse = course;
   document.title = `${course.title} | Momentum Course`;
 
   setText(els.title, course.title);
@@ -217,9 +231,9 @@ function renderCourse(course) {
 
   if (els.startButton) {
     els.startButton.disabled = false;
-    els.startButton.textContent = "Start Course";
+    els.startButton.textContent = "Begin Course";
     els.startButton.dataset.courseId = course.id;
-    els.startButton.onclick = () => goToModule(course.id, 1);
+    els.startButton.onclick = () => openStudentIntakeModal();
   }
 }
 
@@ -240,7 +254,7 @@ function renderNotFound(requestedId) {
 
   setText(
     els.description,
-    "This usually means the course ID in the URL does not match your courses-data.js file."
+    "This usually means the course ID in the URL does not match your course data file."
   );
   setText(
     els.overview,
@@ -266,11 +280,14 @@ function renderNotFound(requestedId) {
 
   if (els.modules) {
     els.modules.innerHTML = `
-      <article class="module-card">
-        <div class="module-number">—</div>
-        <h3>Course unavailable</h3>
-        <p>No modules can load until a valid course ID is passed into the URL.</p>
-      </article>
+      <div class="module-row">
+        <div class="module-row-number">—</div>
+        <div class="module-row-content">
+          <div class="module-row-title">Course unavailable</div>
+          <div class="module-row-text">No modules can load until a valid course ID is passed into the URL.</div>
+        </div>
+        <div class="module-row-action"></div>
+      </div>
     `;
   }
 
@@ -287,6 +304,148 @@ function renderNotFound(requestedId) {
     els.startButton.disabled = true;
     els.startButton.textContent = "Course Unavailable";
   }
+}
+
+function getStoredStudentProfile() {
+  try {
+    const raw = localStorage.getItem("momentum-student-profile");
+    if (!raw) return null;
+
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return null;
+
+    return parsed;
+  } catch (error) {
+    console.warn("Could not parse momentum-student-profile.", error);
+    return null;
+  }
+}
+
+function generateStudentId() {
+  return `STU-${Math.floor(100000 + Math.random() * 900000)}`;
+}
+
+function showIntakeError(message) {
+  if (!els.intakeError) return;
+  els.intakeError.hidden = false;
+  els.intakeError.textContent = message;
+}
+
+function clearIntakeError() {
+  if (!els.intakeError) return;
+  els.intakeError.hidden = true;
+  els.intakeError.textContent = "";
+}
+
+function prefillStudentProfile() {
+  const profile = getStoredStudentProfile();
+  if (!profile) return;
+
+  if (els.studentNameInput && profile.studentName) {
+    els.studentNameInput.value = profile.studentName;
+  }
+
+  if (els.studentEmailInput && profile.studentEmail) {
+    els.studentEmailInput.value = profile.studentEmail;
+  }
+
+  if (els.studentIdInput && profile.studentId) {
+    els.studentIdInput.value = profile.studentId;
+  }
+}
+
+function openStudentIntakeModal() {
+  if (!activeCourse || !els.modal) return;
+
+  clearIntakeError();
+  prefillStudentProfile();
+
+  els.modal.classList.remove("hidden");
+  els.modal.setAttribute("aria-hidden", "false");
+
+  setTimeout(() => {
+    els.studentNameInput?.focus();
+  }, 0);
+}
+
+function closeStudentIntakeModal() {
+  if (!els.modal) return;
+
+  els.modal.classList.add("hidden");
+  els.modal.setAttribute("aria-hidden", "true");
+  clearIntakeError();
+}
+
+function validateEmail(email) {
+  return /\S+@\S+\.\S+/.test(email);
+}
+
+function saveStudentProfileAndStartCourse(event) {
+  event.preventDefault();
+
+  if (!activeCourse) {
+    showIntakeError("No course is currently loaded.");
+    return;
+  }
+
+  const studentName = els.studentNameInput?.value.trim() || "";
+  const studentEmail = els.studentEmailInput?.value.trim() || "";
+  let studentId = els.studentIdInput?.value.trim() || "";
+
+  if (!studentName) {
+    showIntakeError("Please enter the student's full name.");
+    return;
+  }
+
+  if (!studentEmail) {
+    showIntakeError("Please enter the student's email.");
+    return;
+  }
+
+  if (!validateEmail(studentEmail)) {
+    showIntakeError("Please enter a valid email address.");
+    return;
+  }
+
+  if (!studentId) {
+    studentId = generateStudentId();
+  }
+
+  const studentProfile = {
+    studentName,
+    studentEmail,
+    studentId,
+    courseId: activeCourse.id,
+    courseTitle: activeCourse.title,
+    startedAt: new Date().toISOString()
+  };
+
+  try {
+    localStorage.setItem(
+      "momentum-student-profile",
+      JSON.stringify(studentProfile)
+    );
+  } catch (error) {
+    console.warn("Could not save student profile.", error);
+    showIntakeError("Could not save student information. Please try again.");
+    return;
+  }
+
+  closeStudentIntakeModal();
+  goToModule(activeCourse.id, 1);
+}
+
+function initModalEvents() {
+  els.closeModalBtn?.addEventListener("click", closeStudentIntakeModal);
+  els.cancelModalBtn?.addEventListener("click", closeStudentIntakeModal);
+  els.modalBackdrop?.addEventListener("click", closeStudentIntakeModal);
+  els.intakeForm?.addEventListener("submit", saveStudentProfileAndStartCourse);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && els.modal && !els.modal.classList.contains("hidden")) {
+      closeStudentIntakeModal();
+    }
+  });
 }
 
 function initCoursePage() {
@@ -318,4 +477,7 @@ function initCoursePage() {
   renderCourse(course);
 }
 
-document.addEventListener("DOMContentLoaded", initCoursePage);
+document.addEventListener("DOMContentLoaded", () => {
+  initModalEvents();
+  initCoursePage();
+});
