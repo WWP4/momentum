@@ -226,192 +226,78 @@ function markCourseComplete() {
 }
 
 function generateTranscriptPDF(course, record) {
-  if (!window.jspdf || !window.jspdf.jsPDF) {
-    alert("PDF library not loaded. Add the jsPDF CDN script to module.html.");
-    return;
-  }
-
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({
-    orientation: "portrait",
-    unit: "pt",
-    format: "letter"
-  });
+  const doc = new jsPDF();
 
   const pageWidth = doc.internal.pageSize.getWidth();
-  const left = 54;
-  const right = pageWidth - 54;
-  let y = 54;
+  const left = 40;
+  const right = pageWidth - 40;
 
-  const line = (yPos) => {
-    doc.setDrawColor(210, 210, 210);
-    doc.line(left, yPos, right, yPos);
-  };
+  // LOAD IMAGE
+  const img = new Image();
+  img.src = "/assets/momentum-logo.png";
 
-  const textBlock = (label, value, x, yPos, width = 220) => {
-    doc.setFont("helvetica", "bold");
+  img.onload = function () {
+    // TOP RED BAR
+    doc.setFillColor(180, 0, 0);
+    doc.rect(0, 0, pageWidth, 10, "F");
+
+    // LOGO
+    doc.addImage(img, "PNG", left, 28, 120, 36);
+
+    // SUBTEXT
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
     doc.setTextColor(90, 90, 90);
-    doc.text(label, x, yPos);
+    doc.text("Academic Course Platform", left, 68);
+
+    // TITLE
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(20, 20, 20);
+    doc.text("Official Course Completion Transcript", left, 100);
+
+    // DIVIDER
+    doc.setDrawColor(220, 220, 220);
+    doc.line(left, 115, right, 115);
+
+    let y = 140;
+
+    // ===== CONTINUE YOUR EXISTING PDF CODE BELOW =====
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.text("Student Information", left, y);
+    y += 16;
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(11);
-    doc.setTextColor(20, 20, 20);
+    doc.text(`Student: ${record.studentName}`, left, y);
+    y += 14;
 
-    const lines = doc.splitTextToSize(String(value || ""), width);
-    doc.text(lines, x, yPos + 14);
-    return yPos + 14 + lines.length * 13;
-  };
+    doc.text(`Student ID: ${record.studentId}`, left, y);
+    y += 20;
 
-  // Header
-  doc.setTextColor(180, 0, 0);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(16);
-  doc.text("MOMENTUM", left, y);
+    doc.text(`Course: ${course.title}`, left, y);
+    y += 14;
 
-  doc.setTextColor(20, 20, 20);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "normal");
-  doc.text("Academic Course Platform", left + 88, y);
+    doc.text(`Credit: ${course.credit || "1.0"}`, left, y);
+    y += 14;
 
-  y += 26;
+    doc.text(
+      `Completion Date: ${new Date(record.completionDate).toLocaleDateString()}`,
+      left,
+      y
+    );
+    y += 20;
 
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(22);
-  doc.setTextColor(20, 20, 20);
-  doc.text("Official Course Completion Transcript", left, y);
-
-  y += 20;
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-  doc.setTextColor(90, 90, 90);
-  doc.text("Issued upon successful completion of all required coursework.", left, y);
-
-  y += 18;
-  line(y);
-  y += 28;
-
-  // Student / transcript info
-  const leftColX = left;
-  const rightColX = 315;
-
-  let leftY = y;
-  let rightY = y;
-
-  leftY = textBlock("Student Name", record.studentName, leftColX, leftY, 220);
-  leftY = textBlock("Student ID", record.studentId, leftColX, leftY + 10, 220);
-  leftY = textBlock("Transcript ID", record.transcriptId, leftColX, leftY + 10, 220);
-
-  rightY = textBlock("Issue Date", formatDate(record.completionDate), rightColX, rightY, 220);
-  rightY = textBlock("Final Status", record.finalStatus, rightColX, rightY + 10, 220);
-  rightY = textBlock("Credits Earned", record.credit, rightColX, rightY + 10, 220);
-
-  y = Math.max(leftY, rightY) + 20;
-  line(y);
-  y += 28;
-
-  // Course info
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(13);
-  doc.setTextColor(20, 20, 20);
-  doc.text("Course Record", left, y);
-
-  y += 20;
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(11);
-
-  const courseInfo = [
-    ["Course Title", course.title],
-    ["Course ID", course.id],
-    ["Instructional Format", "Training-Based Academic Coursework"],
-    ["Total Modules", String(course.modules.length)],
-    ["Exit Requirement", course.exitExam?.title || "Final Written Summary"]
-  ];
-
-  courseInfo.forEach(([label, value]) => {
     doc.setFont("helvetica", "bold");
-    doc.text(`${label}:`, left, y);
+    doc.text("Verification ID:", left, y);
     doc.setFont("helvetica", "normal");
-    const lines = doc.splitTextToSize(String(value), 360);
-    doc.text(lines, left + 125, y);
-    y += Math.max(18, lines.length * 13 + 4);
-  });
+    doc.text(record.transcriptId, left + 120, y);
 
-  y += 8;
-  line(y);
-  y += 26;
-
-  // Module completion section
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(13);
-  doc.text("Completed Modules", left, y);
-
-  y += 20;
-
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "bold");
-  doc.text("#", left, y);
-  doc.text("Module Title", left + 30, y);
-  doc.text("Status", right - 80, y);
-
-  y += 8;
-  line(y);
-  y += 16;
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-
-  course.modules.forEach((module, index) => {
-    if (y > 700) {
-      doc.addPage();
-      y = 54;
-    }
-
-    const number = String(module.n || index + 1);
-    const title = module.title || `Module ${index + 1}`;
-
-    doc.text(number, left, y);
-
-    const wrappedTitle = doc.splitTextToSize(title, 360);
-    doc.text(wrappedTitle, left + 30, y);
-
-    doc.text("Completed", right - 80, y);
-
-    y += Math.max(18, wrappedTitle.length * 12 + 6);
-  });
-
-  y += 18;
-  line(y);
-  y += 24;
-
-  // Footer
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(11);
-  doc.text("Certification", left, y);
-
-  y += 16;
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-
-  const certText =
-    "This transcript certifies that the student successfully completed the listed Momentum course requirements. Credit recognition and final acceptance are determined by the issuing or enrolling institution according to its academic policies.";
-
-  const certLines = doc.splitTextToSize(certText, 500);
-  doc.text(certLines, left, y);
-
-  y += certLines.length * 12 + 24;
-
-  doc.setFont("helvetica", "normal");
-  doc.text("Authorized by: Momentum Academic Course Platform", left, y);
-  y += 14;
-  doc.text(`Verification ID: ${record.transcriptId}`, left, y);
-
-  const safeFileName = `${record.studentName}-${course.id}-transcript`
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-  doc.save(`${safeFileName}.pdf`);
+    // SAVE
+    doc.save(`Momentum-Transcript-${record.transcriptId}.pdf`);
+  };
 }
 
 saveModuleBtn.addEventListener("click", () => {
