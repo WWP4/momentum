@@ -629,7 +629,7 @@ function handleNextClick() {
 
  generateTranscriptPDF(course, completionRecord, () => {
   window.location.href = "./thank-you.html";
-});
+}); }
 
 if (els.saveModuleBtn) {
   els.saveModuleBtn.addEventListener("click", handleSaveClick);
