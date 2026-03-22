@@ -627,11 +627,9 @@ function handleNextClick() {
 
   const completionRecord = markCourseComplete(studentProfile);
 
-  generateTranscriptPDF(course, completionRecord, () => {
-    alert("Course completed. Your transcript has been downloaded.");
-    window.location.href = `./course.html?course=${encodeURIComponent(course.id)}`;
-  });
-}
+ generateTranscriptPDF(course, completionRecord, () => {
+  window.location.href = "./thank-you.html";
+});
 
 if (els.saveModuleBtn) {
   els.saveModuleBtn.addEventListener("click", handleSaveClick);
