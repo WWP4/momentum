@@ -13,6 +13,7 @@ const els = {
   learningOutcomes: $("learningOutcomes"),
   weeklyExpectations: $("weeklyExpectations"),
   modules: $("courseModules"),
+  moduleProgressText: $("moduleProgressText"),
   exitExamTitle: $("exitExamTitle"),
   exitExamPrompt: $("exitExamPrompt"),
   creditRequirements: $("creditRequirements"),
@@ -122,8 +123,7 @@ function renderList(el, items = [], emptyText = "Not provided yet.") {
 }
 
 function getModuleTitle(module, index) {
-  if (module?.title) return module.title;
-  return `Module ${index + 1}`;
+  return module?.title || `Module ${index + 1}`;
 }
 
 function getModulePrompt(module) {
@@ -137,24 +137,145 @@ function getModulePrompt(module) {
 }
 
 function getModuleNumber(module, index) {
-  return module?.n || module?.number || index + 1;
+  return Number(module?.n || module?.number || index + 1);
 }
 
 function goToModule(courseId, moduleNumber = 1) {
   window.location.href = `./module.html?course=${encodeURIComponent(courseId)}&module=${encodeURIComponent(moduleNumber)}`;
 }
 
+function getResponsesStorageKey(courseId) {
+  return `momentum-module-responses-${courseId}`;
+}
+
+function loadResponses(courseId) {
+  try {
+    const raw = localStorage.getItem(getResponsesStorageKey(courseId));
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch (error) {
+    console.warn("Could not load saved module responses.", error);
+    return {};
+  }
+}
+
+function getStoredStudentProfile() {
+  try {
+    const raw = localStorage.getItem("momentum-student-profile");
+    if (!raw) return null;
+
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return null;
+
+    return parsed;
+  } catch (error) {
+    console.warn("Could not parse momentum-student-profile.", error);
+    return null;
+  }
+}
+
+function isProfileForCurrentCourse(profile, course) {
+  if (!profile || !course) return false;
+  return String(profile.courseId || "").trim() === String(course.id || "").trim();
+}
+
+function getCompletedModuleNumbers(course) {
+  const responses = loadResponses(course.id);
+  const modules = Array.isArray(course?.modules) ? course.modules : [];
+
+  return modules
+    .map((module, index) => {
+      const moduleNumber = getModuleNumber(module, index);
+      const byNumber = responses[String(moduleNumber)];
+      const byIndex = responses[String(index)];
+      const savedValue = typeof byNumber === "string" && byNumber.trim()
+        ? byNumber
+        : typeof byIndex === "string" && byIndex.trim()
+          ? byIndex
+          : "";
+
+      return savedValue ? moduleNumber : null;
+    })
+    .filter(Boolean);
+}
+
+function getNextAvailableModuleNumber(course) {
+  const modules = Array.isArray(course?.modules) ? course.modules : [];
+  const completed = new Set(getCompletedModuleNumbers(course));
+
+  for (let i = 0; i < modules.length; i += 1) {
+    const moduleNumber = getModuleNumber(modules[i], i);
+    if (!completed.has(moduleNumber)) {
+      return moduleNumber;
+    }
+  }
+
+  return modules.length ? getModuleNumber(modules[modules.length - 1], modules.length - 1) : 1;
+}
+
+function getModuleState(course, module, index) {
+  const profile = getStoredStudentProfile();
+  const hasStartedThisCourse = isProfileForCurrentCourse(profile, course);
+  const moduleNumber = getModuleNumber(module, index);
+  const completedModules = new Set(getCompletedModuleNumbers(course));
+  const completed = completedModules.has(moduleNumber);
+
+  if (completed) {
+    return {
+      state: "completed",
+      label: "Completed",
+      buttonText: "Review",
+      locked: false
+    };
+  }
+
+  if (!hasStartedThisCourse) {
+    return {
+      state: "locked",
+      label: "Locked",
+      buttonText: "Locked",
+      locked: true
+    };
+  }
+
+  const nextAvailable = getNextAvailableModuleNumber(course);
+
+  if (moduleNumber === nextAvailable) {
+    return {
+      state: "open",
+      label: completedModules.size === 0 ? "Start Here" : "Available",
+      buttonText: completedModules.size === 0 ? "Start" : "Open",
+      locked: false
+    };
+  }
+
+  return {
+    state: "locked",
+    label: "Locked",
+    buttonText: "Locked",
+    locked: true
+  };
+}
+
 function renderModules(el, course) {
   if (!el) return;
 
   const modules = Array.isArray(course?.modules) ? course.modules : [];
+  const completedCount = getCompletedModuleNumbers(course).length;
+
+  if (els.moduleProgressText) {
+    els.moduleProgressText.textContent = `${completedCount} of ${modules.length} completed`;
+  }
 
   if (modules.length === 0) {
     el.innerHTML = `
       <div class="module-row">
         <div class="module-row-number">—</div>
         <div class="module-row-content">
-          <div class="module-row-title">Modules coming soon</div>
+          <div class="module-row-top">
+            <div class="module-row-title">Modules coming soon</div>
+            <span class="module-status module-status-locked">Unavailable</span>
+          </div>
           <div class="module-row-text">This course does not have module data loaded yet.</div>
         </div>
         <div class="module-row-action"></div>
@@ -168,17 +289,31 @@ function renderModules(el, course) {
       const number = getModuleNumber(module, index);
       const title = getModuleTitle(module, index);
       const prompt = getModulePrompt(module);
+      const moduleState = getModuleState(course, module, index);
 
       return `
-        <div class="module-row" data-module="${escapeHtml(String(number))}">
+        <div class="module-row module-row-${escapeHtml(moduleState.state)}" data-module="${escapeHtml(String(number))}">
           <div class="module-row-number">${escapeHtml(String(number))}</div>
+
           <div class="module-row-content">
-            <div class="module-row-title">${escapeHtml(title)}</div>
+            <div class="module-row-top">
+              <div class="module-row-title">${escapeHtml(title)}</div>
+              <span class="module-status module-status-${escapeHtml(moduleState.state)}">
+                ${escapeHtml(moduleState.label)}
+              </span>
+            </div>
+
             <div class="module-row-text">${escapeHtml(prompt)}</div>
           </div>
+
           <div class="module-row-action">
-            <button type="button" class="open-module-btn" data-module="${escapeHtml(String(number))}">
-              Open
+            <button
+              type="button"
+              class="module-btn module-btn-${escapeHtml(moduleState.state)}"
+              data-module="${escapeHtml(String(number))}"
+              ${moduleState.locked ? "disabled" : ""}
+            >
+              ${escapeHtml(moduleState.buttonText)}
             </button>
           </div>
         </div>
@@ -186,15 +321,45 @@ function renderModules(el, course) {
     })
     .join("");
 
-  const buttons = el.querySelectorAll(".open-module-btn");
+  const buttons = el.querySelectorAll(".module-btn");
 
   buttons.forEach((button) => {
     const moduleNumber = button.dataset.module;
+    const isDisabled = button.hasAttribute("disabled");
 
     button.addEventListener("click", () => {
+      if (isDisabled) return;
       goToModule(course.id, moduleNumber);
     });
   });
+}
+
+function updateStartButton(course) {
+  if (!els.startButton) return;
+
+  const profile = getStoredStudentProfile();
+  const hasStartedThisCourse = isProfileForCurrentCourse(profile, course);
+  const modules = Array.isArray(course?.modules) ? course.modules : [];
+  const completedCount = getCompletedModuleNumbers(course).length;
+  const nextAvailable = getNextAvailableModuleNumber(course);
+
+  els.startButton.disabled = modules.length === 0;
+  els.startButton.dataset.courseId = course.id;
+
+  if (!hasStartedThisCourse) {
+    els.startButton.textContent = "Begin Course";
+    els.startButton.onclick = () => openStudentIntakeModal();
+    return;
+  }
+
+  if (completedCount >= modules.length && modules.length > 0) {
+    els.startButton.textContent = "Review Final Module";
+    els.startButton.onclick = () => goToModule(course.id, nextAvailable);
+    return;
+  }
+
+  els.startButton.textContent = completedCount > 0 ? "Continue Course" : "Start Course";
+  els.startButton.onclick = () => goToModule(course.id, nextAvailable);
 }
 
 function renderCourse(course) {
@@ -229,22 +394,14 @@ function renderCourse(course) {
   setText(els.exitExamTitle, course.exitExam?.title || "Exit Exam");
   setText(els.exitExamPrompt, course.exitExam?.prompt);
 
-  if (els.startButton) {
-    els.startButton.disabled = false;
-    els.startButton.textContent = "Begin Course";
-    els.startButton.dataset.courseId = course.id;
-    els.startButton.onclick = () => openStudentIntakeModal();
-  }
+  updateStartButton(course);
 }
 
 function renderNotFound(requestedId) {
   document.title = "Course Not Found | Momentum Course";
 
   setText(els.title, "Course Not Found");
-  setText(
-    els.tagline,
-    "We could not find the course tied to this enrollment."
-  );
+  setText(els.tagline, "We could not find the course tied to this enrollment.");
   setText(els.credit, "—");
   setText(els.courseId, requestedId || "missing-course-id");
 
@@ -263,8 +420,8 @@ function renderNotFound(requestedId) {
 
   renderList(els.learningOutcomes, [
     "Confirm the URL contains ?course=your-course-id",
-    "Confirm that id exists in  full-courses-data-.js",
-    "Confirm the file import path for  full-courses-data-.js is correct"
+    "Confirm that id exists in full-courses-data-.js",
+    "Confirm the file import path for full-courses-data-.js is correct"
   ]);
 
   renderList(els.weeklyExpectations, [
@@ -283,12 +440,19 @@ function renderNotFound(requestedId) {
       <div class="module-row">
         <div class="module-row-number">—</div>
         <div class="module-row-content">
-          <div class="module-row-title">Course unavailable</div>
+          <div class="module-row-top">
+            <div class="module-row-title">Course unavailable</div>
+            <span class="module-status module-status-locked">Unavailable</span>
+          </div>
           <div class="module-row-text">No modules can load until a valid course ID is passed into the URL.</div>
         </div>
         <div class="module-row-action"></div>
       </div>
     `;
+  }
+
+  if (els.moduleProgressText) {
+    els.moduleProgressText.textContent = "0 of 0 completed";
   }
 
   setText(els.gradingLab, "Not available");
@@ -303,21 +467,6 @@ function renderNotFound(requestedId) {
   if (els.startButton) {
     els.startButton.disabled = true;
     els.startButton.textContent = "Course Unavailable";
-  }
-}
-
-function getStoredStudentProfile() {
-  try {
-    const raw = localStorage.getItem("momentum-student-profile");
-    if (!raw) return null;
-
-    const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== "object") return null;
-
-    return parsed;
-  } catch (error) {
-    console.warn("Could not parse momentum-student-profile.", error);
-    return null;
   }
 }
 
@@ -421,10 +570,7 @@ function saveStudentProfileAndStartCourse(event) {
   };
 
   try {
-    localStorage.setItem(
-      "momentum-student-profile",
-      JSON.stringify(studentProfile)
-    );
+    localStorage.setItem("momentum-student-profile", JSON.stringify(studentProfile));
   } catch (error) {
     console.warn("Could not save student profile.", error);
     showIntakeError("Could not save student information. Please try again.");
@@ -432,6 +578,7 @@ function saveStudentProfileAndStartCourse(event) {
   }
 
   closeStudentIntakeModal();
+  renderCourse(activeCourse);
   goToModule(activeCourse.id, 1);
 }
 
