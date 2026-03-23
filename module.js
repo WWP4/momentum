@@ -13,7 +13,9 @@ const els = {
   saveModuleBtn: $("saveModuleBtn"),
   nextModuleBtn: $("nextModuleBtn"),
   moduleNumber: $("moduleNumber"),
-  backToCourseLink: $("backToCourseLink")
+  backToCourseLink: $("backToCourseLink"),
+  completionState: $("completionState"),
+  completionMessage: $("completionMessage")
 };
 
 const LOGO_PATH = "./assets/assets/momentum-logo.png";
@@ -41,13 +43,12 @@ const normalizedModules = course.modules.map((module, index) => ({
 
 let moduleIndex = resolveModuleIndex(requestedModuleParam, normalizedModules);
 
-if (moduleIndex < 0) {
-  moduleIndex = 0;
-}
-
+if (moduleIndex < 0) moduleIndex = 0;
 if (moduleIndex >= normalizedModules.length) {
   moduleIndex = normalizedModules.length - 1;
 }
+
+enforceModuleLock();
 
 function resolveModuleIndex(moduleParam, modules) {
   const numeric = Number(moduleParam);
@@ -98,6 +99,61 @@ function getModuleStorageKey(module) {
 
 function getCurrentModule() {
   return normalizedModules[moduleIndex];
+}
+
+function getCompletedModuleNumbers() {
+  const responses = loadResponses();
+
+  return normalizedModules
+    .filter((module) => {
+      const value = responses[getModuleStorageKey(module)];
+      return typeof value === "string" && value.trim().length > 0;
+    })
+    .map((module) => module._number)
+    .sort((a, b) => a - b);
+}
+
+function getHighestSequentialCompletion() {
+  const completed = getCompletedModuleNumbers();
+  let highest = 0;
+
+  for (let i = 1; i <= normalizedModules.length; i += 1) {
+    if (completed.includes(i)) {
+      highest = i;
+    } else {
+      break;
+    }
+  }
+
+  return highest;
+}
+
+function getNextUnlockedModuleNumber() {
+  const highestSequential = getHighestSequentialCompletion();
+  return Math.min(highestSequential + 1, normalizedModules.length);
+}
+
+function isModuleUnlocked(moduleNumber) {
+  return moduleNumber <= getNextUnlockedModuleNumber();
+}
+
+function enforceModuleLock() {
+  const currentModule = normalizedModules[moduleIndex];
+  if (!currentModule) return;
+
+  if (!isModuleUnlocked(currentModule._number)) {
+    const fallbackModuleNumber = getNextUnlockedModuleNumber();
+    const fallbackIndex = normalizedModules.findIndex(
+      (module) => module._number === fallbackModuleNumber
+    );
+
+    if (fallbackIndex >= 0 && fallbackIndex !== moduleIndex) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("course", course.id);
+      url.searchParams.set("module", String(normalizedModules[fallbackIndex]._number));
+      window.location.replace(url.toString());
+    }
+  }
 }
 
 function setListItems(element, items, fallback = []) {
@@ -173,6 +229,8 @@ function renderModule() {
   const currentModule = getCurrentModule();
   const responses = loadResponses();
   const savedText = responses[getModuleStorageKey(currentModule)] || "";
+  const completedModules = getCompletedModuleNumbers();
+  const isCompleted = completedModules.includes(currentModule._number);
 
   if (els.moduleTitle) {
     els.moduleTitle.textContent = `Module ${currentModule._number}: ${currentModule._title}`;
@@ -199,8 +257,11 @@ function renderModule() {
   }
 
   if (els.nextModuleBtn) {
-    els.nextModuleBtn.textContent =
-      moduleIndex === normalizedModules.length - 1 ? "Finish Course" : "Next Module";
+    if (moduleIndex === normalizedModules.length - 1) {
+      els.nextModuleBtn.textContent = isCompleted ? "Finish Course" : "Finish Course";
+    } else {
+      els.nextModuleBtn.textContent = "Next Module";
+    }
   }
 
   if (els.backToCourseLink) {
@@ -230,6 +291,41 @@ function goToModuleByIndex(index) {
   url.searchParams.set("course", course.id);
   url.searchParams.set("module", String(targetModule._number));
   window.location.href = url.toString();
+}
+
+function showCompletionState(message = "Preparing your transcript...") {
+  if (els.completionMessage) {
+    els.completionMessage.textContent = message;
+  }
+
+  if (els.completionState) {
+    els.completionState.classList.remove("hidden");
+  }
+
+  if (els.nextModuleBtn) {
+    els.nextModuleBtn.disabled = true;
+    els.nextModuleBtn.textContent = "Completing Course...";
+  }
+
+  if (els.saveModuleBtn) {
+    els.saveModuleBtn.disabled = true;
+  }
+}
+
+function hideCompletionState() {
+  if (els.completionState) {
+    els.completionState.classList.add("hidden");
+  }
+
+  if (els.nextModuleBtn) {
+    els.nextModuleBtn.disabled = false;
+    els.nextModuleBtn.textContent =
+      moduleIndex === normalizedModules.length - 1 ? "Finish Course" : "Next Module";
+  }
+
+  if (els.saveModuleBtn) {
+    els.saveModuleBtn.disabled = false;
+  }
 }
 
 function formatDate(value) {
@@ -328,10 +424,6 @@ function ensureStudentProfile() {
   return profile;
 }
 
-function getCompletedModuleNumbers() {
-  return normalizedModules.map((module) => module._number);
-}
-
 function markCourseComplete(studentProfile) {
   let completions = [];
 
@@ -388,6 +480,7 @@ function markCourseComplete(studentProfile) {
 function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
   if (!window.jspdf || !window.jspdf.jsPDF) {
     alert("PDF library is missing. Add jsPDF to your module.html before module.js.");
+    hideCompletionState();
     return;
   }
 
@@ -437,14 +530,11 @@ function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
       return yPos + 14 + lines.length * 13;
     };
 
-    // Top red bar
     doc.setFillColor(180, 0, 0);
     doc.rect(0, 0, pageWidth, 10, "F");
 
-    // Logo
     doc.addImage(img, "PNG", left, 24, 220, 60);
 
-    // Document title
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
     doc.setTextColor(20, 20, 20);
@@ -462,7 +552,6 @@ function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
     drawRule(134);
     y = 160;
 
-    // Student / transcript info
     y = drawSectionHeading("Student Information", y);
 
     const leftColX = left;
@@ -479,7 +568,6 @@ function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
 
     y = Math.max(leftY, rightY) + 24;
 
-    // Course record
     y = drawSectionHeading("Course Record", y);
 
     const courseFields = [
@@ -498,8 +586,6 @@ function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
     });
 
     y += 10;
-
-    // Module table
     y = drawSectionHeading("Completed Modules", y);
 
     doc.setFillColor(246, 246, 246);
@@ -540,7 +626,6 @@ function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
 
     y += 10;
 
-    // Certification
     if (y > pageHeight - 150) {
       doc.addPage();
       y = 54;
@@ -559,7 +644,6 @@ function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
     doc.text(certLines, left, y);
     y += certLines.length * 12 + 30;
 
-    // Signature / verification area
     doc.setDrawColor(180, 180, 180);
     doc.line(left, y, left + 180, y);
     doc.line(right - 180, y, right, y);
@@ -600,6 +684,7 @@ function generateTranscriptPDF(courseRecord, completionRecord, onDone) {
 
   img.onerror = function () {
     alert("The transcript logo could not be loaded. Check your logo file path.");
+    hideCompletionState();
   };
 }
 
@@ -625,11 +710,13 @@ function handleNextClick() {
   const studentProfile = ensureStudentProfile();
   if (!studentProfile) return;
 
+  showCompletionState("Generating your transcript...");
   const completionRecord = markCourseComplete(studentProfile);
 
- generateTranscriptPDF(course, completionRecord, () => {
-  window.location.href = "./thank-you.html";
-}); }
+  generateTranscriptPDF(course, completionRecord, () => {
+    window.location.href = "./thank-you.html";
+  });
+}
 
 if (els.saveModuleBtn) {
   els.saveModuleBtn.addEventListener("click", handleSaveClick);
