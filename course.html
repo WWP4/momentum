@@ -104,17 +104,33 @@
         </ul>
       </section>
 
-      <section class="section">
-        <h2>Course Modules</h2>
+      <section class="section module-section">
+        <div class="module-header-row">
+          <div>
+            <h2>Course Modules</h2>
+            <p class="module-subcopy">
+              Complete modules in order. Only the next available module can be opened.
+            </p>
+          </div>
+
+          <div class="module-progress-box">
+            <div class="module-progress-label">Progress</div>
+            <div id="moduleProgressText" class="module-progress-value">0 of 20 completed</div>
+          </div>
+        </div>
+
         <div id="courseModules" class="module-list">
           <div class="module-row">
             <div class="module-row-number">1</div>
             <div class="module-row-content">
-              <div class="module-row-title">Module Title</div>
+              <div class="module-row-top">
+                <div class="module-row-title">Module Title</div>
+                <span class="module-status module-status-open">Available</span>
+              </div>
               <div class="module-row-text">Module prompt preview goes here.</div>
             </div>
             <div class="module-row-action">
-              <button type="button">Open</button>
+              <button type="button" class="module-btn module-btn-open">Open</button>
             </div>
           </div>
         </div>
@@ -135,7 +151,6 @@
     </main>
   </div>
 
-  <!-- Student Intake Modal -->
   <div id="studentIntakeModal" class="modal hidden" aria-hidden="true">
     <div class="modal-backdrop" id="studentIntakeBackdrop"></div>
 
