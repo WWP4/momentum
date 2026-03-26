@@ -3,8 +3,8 @@ const Stripe = require("stripe");
 exports.handler = async (event) => {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-    const body = JSON.parse(event.body || "{}");
 
+    const body = JSON.parse(event.body || "{}");
     const { courseId, courseTitle } = body;
 
     if (!courseId || !courseTitle) {
@@ -16,6 +16,7 @@ exports.handler = async (event) => {
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+
       line_items: [
         {
           price_data: {
@@ -29,11 +30,15 @@ exports.handler = async (event) => {
           quantity: 1,
         },
       ],
+
       metadata: {
         course_id: courseId,
         course_title: courseTitle,
       },
-      success_url: `${process.env.URL}/enrollment-success.html?session_id={CHECKOUT_SESSION_ID}`,
+
+      // 🔥 THIS is the key change
+      success_url: `${process.env.URL}/course.html?course=${encodeURIComponent(courseId)}&session_id={CHECKOUT_SESSION_ID}`,
+
       cancel_url: `${process.env.URL}/course-enrollment.html?course=${encodeURIComponent(courseId)}`,
     });
 
@@ -41,10 +46,15 @@ exports.handler = async (event) => {
       statusCode: 200,
       body: JSON.stringify({ url: session.url }),
     };
+
   } catch (error) {
+    console.error("Stripe session error:", error);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({
+        error: "Failed to create checkout session.",
+      }),
     };
   }
 };
