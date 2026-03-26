@@ -38,6 +38,101 @@ const els = {
 
 let activeCourse = null;
 
+async function verifyCourseAccess(courseId) {
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get("session_id");
+
+  if (!courseId || !sessionId) {
+    return {
+      ok: false,
+      error: "Missing course or session."
+    };
+  }
+
+  try {
+    const res = await fetch(
+      `/.netlify/functions/verify-course-access?session_id=${encodeURIComponent(sessionId)}&course=${encodeURIComponent(courseId)}`
+    );
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || !data.ok) {
+      return {
+        ok: false,
+        error: data.error || "Access could not be verified."
+      };
+    }
+
+    return {
+      ok: true,
+      data
+    };
+  } catch (error) {
+    console.error("Course access verification failed:", error);
+    return {
+      ok: false,
+      error: "Could not verify access right now."
+    };
+  }
+}
+
+function renderAccessDenied(message = "Access denied. Please complete enrollment first.") {
+  document.title = "Access Denied | Momentum Course";
+
+  setText(els.title, "Access Denied");
+  setText(els.tagline, "This course page requires verified enrollment.");
+  setText(els.credit, "—");
+  setText(els.courseId, "verification-required");
+
+  if (els.moduleCount) {
+    setText(els.moduleCount, "0 Modules");
+  }
+
+  setText(els.description, message);
+  setText(
+    els.overview,
+    "Your payment session could not be verified for this course. Please return to enrollment and try again."
+  );
+
+  renderList(els.learningOutcomes, ["Verified enrollment required"]);
+  renderList(els.weeklyExpectations, ["Complete checkout first", "Return through the Stripe success redirect"]);
+  renderList(els.creditRequirements, ["Enrollment verification required"]);
+  renderList(els.qualifyingMinutes, ["Enrollment verification required"]);
+  renderList(els.athleteExpectations, ["Enrollment verification required"]);
+  renderList(els.requiredMaterials, ["Enrollment verification required"]);
+
+  if (els.modules) {
+    els.modules.innerHTML = `
+      <div class="module-row">
+        <div class="module-row-number">—</div>
+        <div class="module-row-content">
+          <div class="module-row-top">
+            <div class="module-row-title">Locked</div>
+            <span class="module-status module-status-locked">Access Denied</span>
+          </div>
+          <div class="module-row-text">${escapeHtml(message)}</div>
+        </div>
+        <div class="module-row-action"></div>
+      </div>
+    `;
+  }
+
+  if (els.moduleProgressText) {
+    els.moduleProgressText.textContent = "0 of 0 completed";
+  }
+
+  setText(els.gradingLab, "Not available");
+  setText(els.gradingReflection, "Not available");
+  setText(els.gradingFinal, "Not available");
+  setText(els.exitExamTitle, "Enrollment Required");
+  setText(els.exitExamPrompt, "This course unlocks only after verified payment.");
+
+  if (els.startButton) {
+    els.startButton.disabled = true;
+    els.startButton.textContent = "Locked";
+  }
+}
+
 function slugify(value = "") {
   return String(value)
     .trim()
@@ -595,10 +690,22 @@ function initModalEvents() {
   });
 }
 
-function initCoursePage() {
+async function initCoursePage() {
   const urlCourseId = getCourseIdFromUrl();
   const storedCourseId = getStoredCourseId();
   const resolvedCourseId = urlCourseId || storedCourseId;
+
+  if (!resolvedCourseId) {
+    renderAccessDenied("No course was provided.");
+    return;
+  }
+
+  const verification = await verifyCourseAccess(resolvedCourseId);
+
+  if (!verification.ok) {
+    renderAccessDenied(verification.error || "Enrollment could not be verified.");
+    return;
+  }
 
   const course = findCourse(resolvedCourseId);
 
@@ -623,8 +730,7 @@ function initCoursePage() {
 
   renderCourse(course);
 }
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   initModalEvents();
-  initCoursePage();
+  await initCoursePage();
 });
