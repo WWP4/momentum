@@ -4,19 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Momentum Club Activation Generator</title>
-  <meta name="description" content="Simple input-to-output generator for Momentum club activation assets." />
+  <meta name="description" content="Premium input-to-output generator for Momentum club activation assets." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <link rel="stylesheet" href="generator.css" />
 </head>
 <body>
-  <main class="app" id="appRoot">
-    <header class="topbar">
-      <div class="brand">MOMENTUM</div>
-      <div class="brand-sub">Club Activation Generator</div>
+  <main class="shell" id="appRoot">
+    <header class="topbar" data-aos="fade-down" data-aos-duration="800">
+      <div class="brand-mark">MOMENTUM</div>
+      <div class="brand-context">Club Activation Generator</div>
     </header>
 
-    <section class="panel" id="clubInputView">
-      <h1>Club Setup</h1>
-      <p class="sub">Fill this once. Get your landing page, parent messages, graphic, and PDF instantly.</p>
+    <section class="hero" id="heroSection">
+      <p class="eyebrow" data-aos="fade-up" data-aos-duration="700">Institutional Enrollment Toolkit</p>
+      <h1 data-aos="fade-up" data-aos-duration="900" data-aos-delay="80">Generate every family-facing activation asset in under five minutes.</h1>
+      <p class="hero-copy" data-aos="fade-up" data-aos-duration="900" data-aos-delay="160">One clean input. One polished output system. No campaign builder. No design work. Just credible materials ready to send.</p>
+      <a class="cta-link" href="#clubInputView" data-aos="fade-up" data-aos-duration="800" data-aos-delay="220">Start club setup</a>
+    </section>
+
+    <section class="panel" id="clubInputView" data-aos="fade-up" data-aos-duration="900" data-aos-offset="40">
+      <div class="panel-headline">
+        <p class="section-kicker">Phase 1</p>
+        <h2>Club Input</h2>
+      </div>
 
       <form id="clubForm" class="form-grid">
         <label>
@@ -39,12 +52,12 @@
           <input required name="contactEmail" type="email" placeholder="alex@club.org" />
         </label>
 
-        <label>
+        <label class="full">
           Club logo
           <input required name="clubLogo" id="clubLogo" type="file" accept="image/*" />
         </label>
 
-        <label>
+        <label class="full">
           Optional short club message
           <textarea name="clubMessage" rows="4" placeholder="We are excited to offer families a clear path to earn credit for training."></textarea>
         </label>
@@ -55,12 +68,15 @@
 
     <section class="panel hidden" id="dashboardView">
       <div class="panel-head">
-        <h2>Output Dashboard</h2>
+        <div>
+          <p class="section-kicker">Output Dashboard</p>
+          <h2>Materials Ready</h2>
+        </div>
         <button class="btn btn-outline" id="editProfileBtn" type="button">Edit club profile</button>
       </div>
 
       <div class="card-stack">
-        <article class="card">
+        <article class="card" data-stage="1">
           <h3>1) Club Landing Page</h3>
           <p id="clubLinkText"></p>
           <div class="row-actions">
@@ -69,7 +85,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-stage="2">
           <h3>2) Parent Message Block</h3>
 
           <div class="message-box">
@@ -97,7 +113,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-stage="3">
           <h3>3) Co-Branded Graphic</h3>
           <canvas id="graphicCanvas" width="1200" height="630" aria-label="Generated branded graphic preview"></canvas>
           <div class="row-actions">
@@ -105,7 +121,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-stage="4">
           <h3>4) Parent PDF</h3>
           <p>Professional 1–2 page family handout with Momentum overview, training credit model, FAQ, and enrollment CTA.</p>
           <div class="row-actions">
@@ -118,6 +134,7 @@
     <section class="panel hidden" id="parentLandingView"></section>
   </main>
 
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="generator.js"></script>
 </body>
