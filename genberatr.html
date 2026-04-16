@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Momentum Club Launch Kit</title>
+  <meta name="description" content="Single-screen Momentum Club Launch Kit for immediate family messaging." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <link rel="stylesheet" href="generator.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar" data-aos="fade-up" data-aos-duration="700">
+      <div class="brand-mark">MOMENTUM</div>
+      <div class="brand-context">Club Launch Kit</div>
+    </header>
+
+    <section class="panel" id="clubInputView" data-aos="fade-up" data-aos-duration="760" data-aos-delay="80">
+      <div class="panel-headline">
+        <p class="section-kicker">Setup</p>
+        <h1>Create your club launch kit</h1>
+        <p class="panel-sub">Enter your club details once. Send to families immediately.</p>
+      </div>
+
+      <form id="clubForm" class="form-grid">
+        <label>
+          Club name
+          <input required name="clubName" type="text" placeholder="Redline Soccer Club" />
+        </label>
+
+        <label>
+          Sport type
+          <input required name="sportType" type="text" placeholder="Soccer" />
+        </label>
+
+        <label>
+          Contact name
+          <input required name="contactName" type="text" placeholder="Alex Carter" />
+        </label>
+
+        <label>
+          Contact email
+          <input required name="contactEmail" type="email" placeholder="alex@club.org" />
+        </label>
+
+        <label class="full">
+          Club logo
+          <input required name="clubLogo" id="clubLogo" type="file" accept="image/*" />
+        </label>
+
+        <label class="full">
+          Optional short club message
+          <textarea name="clubMessage" rows="4" placeholder="We are excited to offer families a clear path to earn credit for training."></textarea>
+        </label>
+
+        <button class="btn" type="submit">Generate Launch Kit</button>
+      </form>
+    </section>
+
+    <section id="dashboardView" class="hidden">
+      <section class="launch-hero panel" data-aos="fade-up" data-aos-duration="700">
+        <img id="launchClubLogo" class="launch-logo" alt="Club logo" />
+        <div>
+          <h2>Your Momentum Launch Kit is ready</h2>
+          <p>Send this to your families this week.</p>
+        </div>
+      </section>
+
+      <section class="panel primary-block" data-aos="fade-up" data-aos-duration="840" data-aos-delay="90">
+        <div class="section-head">
+          <p class="section-kicker">Primary Action</p>
+          <h3>Send this to parents</h3>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Parent message tabs">
+          <button class="tab-btn active" data-tab="text" role="tab" type="button">Text Message</button>
+          <button class="tab-btn" data-tab="email" role="tab" type="button">Email</button>
+          <button class="tab-btn" data-tab="app" role="tab" type="button">Team App</button>
+        </div>
+
+        <div class="message-surface">
+          <pre id="activeMessageContent"></pre>
+          <div class="row-actions">
+            <button class="btn" id="copyActiveMessageBtn" type="button">Copy message</button>
+            <span id="copyFeedback" class="copy-feedback" aria-live="polite"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" data-aos="fade-up" data-aos-duration="760" data-aos-delay="140">
+        <div class="section-head">
+          <p class="section-kicker">Club Link</p>
+          <h3>Your Club Link</h3>
+        </div>
+        <p id="clubLinkText" class="link-line"></p>
+        <div class="row-actions">
+          <a class="btn" id="openLandingBtn" target="_blank" rel="noopener">Open Page</a>
+          <button class="btn btn-outline" id="copyLandingBtn" type="button">Copy link</button>
+        </div>
+        <p class="micro-note">All families should be directed here.</p>
+      </section>
+
+      <section class="panel support-panel" data-aos="fade-up" data-aos-duration="760" data-aos-delay="180">
+        <div class="section-head">
+          <p class="section-kicker">Secondary</p>
+          <h3>Optional Support Materials</h3>
+        </div>
+
+        <div class="support-grid">
+          <article class="support-item">
+            <h4>Announcement Graphic</h4>
+            <canvas id="graphicCanvas" width="1200" height="630" aria-label="Generated branded graphic preview"></canvas>
+            <button class="btn btn-outline" id="downloadGraphicBtn" type="button">Download graphic</button>
+          </article>
+
+          <article class="support-item">
+            <h4>Parent PDF</h4>
+            <div class="pdf-preview">Professional family handout with Momentum overview, credit pathway, FAQ, and CTA.</div>
+            <button class="btn btn-outline" id="downloadPdfBtn" type="button">Download PDF</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel instruction" data-aos="fade-up" data-aos-duration="720" data-aos-delay="220">
+        <h3>Next Steps</h3>
+        <ol>
+          <li>Copy the message</li>
+          <li>Send to all families</li>
+          <li>Direct them to your link</li>
+        </ol>
+        <div class="row-actions">
+          <button class="btn btn-outline" id="editProfileBtn" type="button">Edit club profile</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="panel hidden" id="parentLandingView"></section>
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="generator.js"></script>
+</body>
+</html>
