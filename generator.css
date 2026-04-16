@@ -156,8 +156,9 @@ html {
 
 /* ---------- FADE-IN ANIMATION ---------- */
 .fade-up {
-  opacity: 0;
-  transform: translateY(20px);
+  /* Keep content visible even if reveal JS is not present on the page. */
+  opacity: 1;
+  transform: translateY(0);
   transition: all 0.8s var(--ease);
 }
 
