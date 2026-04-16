@@ -18,16 +18,10 @@ const graphicCanvas = document.getElementById('graphicCanvas');
 const downloadGraphicBtn = document.getElementById('downloadGraphicBtn');
 const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 
-const state = {
-  profile: null,
-};
+const state = { profile: null };
 
 function slugify(value) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)+/g, '')
-    .slice(0, 42);
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '').slice(0, 42);
 }
 
 function uid() {
@@ -58,9 +52,9 @@ function readProfile() {
 function makeMessages(profile, link) {
   const t1 = `Hi ${profile.clubName} families — we partnered with Momentum to help students earn high school credit for structured ${profile.sportType.toLowerCase()} training they already complete. Learn more: ${link}`;
 
-  const t2 = `Subject: ${profile.clubName} x Momentum Family Credit Opportunity\n\nDear families,\n\n${profile.clubName} has partnered with Momentum to provide a simple, credible pathway for students to earn academic credit for verified ${profile.sportType.toLowerCase()} training.\n\nHow it works:\n1) Review the club page\n2) Check eligibility\n3) Enroll if fit\n\nClub page: ${link}\n\nQuestions? Contact ${profile.contactName} at ${profile.contactEmail}.`;
+  const t2 = `Subject: ${profile.clubName} x Momentum Family Credit Opportunity\n\nDear families,\n\n${profile.clubName} has partnered with Momentum to provide a clear, institutionally credible pathway for students to earn academic credit for verified ${profile.sportType.toLowerCase()} training.\n\nHow it works:\n1) Review the club page\n2) Check eligibility\n3) Enroll if fit\n\nClub page: ${link}\n\nQuestions? Contact ${profile.contactName} at ${profile.contactEmail}.`;
 
-  const t3 = `${profile.clubName} Announcement:\nMomentum enrollment is now open for eligible student-athletes. Families can review details and enroll here: ${link}\n\n${profile.clubMessage || 'Thank you for supporting student development in sport and school.'}`;
+  const t3 = `${profile.clubName} Announcement:\nMomentum enrollment is open for eligible student-athletes. Families can review details and enroll here: ${link}\n\n${profile.clubMessage || 'Thank you for supporting student development in both sport and school.'}`;
 
   return { t1, t2, t3 };
 }
@@ -70,31 +64,31 @@ function drawGraphic(profile, link) {
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, graphicCanvas.width, graphicCanvas.height);
 
-  ctx.fillStyle = '#090909';
-  ctx.fillRect(40, 40, 1120, 550);
+  ctx.fillStyle = '#151515';
+  ctx.fillRect(44, 44, 1112, 542);
 
-  ctx.fillStyle = '#be1e2d';
-  ctx.fillRect(40, 480, 1120, 110);
+  ctx.fillStyle = '#b61f2c';
+  ctx.fillRect(44, 486, 1112, 100);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 56px Arial';
-  ctx.fillText('MOMENTUM x ' + profile.clubName.toUpperCase(), 80, 150);
+  ctx.font = '600 52px Inter, Arial';
+  ctx.fillText('MOMENTUM x ' + profile.clubName.toUpperCase(), 88, 142);
 
-  ctx.font = '32px Arial';
-  ctx.fillText('Earn credit for structured training already happening.', 80, 215);
+  ctx.font = '400 30px Inter, Arial';
+  ctx.fillText('A clear pathway to earn credit for structured training.', 88, 204);
 
-  ctx.font = '28px Arial';
-  ctx.fillText('Check eligibility and enroll', 80, 540);
+  ctx.font = '500 26px Inter, Arial';
+  ctx.fillText('Check eligibility and enroll', 88, 546);
 
-  ctx.font = '24px Arial';
-  ctx.fillText(link, 80, 575);
+  ctx.font = '400 22px Inter, Arial';
+  ctx.fillText(link, 88, 574);
 
   if (profile.logoDataUrl) {
     const logo = new Image();
     logo.onload = () => {
       ctx.fillStyle = '#ffffff';
-      ctx.fillRect(905, 100, 210, 210);
-      ctx.drawImage(logo, 920, 115, 180, 180);
+      ctx.fillRect(910, 108, 204, 204);
+      ctx.drawImage(logo, 922, 120, 180, 180);
     };
     logo.src = profile.logoDataUrl;
   }
@@ -102,7 +96,7 @@ function drawGraphic(profile, link) {
 
 function buildParentLanding(profile, link) {
   return `
-    <article class="parent-landing">
+    <article class="parent-landing" data-aos="fade-up" data-aos-duration="850">
       <div class="parent-hero">
         <img src="${profile.logoDataUrl}" alt="${profile.clubName} logo" />
         <div>
@@ -112,17 +106,17 @@ function buildParentLanding(profile, link) {
       </div>
 
       <h3>Why ${profile.clubName} partnered with Momentum</h3>
-      <p class="callout">Our club wants families to get formal academic recognition for the structured training athletes are already completing each week.</p>
+      <p class="callout">Our club wants families to receive formal academic recognition for the structured training athletes are already completing each week.</p>
 
-      <h3>How it works</h3>
+      <h3>How it works in three steps</h3>
       <ol class="steps">
-        <li>Check eligibility using Momentum's quick intake process.</li>
+        <li>Check eligibility using Momentum's intake process.</li>
         <li>Submit training details and enrollment information.</li>
-        <li>Receive guidance to convert verified training into credit options.</li>
+        <li>Receive support to convert verified training into credit options.</li>
       </ol>
 
       <h3>Momentum for families</h3>
-      <p>Momentum supports a professional, academically credible process that fits club schedules and keeps communication clear for parents.</p>
+      <p>Momentum supports a professional, academically credible process that fits club schedules and keeps communication clear.</p>
 
       ${profile.clubMessage ? `<h3>Message from ${profile.clubName}</h3><p>${profile.clubMessage}</p>` : ''}
 
@@ -175,8 +169,7 @@ function downloadPdf(profile, link) {
     `Learn more / enroll: ${link}`,
   ];
 
-  const wrapped = doc.splitTextToSize(body.join('\n'), 180);
-  doc.text(wrapped, 14, 30);
+  doc.text(doc.splitTextToSize(body.join('\n'), 180), 14, 30);
 
   doc.addPage();
   doc.setFont('helvetica', 'bold');
@@ -189,13 +182,21 @@ function downloadPdf(profile, link) {
     '2. Complete the eligibility/enrollment process.',
     '3. Keep communication open with your club contact and Momentum support.',
     '',
-    'This handout is intended to remain concise, clear, and institutionally credible.',
+    'This handout is intentionally concise, clear, and institutionally credible.',
     '',
     'Momentum',
   ];
   doc.text(doc.splitTextToSize(page2.join('\n'), 180), 14, 32);
 
   doc.save(`${profile.slug}-momentum-parent-packet.pdf`);
+}
+
+function revealDashboardStages() {
+  const cards = [...document.querySelectorAll('#dashboardView .card')].sort((a, b) => Number(a.dataset.stage) - Number(b.dataset.stage));
+  cards.forEach((card) => card.classList.remove('is-visible'));
+  cards.forEach((card, index) => {
+    window.setTimeout(() => card.classList.add('is-visible'), 180 + index * 220);
+  });
 }
 
 function copyElementText(id) {
@@ -214,6 +215,7 @@ function renderDashboard(profile) {
   appMessage.textContent = messages.t3;
 
   drawGraphic(profile, link);
+  revealDashboardStages();
 
   copyLandingBtn.onclick = () => navigator.clipboard.writeText(link);
   downloadGraphicBtn.onclick = () => downloadGraphic(profile);
@@ -253,6 +255,7 @@ function showParentLanding(profile) {
 
   const btn = document.getElementById('parentPdfBtn');
   if (btn) btn.onclick = () => downloadPdf(profile, link);
+  if (window.AOS) window.AOS.refreshHard();
 }
 
 clubForm.addEventListener('submit', async (event) => {
@@ -292,6 +295,16 @@ editProfileBtn.addEventListener('click', () => {
 });
 
 (function init() {
+  if (window.AOS) {
+    window.AOS.init({
+      duration: 900,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 24,
+      mirror: false,
+    });
+  }
+
   const existing = readProfile();
   const clubQuery = new URLSearchParams(window.location.search).get('club');
 
