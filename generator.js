@@ -5,20 +5,26 @@ const clubInputView = document.getElementById('clubInputView');
 const dashboardView = document.getElementById('dashboardView');
 const parentLandingView = document.getElementById('parentLandingView');
 
+const launchClubLogo = document.getElementById('launchClubLogo');
 const clubLinkText = document.getElementById('clubLinkText');
 const openLandingBtn = document.getElementById('openLandingBtn');
 const copyLandingBtn = document.getElementById('copyLandingBtn');
 const editProfileBtn = document.getElementById('editProfileBtn');
 
-const textMessage = document.getElementById('textMessage');
-const emailMessage = document.getElementById('emailMessage');
-const appMessage = document.getElementById('appMessage');
+const activeMessageContent = document.getElementById('activeMessageContent');
+const copyActiveMessageBtn = document.getElementById('copyActiveMessageBtn');
+const copyFeedback = document.getElementById('copyFeedback');
 
 const graphicCanvas = document.getElementById('graphicCanvas');
 const downloadGraphicBtn = document.getElementById('downloadGraphicBtn');
 const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
 
-const state = { profile: null };
+const state = {
+  profile: null,
+  messages: null,
+  activeTab: 'text',
+};
 
 function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '').slice(0, 42);
@@ -50,13 +56,23 @@ function readProfile() {
 }
 
 function makeMessages(profile, link) {
-  const t1 = `Hi ${profile.clubName} families — we partnered with Momentum to help students earn high school credit for structured ${profile.sportType.toLowerCase()} training they already complete. Learn more: ${link}`;
+  return {
+    text: `Hi ${profile.clubName} families — we partnered with Momentum to help students earn high school credit for structured ${profile.sportType.toLowerCase()} training they already complete. Learn more: ${link}`,
+    email: `Subject: ${profile.clubName} x Momentum Family Credit Opportunity\n\nDear families,\n\n${profile.clubName} has partnered with Momentum to provide a clear, institutionally credible pathway for students to earn academic credit for verified ${profile.sportType.toLowerCase()} training.\n\nHow it works:\n1) Review the club page\n2) Check eligibility\n3) Enroll if fit\n\nClub page: ${link}\n\nQuestions? Contact ${profile.contactName} at ${profile.contactEmail}.`,
+    app: `${profile.clubName} Announcement:\nMomentum enrollment is open for eligible student-athletes. Families can review details and enroll here: ${link}\n\n${profile.clubMessage || 'Thank you for supporting student development in both sport and school.'}`,
+  };
+}
 
-  const t2 = `Subject: ${profile.clubName} x Momentum Family Credit Opportunity\n\nDear families,\n\n${profile.clubName} has partnered with Momentum to provide a clear, institutionally credible pathway for students to earn academic credit for verified ${profile.sportType.toLowerCase()} training.\n\nHow it works:\n1) Review the club page\n2) Check eligibility\n3) Enroll if fit\n\nClub page: ${link}\n\nQuestions? Contact ${profile.contactName} at ${profile.contactEmail}.`;
+function setActiveTab(tabKey) {
+  state.activeTab = tabKey;
+  tabButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.tab === tabKey));
+  activeMessageContent.textContent = state.messages?.[tabKey] || '';
+}
 
-  const t3 = `${profile.clubName} Announcement:\nMomentum enrollment is open for eligible student-athletes. Families can review details and enroll here: ${link}\n\n${profile.clubMessage || 'Thank you for supporting student development in both sport and school.'}`;
-
-  return { t1, t2, t3 };
+function showCopied(text = 'Copied') {
+  copyFeedback.textContent = text;
+  copyFeedback.classList.add('show');
+  setTimeout(() => copyFeedback.classList.remove('show'), 1200);
 }
 
 function drawGraphic(profile, link) {
@@ -65,30 +81,27 @@ function drawGraphic(profile, link) {
   ctx.fillRect(0, 0, graphicCanvas.width, graphicCanvas.height);
 
   ctx.fillStyle = '#151515';
-  ctx.fillRect(44, 44, 1112, 542);
+  ctx.fillRect(46, 46, 1108, 538);
 
-  ctx.fillStyle = '#b61f2c';
-  ctx.fillRect(44, 486, 1112, 100);
+  ctx.fillStyle = '#b71e2d';
+  ctx.fillRect(46, 484, 1108, 100);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '600 52px Inter, Arial';
-  ctx.fillText('MOMENTUM x ' + profile.clubName.toUpperCase(), 88, 142);
+  ctx.font = '600 50px Inter, Arial';
+  ctx.fillText('MOMENTUM x ' + profile.clubName.toUpperCase(), 88, 140);
 
   ctx.font = '400 30px Inter, Arial';
-  ctx.fillText('A clear pathway to earn credit for structured training.', 88, 204);
+  ctx.fillText('Send families to your enrollment page this week.', 88, 202);
 
-  ctx.font = '500 26px Inter, Arial';
-  ctx.fillText('Check eligibility and enroll', 88, 546);
-
-  ctx.font = '400 22px Inter, Arial';
-  ctx.fillText(link, 88, 574);
+  ctx.font = '500 24px Inter, Arial';
+  ctx.fillText(link, 88, 548);
 
   if (profile.logoDataUrl) {
     const logo = new Image();
     logo.onload = () => {
       ctx.fillStyle = '#ffffff';
-      ctx.fillRect(910, 108, 204, 204);
-      ctx.drawImage(logo, 922, 120, 180, 180);
+      ctx.fillRect(910, 108, 200, 200);
+      ctx.drawImage(logo, 920, 118, 180, 180);
     };
     logo.src = profile.logoDataUrl;
   }
@@ -96,7 +109,7 @@ function drawGraphic(profile, link) {
 
 function buildParentLanding(profile, link) {
   return `
-    <article class="parent-landing" data-aos="fade-up" data-aos-duration="850">
+    <article class="parent-landing" data-aos="fade-up" data-aos-duration="760">
       <div class="parent-hero">
         <img src="${profile.logoDataUrl}" alt="${profile.clubName} logo" />
         <div>
@@ -106,7 +119,7 @@ function buildParentLanding(profile, link) {
       </div>
 
       <h3>Why ${profile.clubName} partnered with Momentum</h3>
-      <p class="callout">Our club wants families to receive formal academic recognition for the structured training athletes are already completing each week.</p>
+      <p class="callout">Our club wants families to receive formal academic recognition for structured training athletes already complete each week.</p>
 
       <h3>How it works in three steps</h3>
       <ol class="steps">
@@ -170,60 +183,35 @@ function downloadPdf(profile, link) {
   ];
 
   doc.text(doc.splitTextToSize(body.join('\n'), 180), 14, 30);
-
-  doc.addPage();
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(16);
-  doc.text('Next Steps for Families', 14, 20);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(11);
-  const page2 = [
-    '1. Review the club landing page information.',
-    '2. Complete the eligibility/enrollment process.',
-    '3. Keep communication open with your club contact and Momentum support.',
-    '',
-    'This handout is intentionally concise, clear, and institutionally credible.',
-    '',
-    'Momentum',
-  ];
-  doc.text(doc.splitTextToSize(page2.join('\n'), 180), 14, 32);
-
   doc.save(`${profile.slug}-momentum-parent-packet.pdf`);
-}
-
-function revealDashboardStages() {
-  const cards = [...document.querySelectorAll('#dashboardView .card')].sort((a, b) => Number(a.dataset.stage) - Number(b.dataset.stage));
-  cards.forEach((card) => card.classList.remove('is-visible'));
-  cards.forEach((card, index) => {
-    window.setTimeout(() => card.classList.add('is-visible'), 180 + index * 220);
-  });
-}
-
-function copyElementText(id) {
-  const target = document.getElementById(id);
-  navigator.clipboard.writeText(target.textContent || '');
 }
 
 function renderDashboard(profile) {
   const link = parentUrl(profile);
+
+  launchClubLogo.src = profile.logoDataUrl;
+  launchClubLogo.alt = `${profile.clubName} logo`;
+
   clubLinkText.textContent = link;
   openLandingBtn.href = link;
-
-  const messages = makeMessages(profile, link);
-  textMessage.textContent = messages.t1;
-  emailMessage.textContent = messages.t2;
-  appMessage.textContent = messages.t3;
+  state.messages = makeMessages(profile, link);
+  setActiveTab(state.activeTab);
 
   drawGraphic(profile, link);
-  revealDashboardStages();
 
-  copyLandingBtn.onclick = () => navigator.clipboard.writeText(link);
+  copyLandingBtn.onclick = async () => {
+    await navigator.clipboard.writeText(link);
+    showCopied('Link copied');
+  };
+
+  copyActiveMessageBtn.onclick = async () => {
+    const value = state.messages?.[state.activeTab] || '';
+    await navigator.clipboard.writeText(value);
+    showCopied('Message copied');
+  };
+
   downloadGraphicBtn.onclick = () => downloadGraphic(profile);
   downloadPdfBtn.onclick = () => downloadPdf(profile, link);
-
-  document.querySelectorAll('.copy-btn').forEach((btn) => {
-    btn.onclick = () => copyElementText(btn.dataset.copy);
-  });
 }
 
 function showDashboard(profile) {
@@ -231,6 +219,7 @@ function showDashboard(profile) {
   parentLandingView.classList.add('hidden');
   dashboardView.classList.remove('hidden');
   renderDashboard(profile);
+  if (window.AOS) window.AOS.refreshHard();
 }
 
 function showForm(profile) {
@@ -284,7 +273,6 @@ clubForm.addEventListener('submit', async (event) => {
   profile.slug = slugify(profile.clubName || 'club');
   state.profile = profile;
   saveProfile(profile);
-
   window.history.replaceState({}, '', parentUrl(profile));
   showDashboard(profile);
 });
@@ -294,13 +282,17 @@ editProfileBtn.addEventListener('click', () => {
   window.history.replaceState({}, '', window.location.pathname);
 });
 
+tabButtons.forEach((btn) => {
+  btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
+});
+
 (function init() {
   if (window.AOS) {
     window.AOS.init({
-      duration: 900,
+      duration: 780,
       easing: 'ease-out-cubic',
       once: true,
-      offset: 24,
+      offset: 20,
       mirror: false,
     });
   }
