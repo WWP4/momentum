@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Momentum Club Activation Generator</title>
+  <meta name="description" content="Simple input-to-output generator for Momentum club activation assets." />
+  <link rel="stylesheet" href="generator.css" />
+</head>
+<body>
+  <main class="app" id="appRoot">
+    <header class="topbar">
+      <div class="brand">MOMENTUM</div>
+      <div class="brand-sub">Club Activation Generator</div>
+    </header>
+
+    <section class="panel" id="clubInputView">
+      <h1>Club Setup</h1>
+      <p class="sub">Fill this once. Get your landing page, parent messages, graphic, and PDF instantly.</p>
+
+      <form id="clubForm" class="form-grid">
+        <label>
+          Club name
+          <input required name="clubName" type="text" placeholder="Redline Soccer Club" />
+        </label>
+
+        <label>
+          Sport type
+          <input required name="sportType" type="text" placeholder="Soccer" />
+        </label>
+
+        <label>
+          Contact name
+          <input required name="contactName" type="text" placeholder="Alex Carter" />
+        </label>
+
+        <label>
+          Contact email
+          <input required name="contactEmail" type="email" placeholder="alex@club.org" />
+        </label>
+
+        <label>
+          Club logo
+          <input required name="clubLogo" id="clubLogo" type="file" accept="image/*" />
+        </label>
+
+        <label>
+          Optional short club message
+          <textarea name="clubMessage" rows="4" placeholder="We are excited to offer families a clear path to earn credit for training."></textarea>
+        </label>
+
+        <button class="btn" type="submit">Generate Activation Assets</button>
+      </form>
+    </section>
+
+    <section class="panel hidden" id="dashboardView">
+      <div class="panel-head">
+        <h2>Output Dashboard</h2>
+        <button class="btn btn-outline" id="editProfileBtn" type="button">Edit club profile</button>
+      </div>
+
+      <div class="card-stack">
+        <article class="card">
+          <h3>1) Club Landing Page</h3>
+          <p id="clubLinkText"></p>
+          <div class="row-actions">
+            <a class="btn" id="openLandingBtn" target="_blank" rel="noopener">Open landing page</a>
+            <button class="btn btn-outline" id="copyLandingBtn" type="button">Copy link</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>2) Parent Message Block</h3>
+
+          <div class="message-box">
+            <div class="message-head">
+              <h4>Text message version</h4>
+              <button class="btn btn-outline copy-btn" data-copy="textMessage" type="button">Copy</button>
+            </div>
+            <pre id="textMessage"></pre>
+          </div>
+
+          <div class="message-box">
+            <div class="message-head">
+              <h4>Email version</h4>
+              <button class="btn btn-outline copy-btn" data-copy="emailMessage" type="button">Copy</button>
+            </div>
+            <pre id="emailMessage"></pre>
+          </div>
+
+          <div class="message-box">
+            <div class="message-head">
+              <h4>Team app / announcement version</h4>
+              <button class="btn btn-outline copy-btn" data-copy="appMessage" type="button">Copy</button>
+            </div>
+            <pre id="appMessage"></pre>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>3) Co-Branded Graphic</h3>
+          <canvas id="graphicCanvas" width="1200" height="630" aria-label="Generated branded graphic preview"></canvas>
+          <div class="row-actions">
+            <button class="btn" id="downloadGraphicBtn" type="button">Download graphic (PNG)</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>4) Parent PDF</h3>
+          <p>Professional 1–2 page family handout with Momentum overview, training credit model, FAQ, and enrollment CTA.</p>
+          <div class="row-actions">
+            <button class="btn" id="downloadPdfBtn" type="button">Download parent PDF</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="parentLandingView"></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="generator.js"></script>
+</body>
+</html>
