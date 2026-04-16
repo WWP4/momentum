@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'momentumClubActivationProfile';
+const MOMENTUM_LOGO_PATH = 'assets/assets/momentum-logo.png';
 
 const clubForm = document.getElementById('clubForm');
 const clubInputView = document.getElementById('clubInputView');
@@ -20,11 +21,7 @@ const downloadGraphicBtn = document.getElementById('downloadGraphicBtn');
 const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
 
-const state = {
-  profile: null,
-  messages: null,
-  activeTab: 'text',
-};
+const state = { profile: null, messages: null, activeTab: 'text' };
 
 function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '').slice(0, 42);
@@ -58,8 +55,8 @@ function readProfile() {
 function makeMessages(profile, link) {
   return {
     text: `Hi ${profile.clubName} families — we partnered with Momentum to help students earn high school credit for structured ${profile.sportType.toLowerCase()} training they already complete. Learn more: ${link}`,
-    email: `Subject: ${profile.clubName} x Momentum Family Credit Opportunity\n\nDear families,\n\n${profile.clubName} has partnered with Momentum to provide a clear, institutionally credible pathway for students to earn academic credit for verified ${profile.sportType.toLowerCase()} training.\n\nHow it works:\n1) Review the club page\n2) Check eligibility\n3) Enroll if fit\n\nClub page: ${link}\n\nQuestions? Contact ${profile.contactName} at ${profile.contactEmail}.`,
-    app: `${profile.clubName} Announcement:\nMomentum enrollment is open for eligible student-athletes. Families can review details and enroll here: ${link}\n\n${profile.clubMessage || 'Thank you for supporting student development in both sport and school.'}`,
+    email: `Subject: ${profile.clubName} x Momentum Family Credit Opportunity\n\nDear families,\n\n${profile.clubName} is partnering with Momentum to help athletes and families turn structured ${profile.sportType.toLowerCase()} training into real academic progress.\n\nHow it works:\n1) Check eligibility\n2) Enroll\n3) Complete coursework tied to training\n\nClub page: ${link}\n\nQuestions? Contact ${profile.contactName} at ${profile.contactEmail}.`,
+    app: `${profile.clubName} Announcement:\nMomentum enrollment is now open for eligible student-athletes. Families can review the full partnership details and next steps here: ${link}\n\n${profile.clubMessage || 'Thank you for supporting student development in both sport and school.'}`,
   };
 }
 
@@ -80,65 +77,112 @@ function drawGraphic(profile, link) {
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, graphicCanvas.width, graphicCanvas.height);
 
-  ctx.fillStyle = '#151515';
-  ctx.fillRect(46, 46, 1108, 538);
+  ctx.fillStyle = '#171717';
+  ctx.fillRect(44, 44, 1112, 542);
 
   ctx.fillStyle = '#b71e2d';
-  ctx.fillRect(46, 484, 1108, 100);
+  ctx.fillRect(44, 472, 1112, 114);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '600 50px Inter, Arial';
+  ctx.font = '600 48px Inter, Arial';
   ctx.fillText('MOMENTUM x ' + profile.clubName.toUpperCase(), 88, 140);
-
   ctx.font = '400 30px Inter, Arial';
-  ctx.fillText('Send families to your enrollment page this week.', 88, 202);
-
+  ctx.fillText('Turn training already happening into academic credit.', 88, 198);
   ctx.font = '500 24px Inter, Arial';
   ctx.fillText(link, 88, 548);
 
-  if (profile.logoDataUrl) {
-    const logo = new Image();
-    logo.onload = () => {
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(910, 108, 200, 200);
-      ctx.drawImage(logo, 920, 118, 180, 180);
-    };
-    logo.src = profile.logoDataUrl;
-  }
+  const clubLogo = new Image();
+  const momentumLogo = new Image();
+  let loaded = 0;
+
+  const paintLogos = () => {
+    loaded += 1;
+    if (loaded < 2) return;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(900, 92, 220, 112);
+    ctx.fillRect(900, 220, 220, 112);
+
+    ctx.drawImage(clubLogo, 914, 106, 190, 84);
+    ctx.drawImage(momentumLogo, 914, 236, 190, 84);
+  };
+
+  clubLogo.onload = paintLogos;
+  momentumLogo.onload = paintLogos;
+  clubLogo.src = profile.logoDataUrl;
+  momentumLogo.src = MOMENTUM_LOGO_PATH;
 }
 
 function buildParentLanding(profile, link) {
   return `
-    <article class="parent-landing" data-aos="fade-up" data-aos-duration="760">
-      <div class="parent-hero">
-        <img src="${profile.logoDataUrl}" alt="${profile.clubName} logo" />
-        <div>
-          <h2>${profile.clubName} + Momentum</h2>
-          <p>Student-athlete credit pathway for ${profile.sportType} families.</p>
+    <article class="parent-landing">
+      <section class="pl-hero" data-aos="fade-up" data-aos-duration="720">
+        <div class="pl-logos">
+          <img src="${profile.logoDataUrl}" alt="${profile.clubName} logo" />
+          <span>x</span>
+          <img src="${MOMENTUM_LOGO_PATH}" alt="Momentum logo" />
         </div>
-      </div>
+        <p class="pl-eyebrow">${profile.clubName} Partnership Launch</p>
+        <h2>Turn the training your athlete is already doing into academic credit.</h2>
+        <p>${profile.clubName} is partnering with Momentum to help athletes and families turn structured ${profile.sportType.toLowerCase()} training into real academic progress.</p>
+        <div class="row-actions">
+          <a class="btn" href="#" onclick="alert('Eligibility flow placeholder.');return false;">Check Eligibility</a>
+          <a class="btn btn-outline" href="#how-it-works">Learn How It Works</a>
+        </div>
+      </section>
 
-      <h3>Why ${profile.clubName} partnered with Momentum</h3>
-      <p class="callout">Our club wants families to receive formal academic recognition for structured training athletes already complete each week.</p>
+      <section class="pl-section pl-split" data-aos="fade-up" data-aos-duration="760" data-aos-delay="90">
+        <div>
+          <h3>Why this partnership exists</h3>
+          <p>Athletes are already putting in disciplined work every week. This partnership helps that work carry academic meaning with a pathway families can trust.</p>
+          <p>${profile.clubMessage || `Our goal is to support each ${profile.sportType.toLowerCase()} athlete with stronger alignment between training and long-term student progress.`}</p>
+        </div>
+        <aside class="pl-highlight">
+          <strong>For families</strong>
+          <p>Clear process. Credible academics. Built around training already happening.</p>
+        </aside>
+      </section>
 
-      <h3>How it works in three steps</h3>
-      <ol class="steps">
-        <li>Check eligibility using Momentum's intake process.</li>
-        <li>Submit training details and enrollment information.</li>
-        <li>Receive support to convert verified training into credit options.</li>
-      </ol>
+      <section class="pl-section" id="how-it-works" data-aos="fade-up" data-aos-duration="760" data-aos-delay="120">
+        <h3>How it works</h3>
+        <ol class="pl-steps">
+          <li><span>1</span><div><strong>Check eligibility</strong><p>Families complete a quick intake to confirm fit.</p></div></li>
+          <li><span>2</span><div><strong>Enroll in course</strong><p>Students enroll in the Momentum course pathway.</p></div></li>
+          <li><span>3</span><div><strong>Complete modules</strong><p>Training + reflection modules are completed online.</p></div></li>
+          <li><span>4</span><div><strong>Earn academic credit</strong><p>Verified work supports academic progress outcomes.</p></div></li>
+        </ol>
+      </section>
 
-      <h3>Momentum for families</h3>
-      <p>Momentum supports a professional, academically credible process that fits club schedules and keeps communication clear.</p>
+      <section class="pl-section" data-aos="fade-up" data-aos-duration="760" data-aos-delay="150">
+        <h3>What families receive</h3>
+        <div class="pl-features">
+          <div><strong>Structured coursework</strong><p>Clear framework aligned with athlete development.</p></div>
+          <div><strong>Flexible online format</strong><p>Designed to fit club schedules and family life.</p></div>
+          <div><strong>Academic transcript value</strong><p>A more meaningful bridge between athletics and school.</p></div>
+          <div><strong>Club-supported pathway</strong><p>${profile.contactName} is available for parent questions.</p></div>
+        </div>
+      </section>
 
-      ${profile.clubMessage ? `<h3>Message from ${profile.clubName}</h3><p>${profile.clubMessage}</p>` : ''}
+      <section class="pl-section" data-aos="fade-up" data-aos-duration="760" data-aos-delay="180">
+        <h3>Parent confidence / FAQ</h3>
+        <div class="pl-faq">
+          <details><summary>What is Momentum?</summary><p>Momentum is an academic pathway that helps students earn credit for structured training they are already doing.</p></details>
+          <details><summary>Who qualifies?</summary><p>Students are reviewed through the eligibility process before enrollment.</p></details>
+          <details><summary>How long do courses take?</summary><p>Course pacing is flexible and designed around active training schedules.</p></details>
+          <details><summary>How does the credit work?</summary><p>Credit options are tied to verified coursework and program requirements.</p></details>
+          <details><summary>Why did ${profile.clubName} partner with Momentum?</summary><p>To give families a trusted way to connect athletic effort with academic progress.</p></details>
+        </div>
+      </section>
 
-      <div class="row-actions">
-        <a class="btn" href="#" onclick="alert('Eligibility flow placeholder.');return false;">Check eligibility / enroll</a>
-        <button class="btn btn-outline" id="parentPdfBtn" type="button">Download parent PDF</button>
-      </div>
-
-      <p><strong>Direct link:</strong> ${link}</p>
+      <section class="pl-section pl-final" data-aos="fade-up" data-aos-duration="760" data-aos-delay="220">
+        <h3>Help your athlete turn existing training into academic progress.</h3>
+        <div class="row-actions">
+          <a class="btn" href="#" onclick="alert('Eligibility flow placeholder.');return false;">Get Started</a>
+          <button class="btn btn-outline" id="parentPdfBtn" type="button">Download Parent PDF</button>
+        </div>
+        <p><strong>Club contact:</strong> ${profile.contactName} • ${profile.contactEmail}</p>
+        <p><strong>Share this link with all families:</strong> ${link}</p>
+      </section>
     </article>
   `;
 }
@@ -157,46 +201,43 @@ function downloadPdf(profile, link) {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
   doc.text(`${profile.clubName} + Momentum`, 14, 20);
-
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(11);
-  const body = [
-    'Parent Information Packet',
+
+  const lines = [
+    'Parent Partnership Brief',
     '',
-    'What is Momentum?',
-    'Momentum provides a professional process for students to pursue credit for structured training they already complete through club participation.',
+    `${profile.clubName} partnered with Momentum to help athletes convert structured ${profile.sportType.toLowerCase()} training into academic progress.`,
     '',
-    `Why ${profile.clubName} partnered with Momentum:`,
-    'To support families with a clear, academically credible pathway connecting sport participation to educational outcomes.',
+    'How it works:',
+    '1) Check eligibility',
+    '2) Enroll in course',
+    '3) Complete modules tied to training',
+    '4) Earn academic credit outcomes',
     '',
-    'How students can earn credit:',
-    '1) Complete the eligibility intake',
-    '2) Verify training activity and schedule',
-    '3) Follow Momentum enrollment guidance',
+    'Why families care:',
+    '• Professional, credible structure',
+    '• Built around existing athlete workload',
+    '• Clear contact and support process',
     '',
-    'FAQ',
-    '• Is this extra training? No, this focuses on training already happening.',
-    '• Is this only for elite athletes? No, students are evaluated by eligibility criteria.',
-    `• Who can answer questions? ${profile.contactName} (${profile.contactEmail})`,
-    '',
-    `Learn more / enroll: ${link}`,
+    `Club contact: ${profile.contactName} (${profile.contactEmail})`,
+    `Launch page: ${link}`,
   ];
 
-  doc.text(doc.splitTextToSize(body.join('\n'), 180), 14, 30);
+  doc.text(doc.splitTextToSize(lines.join('\n'), 178), 14, 30);
   doc.save(`${profile.slug}-momentum-parent-packet.pdf`);
 }
 
 function renderDashboard(profile) {
   const link = parentUrl(profile);
-
   launchClubLogo.src = profile.logoDataUrl;
   launchClubLogo.alt = `${profile.clubName} logo`;
 
   clubLinkText.textContent = link;
   openLandingBtn.href = link;
+
   state.messages = makeMessages(profile, link);
   setActiveTab(state.activeTab);
-
   drawGraphic(profile, link);
 
   copyLandingBtn.onclick = async () => {
@@ -205,8 +246,7 @@ function renderDashboard(profile) {
   };
 
   copyActiveMessageBtn.onclick = async () => {
-    const value = state.messages?.[state.activeTab] || '';
-    await navigator.clipboard.writeText(value);
+    await navigator.clipboard.writeText(state.messages?.[state.activeTab] || '');
     showCopied('Message copied');
   };
 
@@ -249,7 +289,6 @@ function showParentLanding(profile) {
 
 clubForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-
   const logoFile = document.getElementById('clubLogo').files[0];
   if (!logoFile) return;
 
@@ -288,26 +327,15 @@ tabButtons.forEach((btn) => {
 
 (function init() {
   if (window.AOS) {
-    window.AOS.init({
-      duration: 780,
-      easing: 'ease-out-cubic',
-      once: true,
-      offset: 20,
-      mirror: false,
-    });
+    window.AOS.init({ duration: 780, easing: 'ease-out-cubic', once: true, offset: 20, mirror: false });
   }
 
   const existing = readProfile();
   const clubQuery = new URLSearchParams(window.location.search).get('club');
-
   if (existing) {
     state.profile = existing;
-    if (clubQuery) {
-      showParentLanding(existing);
-      return;
-    }
-    showDashboard(existing);
-    return;
+    if (clubQuery) return showParentLanding(existing);
+    return showDashboard(existing);
   }
 
   showForm();
