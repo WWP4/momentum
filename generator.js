@@ -7,17 +7,18 @@ const copyMessageBtn = document.getElementById('copyMessageBtn');
 const editFormBtn = document.getElementById('editFormBtn');
 const scrollButtons = document.querySelectorAll('[data-scroll]');
 const revealEls = document.querySelectorAll('.reveal');
+const logoConfig = window.generatorLogoConfig || {};
 
 function prepAndPlayLogo() {
   if (!svg) return;
 
   const paths = Array.from(svg.querySelectorAll('.draw'));
-  const baseDelay = 450;
-  const step = 160;
-  const drawDur = 5200;
-  const fillDur = 1500;
-  const fillDelayRed = 3200;
-  const fillDelayOther = 3600;
+  const baseDelay = Number(logoConfig.baseDelay ?? 450);
+  const step = Number(logoConfig.step ?? 160);
+  const drawDur = Number(logoConfig.drawDur ?? 5200);
+  const fillDur = Number(logoConfig.fillDur ?? 1500);
+  const fillDelayRed = Number(logoConfig.fillDelayRed ?? 3200);
+  const fillDelayOther = Number(logoConfig.fillDelayOther ?? 3600);
 
   paths.forEach((p, i) => {
     let len = 1000;
@@ -157,5 +158,5 @@ window.addEventListener('load', () => {
 
   setTimeout(() => {
     finishIntro();
-  }, 6500);
+  }, Number(logoConfig.introDuration ?? 6500));
 });
