@@ -12,12 +12,12 @@ function prepAndPlayLogo() {
   if (!svg) return;
 
   const paths = Array.from(svg.querySelectorAll('.draw'));
-  const baseDelay = 450;
-  const step = 160;
-  const drawDur = 5200;
-  const fillDur = 1500;
-  const fillDelayRed = 3200;
-  const fillDelayOther = 3600;
+  const baseDelay = 300;
+  const step = 120;
+  const drawDur = 1850;
+  const fillDur = 520;
+  const fillDelay = 1420;
+  const strokeFadeDelay = 1780;
 
   paths.forEach((p, i) => {
     let len = 1000;
@@ -33,9 +33,8 @@ function prepAndPlayLogo() {
 
     const delay = baseDelay + (i * step);
     p.style.setProperty('--delay', `${delay}ms`);
-
-    const fillDelay = p.classList.contains('is-red') ? fillDelayRed : fillDelayOther;
     p.style.setProperty('--fillDelay', `${fillDelay}ms`);
+    p.style.setProperty('--strokeFadeDelay', `${strokeFadeDelay}ms`);
   });
 
   svg.classList.remove('play');
@@ -157,5 +156,5 @@ window.addEventListener('load', () => {
 
   setTimeout(() => {
     finishIntro();
-  }, 6500);
+  }, 4300);
 });

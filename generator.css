@@ -101,6 +101,7 @@ body.intro-complete .intro{
   fill-opacity:0;
   stroke:rgba(255,255,255,.82);
   stroke-width:2.2;
+  stroke-opacity:.92;
   stroke-linecap:round;
   stroke-linejoin:round;
   vector-effect:non-scaling-stroke;
@@ -118,10 +119,12 @@ body.intro-complete .intro{
 .logoSvg.play .draw{
   animation:
     strokeDraw var(--drawDur, 5200ms) var(--ease) forwards,
-    fillIn var(--fillDur, 1500ms) cubic-bezier(.2,.8,.2,1) forwards;
+    fillIn var(--fillDur, 1500ms) cubic-bezier(.2,.8,.2,1) forwards,
+    strokeFade 900ms ease forwards;
   animation-delay:
     var(--delay, 0ms),
-    calc(var(--delay, 0ms) + var(--fillDelay, 3200ms));
+    calc(var(--delay, 0ms) + var(--fillDelay, 3200ms)),
+    calc(var(--delay, 0ms) + var(--strokeFadeDelay, 4300ms));
 }
 
 @keyframes strokeDraw{
@@ -131,6 +134,10 @@ body.intro-complete .intro{
 
 @keyframes fillIn{
   to{ fill-opacity:1; }
+}
+
+@keyframes strokeFade{
+  to{ stroke-opacity:0; }
 }
 
 /* MAIN EXPERIENCE */
