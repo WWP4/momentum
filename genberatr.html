@@ -342,127 +342,90 @@
   </section>
 </main>
 
-<section class="section section--impact" id="whySection">
-  <div class="impactBackground" aria-hidden="true">
-    <div class="impactField">
-      <span class="fieldLine fieldLine--top"></span>
-      <span class="fieldLine fieldLine--mid"></span>
-      <span class="fieldLine fieldLine--bottom"></span>
-      <span class="fieldCircle"></span>
-    </div>
-  </div>
-
-  <div class="section__inner impactInner reveal">
-    <div class="impactIntro">
-      <p class="eyebrow eyebrow--light">Why this matters</p>
-
-      <h2 class="sectionTitle sectionTitle--light impactTitle">
-        From the field<br />
-        to earned credit.
-      </h2>
-
-      <p class="sectionCopy sectionCopy--light impactCopy">
-        Your athletes are already putting in structured time, discipline, and measurable effort.
-        Momentum helps turn that work into a clearer academic outcome families can actually see and value.
+<section class="why-section" id="whySection" aria-labelledby="why-title">
+  <div class="why-shell">
+    <div class="why-copy">
+      <p class="why-kicker">Why this matters</p>
+      <h2 class="why-title" id="why-title">The work is already there.<br />Momentum gives it academic shape.</h2>
+      <p class="why-lead" id="why-lead">
+        Athletes are already showing discipline, repetition, structure, and progress. Momentum turns that existing commitment into something families can clearly understand and schools can more easily recognize.
       </p>
+
+      <div class="why-steps" aria-label="Momentum process steps">
+        <button class="why-step is-active" type="button" data-step="0">
+          <span class="why-step__index">01</span>
+          <span class="why-step__meta">
+            <span class="why-step__label">Training</span>
+            <span class="why-step__desc">Effort already happening</span>
+          </span>
+        </button>
+
+        <button class="why-step" type="button" data-step="1">
+          <span class="why-step__index">02</span>
+          <span class="why-step__meta">
+            <span class="why-step__label">Structure</span>
+            <span class="why-step__desc">Momentum organizes it</span>
+          </span>
+        </button>
+
+        <button class="why-step" type="button" data-step="2">
+          <span class="why-step__index">03</span>
+          <span class="why-step__meta">
+            <span class="why-step__label">Outcome</span>
+            <span class="why-step__desc">Visible academic value</span>
+          </span>
+        </button>
+      </div>
     </div>
 
-    <div class="impactJourney" aria-label="How Momentum turns training into academic credit">
-      <article class="impactStage impactStage--field">
-        <div class="impactStage__visual" aria-hidden="true">
-          <svg class="impactGlyph" viewBox="0 0 280 180" role="presentation" focusable="false">
-            <rect class="impactGlyph__frame" x="16" y="16" width="248" height="148" rx="18" />
-            <line class="impactGlyph__line" x1="42" y1="55" x2="238" y2="55" />
-            <line class="impactGlyph__line" x1="42" y1="125" x2="238" y2="125" />
-            <circle class="impactGlyph__circle" cx="140" cy="90" r="27" />
-            <circle class="impactGlyph__ball" cx="98" cy="105" r="8" />
-            <path class="impactGlyph__path" d="M98 105 C126 96, 148 80, 177 62" />
+    <div class="why-stageWrap">
+      <div class="why-stage" id="whyStage" data-step="0">
+        <div class="why-glow why-glow--one"></div>
+        <div class="why-glow why-glow--two"></div>
+
+        <div class="why-frame"></div>
+        <div class="why-grid"></div>
+        <div class="why-progress"><span></span></div>
+
+        <div class="why-icon why-icon--runner is-live" data-icon="0" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="presentation" focusable="false">
+            <circle cx="41" cy="10" r="4.5"></circle>
+            <path d="M34 18l8-4 6 6"></path>
+            <path d="M28 28l10-8 6 10"></path>
+            <path d="M20 50l11-14"></path>
+            <path d="M31 36l13 4"></path>
+            <path d="M42 40l9 10"></path>
+            <path d="M16 32h11"></path>
           </svg>
         </div>
 
-        <div class="impactStage__content">
-          <span class="impactStage__eyebrow">What is already happening</span>
-          <h3 class="impactStage__title">Training Commitment</h3>
-          <p class="impactStage__text">
-            Practice hours, coaching, repetition, structure, and athlete discipline are already in motion.
-          </p>
-        </div>
-      </article>
-
-      <div class="impactConnector" aria-hidden="true">
-        <span class="impactConnector__line"></span>
-        <span class="impactConnector__dot"></span>
-      </div>
-
-      <article class="impactStage impactStage--momentum">
-        <div class="impactStage__visual" aria-hidden="true">
-          <svg class="impactGlyph" viewBox="0 0 280 180" role="presentation" focusable="false">
-            <rect class="impactGlyph__frame" x="16" y="16" width="248" height="148" rx="18" />
-            <rect class="impactGlyph__panel" x="38" y="38" width="94" height="44" rx="10" />
-            <rect class="impactGlyph__panel" x="148" y="38" width="94" height="44" rx="10" />
-            <rect class="impactGlyph__panel" x="38" y="96" width="94" height="44" rx="10" />
-            <rect class="impactGlyph__panel" x="148" y="96" width="94" height="44" rx="10" />
-            <path class="impactGlyph__check" d="M171 116 L182 127 L205 104" />
-            <text class="impactGlyph__badge" x="141" y="170" text-anchor="middle">Momentum framework</text>
+        <div class="why-icon why-icon--columns" data-icon="1" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="presentation" focusable="false">
+            <rect x="12" y="12" width="40" height="40" rx="8"></rect>
+            <path d="M24 20v24"></path>
+            <path d="M40 20v24"></path>
+            <path d="M18 28h28"></path>
+            <path d="M18 36h28"></path>
           </svg>
         </div>
 
-        <div class="impactStage__content">
-          <span class="impactStage__eyebrow">What Momentum adds</span>
-          <h3 class="impactStage__title">Structured Academic Framework</h3>
-          <p class="impactStage__text">
-            Training becomes organized into guided modules, reflection, evaluation, and a clear educational pathway.
-          </p>
-        </div>
-      </article>
-
-      <div class="impactConnector" aria-hidden="true">
-        <span class="impactConnector__line"></span>
-        <span class="impactConnector__dot"></span>
-      </div>
-
-      <article class="impactStage impactStage--credit">
-        <div class="impactStage__visual" aria-hidden="true">
-          <svg class="impactGlyph" viewBox="0 0 280 180" role="presentation" focusable="false">
-            <rect class="impactGlyph__frame" x="24" y="24" width="232" height="132" rx="18" />
-            <text class="impactGlyph__label" x="44" y="52">Academic outcome</text>
-            <text class="impactGlyph__score" x="44" y="90">1.0 credit earned</text>
-            <line class="impactGlyph__row" x1="44" y1="112" x2="216" y2="112" />
-            <line class="impactGlyph__row" x1="44" y1="128" x2="198" y2="128" />
-            <line class="impactGlyph__row" x1="44" y1="144" x2="175" y2="144" />
-            <circle class="impactGlyph__seal" cx="228" cy="58" r="16" />
-            <path class="impactGlyph__check" d="M220 58 L227 65 L237 52" />
+        <div class="why-icon why-icon--clipboard" data-icon="2" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="presentation" focusable="false">
+            <rect x="18" y="14" width="28" height="38" rx="6"></rect>
+            <path d="M26 14.5h12"></path>
+            <path d="M26 26h12"></path>
+            <path d="M26 34h8"></path>
+            <path class="why-check" d="M26 43l5 5 9-11"></path>
           </svg>
         </div>
 
-        <div class="impactStage__content">
-          <span class="impactStage__eyebrow">What families can point to</span>
-          <h3 class="impactStage__title">Visible Academic Value</h3>
-          <p class="impactStage__text">
-            The same commitment now leads to something more tangible — clearer progress, stronger parent buy-in, and earned value beyond the field.
+        <div class="why-caption">
+          <span class="why-caption__eyebrow" id="why-caption-eyebrow">Training reality</span>
+          <h3 class="why-caption__title" id="why-caption-title">Athletes are already putting in the work.</h3>
+          <p class="why-caption__text" id="why-caption-text">
+            Practice, repetition, coaching, movement, and discipline already exist before Momentum enters the picture.
           </p>
         </div>
-      </article>
-    </div>
-
-    <div class="impactProof">
-      <div class="impactProof__item">
-        <span class="impactProof__label">Already happening</span>
-        <strong class="impactProof__value">Athlete training</strong>
-      </div>
-
-      <div class="impactProof__divider"></div>
-
-      <div class="impactProof__item">
-        <span class="impactProof__label">Momentum translates it</span>
-        <strong class="impactProof__value">Into academic structure</strong>
-      </div>
-
-      <div class="impactProof__divider"></div>
-
-      <div class="impactProof__item">
-        <span class="impactProof__label">Families feel the difference</span>
-        <strong class="impactProof__value">As earned academic credit</strong>
       </div>
     </div>
   </div>
