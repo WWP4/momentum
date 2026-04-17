@@ -415,8 +415,7 @@ export const COURSES = [
       { n: 10, title: "Self-Control", prompt: "Describe one moment you controlled your emotions instead of reacting.", subtitle: "Show a moment of restraint and maturity." },
       { n: 11, title: "Ethical Decision", prompt: "What ethical choice did you face, and what did you choose?", subtitle: "Reflect on a right-versus-easy decision." },
       { n: 12, title: "Words That Matter", prompt: "Share a moment when your words built someone up — or tore someone down. What did you learn?", subtitle: "Analyze the impact of your words." },
-      { n: 13, title: "Compassion", prompt: "Describe a moment when you helped or comforted a teammate.", subtitle: "Reflect on compassion
-              { n: 13, title: "Compassion", prompt: "Describe a moment when you helped or comforted a teammate.", subtitle: "Reflect on compassion shown in a real team moment." },
+      { n: 13, title: "Compassion", prompt: "Describe a moment when you helped or comforted a teammate.", subtitle: "Reflect on compassion shown in a real team moment." },
       { n: 14, title: "Personal Weakness", prompt: "Which character trait needs the most growth in your life right now?", subtitle: "Identify a character area that still needs work." },
       { n: 15, title: "Personal Strength", prompt: "Which character trait do you feel proud of developing?", subtitle: "Reflect on a trait that has grown stronger." },
       { n: 16, title: "Role Model", prompt: "Who do you look up to for character? What quality do they show that you want?", subtitle: "Identify a role model and the trait you admire." },
@@ -429,9 +428,8 @@ export const COURSES = [
       title: "Exit Exam — Sportsmanship & Character Development",
       prompt: "Write a one-page reflection about how your character developed through sports this season. Include a moment where your character was tested, a moment when you displayed respect or maturity, a mistake or failure you learned from, how your attitude and emotional responses evolved, the character traits you want to continue building, and how you want to treat others moving forward."
     }
-  }, 
-
-  ,  {
+  },
+  {
     id: "team-dynamics-communication",
     title: "Team Dynamics & Communication",
     credit: "1.0",
