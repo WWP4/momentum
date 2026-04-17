@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="generator.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <link rel="stylesheet" href="portal.css" />
 </head>
 <body>
@@ -20,31 +21,95 @@
       </div>
     </header>
 
-    <section class="section section--hero portalHero" aria-labelledby="headline">
-      <div class="section__inner heroBlock">
-        <div class="portalBrandRow">
-          <div id="clubLogoWrap" class="clubLogoWrap" hidden>
-            <img id="clubLogo" alt="Club logo" />
-          </div>
-          <div class="brandDivider" aria-hidden="true">×</div>
-          <div class="momentumWordmark">Momentum</div>
+  <!-- AOS -->
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+<section class="partner-hero" id="partnerHero">
+  <div class="partner-hero__bg"></div>
+  <div class="partner-hero__grid">
+
+    <div class="partner-hero__left">
+      <div class="partner-hero__brandRow" data-aos="fade-up" data-aos-duration="900">
+        <div class="partner-hero__clubMark" id="clubLogoWrap" hidden>
+          <img id="clubLogo" alt="Club logo" />
         </div>
 
-        <div class="heroContent">
-          <p class="eyebrow" id="sport">Club Partnership</p>
-          <h1 class="heroTitle" id="headline">Your athlete pathway starts here.</h1>
-          <div class="headlineRule"></div>
-          <p class="heroSub" id="copy"></p>
-
-          <div class="heroActions">
-            <a class="btn btn--primary" href="#courses">Explore Courses</a>
-            <a class="btn btn--ghost" href="#partnerContact">Talk to Our Team</a>
-          </div>
-
-          <div class="partnerContact" id="partnerContact"></div>
+        <div class="partner-hero__brandLockup">
+          <span class="partner-hero__brandName" id="clubNameText">GLCA</span>
+          <span class="partner-hero__brandX">×</span>
+          <span class="partner-hero__brandMomentum">Momentum</span>
         </div>
       </div>
-    </section>
+
+      <div class="partner-hero__eyebrowWrap" data-aos="fade-up" data-aos-delay="80" data-aos-duration="900">
+        <p class="partner-hero__eyebrow" id="sport">Club Partner Portal</p>
+      </div>
+
+      <div class="partner-hero__headlineWrap" data-aos="fade-up" data-aos-delay="140" data-aos-duration="1000">
+        <h1 class="partner-hero__title" id="headline">
+          Turn athlete development into something academically visible.
+        </h1>
+      </div>
+
+      <div class="partner-hero__copyWrap" data-aos="fade-up" data-aos-delay="220" data-aos-duration="1000">
+        <p class="partner-hero__copy" id="copy">
+          Explore Momentum courses available through this club partnership and find the academic path that fits your athlete’s training.
+        </p>
+      </div>
+
+      <div class="partner-hero__actions" data-aos="fade-up" data-aos-delay="280" data-aos-duration="1000">
+        <a href="#portalCourses" class="partner-hero__btn partner-hero__btn--primary">View Available Classes</a>
+        <a href="#portalAbout" class="partner-hero__btn partner-hero__btn--ghost">How It Works</a>
+      </div>
+
+      <div class="partner-hero__meta" data-aos="fade-up" data-aos-delay="340" data-aos-duration="1000">
+        <div class="partner-hero__metaItem">
+          <span class="partner-hero__metaLabel">Built for</span>
+          <span class="partner-hero__metaValue" id="heroClubName">GLCA Families</span>
+        </div>
+        <div class="partner-hero__metaDivider"></div>
+        <div class="partner-hero__metaItem">
+          <span class="partner-hero__metaLabel">Contact</span>
+          <span class="partner-hero__metaValue" id="contact">Contact your club representative</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="partner-hero__right">
+      <div class="partner-hero__visual" data-aos="zoom-out" data-aos-delay="120" data-aos-duration="1200">
+        <div class="partner-hero__visualFrame"></div>
+
+        <div class="partner-hero__card partner-hero__card--front">
+          <span class="partner-hero__cardKicker">Eligible Credit Paths</span>
+          <h2 class="partner-hero__cardTitle">A clearer path for families.</h2>
+          <p class="partner-hero__cardText">
+            Structured courses designed around the training athletes are already doing.
+          </p>
+
+          <div class="partner-hero__stats">
+            <div class="partner-hero__stat">
+              <span class="partner-hero__statNo">01</span>
+              <span class="partner-hero__statText">Club-approved course access</span>
+            </div>
+            <div class="partner-hero__stat">
+              <span class="partner-hero__statNo">02</span>
+              <span class="partner-hero__statText">Academic structure around training</span>
+            </div>
+            <div class="partner-hero__stat">
+              <span class="partner-hero__statNo">03</span>
+              <span class="partner-hero__statText">Simple enrollment for parents</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="partner-hero__card partner-hero__card--back">
+          <div class="partner-hero__backLines"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
     <section class="section portalCourses" id="courses" aria-labelledby="coursesHeading">
       <div class="section__inner">
@@ -59,5 +124,15 @@
   </main>
 
   <script type="module" src="portal.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    once: true,
+    duration: 1000,
+    easing: 'cubic-bezier(.22,.61,.36,1)',
+    offset: 40
+  });
+</script>
+
 </body>
 </html>
