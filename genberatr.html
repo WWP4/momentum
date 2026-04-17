@@ -342,71 +342,123 @@
 </main>
 
 <section class="section section--impact" id="whySection">
-  <div class="impactBackdrop" aria-hidden="true">
-    <svg class="impactSvg" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="impactLine" x1="240" y1="620" x2="1180" y2="260" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.08)" />
-          <stop offset="45%" stop-color="rgba(255,255,255,0.34)" />
-          <stop offset="100%" stop-color="rgba(255,255,255,0.08)" />
-        </linearGradient>
-        <radialGradient id="impactGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(760 420) rotate(90) scale(280 540)">
-          <stop offset="0%" stop-color="rgba(255,255,255,0.16)" />
-          <stop offset="100%" stop-color="rgba(255,255,255,0)" />
-        </radialGradient>
-      </defs>
-
-      <rect x="0" y="0" width="1440" height="900" fill="transparent"></rect>
-
-      <circle cx="760" cy="420" r="280" fill="url(#impactGlow)"></circle>
-
-      <path class="impactTrail trail-1" d="M180 650C320 650 410 590 520 550C620 515 710 485 790 430C880 370 960 310 1260 250" stroke="url(#impactLine)" stroke-width="1.2" />
-      <path class="impactTrail trail-2" d="M210 730C360 710 470 650 560 600C665 540 730 500 845 425C940 360 1060 300 1290 240" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
-      <path class="impactTrail trail-3" d="M120 560C290 560 400 525 525 470C655 415 730 390 825 340C955 270 1090 220 1320 170" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
-
-      <g class="impactNodes">
-        <circle cx="320" cy="620" r="6"></circle>
-        <circle cx="760" cy="420" r="7"></circle>
-        <circle cx="1140" cy="285" r="6"></circle>
-      </g>
-    </svg>
+  <div class="impactBackground" aria-hidden="true">
+    <div class="impactField">
+      <span class="fieldLine fieldLine--top"></span>
+      <span class="fieldLine fieldLine--mid"></span>
+      <span class="fieldLine fieldLine--bottom"></span>
+      <span class="fieldCircle"></span>
+    </div>
   </div>
 
   <div class="section__inner impactInner reveal">
-    <div class="impactTop">
+    <div class="impactIntro">
       <p class="eyebrow eyebrow--light">Why this matters</p>
 
       <h2 class="sectionTitle sectionTitle--light impactTitle">
-        The work is already happening.<br />
-        Momentum gives it academic weight.
+        From the field<br />
+        to earned credit.
       </h2>
 
       <p class="sectionCopy sectionCopy--light impactCopy">
-        Families are already investing time, energy, and money into structured training.
-        Momentum helps turn that commitment into something more tangible — a clearer academic pathway,
-        stronger parent buy-in, and a more valuable club experience.
+        Your athletes are already putting in structured time, discipline, and measurable effort.
+        Momentum helps turn that work into a clearer academic outcome families can actually see and value.
       </p>
     </div>
 
-    <div class="impactRail">
-      <div class="impactRail__item">
-        <span class="impactRail__label">What already exists</span>
-        <strong class="impactRail__value">Training Commitment</strong>
+    <div class="impactJourney" aria-label="How Momentum turns training into academic credit">
+      <div class="impactStage impactStage--field">
+        <div class="impactStage__visual">
+          <div class="fieldMini">
+            <span class="fieldMini__line fieldMini__line--one"></span>
+            <span class="fieldMini__line fieldMini__line--two"></span>
+            <span class="fieldMini__circle"></span>
+            <span class="fieldMini__ball"></span>
+          </div>
+        </div>
+
+        <div class="impactStage__content">
+          <span class="impactStage__eyebrow">What is already happening</span>
+          <h3 class="impactStage__title">Training Commitment</h3>
+          <p class="impactStage__text">
+            Practice hours, coaching, repetition, structure, and athlete discipline are already in motion.
+          </p>
+        </div>
       </div>
 
-      <div class="impactRail__divider"></div>
-
-      <div class="impactRail__item">
-        <span class="impactRail__label">What Momentum adds</span>
-        <strong class="impactRail__value">Academic Structure</strong>
+      <div class="impactConnector" aria-hidden="true">
+        <span class="impactConnector__line"></span>
+        <span class="impactConnector__dot"></span>
       </div>
 
-      <div class="impactRail__divider"></div>
+      <div class="impactStage impactStage--momentum">
+        <div class="impactStage__visual">
+          <div class="momentumFrame">
+            <span class="momentumFrame__line"></span>
+            <span class="momentumFrame__line"></span>
+            <span class="momentumFrame__line"></span>
+            <span class="momentumFrame__badge">Momentum</span>
+          </div>
+        </div>
 
-      <div class="impactRail__item">
-        <span class="impactRail__label">Why families care</span>
-        <strong class="impactRail__value">More Value From The Same Effort</strong>
+        <div class="impactStage__content">
+          <span class="impactStage__eyebrow">What Momentum adds</span>
+          <h3 class="impactStage__title">Structured Academic Framework</h3>
+          <p class="impactStage__text">
+            Training becomes organized into guided modules, reflection, evaluation, and a clear educational pathway.
+          </p>
+        </div>
+      </div>
+
+      <div class="impactConnector" aria-hidden="true">
+        <span class="impactConnector__line"></span>
+        <span class="impactConnector__dot"></span>
+      </div>
+
+      <div class="impactStage impactStage--credit">
+        <div class="impactStage__visual">
+          <div class="creditCard">
+            <div class="creditCard__top">
+              <span class="creditCard__label">Academic Outcome</span>
+              <strong class="creditCard__value">1.0 Credit Earned</strong>
+            </div>
+
+            <div class="creditCard__rows">
+              <span class="creditCard__row"></span>
+              <span class="creditCard__row"></span>
+              <span class="creditCard__row"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="impactStage__content">
+          <span class="impactStage__eyebrow">What families can point to</span>
+          <h3 class="impactStage__title">Visible Academic Value</h3>
+          <p class="impactStage__text">
+            The same commitment now leads to something more tangible — clearer progress, stronger parent buy-in, and earned value beyond the field.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="impactProof">
+      <div class="impactProof__item">
+        <span class="impactProof__label">Already happening</span>
+        <strong class="impactProof__value">Athlete training</strong>
+      </div>
+
+      <div class="impactProof__divider"></div>
+
+      <div class="impactProof__item">
+        <span class="impactProof__label">Momentum translates it</span>
+        <strong class="impactProof__value">Into academic structure</strong>
+      </div>
+
+      <div class="impactProof__divider"></div>
+
+      <div class="impactProof__item">
+        <span class="impactProof__label">Families feel the difference</span>
+        <strong class="impactProof__value">As earned academic credit</strong>
       </div>
     </div>
   </div>
