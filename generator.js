@@ -1,4 +1,3 @@
-const body = document.body;
 const svg = document.getElementById('momentumLogo');
 const clubForm = document.getElementById('clubForm');
 const resultSection = document.getElementById('resultSection');
@@ -8,22 +7,19 @@ const editFormBtn = document.getElementById('editFormBtn');
 const scrollButtons = document.querySelectorAll('[data-scroll]');
 const revealEls = document.querySelectorAll('.reveal');
 
-const logoConfig = {
-  symbolDelay: 140,
-  wordDelay: 520,
-  introDuration: 3200,
-  ...window.generatorLogoConfig
-};
-
 function prepAndPlayLogo() {
   if (!svg) return;
 
-  const strokePaths = Array.from(svg.querySelectorAll('.logo-stroke'));
-  const fillPaths = Array.from(svg.querySelectorAll('.logo-fill'));
-  const wordmarkPaths = Array.from(svg.querySelectorAll('.logo-word'));
+  const paths = Array.from(svg.querySelectorAll('.draw'));
 
-  // Prep all animated paths
-  [...strokePaths, ...fillPaths, ...wordmarkPaths].forEach((path) => {
+  const baseDelay = 450;
+  const step = 160;
+  const drawDur = 5200;
+  const fillDur = 1500;
+  const fillDelayRed = 3200;
+  const fillDelayOther = 3600;
+
+  paths.forEach((path, i) => {
     let len = 1000;
 
     try {
@@ -31,23 +27,20 @@ function prepAndPlayLogo() {
     } catch (e) {}
 
     path.style.setProperty('--len', len);
-    path.style.strokeDasharray = `${len}`;
-    path.style.strokeDashoffset = `${len}`;
-  });
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
 
-  // Symbol strokes first
-  strokePaths.forEach((path, index) => {
-    path.style.setProperty('--delay', `${logoConfig.symbolDelay + index * 120}ms`);
-  });
+    path.style.setProperty('--drawDur', `${drawDur}ms`);
+    path.style.setProperty('--fillDur', `${fillDur}ms`);
 
-  // Solid symbol fill next
-  fillPaths.forEach((path, index) => {
-    path.style.setProperty('--delay', `${520 + index * 120}ms`);
-  });
+    const delay = baseDelay + (i * step);
+    path.style.setProperty('--delay', `${delay}ms`);
 
-  // Wordmark after the symbol
-  wordmarkPaths.forEach((path, index) => {
-    path.style.setProperty('--delay', `${logoConfig.wordDelay + index * 70}ms`);
+    const fillDelay = path.classList.contains('is-red')
+      ? fillDelayRed
+      : fillDelayOther;
+
+    path.style.setProperty('--fillDelay', `${fillDelay}ms`);
   });
 
   svg.classList.remove('play');
@@ -55,29 +48,32 @@ function prepAndPlayLogo() {
   svg.classList.add('play');
 }
 
-function finishIntro() {
-  body.classList.add('intro-complete');
-}
-
 function handleScrollButtons() {
   scrollButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const target = document.querySelector(btn.dataset.scroll);
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       }
     });
   });
 }
 
 function setupReveals() {
+  if (!revealEls.length) return;
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
       }
     });
-  }, { threshold: 0.18 });
+  }, {
+    threshold: 0.18
+  });
 
   revealEls.forEach((el) => observer.observe(el));
 }
@@ -102,7 +98,7 @@ ${data.contactEmail}`;
 }
 
 function handleForm() {
-  if (!clubForm) return;
+  if (!clubForm || !messageOutput || !resultSection) return;
 
   clubForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -121,13 +117,16 @@ function handleForm() {
     resultSection.hidden = false;
 
     setTimeout(() => {
-      resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      resultSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     }, 80);
   });
 }
 
 function handleCopy() {
-  if (!copyMessageBtn) return;
+  if (!copyMessageBtn || !messageOutput) return;
 
   copyMessageBtn.addEventListener('click', async () => {
     const text = messageOutput.textContent || '';
@@ -155,7 +154,10 @@ function handleEdit() {
   editFormBtn.addEventListener('click', () => {
     const formSection = document.getElementById('formSection');
     if (formSection) {
-      formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      formSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
   });
 }
@@ -167,8 +169,4 @@ window.addEventListener('load', () => {
   handleForm();
   handleCopy();
   handleEdit();
-
-  setTimeout(() => {
-    finishIntro();
-  }, logoConfig.introDuration);
 });
