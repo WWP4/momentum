@@ -7,35 +7,47 @@ const copyMessageBtn = document.getElementById('copyMessageBtn');
 const editFormBtn = document.getElementById('editFormBtn');
 const scrollButtons = document.querySelectorAll('[data-scroll]');
 const revealEls = document.querySelectorAll('.reveal');
-const logoConfig = window.generatorLogoConfig || {};
+
+const logoConfig = {
+  symbolDelay: 140,
+  wordDelay: 520,
+  introDuration: 3200,
+  ...window.generatorLogoConfig
+};
 
 function prepAndPlayLogo() {
   if (!svg) return;
 
-  const paths = Array.from(svg.querySelectorAll('.draw'));
-  const baseDelay = 300;
-  const step = 120;
-  const drawDur = 1850;
-  const fillDur = 520;
-  const fillDelay = 1420;
-  const strokeFadeDelay = 1780;
+  const strokePaths = Array.from(svg.querySelectorAll('.logo-stroke'));
+  const fillPaths = Array.from(svg.querySelectorAll('.logo-fill'));
+  const wordmarkPaths = Array.from(svg.querySelectorAll('.logo-word'));
 
-  paths.forEach((p, i) => {
+  // Prep all animated paths
+  [...strokePaths, ...fillPaths, ...wordmarkPaths].forEach((path) => {
     let len = 1000;
+
     try {
-      len = Math.ceil(p.getTotalLength());
+      len = Math.ceil(path.getTotalLength());
     } catch (e) {}
 
-    p.style.setProperty('--len', len);
-    p.style.strokeDasharray = len;
-    p.style.strokeDashoffset = len;
-    p.style.setProperty('--drawDur', `${drawDur}ms`);
-    p.style.setProperty('--fillDur', `${fillDur}ms`);
+    path.style.setProperty('--len', len);
+    path.style.strokeDasharray = `${len}`;
+    path.style.strokeDashoffset = `${len}`;
+  });
 
-    const delay = baseDelay + (i * step);
-    p.style.setProperty('--delay', `${delay}ms`);
-    p.style.setProperty('--fillDelay', `${fillDelay}ms`);
-    p.style.setProperty('--strokeFadeDelay', `${strokeFadeDelay}ms`);
+  // Symbol strokes first
+  strokePaths.forEach((path, index) => {
+    path.style.setProperty('--delay', `${logoConfig.symbolDelay + index * 120}ms`);
+  });
+
+  // Solid symbol fill next
+  fillPaths.forEach((path, index) => {
+    path.style.setProperty('--delay', `${520 + index * 120}ms`);
+  });
+
+  // Wordmark after the symbol
+  wordmarkPaths.forEach((path, index) => {
+    path.style.setProperty('--delay', `${logoConfig.wordDelay + index * 70}ms`);
   });
 
   svg.classList.remove('play');
@@ -65,9 +77,7 @@ function setupReveals() {
         entry.target.classList.add('is-visible');
       }
     });
-  }, {
-    threshold: 0.18
-  });
+  }, { threshold: 0.18 });
 
   revealEls.forEach((el) => observer.observe(el));
 }
@@ -121,14 +131,17 @@ function handleCopy() {
 
   copyMessageBtn.addEventListener('click', async () => {
     const text = messageOutput.textContent || '';
+
     try {
       await navigator.clipboard.writeText(text);
       copyMessageBtn.textContent = 'Copied';
+
       setTimeout(() => {
         copyMessageBtn.textContent = 'Copy Message';
       }, 1400);
     } catch (err) {
       copyMessageBtn.textContent = 'Copy Failed';
+
       setTimeout(() => {
         copyMessageBtn.textContent = 'Copy Message';
       }, 1400);
@@ -157,5 +170,5 @@ window.addEventListener('load', () => {
 
   setTimeout(() => {
     finishIntro();
-  }, 4300);
+  }, logoConfig.introDuration);
 });
