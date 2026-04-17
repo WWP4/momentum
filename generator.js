@@ -7,6 +7,7 @@ const copyMessageBtn = document.getElementById('copyMessageBtn');
 const editFormBtn = document.getElementById('editFormBtn');
 const scrollButtons = document.querySelectorAll('[data-scroll]');
 const revealEls = document.querySelectorAll('.reveal');
+const logoConfig = window.generatorLogoConfig || {};
 
 function prepAndPlayLogo() {
   if (!svg) return;
