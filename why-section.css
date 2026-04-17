@@ -581,3 +581,28 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.why-stage {
+  --why-progress: 0;
+}
+
+.why-stage .why-frame {
+  transform:
+    rotateX(calc(16deg - (var(--why-progress) * 6deg)))
+    rotateY(calc(-10deg + (var(--why-progress) * 18deg)))
+    translateY(calc(var(--why-progress) * -10px));
+}
+
+.why-stage .why-grid {
+  transform:
+    rotateX(calc(16deg - (var(--why-progress) * 6deg)))
+    rotateY(calc(-10deg + (var(--why-progress) * 18deg)))
+    translateZ(26px)
+    translateY(calc(var(--why-progress) * -8px));
+  opacity: calc(0.16 + (var(--why-progress) * 0.14));
+}
+
+.why-stage .why-progress span {
+  transform: translateX(calc(var(--why-progress) * 200%));
+}
