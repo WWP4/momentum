@@ -2,99 +2,92 @@
   const section = document.querySelector('.why-section');
   if (!section) return;
 
-  const runner = section.querySelector('.why-icon--runner');
-  const structure = section.querySelector('.why-icon--structure');
-  const result = section.querySelector('.why-icon--result');
+  const stage = section.querySelector('#whyStage');
+  const stepButtons = Array.from(section.querySelectorAll('.why-step'));
+  const icons = Array.from(section.querySelectorAll('.why-icon'));
 
-  const title = section.querySelector('.why-title');
-  const copy = section.querySelector('.why-copy');
+  const eyebrow = section.querySelector('#why-caption-eyebrow');
+  const title = section.querySelector('#why-caption-title');
+  const text = section.querySelector('#why-caption-text');
 
   const states = [
     {
-      title: "Athletes are already doing the work.",
-      copy:
-        "Structured training, repetition, coaching, and discipline already exist before Momentum.",
-      show: runner
+      eyebrow: 'Training reality',
+      title: 'Athletes are already putting in the work.',
+      text: 'Practice, repetition, coaching, movement, and discipline already exist before Momentum enters the picture.',
+      icon: '0'
     },
     {
-      title: "Momentum brings structure to that effort.",
-      copy:
-        "Training becomes organized into modules, evaluation, and a defined academic pathway.",
-      show: structure
+      eyebrow: 'Academic structure',
+      title: 'Momentum gives that effort a formal framework.',
+      text: 'Training becomes organized into a clearer academic path with structure, sequence, and evaluation.',
+      icon: '1'
     },
     {
-      title: "The result is real academic credit.",
-      copy:
-        "What was already happening now leads to something measurable, recognized, and valuable.",
-      show: result
+      eyebrow: 'Visible outcome',
+      title: 'The result becomes clearer, measurable, and more valuable.',
+      text: 'What families already invest in starts to look more legible, more credible, and more academically meaningful.',
+      icon: '2'
     }
   ];
 
-  let currentState = -1;
+  let current = -1;
+  let ticking = false;
 
   function setState(index) {
-    if (index === currentState) return;
-    currentState = index;
-
-    // hide all icons
-    [runner, structure, result].forEach((el) => {
-      if (!el) return;
-      el.style.opacity = 0;
-      el.style.transform = "translateY(10px) scale(0.98)";
-    });
+    if (index === current || !states[index]) return;
+    current = index;
 
     const state = states[index];
 
-    // show active icon
-    if (state.show) {
-      state.show.style.opacity = 1;
-      state.show.style.transform = "translateY(0) scale(1)";
-    }
+    stage.setAttribute('data-step', String(index));
 
-    // update text (fade out → in)
-    if (title && copy) {
-      title.style.opacity = 0;
-      copy.style.opacity = 0;
+    stepButtons.forEach((btn, i) => {
+      btn.classList.toggle('is-active', i === index);
+    });
 
-      setTimeout(() => {
-        title.textContent = state.title;
-        copy.textContent = state.copy;
+    icons.forEach((icon) => {
+      icon.classList.toggle('is-live', icon.dataset.icon === state.icon);
+    });
 
-        title.style.opacity = 1;
-        copy.style.opacity = 1;
-      }, 120);
-    }
+    if (eyebrow) eyebrow.textContent = state.eyebrow;
+    if (title) title.textContent = state.title;
+    if (text) text.textContent = state.text;
   }
 
-  function handleScroll() {
+  function getScrollIndex() {
     const rect = section.getBoundingClientRect();
     const vh = window.innerHeight;
 
-    // progress 0 → 1 through section
     const progress = Math.min(
       Math.max((vh - rect.top) / (vh + rect.height), 0),
       1
     );
 
-    let index = 0;
-
-    if (progress < 0.33) {
-      index = 0;
-    } else if (progress < 0.66) {
-      index = 1;
-    } else {
-      index = 2;
-    }
-
-    setState(index);
+    if (progress < 0.34) return 0;
+    if (progress < 0.68) return 1;
+    return 2;
   }
 
-  // initial
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+
+    requestAnimationFrame(() => {
+      setState(getScrollIndex());
+      ticking = false;
+    });
+  }
+
+  stepButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const index = Number(btn.dataset.step || 0);
+      setState(index);
+    });
+  });
+
   setState(0);
-
-  // scroll listener
-  window.addEventListener('scroll', handleScroll, { passive: true });
-
-  // also run on load in case already in view
-  window.addEventListener('load', handleScroll);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  window.addEventListener('load', onScroll);
 })();
