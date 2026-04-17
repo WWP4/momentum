@@ -100,9 +100,10 @@ body.intro-complete .intro{
 .logoSvg .draw{
   fill-opacity:0;
   stroke:rgba(255,255,255,.82);
-  stroke-width:2.2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+  stroke-width:2;
+  stroke-linecap:butt;
+  stroke-linejoin:miter;
+  stroke-miterlimit:3;
   vector-effect:non-scaling-stroke;
   paint-order:stroke;
 }
