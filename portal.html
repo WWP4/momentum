@@ -3,33 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Club Portal</title>
+  <title>Momentum Partnership Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="generator.css" />
   <link rel="stylesheet" href="portal.css" />
 </head>
 <body>
-
-  <main id="portal">
-
-    <section class="portalHero">
-      <div class="logos">
-        <div id="clubLogoWrap" hidden>
-          <img id="clubLogo" />
+  <main class="portalPage" id="portal">
+    <header class="utilityBar" role="banner">
+      <div class="utilityBar__inner">
+        <div class="utilityBar__left">
+          <span class="utilityBar__eyebrow">Momentum x Club Partner Portal</span>
         </div>
-        <div class="divider">×</div>
-        <div class="momentum">Momentum</div>
+        <div class="utilityBar__right" id="portalMeta"></div>
       </div>
+    </header>
 
-      <p id="sport"></p>
-      <h1 id="headline"></h1>
-      <p id="copy"></p>
-      <p id="contact"></p>
+    <section class="section section--hero portalHero" aria-labelledby="headline">
+      <div class="section__inner heroBlock">
+        <div class="portalBrandRow">
+          <div id="clubLogoWrap" class="clubLogoWrap" hidden>
+            <img id="clubLogo" alt="Club logo" />
+          </div>
+          <div class="brandDivider" aria-hidden="true">×</div>
+          <div class="momentumWordmark">Momentum</div>
+        </div>
+
+        <div class="heroContent">
+          <p class="eyebrow" id="sport">Club Partnership</p>
+          <h1 class="heroTitle" id="headline">Your athlete pathway starts here.</h1>
+          <div class="headlineRule"></div>
+          <p class="heroSub" id="copy"></p>
+
+          <div class="heroActions">
+            <a class="btn btn--primary" href="#courses">Explore Courses</a>
+            <a class="btn btn--ghost" href="#partnerContact">Talk to Our Team</a>
+          </div>
+
+          <div class="partnerContact" id="partnerContact"></div>
+        </div>
+      </div>
     </section>
 
-    <section class="courses">
-      <h2>Available Courses</h2>
-      <div id="coursesGrid"></div>
-    </section>
+    <section class="section portalCourses" id="courses" aria-labelledby="coursesHeading">
+      <div class="section__inner">
+        <p class="eyebrow">Partner Curriculum</p>
+        <h2 class="sectionTitle" id="coursesHeading">Built for your club. Backed by Momentum.</h2>
+        <p class="coursesIntro">Select from your tailored course lineup and enroll with your club's preferred partner pricing.</p>
 
+        <div class="coursesStats" id="coursesStats"></div>
+        <div id="coursesGrid" class="coursesGrid"></div>
+      </div>
+    </section>
   </main>
 
   <script type="module" src="portal.js"></script>
