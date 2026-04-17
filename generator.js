@@ -158,37 +158,44 @@ function renderPortal(data) {
 function handleForm() {
   if (!clubForm || !resultSection) return;
 
-  clubForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+ clubForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData(clubForm);
-    const clubLogoFile = formData.get('clubLogo');
+  const formData = new FormData(clubForm);
+  const clubLogoFile = formData.get('clubLogo');
 
-    const data = {
-      clubName: formData.get('clubName')?.toString().trim() || '',
-      sportType: formData.get('sportType')?.toString().trim() || '',
-      contactName: formData.get('contactName')?.toString().trim() || '',
-      contactEmail: formData.get('contactEmail')?.toString().trim() || '',
-      clubMessage: formData.get('clubMessage')?.toString().trim() || '',
-      heroHeadline: formData.get('heroHeadline')?.toString().trim() || '',
-      portalPrice: formData.get('portalPrice')?.toString().trim() || '395',
-      buttonText: formData.get('buttonText')?.toString().trim() || 'Enroll Now',
-      selectedCourses: getSelectedCourses(formData),
-      clubLogo: await readLogoFile(clubLogoFile instanceof File ? clubLogoFile : null)
+  const data = {
+    clubName: formData.get('clubName')?.toString().trim() || '',
+    sportType: formData.get('sportType')?.toString().trim() || '',
+    contactName: formData.get('contactName')?.toString().trim() || '',
+    contactEmail: formData.get('contactEmail')?.toString().trim() || '',
+    clubMessage: formData.get('clubMessage')?.toString().trim() || '',
+    heroHeadline: formData.get('heroHeadline')?.toString().trim() || '',
+    portalPrice: formData.get('portalPrice')?.toString().trim() || '395',
+    buttonText: formData.get('buttonText')?.toString().trim() || 'Enroll Now',
+    selectedCourses: formData.getAll('selectedCourses')
+  };
+
+  // handle logo
+  if (clubLogoFile instanceof File && clubLogoFile.size > 0) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      data.clubLogo = reader.result;
+      saveAndRedirect(data);
     };
+    reader.readAsDataURL(clubLogoFile);
+  } else {
+    data.clubLogo = '';
+    saveAndRedirect(data);
+  }
+});
 
-    renderPortal(data);
-    resultSection.hidden = false;
+function saveAndRedirect(data) {
+  localStorage.setItem('momentum_portal_data', JSON.stringify(data));
 
-    requestAnimationFrame(() => {
-      resultSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    });
-  });
+  // redirect to portal page
+  window.location.href = 'portal.html';
 }
-
 function handleEdit() {
   if (!editFormBtn) return;
 
