@@ -5,7 +5,6 @@
   const stage = section.querySelector('#whyStage');
   const stepButtons = Array.from(section.querySelectorAll('.why-step'));
   const icons = Array.from(section.querySelectorAll('.why-icon'));
-
   const eyebrow = section.querySelector('#why-caption-eyebrow');
   const title = section.querySelector('#why-caption-title');
   const text = section.querySelector('#why-caption-text');
@@ -34,10 +33,11 @@
   let current = -1;
 
   function setState(index) {
-    if (index === current || !states[index]) return;
+    if (!states[index] || index === current) return;
     current = index;
 
     const state = states[index];
+
     stage.setAttribute('data-step', String(index));
 
     stepButtons.forEach((btn, i) => {
@@ -54,36 +54,40 @@
   }
 
   function getPinnedProgress() {
-    const rect = section.getBoundingClientRect();
     const total = section.offsetHeight - window.innerHeight;
-
     if (total <= 0) return 0;
 
+    const rect = section.getBoundingClientRect();
     const scrolled = Math.min(Math.max(-rect.top, 0), total);
+
     return scrolled / total;
   }
 
   function updateFromScroll() {
+    if (window.innerWidth <= 1040) {
+      stage.style.setProperty('--why-progress', '0');
+      setState(0);
+      return;
+    }
+
     const progress = getPinnedProgress();
 
     let index = 0;
-    if (progress < 0.33) index = 0;
-    else if (progress < 0.66) index = 1;
-    else index = 2;
+    if (progress >= 0.66) index = 2;
+    else if (progress >= 0.33) index = 1;
 
     setState(index);
-
     stage.style.setProperty('--why-progress', progress.toFixed(4));
   }
 
   stepButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const index = Number(btn.dataset.step || 0);
-      setState(index);
+      if (window.innerWidth <= 1040) return;
 
+      const index = Number(btn.dataset.step || 0);
       const total = section.offsetHeight - window.innerHeight;
       const targets = [0, 0.5, 1];
-      const y = section.offsetTop + total * targets[index];
+      const y = section.offsetTop + (total * targets[index]);
 
       window.scrollTo({
         top: y,
