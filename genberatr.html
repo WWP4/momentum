@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <link rel="stylesheet" href="generator.css" />
   <link rel="stylesheet" href="why-section.css" />
   <style>
@@ -574,20 +575,31 @@
 
     <div class="portalPreview" id="portalPreview">
       <section class="portalHero">
-        <div class="portalHero__logos">
-          <div class="portalHero__clubLogoWrap" id="portalClubLogoWrap" hidden>
-            <img id="portalClubLogo" alt="Club logo">
+        <div class="portalHero__backdrop"></div>
+        <div class="portalHero__content">
+          <div class="portalHero__main">
+            <div class="portalHero__logos" data-aos="fade-right" data-aos-duration="900">
+              <div class="portalHero__clubLogoWrap" id="portalClubLogoWrap" hidden>
+                <img id="portalClubLogo" alt="Club logo">
+              </div>
+
+              <div class="portalHero__divider">×</div>
+
+              <div class="portalHero__momentum">Momentum</div>
+            </div>
+
+            <p class="portalHero__eyebrow" id="portalSport" data-aos="fade-up" data-aos-delay="80">Club Partner Portal</p>
+            <h3 class="portalHero__title" id="portalHeadline" data-aos="fade-up" data-aos-delay="140"></h3>
+            <p class="portalHero__copy" id="portalCopy" data-aos="fade-up" data-aos-delay="220"></p>
+            <p class="portalHero__contact" id="portalContact" data-aos="fade-up" data-aos-delay="280"></p>
           </div>
 
-          <div class="portalHero__divider">×</div>
-
-          <div class="portalHero__momentum">Momentum</div>
+          <aside class="portalHero__sideCard" data-aos="zoom-in-left" data-aos-duration="900" data-aos-delay="180">
+            <p class="portalHero__sideKicker">Elevated Partner Experience</p>
+            <h4 class="portalHero__sideTitle">GLCA × Momentum</h4>
+            <p class="portalHero__sideCopy">Big, bold, and premium—built to make your families feel immediate confidence in your academic-athletic pathway.</p>
+          </aside>
         </div>
-
-        <p class="portalHero__eyebrow" id="portalSport">Club Partner Portal</p>
-        <h3 class="portalHero__title" id="portalHeadline"></h3>
-        <p class="portalHero__copy" id="portalCopy"></p>
-        <p class="portalHero__contact" id="portalContact"></p>
       </section>
 
       <section class="portalCourses">
@@ -618,6 +630,16 @@
       fillDelayOther: 4300,
       introDuration: 8200
     };
+  </script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    if (window.AOS) {
+      window.AOS.init({
+        duration: 900,
+        once: true,
+        easing: "ease-out-cubic"
+      });
+    }
   </script>
  <script type="module" src="generator.js"></script>
   <script src="why-section.js"></script>
