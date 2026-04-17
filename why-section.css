@@ -468,3 +468,13 @@
     filter: none !important;
   }
 }
+
+.why-icon {
+  transition: opacity 0.6s cubic-bezier(.22,.61,.36,1),
+              transform 0.6s cubic-bezier(.22,.61,.36,1);
+}
+
+.why-title,
+.why-copy {
+  transition: opacity 0.4s ease;
+}
