@@ -512,9 +512,8 @@ export const COURSES = [
       title: "Exit Exam — Team Dynamics & Communication",
       prompt: "Write a one-page summary explaining how your communication and teamwork skills developed this season. Include a communication challenge you faced, how you helped resolve or improve a team situation, what you learned about listening and understanding others, how your relationships with teammates evolved, and the communication habits you want to strengthen moving forward."
     }
-  }
-
-    {
+  },
+  {
     id: "coaching-skills-athlete-mentorship",
     title: "Coaching Skills & Athlete Mentorship",
     credit: "1.0",
@@ -597,9 +596,8 @@ export const COURSES = [
       title: "Exit Exam — Coaching Skills & Athlete Mentorship",
       prompt: "Write a one-page reflection describing your coaching and mentorship journey this season. Include a skill you taught and how you taught it, a mentorship moment that mattered, a challenge you faced while coaching, how your communication and patience grew, a moment where you saw someone improve because of your teaching, and the type of coach or mentor you want to become."
     }
-  }
-
-    {
+  },
+  {
     id: "sports-theory-analysis",
     title: "Sports Theory & Analysis",
     credit: "1.0",
@@ -681,9 +679,8 @@ export const COURSES = [
       title: "Exit Exam — Sports Theory & Analysis",
       prompt: "Write a one-page tactical analysis summarizing what you learned about game strategy and film study this season. Include a film moment you analyzed deeply, a tactical pattern you recognized, a decision-making improvement you made, a strategic mistake you identified, how game IQ changed your performance, and your next step for becoming a smarter athlete."
     }
-  }
-
-    {
+  },
+  {
     id: "sports-psychology-basics",
     title: "Sports Psychology Basics",
     credit: "1.0",
@@ -767,95 +764,8 @@ export const COURSES = [
       title: "Exit Exam — Sports Psychology Basics",
       prompt: "Write a one-page reflection describing how your mindset changed this season. Include a mindset challenge you faced, a mental tool you used that made a difference, how you handled nerves, anxiety, or pressure, a moment when your focus or confidence improved, what you learned about your internal thoughts, and your next step in mental performance development."
     }
-  }
-
-    {
-    id: "sports-psychology-basics",
-    title: "Sports Psychology Basics",
-    credit: "1.0",
-    tagline: "Mindset | Focus | Motivation | Resilience | Competition Anxiety | Goal Setting",
-    description: "A mental-performance training course designed to help athletes strengthen focus, confidence, resilience, emotional control, and the mindset habits that support performance under pressure.",
-    requirements: {
-      credit: ["1.0 Credit = 9,000 minutes", "Available in .25 / .50 versions as well"],
-      qualifyingMinutes: [
-        "Mindset routines",
-        "Visualization sessions",
-        "Breathwork and focus training",
-        "Goal-setting and evaluation",
-        "Pre-competition mental prep",
-        "Post-competition mental review",
-        "Positive self-talk practices",
-        "Anxiety reduction tools",
-        "Mental resilience training",
-        "Journaling or thought-decoding exercises"
-      ],
-      expectations: [
-        "Consistent engagement in mindset exercises",
-        "Honest reflection on internal experiences",
-        "Goal building and evaluation",
-        "Tracking mental performance changes",
-        "Growth in resilience, confidence, or focus"
-      ]
-    },
-    grading: {
-      lab: "60% - Mindset logs, visualization, resilience work, goal-setting, and focus routines",
-      reflection: "20% - Thought patterns, anxiety management, confidence, motivation, and focus awareness",
-      final: "20% - One-page mental performance analysis"
-    },
-    syllabus: {
-      overview: "Teaches athletes how to understand and strengthen the mental side of performance through visualization, breathwork, self-talk, goal setting, focus routines, and resilience practices.",
-      outcomes: [
-        "Use basic sports psychology tools",
-        "Understand and manage competition anxiety",
-        "Build confidence through mindset habits",
-        "Create a personal mental routine",
-        "Stay mentally engaged under pressure",
-        "Demonstrate resilience during setbacks",
-        "Reflect on internal patterns with clarity",
-        "Improve motivation intentionally"
-      ],
-      weekly: [
-        "Weekly mindset exercise",
-        "Reflection on mental performance",
-        "Goal review or adjustment",
-        "Focus or resilience practice",
-        "Thought-pattern analysis"
-      ],
-      materials: [
-        "Notes app or journal",
-        "Space for quiet mental practice",
-        "Access to competitive environments"
-      ]
-    },
-    modules: [
-      { n: 1, title: "Mental Block Awareness", prompt: "Describe a moment when your mind held you back.", subtitle: "Reflect on a mental barrier that affected performance." },
-      { n: 2, title: "Visualization Moment", prompt: "What did you visualize this season, and how did it affect your performance?", subtitle: "Explain how imagery influenced your preparation or execution." },
-      { n: 3, title: "Confidence Check-In", prompt: "When did you feel confident? What thoughts led to it?", subtitle: "Analyze a moment of healthy confidence." },
-      { n: 4, title: "Self-Talk Insight", prompt: "What words or phrases helped you stay focused?", subtitle: "Identify self-talk that supported you." },
-      { n: 5, title: "Pressure Moment", prompt: "Describe how you handled pressure in a key moment.", subtitle: "Reflect on mental performance under pressure." },
-      { n: 6, title: "Anxiety Awareness", prompt: "When did you feel competition nerves? What triggered them?", subtitle: "Analyze a moment of anxiety and its cause." },
-      { n: 7, title: "Breathwork Experience", prompt: "Which breathing technique helped you calm your mind?", subtitle: "Show how breathwork supported regulation." },
-      { n: 8, title: "Focus Strategy", prompt: "What strategy helped you reset your focus?", subtitle: "Identify a mental reset tool that worked." },
-      { n: 9, title: "Mistake Recovery", prompt: "Describe a mistake and how you mentally bounced back.", subtitle: "Reflect on resilience after a setback." },
-      { n: 10, title: "Motivation Pattern", prompt: "What motivates you most — and why?", subtitle: "Explore the source of your motivation." },
-      { n: 11, title: "Goal Setting", prompt: "What meaningful goal did you set this season?", subtitle: "Reflect on a goal that mattered to you." },
-      { n: 12, title: "Goal Adjustment", prompt: "What goal did you need to change or adapt? Why?", subtitle: "Explain a goal that evolved during the season." },
-      { n: 13, title: "Emotional Regulation", prompt: "How did you manage frustration or fear during competition?", subtitle: "Show how you controlled difficult emotions." },
-      { n: 14, title: "Mental Growth Moment", prompt: "What moment revealed your mental strength?", subtitle: "Identify a moment that showed inner growth." },
-      { n: 15, title: "Distraction Awareness", prompt: "What distracts you during games or practice?", subtitle: "Reflect on a distraction that affects focus." },
-      { n: 16, title: "Focus Reset Cue", prompt: "What cue (word, motion, breath) helps you refocus instantly?", subtitle: "Identify a practical reset cue." },
-      { n: 17, title: "Competitive Identity", prompt: "How would you describe the competitor you are becoming?", subtitle: "Reflect on the mindset identity you are building." },
-      { n: 18, title: "Adversity Lesson", prompt: "What challenge built your mental resilience?", subtitle: "Explain what adversity taught you mentally." },
-      { n: 19, title: "Energy Regulation", prompt: "How do you manage mental energy during long events or tournaments?", subtitle: "Reflect on pacing your mental energy." },
-      { n: 20, title: "Future Mindset Goal", prompt: "What mental skill do you want to strengthen next?", subtitle: "Set a clear next-step mental performance goal." }
-    ],
-    exitExam: {
-      title: "Exit Exam — Sports Psychology Basics",
-      prompt: "Write a one-page reflection describing how your mindset changed this season. Include a mindset challenge you faced, a mental tool you used that made a difference, how you handled nerves, anxiety, or pressure, a moment when your focus or confidence improved, what you learned about your internal thoughts, and your next step in mental performance development."
-    }
-  }
-
-   {
+  },
+  {
     id: "intro-to-coaching-theory",
     title: "Intro to Coaching Theory",
     credit: "1.0",
@@ -938,9 +848,8 @@ export const COURSES = [
       title: "Exit Exam — Intro to Coaching Theory",
       prompt: "Write a one-page coaching theory summary describing the foundations of your coaching philosophy. Include the coaching style you align with, what you learned about communication, how you believe behavior should be managed, how you would structure a training session, and what values or principles will guide your coaching identity."
     }
-  }
-
-    {
+  },
+  {
     id: "kinesiology-human-movement",
     title: "Kinesiology & Human Movement",
     credit: "1.0",
@@ -1106,9 +1015,8 @@ export const COURSES = [
       title: "Exit Exam — Exercise Science Foundations",
       prompt: "Write a one-page sports physiology reflection describing how your body responded to exercise this season. Include a muscle group you studied, a conditioning method you learned from, how your body reacted physiologically (breathing, fatigue, heart rate), an early injury-warning sign you recognized, a training adaptation you experienced, and your next physiology goal moving forward."
     }
-  }
-
-    {
+  },
+  {
     id: "student-athlete-college-readiness",
     title: "Student–Athlete College Readiness",
     credit: "1.0",
@@ -1191,9 +1099,8 @@ export const COURSES = [
       title: "Exit Exam — Student–Athlete College Readiness",
       prompt: "Write a one-page college-readiness plan describing how you will prepare academically, personally, and athletically for the transition to college sports. Include a key NCAA requirement you must meet, your academic plan for the next year, your time-management strategy, what you learned about recruiting, how you will remain academically eligible, and your personal and athletic goals for college."
     }
-  }
-
-    {
+  },
+  {
     id: "leadership-in-sports-communities",
     title: "Leadership in Sports Communities",
     credit: "1.0",
@@ -1275,9 +1182,8 @@ export const COURSES = [
       title: "Exit Exam — Leadership in Sports Communities",
       prompt: "Write a one-page leadership impact reflection summarizing your service and mentorship work this season. Include how you served or mentored others, a leadership moment you are proud of, what you learned about responsibility and influence, how you contributed to your community, and how you want to grow as a leader in the future."
     }
-  }
-
-    {
+  },
+  {
     id: "time-management-high-performance-students",
     title: "Time Management for High-Performance Students",
     credit: "1.0",
@@ -1360,9 +1266,8 @@ export const COURSES = [
       title: "Exit Exam — Time Management for High-Performance Students",
       prompt: "Write a one-page personal time-management plan describing how you will organize schoolwork, training, travel, and personal life. Include your weekly schedule, your biggest time-management weakness, what you learned about your habits, how you plan to stay organized during busy seasons, and a strategy to reduce stress and improve consistency."
     }
-  }
-
-   {
+  },
+  {
     id: "personal-responsibility-goal-setting",
     title: "Personal Responsibility & Goal Setting",
     credit: "0.5–1.0",
@@ -1445,10 +1350,8 @@ export const COURSES = [
       title: "Exit Exam — Personal Responsibility & Goal Setting",
       prompt: "Write a one-page personal responsibility and goal-setting reflection describing your growth this season. Include one major goal you worked toward, the habits you built to support it, how you held yourself accountable, a setback and how you responded, what you learned about consistency, and your long-term plan for continuing this growth."
     }
-  }
-
-
-    {
+  },
+  {
     id: "health-fitness-foundations",
     title: "Health & Fitness Foundations",
     credit: "1.0",
@@ -1531,3 +1434,4 @@ export const COURSES = [
       prompt: "Write a one-page lifelong health plan describing the habits you want to maintain for your overall well-being. Include a simple fitness routine, one habit you want to build long-term, how sleep or hydration impacts your performance, how movement affects your mental health, what you learned about your body, and your plan for maintaining healthy habits for life."
     }
   }
+];
