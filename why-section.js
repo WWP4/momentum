@@ -4,7 +4,7 @@
 
   const stage = section.querySelector('#whyStage');
   const stepButtons = Array.from(section.querySelectorAll('.why-step'));
-  const icons = Array.from(section.querySelectorAll('.why-icon'));
+  const cardStates = Array.from(section.querySelectorAll('.why-card__state'));
   const eyebrow = section.querySelector('#why-caption-eyebrow');
   const title = section.querySelector('#why-caption-title');
   const text = section.querySelector('#why-caption-text');
@@ -14,19 +14,19 @@
       eyebrow: 'Training reality',
       title: 'Athletes are already putting in the work.',
       text: 'Practice, repetition, coaching, movement, and discipline already exist before Momentum enters the picture.',
-      icon: '0'
+      card: '0'
     },
     {
       eyebrow: 'Academic structure',
       title: 'Momentum gives that effort a formal framework.',
       text: 'Training becomes organized into a clearer academic path with structure, sequence, and evaluation.',
-      icon: '1'
+      card: '1'
     },
     {
       eyebrow: 'Visible outcome',
       title: 'The result becomes clearer, measurable, and more valuable.',
       text: 'What families already invest in starts to look more legible, more credible, and more academically meaningful.',
-      icon: '2'
+      card: '2'
     }
   ];
 
@@ -37,15 +37,14 @@
     current = index;
 
     const state = states[index];
-
     stage.setAttribute('data-step', String(index));
 
     stepButtons.forEach((btn, i) => {
       btn.classList.toggle('is-active', i === index);
     });
 
-    icons.forEach((icon) => {
-      icon.classList.toggle('is-live', icon.dataset.icon === state.icon);
+    cardStates.forEach((item) => {
+      item.classList.toggle('is-live', item.dataset.card === state.card);
     });
 
     if (eyebrow) eyebrow.textContent = state.eyebrow;
