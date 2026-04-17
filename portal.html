@@ -77,47 +77,21 @@
   </div>
 </section>
 
-<section class="portal-closing" id="contactMomentum">
-  <div class="portal-section__inner">
-    <p class="portal-section__eyebrow">Questions or next steps</p>
-    <h2 class="portal-section__title">Learn more and connect with Momentum.</h2>
-    <p class="portal-closing__intro">
-      Watch the overview video to better understand the program, then reach out to Momentum directly if your family has questions.
-    </p>
 
-    <div class="portal-closing__grid">
-      <div class="portal-closing__video">
-        <div class="portal-videoShell">
-          <iframe
-            id="portalVideo"
-            src=""
-            title="Momentum overview video"
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-
-      <div class="portal-closing__card">
-        <p class="portal-closing__cardEyebrow">Contact Momentum</p>
-        <h3 class="portal-closing__cardTitle">We’re here to help your family move forward clearly.</h3>
-        <p class="portal-closing__cardCopy" id="momentumContactCopy">
-          Reach out to Momentum with questions about courses, enrollment, timelines, or next steps.
+     <section class="portal-courses" id="courses" aria-labelledby="coursesHeading">
+      <div class="portal-section__inner">
+        <p class="portal-section__eyebrow">Available classes</p>
+        <h2 class="portal-section__title" id="coursesHeading">Courses available through your club partnership.</h2>
+        <p class="portal-courses__intro">
+          Review the current class lineup available for families in this partner portal.
         </p>
 
-        <div class="portal-closing__actions">
-          <a class="portal-btn portal-btn--primary" id="momentumEmailBtn" href="mailto:partnerships@momentumacademy.org">
-            Email Momentum
-          </a>
-          <a class="portal-btn portal-btn--secondary" id="momentumPhoneBtn" href="tel:">
-            Call Momentum
-          </a>
-        </div>
+        <div class="portal-courses__stats" id="coursesStats"></div>
+        <div class="portal-courses__grid" id="coursesGrid"></div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+
+
     <section class="portal-overview" id="overview">
       <div class="portal-section__inner">
         <p class="portal-section__eyebrow">How it works</p>
@@ -151,19 +125,48 @@
       </div>
     </section>
 
-    <section class="portal-courses" id="courses" aria-labelledby="coursesHeading">
-      <div class="portal-section__inner">
-        <p class="portal-section__eyebrow">Available classes</p>
-        <h2 class="portal-section__title" id="coursesHeading">Courses available through your club partnership.</h2>
-        <p class="portal-courses__intro">
-          Review the current class lineup available for families in this partner portal.
+   
+<section class="portal-closing" id="contactMomentum">
+  <div class="portal-section__inner">
+    <p class="portal-section__eyebrow">Questions or next steps</p>
+    <h2 class="portal-section__title">Learn more and connect with Momentum.</h2>
+    <p class="portal-closing__intro">
+      Watch the overview video to better understand the program, then reach out to Momentum directly if your family has questions.
+    </p>
+
+    <div class="portal-closing__grid">
+      <div class="portal-closing__video">
+        <div class="portal-videoShell">
+          <iframe
+            id="portalVideo"
+            src="https://www.youtube.com/embed/yDswWl8bqgc?rel=0"
+            title="Momentum overview video"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <div class="portal-closing__card">
+        <p class="portal-closing__cardEyebrow">Contact Momentum</p>
+        <h3 class="portal-closing__cardTitle">We’re here to help your family move forward clearly.</h3>
+        <p class="portal-closing__cardCopy" id="momentumContactCopy">
+          Reach out to Momentum with questions about courses, enrollment, timelines, or next steps.
         </p>
 
-        <div class="portal-courses__stats" id="coursesStats"></div>
-        <div class="portal-courses__grid" id="coursesGrid"></div>
+        <div class="portal-closing__actions">
+          <a class="portal-btn portal-btn--primary" id="momentumEmailBtn" href="mailto:partnerships@momentumacademy.org">
+            Email Momentum
+          </a>
+          <a class="portal-btn portal-btn--secondary" id="momentumPhoneBtn" href="tel:">
+            Call Momentum
+          </a>
+        </div>
       </div>
-    </section>
-
+    </div>
+  </div>
+</section>
   </main>
 
   <script type="module" src="portal.js"></script>
