@@ -485,67 +485,126 @@
       </div>
     </section>
 
-    <section class="section section--dark" id="formSection">
-      <div class="section__inner reveal">
-        <p class="eyebrow eyebrow--light">Create your launch</p>
-        <h2 class="sectionTitle sectionTitle--light">Generate your club launch kit.</h2>
-        <p class="sectionCopy sectionCopy--light">
-          Keep it simple. Fill this out once, then send your families one clean branded experience.
-        </p>
+  <section class="section section--dark" id="formSection">
+  <div class="section__inner reveal">
+    <p class="eyebrow eyebrow--light">Build your partner portal</p>
+    <h2 class="sectionTitle sectionTitle--light">Generate a parent-facing club portal.</h2>
+    <p class="sectionCopy sectionCopy--light">
+      Add the club details, choose which courses to show, and generate the branded page parents will use.
+    </p>
 
-        <form id="clubForm" class="clubForm">
-          <div class="formGrid">
-            <div class="field">
-              <label for="clubName">Club name</label>
-              <input id="clubName" name="clubName" type="text" placeholder="Redline Soccer Club" required>
-            </div>
-
-            <div class="field">
-              <label for="sportType">Sport</label>
-              <input id="sportType" name="sportType" type="text" placeholder="Soccer" required>
-            </div>
-
-            <div class="field">
-              <label for="contactName">Contact name</label>
-              <input id="contactName" name="contactName" type="text" placeholder="Alex Carter" required>
-            </div>
-
-            <div class="field">
-              <label for="contactEmail">Contact email</label>
-              <input id="contactEmail" name="contactEmail" type="email" placeholder="alex@club.org" required>
-            </div>
-
-            <div class="field field--full">
-              <label for="clubMessage">Short club message</label>
-              <textarea id="clubMessage" name="clubMessage" rows="4" placeholder="We’re excited to offer families a clear path to earn academic credit for the work athletes are already doing."></textarea>
-            </div>
-          </div>
-
-          <div class="formActions">
-            <button class="btn btn--primary btn--wide" type="submit">Generate Launch Kit</button>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <section class="section" id="resultSection" hidden>
-      <div class="section__inner reveal">
-        <p class="eyebrow">Your launch kit</p>
-        <h2 class="sectionTitle">Your Momentum club message is ready.</h2>
-        <p class="sectionCopy">
-          Copy this and send it to families this week. Keep everything routed through one clean next step.
-        </p>
-
-        <div class="resultCard">
-          <pre id="messageOutput"></pre>
+    <form id="clubForm" class="clubForm">
+      <div class="formGrid">
+        <div class="field">
+          <label for="clubName">Club name</label>
+          <input id="clubName" name="clubName" type="text" placeholder="Redline Soccer Club" required>
         </div>
 
-        <div class="resultActions">
-          <button class="btn btn--primary" id="copyMessageBtn" type="button">Copy Message</button>
-          <button class="btn btn--ghost" id="editFormBtn" type="button">Edit Details</button>
+        <div class="field">
+          <label for="sportType">Sport</label>
+          <input id="sportType" name="sportType" type="text" placeholder="Soccer" required>
+        </div>
+
+        <div class="field">
+          <label for="contactName">Contact name</label>
+          <input id="contactName" name="contactName" type="text" placeholder="Alex Carter" required>
+        </div>
+
+        <div class="field">
+          <label for="contactEmail">Contact email</label>
+          <input id="contactEmail" name="contactEmail" type="email" placeholder="alex@club.org" required>
+        </div>
+
+        <div class="field">
+          <label for="portalPrice">Course price</label>
+          <input id="portalPrice" name="portalPrice" type="number" min="0" step="1" value="395" placeholder="395">
+        </div>
+
+        <div class="field">
+          <label for="buttonText">Button text</label>
+          <input id="buttonText" name="buttonText" type="text" value="Enroll Now" placeholder="Enroll Now">
+        </div>
+
+        <div class="field field--full">
+          <label for="heroHeadline">Hero headline</label>
+          <input
+            id="heroHeadline"
+            name="heroHeadline"
+            type="text"
+            placeholder="Turn your athlete’s training into academic credit opportunities."
+            required
+          >
+        </div>
+
+        <div class="field field--full">
+          <label for="clubMessage">Short club message</label>
+          <textarea
+            id="clubMessage"
+            name="clubMessage"
+            rows="4"
+            placeholder="We’re excited to offer families a clear path to earn academic credit for the work athletes are already doing."
+          ></textarea>
+        </div>
+
+        <div class="field field--full">
+          <label for="clubLogo">Club logo</label>
+          <input id="clubLogo" name="clubLogo" type="file" accept="image/*">
+        </div>
+
+        <div class="field field--full">
+          <label>Visible courses</label>
+          <div id="courseSelector" class="courseSelector"></div>
         </div>
       </div>
-    </section>
+
+      <div class="formActions">
+        <button class="btn btn--primary btn--wide" type="submit">Generate Partner Portal</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="resultSection" hidden>
+  <div class="section__inner reveal">
+    <p class="eyebrow">Portal preview</p>
+    <h2 class="sectionTitle">Your parent-facing portal is ready.</h2>
+    <p class="sectionCopy">
+      This is the branded page families will see, with the selected courses available to purchase.
+    </p>
+
+    <div class="portalPreview" id="portalPreview">
+      <section class="portalHero">
+        <div class="portalHero__logos">
+          <div class="portalHero__clubLogoWrap" id="portalClubLogoWrap" hidden>
+            <img id="portalClubLogo" alt="Club logo">
+          </div>
+
+          <div class="portalHero__divider">×</div>
+
+          <div class="portalHero__momentum">Momentum</div>
+        </div>
+
+        <p class="portalHero__eyebrow" id="portalSport">Club Partner Portal</p>
+        <h3 class="portalHero__title" id="portalHeadline"></h3>
+        <p class="portalHero__copy" id="portalCopy"></p>
+        <p class="portalHero__contact" id="portalContact"></p>
+      </section>
+
+      <section class="portalCourses">
+        <div class="portalCourses__head">
+          <p class="portalCourses__kicker">Eligible classes</p>
+          <h3 class="portalCourses__title">Available courses for families</h3>
+        </div>
+
+        <div class="portalCourses__grid" id="portalCoursesGrid"></div>
+      </section>
+    </div>
+
+    <div class="resultActions">
+      <button class="btn btn--ghost" id="editFormBtn" type="button">Edit Details</button>
+    </div>
+  </div>
+</section>
 
   </main>
 
