@@ -2,19 +2,10 @@ import { COURSES } from './courses-data.js';
 
 const svg = document.getElementById('momentumLogo');
 const clubForm = document.getElementById('clubForm');
-const resultSection = document.getElementById('resultSection');
 const editFormBtn = document.getElementById('editFormBtn');
 const scrollButtons = document.querySelectorAll('[data-scroll]');
 const revealEls = document.querySelectorAll('.reveal');
-
 const courseSelector = document.getElementById('courseSelector');
-const portalSport = document.getElementById('portalSport');
-const portalHeadline = document.getElementById('portalHeadline');
-const portalCopy = document.getElementById('portalCopy');
-const portalContact = document.getElementById('portalContact');
-const portalCoursesGrid = document.getElementById('portalCoursesGrid');
-const portalClubLogo = document.getElementById('portalClubLogo');
-const portalClubLogoWrap = document.getElementById('portalClubLogoWrap');
 
 function setupScrollButtons() {
   if (!scrollButtons.length) return;
@@ -69,6 +60,7 @@ function revealLogo() {
 
 function buildCourseSelector() {
   if (!courseSelector) return;
+  if (!Array.isArray(COURSES)) return;
 
   const starterIds = [
     'sports-training-performance',
@@ -91,111 +83,58 @@ function buildCourseSelector() {
   }).join('');
 }
 
-function getSelectedCourses(formData) {
-  const selectedIds = formData.getAll('selectedCourses');
-
-  return COURSES.filter((course) => selectedIds.includes(course.id));
-}
-
 function readLogoFile(file) {
   return new Promise((resolve) => {
-    if (!file) {
+    if (!(file instanceof File) || file.size === 0) {
       resolve('');
       return;
     }
 
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result?.toString() || '');
-    reader.onerror = () => resolve('');
+
+    reader.onload = () => {
+      resolve(reader.result?.toString() || '');
+    };
+
+    reader.onerror = () => {
+      resolve('');
+    };
+
     reader.readAsDataURL(file);
   });
 }
 
-function renderPortal(data) {
-  if (!portalHeadline || !portalCopy || !portalCoursesGrid) return;
-
-  portalSport.textContent = `${data.clubName} · ${data.sportType}`;
-  portalHeadline.textContent = data.heroHeadline;
-  portalCopy.textContent = data.clubMessage || `${data.clubName} families can explore Momentum courses designed to connect structured athletic training to real academic progress.`;
-  portalContact.textContent = `Questions? Contact ${data.contactName} at ${data.contactEmail}`;
-
-  if (data.clubLogo) {
-    portalClubLogo.src = data.clubLogo;
-    portalClubLogo.alt = `${data.clubName} logo`;
-    portalClubLogoWrap.hidden = false;
-  } else {
-    portalClubLogo.removeAttribute('src');
-    portalClubLogoWrap.hidden = true;
-  }
-
-  if (!data.selectedCourses.length) {
-    portalCoursesGrid.innerHTML = `<div class="portalEmpty">No courses selected yet. Choose at least one course for this club.</div>`;
-    return;
-  }
-
-  portalCoursesGrid.innerHTML = data.selectedCourses.map((course) => {
-    return `
-      <article class="portalCourseCard">
-        <div class="portalCourseCard__top">
-          <h4 class="portalCourseCard__title">${course.title}</h4>
-          <span class="portalCourseCard__credit">${course.credit} Credit</span>
-        </div>
-
-        <p class="portalCourseCard__tagline">${course.tagline}</p>
-        <p class="portalCourseCard__desc">${course.description}</p>
-
-        <div class="portalCourseCard__footer">
-          <div class="portalCourseCard__price">$${data.portalPrice}</div>
-          <button class="portalCourseCard__btn" type="button" data-course-id="${course.id}">
-            ${data.buttonText}
-          </button>
-        </div>
-      </article>
-    `;
-  }).join('');
+function saveAndRedirect(data) {
+  localStorage.setItem('momentum_portal_data', JSON.stringify(data));
+  window.location.href = 'portal.html';
 }
 
 function handleForm() {
-  if (!clubForm || !resultSection) return;
+  if (!clubForm) return;
 
- clubForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+  clubForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  const formData = new FormData(clubForm);
-  const clubLogoFile = formData.get('clubLogo');
+    const formData = new FormData(clubForm);
+    const clubLogoFile = formData.get('clubLogo');
 
-  const data = {
-    clubName: formData.get('clubName')?.toString().trim() || '',
-    sportType: formData.get('sportType')?.toString().trim() || '',
-    contactName: formData.get('contactName')?.toString().trim() || '',
-    contactEmail: formData.get('contactEmail')?.toString().trim() || '',
-    clubMessage: formData.get('clubMessage')?.toString().trim() || '',
-    heroHeadline: formData.get('heroHeadline')?.toString().trim() || '',
-    portalPrice: formData.get('portalPrice')?.toString().trim() || '395',
-    buttonText: formData.get('buttonText')?.toString().trim() || 'Enroll Now',
-    selectedCourses: formData.getAll('selectedCourses')
-  };
-
-  // handle logo
-  if (clubLogoFile instanceof File && clubLogoFile.size > 0) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      data.clubLogo = reader.result;
-      saveAndRedirect(data);
+    const data = {
+      clubName: formData.get('clubName')?.toString().trim() || '',
+      sportType: formData.get('sportType')?.toString().trim() || '',
+      contactName: formData.get('contactName')?.toString().trim() || '',
+      contactEmail: formData.get('contactEmail')?.toString().trim() || '',
+      clubMessage: formData.get('clubMessage')?.toString().trim() || '',
+      heroHeadline: formData.get('heroHeadline')?.toString().trim() || '',
+      portalPrice: formData.get('portalPrice')?.toString().trim() || '395',
+      buttonText: formData.get('buttonText')?.toString().trim() || 'Enroll Now',
+      selectedCourses: formData.getAll('selectedCourses'),
+      clubLogo: await readLogoFile(clubLogoFile)
     };
-    reader.readAsDataURL(clubLogoFile);
-  } else {
-    data.clubLogo = '';
+
     saveAndRedirect(data);
-  }
-});
-
-function saveAndRedirect(data) {
-  localStorage.setItem('momentum_portal_data', JSON.stringify(data));
-
-  // redirect to portal page
-  window.location.href = 'portal.html';
+  });
 }
+
 function handleEdit() {
   if (!editFormBtn) return;
 
