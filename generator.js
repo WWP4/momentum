@@ -1,11 +1,20 @@
+import { COURSES } from './courses-data.js';
+
 const svg = document.getElementById('momentumLogo');
 const clubForm = document.getElementById('clubForm');
 const resultSection = document.getElementById('resultSection');
-const messageOutput = document.getElementById('messageOutput');
-const copyMessageBtn = document.getElementById('copyMessageBtn');
 const editFormBtn = document.getElementById('editFormBtn');
 const scrollButtons = document.querySelectorAll('[data-scroll]');
 const revealEls = document.querySelectorAll('.reveal');
+
+const courseSelector = document.getElementById('courseSelector');
+const portalSport = document.getElementById('portalSport');
+const portalHeadline = document.getElementById('portalHeadline');
+const portalCopy = document.getElementById('portalCopy');
+const portalContact = document.getElementById('portalContact');
+const portalCoursesGrid = document.getElementById('portalCoursesGrid');
+const portalClubLogo = document.getElementById('portalClubLogo');
+const portalClubLogoWrap = document.getElementById('portalClubLogoWrap');
 
 function setupScrollButtons() {
   if (!scrollButtons.length) return;
@@ -58,42 +67,117 @@ function revealLogo() {
   logoObserver.observe(svg);
 }
 
-function buildMessage(data) {
-  const clubMessageBlock = data.clubMessage
-    ? `${data.clubMessage}\n\n`
-    : '';
+function buildCourseSelector() {
+  if (!courseSelector) return;
 
-  return `Hi ${data.clubName} families,
+  const starterIds = [
+    'sports-training-performance',
+    'strength-conditioning',
+    'competitive-athletics'
+  ];
 
-${data.clubName} is now partnering with Momentum to help athletes turn the training they are already doing into academic progress.
+  courseSelector.innerHTML = COURSES.map((course) => {
+    const checked = starterIds.includes(course.id) ? 'checked' : '';
 
-${clubMessageBlock}Momentum provides a clear path for families to understand how structured training may connect to academic credit opportunities.
+    return `
+      <label class="courseOption">
+        <input type="checkbox" name="selectedCourses" value="${course.id}" ${checked}>
+        <span class="courseOption__body">
+          <span class="courseOption__title">${course.title}</span>
+          <span class="courseOption__meta">${course.credit} Credit · ${course.tagline}</span>
+        </span>
+      </label>
+    `;
+  }).join('');
+}
 
-Next step:
-[INSERT CLUB LANDING PAGE LINK]
+function getSelectedCourses(formData) {
+  const selectedIds = formData.getAll('selectedCourses');
 
-Contact:
-${data.contactName}
-${data.contactEmail}`;
+  return COURSES.filter((course) => selectedIds.includes(course.id));
+}
+
+function readLogoFile(file) {
+  return new Promise((resolve) => {
+    if (!file) {
+      resolve('');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result?.toString() || '');
+    reader.onerror = () => resolve('');
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPortal(data) {
+  if (!portalHeadline || !portalCopy || !portalCoursesGrid) return;
+
+  portalSport.textContent = `${data.clubName} · ${data.sportType}`;
+  portalHeadline.textContent = data.heroHeadline;
+  portalCopy.textContent = data.clubMessage || `${data.clubName} families can explore Momentum courses designed to connect structured athletic training to real academic progress.`;
+  portalContact.textContent = `Questions? Contact ${data.contactName} at ${data.contactEmail}`;
+
+  if (data.clubLogo) {
+    portalClubLogo.src = data.clubLogo;
+    portalClubLogo.alt = `${data.clubName} logo`;
+    portalClubLogoWrap.hidden = false;
+  } else {
+    portalClubLogo.removeAttribute('src');
+    portalClubLogoWrap.hidden = true;
+  }
+
+  if (!data.selectedCourses.length) {
+    portalCoursesGrid.innerHTML = `<div class="portalEmpty">No courses selected yet. Choose at least one course for this club.</div>`;
+    return;
+  }
+
+  portalCoursesGrid.innerHTML = data.selectedCourses.map((course) => {
+    return `
+      <article class="portalCourseCard">
+        <div class="portalCourseCard__top">
+          <h4 class="portalCourseCard__title">${course.title}</h4>
+          <span class="portalCourseCard__credit">${course.credit} Credit</span>
+        </div>
+
+        <p class="portalCourseCard__tagline">${course.tagline}</p>
+        <p class="portalCourseCard__desc">${course.description}</p>
+
+        <div class="portalCourseCard__footer">
+          <div class="portalCourseCard__price">$${data.portalPrice}</div>
+          <button class="portalCourseCard__btn" type="button" data-course-id="${course.id}">
+            ${data.buttonText}
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
 }
 
 function handleForm() {
-  if (!clubForm || !messageOutput || !resultSection) return;
+  if (!clubForm || !resultSection) return;
 
-  clubForm.addEventListener('submit', (e) => {
+  clubForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData(clubForm);
+    const clubLogoFile = formData.get('clubLogo');
+
     const data = {
       clubName: formData.get('clubName')?.toString().trim() || '',
       sportType: formData.get('sportType')?.toString().trim() || '',
       contactName: formData.get('contactName')?.toString().trim() || '',
       contactEmail: formData.get('contactEmail')?.toString().trim() || '',
-      clubMessage: formData.get('clubMessage')?.toString().trim() || ''
+      clubMessage: formData.get('clubMessage')?.toString().trim() || '',
+      heroHeadline: formData.get('heroHeadline')?.toString().trim() || '',
+      portalPrice: formData.get('portalPrice')?.toString().trim() || '395',
+      buttonText: formData.get('buttonText')?.toString().trim() || 'Enroll Now',
+      selectedCourses: getSelectedCourses(formData),
+      clubLogo: await readLogoFile(clubLogoFile instanceof File ? clubLogoFile : null)
     };
 
-    const message = buildMessage(data);
-    messageOutput.textContent = message;
+    renderPortal(data);
     resultSection.hidden = false;
 
     requestAnimationFrame(() => {
@@ -102,25 +186,6 @@ function handleForm() {
         block: 'start'
       });
     });
-  });
-}
-
-function handleCopy() {
-  if (!copyMessageBtn || !messageOutput) return;
-
-  copyMessageBtn.addEventListener('click', async () => {
-    const text = messageOutput.textContent || '';
-
-    try {
-      await navigator.clipboard.writeText(text);
-      copyMessageBtn.textContent = 'Copied';
-    } catch (err) {
-      copyMessageBtn.textContent = 'Copy Failed';
-    }
-
-    window.setTimeout(() => {
-      copyMessageBtn.textContent = 'Copy Message';
-    }, 1400);
   });
 }
 
@@ -142,7 +207,7 @@ window.addEventListener('DOMContentLoaded', () => {
   revealLogo();
   setupScrollButtons();
   setupReveals();
+  buildCourseSelector();
   handleForm();
-  handleCopy();
   handleEdit();
 });
