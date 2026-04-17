@@ -7,57 +7,18 @@ const editFormBtn = document.getElementById('editFormBtn');
 const scrollButtons = document.querySelectorAll('[data-scroll]');
 const revealEls = document.querySelectorAll('.reveal');
 
-function prepAndPlayLogo() {
-  if (!svg) return;
+function setupScrollButtons() {
+  if (!scrollButtons.length) return;
 
-  const paths = Array.from(svg.querySelectorAll('.draw'));
-
-  const baseDelay = 450;
-  const step = 160;
-  const drawDur = 5200;
-  const fillDur = 1500;
-  const fillDelayRed = 3200;
-  const fillDelayOther = 3600;
-
-  paths.forEach((path, i) => {
-    let len = 1000;
-
-    try {
-      len = Math.ceil(path.getTotalLength());
-    } catch (e) {}
-
-    path.style.setProperty('--len', len);
-    path.style.strokeDasharray = len;
-    path.style.strokeDashoffset = len;
-
-    path.style.setProperty('--drawDur', `${drawDur}ms`);
-    path.style.setProperty('--fillDur', `${fillDur}ms`);
-
-    const delay = baseDelay + (i * step);
-    path.style.setProperty('--delay', `${delay}ms`);
-
-    const fillDelay = path.classList.contains('is-red')
-      ? fillDelayRed
-      : fillDelayOther;
-
-    path.style.setProperty('--fillDelay', `${fillDelay}ms`);
-  });
-
-  svg.classList.remove('play');
-  void svg.getBoundingClientRect();
-  svg.classList.add('play');
-}
-
-function handleScrollButtons() {
   scrollButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const target = document.querySelector(btn.dataset.scroll);
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
+      if (!target) return;
+
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     });
   });
 }
@@ -65,17 +26,36 @@ function handleScrollButtons() {
 function setupReveals() {
   if (!revealEls.length) return;
 
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-      }
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      obs.unobserve(entry.target);
     });
   }, {
-    threshold: 0.18
+    threshold: 0.16,
+    rootMargin: '0px 0px -8% 0px'
   });
 
   revealEls.forEach((el) => observer.observe(el));
+}
+
+function revealLogo() {
+  if (!svg) return;
+
+  svg.classList.add('logo-ready');
+
+  const logoObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      svg.classList.add('is-visible');
+      obs.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.3
+  });
+
+  logoObserver.observe(svg);
 }
 
 function buildMessage(data) {
@@ -116,12 +96,12 @@ function handleForm() {
     messageOutput.textContent = message;
     resultSection.hidden = false;
 
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       resultSection.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
-    }, 80);
+    });
   });
 }
 
@@ -134,17 +114,13 @@ function handleCopy() {
     try {
       await navigator.clipboard.writeText(text);
       copyMessageBtn.textContent = 'Copied';
-
-      setTimeout(() => {
-        copyMessageBtn.textContent = 'Copy Message';
-      }, 1400);
     } catch (err) {
       copyMessageBtn.textContent = 'Copy Failed';
-
-      setTimeout(() => {
-        copyMessageBtn.textContent = 'Copy Message';
-      }, 1400);
     }
+
+    window.setTimeout(() => {
+      copyMessageBtn.textContent = 'Copy Message';
+    }, 1400);
   });
 }
 
@@ -153,18 +129,18 @@ function handleEdit() {
 
   editFormBtn.addEventListener('click', () => {
     const formSection = document.getElementById('formSection');
-    if (formSection) {
-      formSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+    if (!formSection) return;
+
+    formSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   });
 }
 
-window.addEventListener('load', () => {
-  prepAndPlayLogo();
-  handleScrollButtons();
+window.addEventListener('DOMContentLoaded', () => {
+  revealLogo();
+  setupScrollButtons();
   setupReveals();
   handleForm();
   handleCopy();
