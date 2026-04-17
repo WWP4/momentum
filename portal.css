@@ -1086,3 +1086,155 @@ a{
     max-width:none;
   }
 }
+
+/* GLOBAL SECTION RHYTHM */
+.portal-overview,
+.portal-courses,
+.portal-closing{
+  position:relative;
+  overflow:hidden;
+}
+
+.portal-overview::before,
+.portal-courses::before,
+.portal-closing::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+/* HERO — airy / stage-like */
+.portal-hero{
+  background:
+    radial-gradient(circle at 50% 18%, rgba(23,26,32,.06), transparent 30%),
+    radial-gradient(circle at 12% 78%, rgba(23,26,32,.03), transparent 24%),
+    linear-gradient(180deg, #ffffff 0%, #f4f6f8 100%);
+}
+
+.portal-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0 0;
+  height:140px;
+  background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(23,26,32,.035) 100%);
+  pointer-events:none;
+  opacity:.35;
+}
+
+/* OVERVIEW — softer paper / presentation field */
+.portal-overview{
+  background:
+    radial-gradient(circle at 85% 10%, rgba(23,26,32,.035), transparent 24%),
+    linear-gradient(180deg, #fbfbfc 0%, #f3f5f7 100%);
+  border-top:1px solid var(--line);
+}
+
+.portal-overview::before{
+  background:
+    linear-gradient(90deg, rgba(23,26,32,.02) 1px, transparent 1px),
+    linear-gradient(rgba(23,26,32,.02) 1px, transparent 1px);
+  background-size:88px 88px;
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.35), transparent 82%);
+  opacity:.35;
+}
+
+/* lift overview cards more */
+.portal-overview__item{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(6px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.8) inset,
+    0 18px 36px rgba(15,17,20,.06);
+}
+
+/* COURSES — more structured / gallery feel */
+.portal-courses{
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+}
+
+.portal-courses::before{
+  background:
+    radial-gradient(circle at 15% 15%, rgba(23,26,32,.035), transparent 20%),
+    radial-gradient(circle at 88% 82%, rgba(23,26,32,.03), transparent 24%);
+  opacity:1;
+}
+
+.portal-courses::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(23,26,32,.018) 1px, transparent 1px),
+    linear-gradient(rgba(23,26,32,.018) 1px, transparent 1px);
+  background-size:120px 120px;
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.22), transparent 90%);
+  opacity:.28;
+}
+
+/* lift course cards more cleanly */
+.courseCard{
+  background:rgba(255,255,255,.96);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.85) inset,
+    0 20px 40px rgba(15,17,20,.06);
+}
+
+/* CLOSING — stronger finish */
+.portal-closing{
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.06), transparent 28%),
+    linear-gradient(180deg, #111317 0%, #0d0f12 100%);
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.portal-closing::before{
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size:88px 88px;
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.5), transparent 88%);
+  opacity:.24;
+}
+
+/* make closing section text work on dark */
+.portal-closing .portal-section__eyebrow{
+  color:rgba(255,255,255,.52);
+}
+
+.portal-closing .portal-section__title{
+  color:#fff;
+}
+
+.portal-closing__intro{
+  color:rgba(255,255,255,.72);
+}
+
+.portal-closing__card{
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.06) inset,
+    0 20px 44px rgba(0,0,0,.28);
+}
+
+.portal-closing__cardEyebrow{
+  color:rgba(255,255,255,.48);
+}
+
+.portal-closing__cardTitle{
+  color:#fff;
+}
+
+.portal-closing__cardCopy{
+  color:rgba(255,255,255,.72);
+}
+
+.portal-videoShell{
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.05) inset,
+    0 20px 44px rgba(0,0,0,.3);
+}
