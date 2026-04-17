@@ -97,48 +97,128 @@ body.intro-complete .intro{
   display:block;
 }
 
-.logoSvg .draw{
-  fill-opacity:0;
+/* Base path handling */
+.logoSvg .logo-stroke,
+.logoSvg .logo-fill,
+.logoSvg .logo-word{
+  vector-effect:non-scaling-stroke;
+  transform-origin:center;
+  will-change:stroke-dashoffset, opacity, transform;
+}
+
+/* Symbol stroke paths only */
+.logoSvg .logo-stroke{
+  fill:none !important;
   stroke:rgba(255,255,255,.82);
   stroke-width:2.2;
-  stroke-opacity:.92;
+  stroke-opacity:.9;
   stroke-linecap:round;
   stroke-linejoin:round;
-  vector-effect:non-scaling-stroke;
-  paint-order:stroke;
 }
 
-.logoSvg .draw.is-red{
-  stroke:rgba(196,50,54,.96);
+/* Solid mark pieces */
+.logoSvg .logo-fill{
+  stroke:none !important;
+  opacity:0;
+  transform:translateY(8px) scale(.985);
 }
 
-.logoSvg .draw.is-dark{
-  stroke:rgba(220,220,220,.6);
+/* Wordmark */
+.logoSvg .logo-word{
+  fill:none !important;
+  stroke:rgba(255,255,255,.78);
+  stroke-width:2.05;
+  stroke-opacity:.88;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-.logoSvg.play .draw{
+/* Optional color modifiers */
+.logoSvg .is-red{
+  fill:#c43236;
+  stroke:#c43236;
+}
+
+.logoSvg .is-dark{
+  fill:#121212;
+  stroke:rgba(255,255,255,.35);
+}
+
+.logoSvg.play .logo-stroke{
   animation:
-    strokeDraw var(--drawDur, 5200ms) var(--ease) forwards,
-    fillIn var(--fillDur, 1500ms) cubic-bezier(.2,.8,.2,1) forwards,
-    strokeFade 900ms ease forwards;
+    logoStrokeDraw 900ms cubic-bezier(.2,.8,.2,1) forwards,
+    logoStrokeFade 420ms ease forwards;
   animation-delay:
     var(--delay, 0ms),
-    calc(var(--delay, 0ms) + var(--fillDelay, 3200ms)),
-    calc(var(--delay, 0ms) + var(--strokeFadeDelay, 4300ms));
+    calc(var(--delay, 0ms) + 760ms);
 }
 
-@keyframes strokeDraw{
-  from{ stroke-dashoffset:var(--len, 1000); }
-  to{ stroke-dashoffset:0; }
+.logoSvg.play .logo-fill{
+  animation:
+    logoFillReveal 700ms cubic-bezier(.18,.72,.18,1) forwards;
+  animation-delay:var(--delay, 0ms);
 }
 
-@keyframes fillIn{
-  to{ fill-opacity:1; }
+.logoSvg.play .logo-word{
+  animation:
+    logoWordDraw 980ms cubic-bezier(.2,.8,.2,1) forwards,
+    logoWordSettle 500ms ease forwards;
+  animation-delay:
+    var(--delay, 0ms),
+    calc(var(--delay, 0ms) + 760ms);
 }
 
-@keyframes strokeFade{
-  to{ stroke-opacity:0; }
+@keyframes logoStrokeDraw{
+  from{
+    stroke-dashoffset:var(--len, 1000);
+    opacity:0;
+  }
+  to{
+    stroke-dashoffset:0;
+    opacity:1;
+  }
 }
+
+@keyframes logoStrokeFade{
+  from{
+    stroke-opacity:.9;
+  }
+  to{
+    stroke-opacity:.18;
+  }
+}
+
+@keyframes logoFillReveal{
+  from{
+    opacity:0;
+    transform:translateY(8px) scale(.985);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+@keyframes logoWordDraw{
+  from{
+    stroke-dashoffset:var(--len, 1000);
+    opacity:0;
+  }
+  to{
+    stroke-dashoffset:0;
+    opacity:1;
+  }
+}
+
+@keyframes logoWordSettle{
+  from{
+    stroke-opacity:.88;
+  }
+  to{
+    stroke-opacity:1;
+  }
+}
+
 
 /* MAIN EXPERIENCE */
 .experience{
