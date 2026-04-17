@@ -1,118 +1,166 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Momentum Club Launch</title>
-
-<link rel="stylesheet" href="generator.css" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Momentum Club Launch</title>
+  <meta name="description" content="Momentum club partner launch experience." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="generator.css" />
 </head>
-
 <body>
 
-<!-- SECTION 1 HERO -->
-<section class="section">
-  <div class="section-inner fade-up">
-    <div class="eyebrow">Momentum x Club</div>
-    <h1 class="heading">Turn training into academic credit</h1>
-    <p class="subtext">
-      Your athletes are already putting in the work. Now it can count.
-    </p>
-    <button class="button" onclick="scrollToForm()">Get Started</button>
-  </div>
-</section>
-
-<!-- SECTION 2 WHY -->
-<section class="section dark">
-  <div class="section-inner fade-up">
-    <h2 class="heading">Your athletes are already doing the work</h2>
-    <p class="subtext">
-      Momentum helps turn structured training into academic progress,
-      giving families more value from what they are already committed to.
-    </p>
-  </div>
-</section>
-
-<!-- SECTION 3 HOW -->
-<section class="section">
-  <div class="section-inner fade-up">
-    <h2 class="heading">How it works</h2>
-
-    <div class="steps">
-      <div class="step">1. Check eligibility</div>
-      <div class="step">2. Enroll in a course</div>
-      <div class="step">3. Complete training-based modules</div>
-      <div class="step">4. Earn academic credit</div>
+  <!-- INTRO -->
+  <section class="intro" id="intro">
+    <div class="intro__inner">
+      <div class="logoWrap" aria-label="Momentum logo reveal">
+        <svg class="logoSvg" id="momentumLogo"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1476 674"
+          role="img"
+          aria-label="Momentum logo">
+          
+          <path class="draw is-red" fill="#c43236" d="M657.79 106.46L603.53 66.95A0.57 0.57 0 0 1 603.86 65.92L826.19 65.92A0.57 0.57 0 0 1 826.65 66.83L745.72 174.81A0.57 0.57 0 0 1 744.93 174.93L719.86 156.68A0.57 0.57 0 0 0 719.07 156.80L594.63 321.05A0.57 0.57 0 0 1 594.18 321.28L496.92 321.28A0.57 0.57 0 0 1 496.46 320.37L657.91 107.26A0.57 0.57 0 0 0 657.79 106.46Z"/>
+          <path class="draw is-dark" fill="#464646" d="M892.37 84.74L940.94 84.74A0.32 0.32 0 0 1 941.20 85.25L761.41 321.55A0.32 0.32 0 0 1 761.15 321.68L712.59 321.68A0.32 0.32 0 0 1 712.33 321.17L892.11 84.87A0.32 0.32 0 0 1 892.37 84.74Z"/>
+          <path class="draw is-dark" fill="#464646" d="M750.32 191.80L761.56 200.35A0.38 0.38 0 0 1 761.63 200.88L668.71 321.50A0.38 0.38 0 0 1 668.41 321.65L651.81 321.65A0.38 0.38 0 0 1 651.50 321.04L749.79 191.87A0.38 0.38 0 0 1 750.32 191.80Z"/>
+          <path class="draw" fill="#000000" d="M969.78 126.67L991.77 202.00A0.30 0.30 0 0 1 991.72 202.27L899.86 321.51A0.30 0.30 0 0 1 899.62 321.63L821.46 321.63A0.30 0.30 0 0 1 821.22 321.15L969.25 126.57A0.30 0.30 0 0 1 969.78 126.67Z"/>
+          <path class="draw" fill="#000000" d="M369.00 471.95C347.36 473.64 324.71 472.06 305.64 461.62C292.64 454.49 283.14 442.72 282.64 427.33C281.98 407.31 293.09 390.13 309.53 379.43C324.61 369.62 342.50 364.47 360.36 363.07C381.99 361.38 404.65 362.96 423.71 373.40C436.72 380.53 446.22 392.30 446.72 407.69C447.38 427.71 436.27 444.89 419.82 455.59C404.75 465.40 386.85 470.54 369.00 471.95ZM359.62 388.12C342.83 390.96 328.07 401.27 324.88 418.66C319.89 445.73 351.42 450.03 369.74 446.93C386.53 444.09 401.28 433.77 404.48 416.39C409.46 389.31 377.94 385.02 359.62 388.12Z"/>
+          <path class="draw" fill="#000000" d="M223.60 415.72A0.34 0.34 0 0 0 223.04 415.38L176.08 459.04A3.58 3.57 23.5 0 1 173.64 460.00L157.58 460.00A1.22 1.21 -15.0 0 1 156.53 459.40L130.81 415.46A0.44 0.44 0 0 0 130.00 415.57L114.96 469.77A0.93 0.92 -82.1 0 1 114.07 470.45L77.26 470.42A0.42 0.42 0 0 1 76.85 469.89L105.85 365.23A0.91 0.90 7.5 0 1 106.73 364.56L138.55 364.55A1.91 1.89 -14.4 0 1 140.21 365.52L173.76 425.43A0.41 0.41 0 0 0 174.39 425.53L239.52 365.64A4.12 4.09 -66.0 0 1 242.29 364.56L275.31 364.56A0.50 0.49 7.9 0 0 1 275.79 365.19L247.25 469.77A0.95 0.94 7.7 0 1 246.34 470.46L209.58 470.44A0.59 0.59 0 0 1 209.01 469.69L223.60 415.72Z"/>
+          <path class="draw" fill="#000000" d="M600.02 415.70A0.34 0.34 0 0 0 599.46 415.36L552.51 459.03A3.58 3.57 23.5 0 1 550.07 459.99L534.00 459.99A1.22 1.21 -15.0 0 1 532.95 459.39L507.22 415.45A0.44 0.44 0 0 0 506.41 415.56L491.37 469.76A0.93 0.92 -82.1 0 1 490.48 470.44L453.66 470.42A0.42 0.42 0 0 1 453.25 469.89L482.25 365.21A0.91 0.90 7.5 0 1 483.13 364.54L514.96 364.52A1.91 1.89 -14.4 0 1 516.62 365.49L550.18 425.41A0.41 0.41 0 0 0 550.81 425.51L615.95 365.61A4.12 4.09 -66.0 0 1 618.72 364.53L651.74 364.53A0.50 0.49 7.9 0 0 1 652.22 365.16L623.68 469.76A0.95 0.94 7.7 0 1 622.77 470.45L586.01 470.43A0.59 0.59 0 0 1 585.44 469.68L600.02 415.70Z"/>
+          <path class="draw" fill="#000000" d="M776.86 406.16L770.92 427.60A0.47 0.47 0 0 1 770.46 427.94L705.97 427.94A0.47 0.47 0 0 0 705.51 428.28L700.39 446.76A0.47 0.47 0 0 0 700.85 447.36L776.40 447.36A0.47 0.47 0 0 1 776.86 447.96L770.73 470.10A0.47 0.47 0 0 1 770.27 470.44L653.68 470.44A0.47 0.47 0 0 1 653.22 469.84L682.28 364.90A0.47 0.47 0 0 1 682.74 364.56L796.40 364.56A0.47 0.47 0 0 1 796.85 365.16L790.70 387.39A0.47 0.47 0 0 1 790.24 387.73L717.05 387.73A0.47 0.47 0 0 0 716.59 388.07L711.91 404.96A0.47 0.47 0 0 0 712.37 405.56L776.40 405.56A0.47 0.47 0 0 1 776.86 406.16Z"/>
+          <path class="draw" fill="#000000" d="M864.06 428.68Q859.63 423.35 851.07 413.22A0.54 0.54 0 0 0 850.13 413.43L834.54 469.71A0.97 0.96 -82.1 0 1 833.61 470.42L794.54 470.42A0.57 0.57 0 0 1 793.99 469.70L822.88 365.41A1.21 1.21 0 0 1 824.05 364.51L856.12 364.51A2.20 2.18 -19.7 0 1 857.81 365.30Q879.97 391.70 892.05 406.26Q896.47 411.59 905.03 421.72A0.54 0.54 0 0 0 905.97 421.51L921.56 365.23A0.97 0.96 -82.1 0 1 922.49 364.52L961.56 364.52A0.57 0.57 0 0 1 962.11 365.24L933.22 469.53A1.21 1.21 0 0 1 932.05 470.43L899.98 470.43A2.20 2.18 -19.7 0 0 1 898.30 469.64Q876.13 443.24 864.06 428.68Z"/>
+          <path class="draw" fill="#000000" d="M971.25 387.56L977.51 365.00A0.61 0.61 0 0 1 978.09 364.55L1108.06 364.55A0.61 0.61 0 0 1 1108.65 365.32L1102.39 387.88A0.61 0.61 0 0 1 1101.81 388.33L1057.81 388.33A0.61 0.61 0 0 0 1057.23 388.78L1034.73 469.99A0.61 0.61 0 0 1 1034.15 470.44L994.01 470.44A0.61 0.61 0 0 1 993.42 469.67L1015.74 389.10A0.61 0.61 0 0 0 1015.15 388.33L971.84 388.33A0.61 0.61 0 0 1 971.25 387.56Z"/>
+          <path class="draw" fill="#000000" d="M1162.23 365.16Q1155.50 389.49 1146.41 422.21C1143.39 433.09 1145.09 443.34 1157.55 446.38C1170.55 449.56 1187.70 448.26 1195.76 435.85Q1199.38 430.29 1200.87 425.11Q1204.78 411.49 1217.45 365.37A1.14 1.13 7.7 0 1 1218.55 364.54L1257.89 364.54A0.47 0.47 0 0 1 1258.34 365.14Q1253.11 383.88 1243.55 418.80Q1240.69 429.23 1238.33 434.54C1229.49 454.42 1211.98 465.94 1190.76 470.04Q1163.71 475.28 1136.97 469.61Q1131.49 468.45 1124.49 465.14C1111.91 459.19 1103.13 449.08 1102.91 434.70Q1102.82 429.03 1107.32 413.48Q1110.63 402.02 1120.78 365.19A0.87 0.86 7.3 0 1 1121.62 364.55L1161.76 364.55A0.49 0.48 7.7 0 0 1 1162.23 365.16Z"/>
+          <path class="draw" fill="#000000" d="M1355.39 459.99L1337.70 459.99A0.40 0.40 0 0 1 1337.35 459.79L1311.58 415.15A0.40 0.40 0 0 0 1310.85 415.24L1295.64 470.16A0.40 0.40 0 0 1 1295.26 470.45L1258.00 470.45A0.40 0.40 0 0 1 1257.61 469.94L1286.72 364.84A0.40 0.40 0 0 1 1287.10 364.55L1320.20 364.55A0.40 0.40 0 0 1 1320.54 364.75L1354.53 425.42A0.40 0.40 0 0 0 1355.15 425.52L1421.36 364.66A0.40 0.40 0 0 1 1421.63 364.55L1456.42 364.55A0.40 0.40 0 0 1 1456.81 365.06L1427.71 470.15A0.40 0.40 0 0 1 1427.33 470.44L1389.93 470.44A0.40 0.40 0 0 1 1389.54 469.93L1404.47 416.03A0.40 0.40 0 0 0 1403.81 415.63L1355.66 459.88A0.40 0.40 0 0 1 1355.39 459.99Z"/>
+        </svg>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SECTION 4 FORM -->
-<section class="section dark" id="formSection">
-  <div class="section-inner fade-up">
+  <!-- MAIN EXPERIENCE -->
+  <main class="experience" id="experience">
 
-    <h2 class="heading">Create your club launch</h2>
+    <section class="section section--hero">
+      <div class="section__inner heroBlock reveal">
+        <p class="eyebrow">Momentum x Club Partner Program</p>
+        <h1 class="heroTitle">
+          Bring Momentum<br />
+          To Your Athletes.
+        </h1>
+        <div class="headlineRule"></div>
+        <p class="heroSub">
+          A premium co-branded launch experience that helps your club explain Momentum clearly to families and move them into action.
+        </p>
+        <div class="heroActions">
+          <button class="btn btn--primary" data-scroll="#formSection">Create Launch</button>
+          <button class="btn btn--ghost" data-scroll="#howSection">See How It Works</button>
+        </div>
+      </div>
+    </section>
 
-    <form id="clubForm" style="max-width:400px;margin:auto;display:flex;flex-direction:column;gap:16px">
+    <section class="section section--dark" id="whySection">
+      <div class="section__inner reveal">
+        <p class="eyebrow eyebrow--light">Why this matters</p>
+        <h2 class="sectionTitle sectionTitle--light">Your athletes are already doing the work.</h2>
+        <p class="sectionCopy sectionCopy--light">
+          Momentum helps turn structured training into academic progress, giving families more value from what they are already committed to.
+        </p>
+      </div>
+    </section>
 
-      <input required name="clubName" placeholder="Club name" />
-      <input required name="sportType" placeholder="Sport" />
-      <input required name="contactName" placeholder="Contact name" />
-      <input required name="contactEmail" placeholder="Email" />
+    <section class="section" id="howSection">
+      <div class="section__inner reveal">
+        <p class="eyebrow">How it works</p>
+        <h2 class="sectionTitle">A clear 3-step rollout.</h2>
 
-      <button class="button" type="submit">
-        Generate Launch Kit
-      </button>
+        <div class="steps">
+          <article class="stepCard">
+            <span class="stepNo">01</span>
+            <h3>Set up your club</h3>
+            <p>Enter your club details once and generate a co-branded launch experience.</p>
+          </article>
 
-    </form>
+          <article class="stepCard">
+            <span class="stepNo">02</span>
+            <h3>Send families one link</h3>
+            <p>Parents land on a polished page that explains the partnership and next steps.</p>
+          </article>
 
-  </div>
-</section>
+          <article class="stepCard">
+            <span class="stepNo">03</span>
+            <h3>Guide them into action</h3>
+            <p>Momentum provides messaging, explanation, and a clear eligibility path.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<!-- SECTION 5 RESULT -->
-<section class="section" id="resultSection" style="display:none">
-  <div class="section-inner fade-up">
+    <section class="section section--dark" id="formSection">
+      <div class="section__inner reveal">
+        <p class="eyebrow eyebrow--light">Create your launch</p>
+        <h2 class="sectionTitle sectionTitle--light">Generate your club launch kit.</h2>
+        <p class="sectionCopy sectionCopy--light">
+          Keep it simple. Fill this out once, then send your families one clean branded experience.
+        </p>
 
-    <h2 class="heading">Your Launch Kit is Ready</h2>
-    <p class="subtext">Send this to your families this week.</p>
+        <form id="clubForm" class="clubForm">
+          <div class="formGrid">
+            <div class="field">
+              <label for="clubName">Club name</label>
+              <input id="clubName" name="clubName" type="text" placeholder="Redline Soccer Club" required>
+            </div>
 
-    <pre id="messageOutput" style="text-align:left;white-space:pre-wrap;"></pre>
+            <div class="field">
+              <label for="sportType">Sport</label>
+              <input id="sportType" name="sportType" type="text" placeholder="Soccer" required>
+            </div>
 
-    <button class="button" onclick="copyMessage()">Copy Message</button>
+            <div class="field">
+              <label for="contactName">Contact name</label>
+              <input id="contactName" name="contactName" type="text" placeholder="Alex Carter" required>
+            </div>
 
-  </div>
-</section>
+            <div class="field">
+              <label for="contactEmail">Contact email</label>
+              <input id="contactEmail" name="contactEmail" type="email" placeholder="alex@club.org" required>
+            </div>
 
-<script>
-function scrollToForm() {
-  document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
-}
+            <div class="field field--full">
+              <label for="clubMessage">Short club message</label>
+              <textarea id="clubMessage" name="clubMessage" rows="4" placeholder="We’re excited to offer families a clear path to earn academic credit for the work athletes are already doing."></textarea>
+            </div>
+          </div>
 
-function copyMessage() {
-  const text = document.getElementById('messageOutput').innerText;
-  navigator.clipboard.writeText(text);
-}
+          <div class="formActions">
+            <button class="btn btn--primary btn--wide" type="submit">Generate Launch Kit</button>
+          </div>
+        </form>
+      </div>
+    </section>
 
-document.getElementById("clubForm").addEventListener("submit", function(e){
-  e.preventDefault();
+    <section class="section" id="resultSection" hidden>
+      <div class="section__inner reveal">
+        <p class="eyebrow">Your launch kit</p>
+        <h2 class="sectionTitle">Your Momentum club message is ready.</h2>
+        <p class="sectionCopy">
+          Copy this and send it to families this week. Keep everything routed through one clean next step.
+        </p>
 
-  const name = this.clubName.value;
+        <div class="resultCard">
+          <pre id="messageOutput"></pre>
+        </div>
 
-  const message =
-`Hi! ${name} is now partnered with Momentum.
+        <div class="resultActions">
+          <button class="btn btn--primary" id="copyMessageBtn" type="button">Copy Message</button>
+          <button class="btn btn--ghost" id="editFormBtn" type="button">Edit Details</button>
+        </div>
+      </div>
+    </section>
 
-Your athlete may qualify to earn academic credit for the training they are already doing.
+  </main>
 
-Learn more here:
-[LINK]`;
-
-  document.getElementById("messageOutput").innerText = message;
-
-  document.getElementById("resultSection").style.display = "flex";
-  document.getElementById("resultSection").scrollIntoView({ behavior: "smooth" });
-});
-</script>
-
+  <script src="generator.js"></script>
 </body>
 </html>
