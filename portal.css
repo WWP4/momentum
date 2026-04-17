@@ -694,3 +694,121 @@ a{
     transition:none !important;
   }
 }
+
+
+.portal-hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:120px 24px 80px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(23,26,32,.05), transparent 40%),
+    linear-gradient(180deg, #ffffff 0%, #f6f7f8 100%);
+}
+
+/* subtle grid texture */
+.portal-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(23,26,32,.025) 1px, transparent 1px),
+    linear-gradient(rgba(23,26,32,.025) 1px, transparent 1px);
+  background-size:72px 72px;
+  opacity:.4;
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.6), transparent 85%);
+}
+
+/* center container */
+.portal-hero__inner{
+  position:relative;
+  z-index:1;
+  width:min(980px, 100%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* BRAND */
+.portal-hero__brand{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-bottom:28px;
+}
+
+.portal-hero__club-logo{
+  width:72px;
+  height:72px;
+  border:1px solid var(--line);
+  background:#fff;
+  display:grid;
+  place-items:center;
+}
+
+.portal-hero__club-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.portal-hero__brand-lockup{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-size:clamp(22px, 2vw, 30px);
+  font-weight:600;
+  letter-spacing:-.04em;
+}
+
+.portal-hero__divider{
+  color:var(--ink-muted);
+}
+
+/* TEXT */
+.portal-hero__eyebrow{
+  margin:0 0 20px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+}
+
+.portal-hero__title{
+  margin:0;
+  font-size:clamp(48px, 7vw, 86px);
+  line-height:1.02;
+  letter-spacing:-.05em;
+  font-weight:600;
+  max-width:14ch;
+  text-wrap:balance;
+}
+
+.portal-hero__copy{
+  margin-top:28px;
+  font-size:18px;
+  line-height:1.65;
+  color:var(--ink-soft);
+  max-width:56ch;
+}
+
+/* ACTIONS */
+.portal-hero__actions{
+  margin-top:42px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+/* CONTACT */
+.portal-hero__contact{
+  margin-top:28px;
+  font-size:14px;
+  color:var(--ink-soft);
+}
