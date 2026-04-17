@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Momentum Partnership Portal</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="generator.css" />
@@ -11,128 +12,142 @@
   <link rel="stylesheet" href="portal.css" />
 </head>
 <body>
-  <main class="portalPage" id="portal">
-    <header class="utilityBar" role="banner">
-      <div class="utilityBar__inner">
-        <div class="utilityBar__left">
-          <span class="utilityBar__eyebrow">Momentum x Club Partner Portal</span>
-        </div>
-        <div class="utilityBar__right" id="portalMeta"></div>
+  <main class="portal-page">
+
+    <header class="portal-topbar" role="banner">
+      <div class="portal-topbar__inner">
+        <p class="portal-topbar__label">Momentum x Club Partner Portal</p>
+        <div class="portal-topbar__meta" id="portalMeta"></div>
       </div>
     </header>
 
-  <!-- AOS -->
-<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <section class="portal-hero" id="portalHero">
+      <div class="portal-hero__inner">
+        <div class="portal-hero__content">
 
-<section class="partner-hero" id="partnerHero">
-  <div class="partner-hero__bg"></div>
-  <div class="partner-hero__grid">
+          <div class="portal-hero__brand" data-aos="fade-up" data-aos-duration="900">
+            <div class="portal-hero__club-logo" id="clubLogoWrap" hidden>
+              <img id="clubLogo" alt="Club logo" />
+            </div>
 
-    <div class="partner-hero__left">
-      <div class="partner-hero__brandRow" data-aos="fade-up" data-aos-duration="900">
-        <div class="partner-hero__clubMark" id="clubLogoWrap" hidden>
-          <img id="clubLogo" alt="Club logo" />
-        </div>
+            <div class="portal-hero__brand-lockup">
+              <span class="portal-hero__brand-club" id="clubNameText">Club Partner</span>
+              <span class="portal-hero__brand-divider">×</span>
+              <span class="portal-hero__brand-momentum">Momentum</span>
+            </div>
+          </div>
 
-        <div class="partner-hero__brandLockup">
-          <span class="partner-hero__brandName" id="clubNameText">GLCA</span>
-          <span class="partner-hero__brandX">×</span>
-          <span class="partner-hero__brandMomentum">Momentum</span>
-        </div>
-      </div>
-
-      <div class="partner-hero__eyebrowWrap" data-aos="fade-up" data-aos-delay="80" data-aos-duration="900">
-        <p class="partner-hero__eyebrow" id="sport">Club Partner Portal</p>
-      </div>
-
-      <div class="partner-hero__headlineWrap" data-aos="fade-up" data-aos-delay="140" data-aos-duration="1000">
-        <h1 class="partner-hero__title" id="headline">
-          Turn athlete development into something academically visible.
-        </h1>
-      </div>
-
-      <div class="partner-hero__copyWrap" data-aos="fade-up" data-aos-delay="220" data-aos-duration="1000">
-        <p class="partner-hero__copy" id="copy">
-          Explore Momentum courses available through this club partnership and find the academic path that fits your athlete’s training.
-        </p>
-      </div>
-
-      <div class="partner-hero__actions" data-aos="fade-up" data-aos-delay="280" data-aos-duration="1000">
-        <a href="#portalCourses" class="partner-hero__btn partner-hero__btn--primary">View Available Classes</a>
-        <a href="#portalAbout" class="partner-hero__btn partner-hero__btn--ghost">How It Works</a>
-      </div>
-
-      <div class="partner-hero__meta" data-aos="fade-up" data-aos-delay="340" data-aos-duration="1000">
-        <div class="partner-hero__metaItem">
-          <span class="partner-hero__metaLabel">Built for</span>
-          <span class="partner-hero__metaValue" id="heroClubName">GLCA Families</span>
-        </div>
-        <div class="partner-hero__metaDivider"></div>
-        <div class="partner-hero__metaItem">
-          <span class="partner-hero__metaLabel">Contact</span>
-          <span class="partner-hero__metaValue" id="contact">Contact your club representative</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="partner-hero__right">
-      <div class="partner-hero__visual" data-aos="zoom-out" data-aos-delay="120" data-aos-duration="1200">
-        <div class="partner-hero__visualFrame"></div>
-
-        <div class="partner-hero__card partner-hero__card--front">
-          <span class="partner-hero__cardKicker">Eligible Credit Paths</span>
-          <h2 class="partner-hero__cardTitle">A clearer path for families.</h2>
-          <p class="partner-hero__cardText">
-            Structured courses designed around the training athletes are already doing.
+          <p class="portal-hero__eyebrow" id="sport" data-aos="fade-up" data-aos-delay="80">
+            Partner Family Portal
           </p>
 
-          <div class="partner-hero__stats">
-            <div class="partner-hero__stat">
-              <span class="partner-hero__statNo">01</span>
-              <span class="partner-hero__statText">Club-approved course access</span>
+          <h1 class="portal-hero__title" id="headline" data-aos="fade-up" data-aos-delay="140">
+            Welcome to your club’s Momentum partnership portal.
+          </h1>
+
+          <p class="portal-hero__copy" id="copy" data-aos="fade-up" data-aos-delay="220">
+            This portal was created to help families understand the Momentum partnership, review available courses, and move forward when ready.
+          </p>
+
+          <div class="portal-hero__actions" data-aos="fade-up" data-aos-delay="300">
+            <a href="#courses" class="portal-btn portal-btn--primary">Review Available Classes</a>
+            <a href="#overview" class="portal-btn portal-btn--secondary">How It Works</a>
+          </div>
+
+          <div class="portal-hero__contact" data-aos="fade-up" data-aos-delay="360">
+            <p id="partnerContact">
+              Questions? Connect with your club representative for guidance.
+            </p>
+          </div>
+        </div>
+
+        <div class="portal-hero__presentation" data-aos="fade-up" data-aos-delay="180" data-aos-duration="1100">
+          <div class="portal-hero__panel">
+            <p class="portal-hero__panel-kicker">Partnership Overview</p>
+
+            <div class="portal-hero__panel-row">
+              <span class="portal-hero__panel-label">For Families</span>
+              <p class="portal-hero__panel-text">
+                A clear place to explore Momentum through your club partnership.
+              </p>
             </div>
-            <div class="partner-hero__stat">
-              <span class="partner-hero__statNo">02</span>
-              <span class="partner-hero__statText">Academic structure around training</span>
+
+            <div class="portal-hero__panel-row">
+              <span class="portal-hero__panel-label">For Athletes</span>
+              <p class="portal-hero__panel-text">
+                Structured academic options built around the work they are already doing.
+              </p>
             </div>
-            <div class="partner-hero__stat">
-              <span class="partner-hero__statNo">03</span>
-              <span class="partner-hero__statText">Simple enrollment for parents</span>
+
+            <div class="portal-hero__panel-row">
+              <span class="portal-hero__panel-label">Next Step</span>
+              <p class="portal-hero__panel-text">
+                Review your club’s available classes and enroll when ready.
+              </p>
             </div>
           </div>
         </div>
 
-        <div class="partner-hero__card partner-hero__card--back">
-          <div class="partner-hero__backLines"></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-    <section class="section portalCourses" id="courses" aria-labelledby="coursesHeading">
-      <div class="section__inner">
-        <p class="eyebrow">Partner Curriculum</p>
-        <h2 class="sectionTitle" id="coursesHeading">Built for your club. Backed by Momentum.</h2>
-        <p class="coursesIntro">Select from your tailored course lineup and enroll with your club's preferred partner pricing.</p>
-
-        <div class="coursesStats" id="coursesStats"></div>
-        <div id="coursesGrid" class="coursesGrid"></div>
       </div>
     </section>
+
+    <section class="portal-overview" id="overview">
+      <div class="portal-section__inner">
+        <p class="portal-section__eyebrow">How it works</p>
+        <h2 class="portal-section__title">A simple path for families.</h2>
+
+        <div class="portal-overview__grid">
+          <article class="portal-overview__item" data-aos="fade-up" data-aos-delay="0">
+            <span class="portal-overview__number">01</span>
+            <h3>Review the partnership</h3>
+            <p>
+              Learn how Momentum works with your club and what this opportunity means for your athlete.
+            </p>
+          </article>
+
+          <article class="portal-overview__item" data-aos="fade-up" data-aos-delay="80">
+            <span class="portal-overview__number">02</span>
+            <h3>Explore available classes</h3>
+            <p>
+              View the courses currently available through your club’s partner portal.
+            </p>
+          </article>
+
+          <article class="portal-overview__item" data-aos="fade-up" data-aos-delay="160">
+            <span class="portal-overview__number">03</span>
+            <h3>Move forward when ready</h3>
+            <p>
+              Enroll through the portal and take the next step with clarity.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="portal-courses" id="courses" aria-labelledby="coursesHeading">
+      <div class="portal-section__inner">
+        <p class="portal-section__eyebrow">Available classes</p>
+        <h2 class="portal-section__title" id="coursesHeading">Courses available through your club partnership.</h2>
+        <p class="portal-courses__intro">
+          Review the current class lineup available for families in this partner portal.
+        </p>
+
+        <div class="portal-courses__stats" id="coursesStats"></div>
+        <div class="portal-courses__grid" id="coursesGrid"></div>
+      </div>
+    </section>
+
   </main>
 
   <script type="module" src="portal.js"></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init({
-    once: true,
-    duration: 1000,
-    easing: 'cubic-bezier(.22,.61,.36,1)',
-    offset: 40
-  });
-</script>
-
+  <script>
+    AOS.init({
+      once: true,
+      duration: 1000,
+      easing: 'cubic-bezier(.22,.61,.36,1)',
+      offset: 40
+    });
+  </script>
 </body>
 </html>
