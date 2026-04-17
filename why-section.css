@@ -534,3 +534,50 @@
     filter: none !important;
   }
 }
+
+
+.why-section {
+  position: relative;
+  min-height: 300vh;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255,255,255,0.03), transparent 22%),
+    radial-gradient(circle at 85% 80%, rgba(255,255,255,0.025), transparent 24%),
+    linear-gradient(180deg, #050608 0%, #0a0c10 100%);
+  color: rgba(255,255,255,0.96);
+}
+
+.why-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.why-shell {
+  width: min(1320px, 100%);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: minmax(320px, 450px) minmax(0, 1fr);
+  gap: clamp(34px, 5vw, 84px);
+  align-items: center;
+}
+
+@media (max-width: 1040px) {
+  .why-section {
+    min-height: 260vh;
+  }
+
+  .why-sticky {
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 80px 0;
+  }
+
+  .why-shell {
+    grid-template-columns: 1fr;
+  }
+}
