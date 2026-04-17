@@ -392,54 +392,59 @@
       <div class="why-stageWrap">
         <div class="why-stage" id="whyStage" data-step="0">
 
-          <div class="why-stage__rail"></div>
-          <div class="why-stage__plane"></div>
-          <div class="why-stage__line"></div>
-          <div class="why-progress" aria-hidden="true"><span></span></div>
+          <div class="why-environment"></div>
+          <div class="why-shadowPlane"></div>
 
-          <div class="why-visuals" aria-hidden="true">
+          <div class="why-card">
+            <div class="why-card__back"></div>
+            <div class="why-card__edge why-card__edge--left"></div>
+            <div class="why-card__edge why-card__edge--right"></div>
+            <div class="why-card__edge why-card__edge--bottom"></div>
 
-            <!-- STATE 1 -->
-            <div class="why-icon why-icon--motion is-live" data-icon="0">
-              <svg viewBox="0 0 160 160" role="presentation" focusable="false">
-                <path d="M32 103C45 78 63 62 83 56C100 51 116 54 130 67"></path>
-                <path d="M42 119C59 94 79 79 100 73C116 69 130 72 141 82"></path>
-                <path d="M27 88C38 71 54 58 72 50"></path>
-              </svg>
-            </div>
+            <div class="why-card__face">
+              <div class="why-card__gloss"></div>
+              <div class="why-card__surface"></div>
 
-            <!-- STATE 2 -->
-            <div class="why-icon why-icon--framework" data-icon="1">
-              <svg viewBox="0 0 160 160" role="presentation" focusable="false">
-                <rect x="36" y="36" width="88" height="88" rx="18"></rect>
-                <path d="M61 48V112"></path>
-                <path d="M80 48V112"></path>
-                <path d="M99 48V112"></path>
-                <path d="M48 67H112"></path>
-                <path d="M48 93H112"></path>
-              </svg>
-            </div>
+              <div class="why-card__state why-card__state--motion is-live" data-card="0" aria-hidden="true">
+                <svg viewBox="0 0 160 160" role="presentation" focusable="false">
+                  <path d="M26 102C43 76 62 61 84 54C102 49 120 53 136 66"></path>
+                  <path d="M34 120C55 92 77 76 100 70C118 65 134 69 145 80"></path>
+                  <path d="M24 86C36 69 52 56 71 48"></path>
+                  <circle cx="113" cy="61" r="4"></circle>
+                </svg>
+              </div>
 
-            <!-- STATE 3 -->
-            <div class="why-icon why-icon--result" data-icon="2">
-              <svg viewBox="0 0 160 160" role="presentation" focusable="false">
-                <rect x="48" y="28" width="64" height="96" rx="16"></rect>
-                <path d="M65 28H95"></path>
-                <path d="M63 62H96"></path>
-                <path d="M63 80H92"></path>
-                <path d="M63 98H84"></path>
-                <path class="why-check" d="M94 108L104 118L122 96"></path>
-              </svg>
+              <div class="why-card__state why-card__state--framework" data-card="1" aria-hidden="true">
+                <svg viewBox="0 0 160 160" role="presentation" focusable="false">
+                  <rect x="38" y="34" width="84" height="92" rx="18"></rect>
+                  <path d="M58 48V112"></path>
+                  <path d="M80 48V112"></path>
+                  <path d="M102 48V112"></path>
+                  <path d="M49 69H111"></path>
+                  <path d="M49 91H111"></path>
+                </svg>
+              </div>
+
+              <div class="why-card__state why-card__state--result" data-card="2" aria-hidden="true">
+                <svg viewBox="0 0 160 160" role="presentation" focusable="false">
+                  <rect x="50" y="28" width="60" height="96" rx="15"></rect>
+                  <path d="M66 28H94"></path>
+                  <path d="M64 58H95"></path>
+                  <path d="M64 76H92"></path>
+                  <path d="M64 94H84"></path>
+                  <path class="why-check" d="M92 106L102 116L120 95"></path>
+                </svg>
+              </div>
             </div>
           </div>
 
+          <div class="why-progress" aria-hidden="true"><span></span></div>
+
           <div class="why-caption">
             <span class="why-caption__eyebrow" id="why-caption-eyebrow">Training reality</span>
-
             <h3 class="why-caption__title" id="why-caption-title">
               Athletes are already putting in the work.
             </h3>
-
             <p class="why-caption__text" id="why-caption-text">
               Practice, repetition, coaching, movement, and discipline already exist before Momentum enters the picture.
             </p>
@@ -451,6 +456,8 @@
     </div>
   </div>
 </section>
+
+  
     <section class="section" id="howSection">
       <div class="section__inner reveal">
         <p class="eyebrow">How it works</p>
