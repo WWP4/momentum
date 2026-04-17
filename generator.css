@@ -10,7 +10,7 @@
   --white-muted:rgba(255,255,255,.54);
 
   --line:rgba(0,0,0,.08);
-  --line-soft:rgba(255,255,255,.12);
+  --line-strong:rgba(0,0,0,.14);
 
   --red:#c43236;
   --graphite:#2a2e35;
@@ -18,6 +18,7 @@
   --radius:4px;
   --max:1180px;
   --ease:cubic-bezier(.18,.72,.18,1);
+  --ease-smooth:cubic-bezier(.22,.61,.36,1);
 }
 
 *,
@@ -31,6 +32,9 @@ body{
   margin:0;
   padding:0;
   min-height:100%;
+}
+
+html{
   scroll-behavior:smooth;
 }
 
@@ -50,12 +54,13 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
   background:
-    radial-gradient(900px 520px at 12% 20%, rgba(196,50,54,.42), transparent 60%),
-    radial-gradient(820px 540px at 86% 20%, rgba(255,255,255,.10), transparent 62%),
-    radial-gradient(1000px 680px at 55% 110%, rgba(42,46,53,.60), transparent 55%),
-    linear-gradient(to bottom, rgba(5,6,7,.55), rgba(5,6,7,1));
-  transition:opacity 1.2s ease, visibility 1.2s ease;
+    radial-gradient(900px 520px at 12% 20%, rgba(196,50,54,.34), transparent 60%),
+    radial-gradient(820px 540px at 86% 20%, rgba(255,255,255,.08), transparent 62%),
+    radial-gradient(1000px 680px at 55% 110%, rgba(42,46,53,.54), transparent 55%),
+    linear-gradient(180deg, rgba(88,88,88,.94) 0%, rgba(45,45,45,.92) 48%, rgba(6,7,9,1) 100%);
+  transition:opacity 1.05s ease, visibility 1.05s ease;
 }
 
 body.intro-complete .intro{
@@ -65,7 +70,7 @@ body.intro-complete .intro{
 }
 
 .intro__inner{
-  width:min(560px, 86vw);
+  width:min(720px, 88vw);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -74,6 +79,23 @@ body.intro-complete .intro{
 .logoWrap{
   position:relative;
   width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logoWrap::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+  width:min(520px, 76vw);
+  aspect-ratio:1 / 1;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(196,50,54,.14) 0%, rgba(196,50,54,.08) 34%, rgba(196,50,54,0) 72%);
+  filter:blur(12px);
+  pointer-events:none;
 }
 
 .logoWrap::after{
@@ -82,149 +104,103 @@ body.intro-complete .intro{
   left:50%;
   top:50%;
   transform:translate(-50%, -50%);
-  width:130%;
-  height:130%;
-  background:radial-gradient(circle at center, rgba(196,50,54,.28), rgba(196,50,54,.12), transparent 70%);
-  filter:blur(24px);
-  opacity:.88;
+  width:min(700px, 98vw);
+  height:min(700px, 98vw);
+  background:radial-gradient(circle at center, rgba(255,255,255,.06), transparent 60%);
   pointer-events:none;
-  z-index:-1;
 }
 
 .logoSvg{
-  width:100%;
+  width:min(680px, 82vw);
   height:auto;
   display:block;
+  position:relative;
+  z-index:1;
 }
 
-/* Base path handling */
-.logoSvg .logo-stroke,
+/* LOGO PATHS */
 .logoSvg .logo-fill,
 .logoSvg .logo-word{
   vector-effect:non-scaling-stroke;
+  transform-box:fill-box;
   transform-origin:center;
-  will-change:stroke-dashoffset, opacity, transform;
+  will-change:opacity, transform, stroke-dashoffset;
 }
 
-/* Symbol stroke paths only */
-.logoSvg .logo-stroke{
-  fill:none !important;
-  stroke:rgba(255,255,255,.82);
-  stroke-width:2.2;
-  stroke-opacity:.9;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-/* Solid mark pieces */
 .logoSvg .logo-fill{
   stroke:none !important;
   opacity:0;
   transform:translateY(8px) scale(.985);
 }
 
-/* Wordmark */
 .logoSvg .logo-word{
   fill:none !important;
   stroke:rgba(255,255,255,.78);
-  stroke-width:2.05;
-  stroke-opacity:.88;
+  stroke-width:2.1;
+  stroke-opacity:.92;
   stroke-linecap:round;
   stroke-linejoin:round;
+  opacity:0;
 }
 
-/* Optional color modifiers */
 .logoSvg .is-red{
-  fill:#c43236;
-  stroke:#c43236;
+  fill:var(--red);
 }
 
 .logoSvg .is-dark{
-  fill:#121212;
-  stroke:rgba(255,255,255,.35);
-}
-
-.logoSvg.play .logo-stroke{
-  animation:
-    logoStrokeDraw 900ms cubic-bezier(.2,.8,.2,1) forwards,
-    logoStrokeFade 420ms ease forwards;
-  animation-delay:
-    var(--delay, 0ms),
-    calc(var(--delay, 0ms) + 760ms);
+  fill:#111111;
 }
 
 .logoSvg.play .logo-fill{
-  animation:
-    logoFillReveal 700ms cubic-bezier(.18,.72,.18,1) forwards;
+  animation:logoFillReveal 760ms var(--ease-smooth) forwards;
   animation-delay:var(--delay, 0ms);
 }
 
 .logoSvg.play .logo-word{
   animation:
-    logoWordDraw 980ms cubic-bezier(.2,.8,.2,1) forwards,
-    logoWordSettle 500ms ease forwards;
+    logoWordDraw 1050ms var(--ease-smooth) forwards,
+    logoWordOpacity 220ms linear forwards;
   animation-delay:
     var(--delay, 0ms),
-    calc(var(--delay, 0ms) + 760ms);
-}
-
-@keyframes logoStrokeDraw{
-  from{
-    stroke-dashoffset:var(--len, 1000);
-    opacity:0;
-  }
-  to{
-    stroke-dashoffset:0;
-    opacity:1;
-  }
-}
-
-@keyframes logoStrokeFade{
-  from{
-    stroke-opacity:.9;
-  }
-  to{
-    stroke-opacity:.18;
-  }
+    var(--delay, 0ms);
 }
 
 @keyframes logoFillReveal{
   from{
     opacity:0;
     transform:translateY(8px) scale(.985);
+    filter:blur(2px);
   }
   to{
     opacity:1;
     transform:translateY(0) scale(1);
+    filter:blur(0);
   }
 }
 
 @keyframes logoWordDraw{
   from{
     stroke-dashoffset:var(--len, 1000);
-    opacity:0;
   }
   to{
     stroke-dashoffset:0;
+  }
+}
+
+@keyframes logoWordOpacity{
+  from{
+    opacity:0;
+  }
+  to{
     opacity:1;
   }
 }
 
-@keyframes logoWordSettle{
-  from{
-    stroke-opacity:.88;
-  }
-  to{
-    stroke-opacity:1;
-  }
-}
-
-
 /* MAIN EXPERIENCE */
 .experience{
   opacity:0;
-  transform:translateY(20px);
-  transition:opacity 1.1s ease, transform 1.1s ease;
+  transform:translateY(18px);
+  transition:opacity .95s ease, transform .95s ease;
 }
 
 body.intro-complete .experience{
@@ -237,7 +213,7 @@ body.intro-complete .experience{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:64px 28px;
+  padding:72px 28px;
   position:relative;
   overflow:hidden;
 }
@@ -250,7 +226,7 @@ body.intro-complete .experience{
 .section--hero{
   background:
     radial-gradient(900px 520px at 12% 20%, rgba(196,50,54,.08), transparent 60%),
-    radial-gradient(900px 520px at 88% 0%, rgba(42,46,53,.14), transparent 62%),
+    radial-gradient(900px 520px at 88% 0%, rgba(42,46,53,.12), transparent 62%),
     linear-gradient(to bottom, #ffffff, #fafafa);
 }
 
@@ -344,7 +320,12 @@ body.intro-complete .experience{
   font-family:inherit;
   font-size:14px;
   font-weight:700;
-  transition:transform .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    border-color .18s ease,
+    opacity .18s ease,
+    box-shadow .18s ease;
 }
 
 .btn:hover{
@@ -352,10 +333,14 @@ body.intro-complete .experience{
 }
 
 .btn--primary{
-  background:linear-gradient(135deg, rgba(196,50,54,.96), rgba(196,50,54,.74));
+  background:linear-gradient(135deg, rgba(196,50,54,.96), rgba(196,50,54,.78));
   color:#fff;
   border:1px solid rgba(196,50,54,.55);
   box-shadow:0 18px 60px rgba(196,50,54,.18);
+}
+
+.btn--primary:hover{
+  box-shadow:0 24px 70px rgba(196,50,54,.22);
 }
 
 .btn--ghost{
@@ -376,7 +361,7 @@ body.intro-complete .experience{
 /* STEPS */
 .steps{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
+  grid-template-columns:repeat(3, minmax(0, 1fr));
   gap:22px;
   margin-top:44px;
   text-align:left;
@@ -452,7 +437,7 @@ body.intro-complete .experience{
   padding:15px 16px;
   border-radius:4px;
   font:inherit;
-  transition:border-color .2s ease, background .2s ease;
+  transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
 }
 
 .field input::placeholder,
@@ -463,8 +448,9 @@ body.intro-complete .experience{
 .field input:focus,
 .field textarea:focus{
   outline:none;
-  border-color:rgba(255,255,255,.35);
+  border-color:rgba(255,255,255,.34);
   background:rgba(255,255,255,.08);
+  box-shadow:0 0 0 4px rgba(255,255,255,.04);
 }
 
 .field textarea{
@@ -516,6 +502,14 @@ body.intro-complete .experience{
 }
 
 @media (max-width: 720px){
+  .intro__inner{
+    width:min(94vw, 720px);
+  }
+
+  .logoSvg{
+    width:min(560px, 88vw);
+  }
+
   .section{
     padding:56px 20px;
   }
@@ -554,11 +548,13 @@ body.intro-complete .experience{
     transition:none !important;
   }
 
-  .logoSvg.play .draw{
+  .logoSvg .logo-fill,
+  .logoSvg .logo-word{
     animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
     stroke-dasharray:none !important;
     stroke-dashoffset:0 !important;
-    fill-opacity:1 !important;
   }
 
   .reveal{
