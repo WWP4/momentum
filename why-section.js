@@ -1,5 +1,5 @@
 (function () {
-  const section = document.querySelector('.why-section');
+  const section = document.querySelector('#whySection');
   if (!section) return;
 
   const stage = section.querySelector('#whyStage');
@@ -32,14 +32,12 @@
   ];
 
   let current = -1;
-  let ticking = false;
 
   function setState(index) {
     if (index === current || !states[index]) return;
     current = index;
 
     const state = states[index];
-
     stage.setAttribute('data-step', String(index));
 
     stepButtons.forEach((btn, i) => {
@@ -55,39 +53,48 @@
     if (text) text.textContent = state.text;
   }
 
-  function getScrollIndex() {
+  function getPinnedProgress() {
     const rect = section.getBoundingClientRect();
-    const vh = window.innerHeight;
+    const total = section.offsetHeight - window.innerHeight;
 
-    const progress = Math.min(
-      Math.max((vh - rect.top) / (vh + rect.height), 0),
-      1
-    );
+    if (total <= 0) return 0;
 
-    if (progress < 0.34) return 0;
-    if (progress < 0.68) return 1;
-    return 2;
+    const scrolled = Math.min(Math.max(-rect.top, 0), total);
+    return scrolled / total;
   }
 
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
+  function updateFromScroll() {
+    const progress = getPinnedProgress();
 
-    requestAnimationFrame(() => {
-      setState(getScrollIndex());
-      ticking = false;
-    });
+    let index = 0;
+    if (progress < 0.33) index = 0;
+    else if (progress < 0.66) index = 1;
+    else index = 2;
+
+    setState(index);
+
+    stage.style.setProperty('--why-progress', progress.toFixed(4));
   }
 
   stepButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const index = Number(btn.dataset.step || 0);
       setState(index);
+
+      const total = section.offsetHeight - window.innerHeight;
+      const targets = [0, 0.5, 1];
+      const y = section.offsetTop + total * targets[index];
+
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
     });
   });
 
   setState(0);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  window.addEventListener('load', onScroll);
+  updateFromScroll();
+
+  window.addEventListener('scroll', updateFromScroll, { passive: true });
+  window.addEventListener('resize', updateFromScroll);
 })();
