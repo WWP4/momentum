@@ -1,0 +1,55 @@
+body {
+  margin:0;
+  font-family:sans-serif;
+  background:#fff;
+  color:#111;
+}
+
+.portalHero {
+  padding:80px 40px;
+  border-bottom:1px solid #eee;
+}
+
+.logos {
+  display:flex;
+  align-items:center;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+#clubLogoWrap {
+  width:70px;
+  height:70px;
+}
+
+#clubLogo {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.momentum {
+  font-size:28px;
+  font-weight:600;
+}
+
+.courses {
+  padding:40px;
+}
+
+#coursesGrid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.card {
+  border:1px solid #eee;
+  padding:20px;
+}
+
+.cardFooter {
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
