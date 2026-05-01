@@ -1,100 +1,110 @@
-const COURSES = [
-  {
-    id: "sports-training-performance",
-    title: "Sports Training & Performance",
-    credit: "1.0 Credit",
-    price: "$395",
-    checkoutUrl: "#checkout-sports-training-performance",
-    courseUrl: "./course.html?course=sports-training-performance",
-    image: "https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=80",
-    alt: "Student athletes training on a field",
-    description:
-      "A technique-driven course for athletes building discipline, skill consistency, game IQ, and stronger training habits."
-  },
-  {
-    id: "strength-conditioning",
-    title: "Strength & Conditioning",
-    credit: "1.0 Credit",
-    price: "$395",
-    checkoutUrl: "#checkout-strength-conditioning",
-    courseUrl: "./course.html?course=strength-conditioning",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80",
-    alt: "Athlete training in a gym",
-    description:
-      "A performance science course focused on strength, conditioning, mobility, safe progression, and measurable athletic growth."
-  },
-  {
-    id: "competitive-athletics",
-    title: "Competitive Athletics",
-    credit: "1.0 Credit",
-    price: "$395",
-    checkoutUrl: "#checkout-competitive-athletics",
-    courseUrl: "./course.html?course=competitive-athletics",
-    image: "https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=1200&q=80",
-    alt: "Basketball players competing during a game",
-    description:
-      "A course for athletes competing in games, tournaments, showcases, and high-pressure performance environments."
-  },
-  {
-    id: "health-wellness-for-athletes",
-    title: "Health & Wellness for Athletes",
-    credit: "1.0 Credit",
-    price: "$395",
-    checkoutUrl: "#checkout-health-wellness-for-athletes",
-    courseUrl: "./course.html?course=health-wellness-for-athletes",
-    image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=1200&q=80",
-    alt: "Athlete stretching and recovering",
-    description:
-      "A wellness-centered course covering sleep, recovery, stress, hydration, emotional regulation, and sustainable habits."
-  },
-  {
-    id: "high-performance-athletic-development",
-    title: "High-Performance Athletic Development",
-    credit: "1.0 Credit",
-    price: "$395",
-    checkoutUrl: "#checkout-high-performance-athletic-development",
-    courseUrl: "./course.html?course=high-performance-athletic-development",
-    image: "https://images.unsplash.com/photo-1502904550040-7534597429ae?auto=format&fit=crop&w=1200&q=80",
-    alt: "Athlete sprinting outdoors during training",
-    description:
-      "An advanced course for serious athletes focused on adaptability, cross-training, performance science, and elite habits."
-  }
-];
+import { COURSES } from "./full-courses-data-.js";
 
 const classGrid = document.getElementById("classGrid");
 
-function createCourseCard(course) {
+const CLASS_LIMIT = 21;
+const CLASS_PRICE = "$395";
+
+const STOCK_IMAGES = [
+  "https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1502904550040-7534597429ae?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1571019613914-85f342c6a11e?auto=format&fit=crop&w=1200&q=80"
+];
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function getModuleNumber(module, index) {
+  return Number(module?.n || module?.number || index + 1);
+}
+
+function getModuleTitle(module, index) {
+  return module?.title || `Class ${index + 1}`;
+}
+
+function getModuleDescription(module, course) {
+  return (
+    module?.subtitle ||
+    module?.prompt ||
+    module?.description ||
+    course?.description ||
+    "Momentum athlete development class."
+  );
+}
+
+function getImage(index) {
+  return STOCK_IMAGES[index % STOCK_IMAGES.length];
+}
+
+function buildIndividualClasses() {
+  if (!Array.isArray(COURSES)) return [];
+
+  return COURSES.flatMap((course) => {
+    const modules = Array.isArray(course.modules) ? course.modules : [];
+
+    return modules.map((module, moduleIndex) => {
+      const moduleNumber = getModuleNumber(module, moduleIndex);
+
+      return {
+        id: `${course.id}-module-${moduleNumber}`,
+        courseId: course.id,
+        courseTitle: course.title,
+        moduleNumber,
+        title: getModuleTitle(module, moduleIndex),
+        description: getModuleDescription(module, course),
+        credit: course.credit || "1.0 Credit",
+        price: CLASS_PRICE,
+        image: getImage(moduleIndex),
+        checkoutUrl: `#checkout-${course.id}-module-${moduleNumber}`,
+        classUrl: `./module.html?course=${encodeURIComponent(course.id)}&module=${encodeURIComponent(moduleNumber)}`
+      };
+    });
+  }).slice(0, CLASS_LIMIT);
+}
+
+function createClassCard(item, index) {
   const article = document.createElement("article");
   article.className = "classCard";
 
   article.innerHTML = `
     <div class="classCard__image">
-      <img src="${course.image}" alt="${course.alt}" loading="lazy">
-      <span class="classCard__badge">${course.credit}</span>
+      <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy">
+      <span class="classCard__badge">Class ${index + 1}</span>
     </div>
 
     <div class="classCard__body">
-      <h3>${course.title}</h3>
-      <p>${course.description}</p>
+      <h3>${escapeHtml(item.title)}</h3>
+
+      <p>${escapeHtml(item.description)}</p>
 
       <div class="classCard__meta">
         <div class="metaBlock">
-          <span>Credit</span>
-          <strong>${course.credit}</strong>
+          <span>Program</span>
+          <strong>${escapeHtml(item.courseTitle)}</strong>
         </div>
 
         <div class="metaBlock">
           <span>Enrollment</span>
-          <strong>${course.price}</strong>
+          <strong>${escapeHtml(item.price)}</strong>
         </div>
       </div>
 
       <div class="classCard__actions">
-        <a class="btn btn--primary" href="${course.checkoutUrl}" data-checkout="${course.id}">
+        <a class="btn btn--primary" href="${escapeHtml(item.checkoutUrl)}" data-checkout="${escapeHtml(item.id)}">
           Enroll in This Class
         </a>
 
-        <a class="btn btn--ghost" href="${course.courseUrl}">
+        <a class="btn btn--ghost" href="${escapeHtml(item.classUrl)}">
           Preview Class
         </a>
       </div>
@@ -104,13 +114,15 @@ function createCourseCard(course) {
   return article;
 }
 
-function renderCourses() {
+function renderClasses() {
   if (!classGrid) return;
+
+  const classes = buildIndividualClasses();
 
   classGrid.innerHTML = "";
 
-  COURSES.forEach((course) => {
-    classGrid.appendChild(createCourseCard(course));
+  classes.forEach((item, index) => {
+    classGrid.appendChild(createClassCard(item, index));
   });
 }
 
@@ -125,14 +137,11 @@ function setupCheckoutPlaceholders() {
 
     event.preventDefault();
 
-    const courseId = checkoutLink.dataset.checkout;
-    const course = COURSES.find((item) => item.id === courseId);
-
     alert(
-      `Checkout placeholder for ${course?.title || "this class"}.\n\nReplace checkoutUrl in classes.js with your real Stripe, Square, or payment link.`
+      "Checkout placeholder.\n\nReplace checkoutUrl in classes.js with the real payment link for this individual class."
     );
   });
 }
 
-renderCourses();
+renderClasses();
 setupCheckoutPlaceholders();
