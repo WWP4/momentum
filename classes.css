@@ -521,3 +521,127 @@ a{
     grid-template-columns:1fr;
   }
 }
+
+
+.classCard__kicker{
+  margin-bottom:10px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+}
+
+.classCard__overview{
+  min-height:74px;
+}
+
+.classDetails{
+  display:grid;
+  gap:10px;
+  margin-top:20px;
+}
+
+.classDetail{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 12px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#fafafa;
+}
+
+.classDetail__icon,
+.classBullet__icon{
+  width:28px;
+  height:28px;
+  flex:0 0 28px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--line);
+}
+
+.classDetail svg,
+.classBullet svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:#171a20;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.classDetail small{
+  display:block;
+  margin-bottom:2px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+}
+
+.classDetail strong{
+  display:block;
+  font-size:13px;
+  line-height:1.25;
+}
+
+.classHoverPanel{
+  margin-top:18px;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  opacity:.86;
+  transform:translateY(4px);
+  transition:opacity .24s ease, transform .24s ease, border-color .24s ease;
+}
+
+.classCard:hover .classHoverPanel{
+  opacity:1;
+  transform:translateY(0);
+  border-color:rgba(23,26,32,.18);
+}
+
+.classHoverPanel__title{
+  margin-bottom:12px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+
+.classBullet{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+
+.classBullet li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  color:var(--ink-soft);
+  font-size:14px;
+  line-height:1.45;
+}
+
+.classBullet__icon{
+  width:24px;
+  height:24px;
+  flex-basis:24px;
+}
+
+.classBullet svg{
+  width:13px;
+  height:13px;
+}
