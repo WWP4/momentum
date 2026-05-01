@@ -5,29 +5,70 @@ const classGrid = document.getElementById("classGrid");
 const CLASS_LIMIT = 21;
 const CLASS_PRICE = "$395";
 
-const CLASS_IMAGES = [
-  "./assets/classes/class-01.jpg",
-  "./assets/classes/class-02.jpg",
-  "./assets/classes/class-03.jpg",
-  "./assets/classes/class-04.jpg",
-  "./assets/classes/class-05.jpg",
-  "./assets/classes/class-06.jpg",
-  "./assets/classes/class-07.jpg",
-  "./assets/classes/class-08.jpg",
-  "./assets/classes/class-09.jpg",
-  "./assets/classes/class-10.jpg",
-  "./assets/classes/class-11.jpg",
-  "./assets/classes/class-12.jpg",
-  "./assets/classes/class-13.jpg",
-  "./assets/classes/class-14.jpg",
-  "./assets/classes/class-15.jpg",
-  "./assets/classes/class-16.jpg",
-  "./assets/classes/class-17.jpg",
-  "./assets/classes/class-18.jpg",
-  "./assets/classes/class-19.jpg",
-  "./assets/classes/class-20.jpg",
-  "./assets/classes/class-21.jpg"
-];
+const COURSE_IMAGE_MAP = {
+  "sports-training-performance":
+    "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=1200&auto=format&fit=crop",
+
+  "strength-conditioning":
+    "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1200&auto=format&fit=crop",
+
+  "high-performance-athletic-development":
+    "https://images.unsplash.com/photo-1571019613914-85f342c1d4b6?q=80&w=1200&auto=format&fit=crop",
+
+  "competitive-athletics":
+    "https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1200&auto=format&fit=crop",
+
+  "health-wellness-for-athletes":
+    "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=1200&auto=format&fit=crop",
+
+  "athletic-health-recovery":
+    "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200&auto=format&fit=crop",
+
+  "nutrition-for-athletes":
+    "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1200&auto=format&fit=crop",
+
+  "sports-leadership":
+    "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1200&auto=format&fit=crop",
+
+  "sportsmanship-character-development":
+    "https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?q=80&w=1200&auto=format&fit=crop",
+
+  "team-dynamics-communication":
+    "https://images.unsplash.com/photo-1505842465776-3d6b5d58d99c?q=80&w=1200&auto=format&fit=crop",
+
+  "coaching-skills-athlete-mentorship":
+    "https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=1200&auto=format&fit=crop",
+
+  "sports-theory-analysis":
+    "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=1200&auto=format&fit=crop",
+
+  "sports-psychology-basics":
+    "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop",
+
+  "intro-to-coaching-theory":
+    "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1200&auto=format&fit=crop",
+
+  "kinesiology-human-movement":
+    "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1200&auto=format&fit=crop",
+
+  "exercise-science-foundations":
+    "https://images.unsplash.com/photo-1550345332-09e3ac987658?q=80&w=1200&auto=format&fit=crop",
+
+  "student-athlete-college-readiness":
+    "https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=1200&auto=format&fit=crop",
+
+  "leadership-in-sports-communities":
+    "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=1200&auto=format&fit=crop",
+
+  "time-management-high-performance-students":
+    "https://images.unsplash.com/photo-1506784365847-bbad939e9335?q=80&w=1200&auto=format&fit=crop",
+
+  "personal-responsibility-goal-setting":
+    "https://images.unsplash.com/photo-1483721310020-03333e577078?q=80&w=1200&auto=format&fit=crop",
+
+  "health-fitness-foundations":
+    "https://images.unsplash.com/photo-1519861531473-9200262188bf?q=80&w=1200&auto=format&fit=crop"
+};
 
 function escapeHtml(value = "") {
   return String(value)
