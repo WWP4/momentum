@@ -91,8 +91,9 @@ function createCourseCard(course) {
 
       <div class="classCard__actions">
         <a class="btn btn--primary" href="${course.checkoutUrl}" data-checkout="${course.id}">
-          Enroll Now
+          Enroll in This Class
         </a>
+
         <a class="btn btn--ghost" href="${course.courseUrl}">
           Preview Class
         </a>
@@ -105,7 +106,9 @@ function createCourseCard(course) {
 
 function renderCourses() {
   if (!classGrid) return;
+
   classGrid.innerHTML = "";
+
   COURSES.forEach((course) => {
     classGrid.appendChild(createCourseCard(course));
   });
@@ -117,6 +120,7 @@ function setupCheckoutPlaceholders() {
     if (!checkoutLink) return;
 
     const href = checkoutLink.getAttribute("href") || "";
+
     if (!href.startsWith("#checkout")) return;
 
     event.preventDefault();
