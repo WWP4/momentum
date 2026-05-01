@@ -5,7 +5,6 @@ const classGrid = document.getElementById("classGrid");
 const CLASS_LIMIT = 21;
 const CLASS_PRICE = "$395";
 
-/* 🔑 REAL IMAGE MAP — MATCHED TO COURSE PURPOSE */
 const COURSE_IMAGE_MAP = {
   "sports-training-performance":
     "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=1200&auto=format&fit=crop",
@@ -90,6 +89,15 @@ function icon(type) {
   return icons[type] || icons.check;
 }
 
+function getModuleNumber(module, index) {
+  return Number(module?.n || module?.number || index + 1);
+}
+
+function getCourseImage(course, index) {
+  const fallback = `./assets/classes/class-${String(index + 1).padStart(2, "0")}.jpg`;
+  return COURSE_IMAGE_MAP[course?.id] || fallback;
+}
+
 function getOverview(module, course) {
   return (
     module?.subtitle ||
@@ -102,54 +110,152 @@ function getOverview(module, course) {
 function getBullets(module, course) {
   const text = `${module?.title || ""} ${course?.title || ""}`.toLowerCase();
 
-  if (text.includes("wellness") || text.includes("recovery")) {
-    return ["Build healthier routines", "Reflect on recovery", "Support long-term performance"];
+  if (
+    text.includes("wellness") ||
+    text.includes("sleep") ||
+    text.includes("recovery") ||
+    text.includes("stress") ||
+    text.includes("health")
+  ) {
+    return [
+      "Build healthier athlete routines",
+      "Reflect on recovery and balance",
+      "Support long-term performance habits"
+    ];
   }
 
-  if (text.includes("strength") || text.includes("conditioning")) {
-    return ["Track progress", "Build performance habits", "Train with structure"];
+  if (
+    text.includes("strength") ||
+    text.includes("conditioning") ||
+    text.includes("mobility") ||
+    text.includes("exercise") ||
+    text.includes("kinesiology") ||
+    text.includes("movement")
+  ) {
+    return [
+      "Track training progress",
+      "Connect movement to academics",
+      "Build safer performance habits"
+    ];
   }
 
-  if (text.includes("competitive") || text.includes("game")) {
-    return ["Reflect on competition", "Understand pressure", "Turn games into coursework"];
+  if (
+    text.includes("competitive") ||
+    text.includes("game") ||
+    text.includes("pressure") ||
+    text.includes("tournament") ||
+    text.includes("performance")
+  ) {
+    return [
+      "Reflect on competition",
+      "Understand pressure moments",
+      "Turn training into class work"
+    ];
   }
 
-  return ["Real training experience", "Guided reflection", "Earn academic credit"];
+  if (
+    text.includes("leadership") ||
+    text.includes("team") ||
+    text.includes("communication") ||
+    text.includes("coaching") ||
+    text.includes("mentorship")
+  ) {
+    return [
+      "Develop leadership through sport",
+      "Practice communication and accountability",
+      "Reflect on team responsibility"
+    ];
+  }
+
+  if (
+    text.includes("college") ||
+    text.includes("time") ||
+    text.includes("goal") ||
+    text.includes("responsibility")
+  ) {
+    return [
+      "Build stronger student habits",
+      "Set goals with structure",
+      "Connect discipline to real outcomes"
+    ];
+  }
+
+  return [
+    "Use real athletic training",
+    "Complete guided reflection",
+    "Build academic credit through sport"
+  ];
 }
 
 function buildClasses() {
   const items = [];
-  let count = 0;
+  let globalIndex = 0;
 
   COURSES.forEach((course) => {
-    if (count >= CLASS_LIMIT) return;
+    const modules = Array.isArray(course.modules) ? course.modules : [];
 
-    items.push({
-      title: course.title,
-      courseTitle: "Momentum Course",
-      overview: course.description,
-      bullets: getBullets({}, course),
-      image: COURSE_IMAGE_MAP[course.id],
-      credit: "1.0 Credit",
-      time: "Self-paced • 2–4 weeks",
-      price: CLASS_PRICE,
-      checkoutUrl: `#checkout-${course.id}`,
-      classUrl: `./module.html?course=${encodeURIComponent(course.id)}`
-    });
+    if (modules.length > 0) {
+      modules.forEach((module, moduleIndex) => {
+        if (items.length >= CLASS_LIMIT) return;
 
-    count++;
+        const moduleNumber = getModuleNumber(module, moduleIndex);
+
+        items.push({
+          title: module?.title || course.title || `Class ${globalIndex + 1}`,
+          courseTitle: course.title || "Momentum Course",
+          overview: getOverview(module, course),
+          bullets: getBullets(module, course),
+          image: getCourseImage(course, globalIndex),
+          credit: course.credit || "1.0 Credit",
+          time: "Self-paced • 2–4 weeks",
+          price: CLASS_PRICE,
+          checkoutUrl: `./course-enrollment.html?course=${encodeURIComponent(course.id)}`,
+          classUrl: `./module.html?course=${encodeURIComponent(course.id)}&module=${encodeURIComponent(moduleNumber)}`
+        });
+
+        globalIndex += 1;
+      });
+    } else {
+      if (items.length >= CLASS_LIMIT) return;
+
+      items.push({
+        title: course.title || `Class ${globalIndex + 1}`,
+        courseTitle: course.category || "Momentum Course",
+        overview: course.description || "A guided Momentum class built around athlete development.",
+        bullets: getBullets({}, course),
+        image: getCourseImage(course, globalIndex),
+        credit: course.credit || "1.0 Credit",
+        time: "Self-paced • 2–4 weeks",
+        price: CLASS_PRICE,
+        checkoutUrl: `./course-enrollment.html?course=${encodeURIComponent(course.id)}`,
+        classUrl: `./module.html?course=${encodeURIComponent(course.id)}`
+      });
+
+      globalIndex += 1;
+    }
   });
 
   return items;
 }
 
+function bulletHtml(bullets) {
+  return bullets.map((item) => `
+    <li>
+      <span>${icon("check")}</span>
+      ${escapeHtml(item)}
+    </li>
+  `).join("");
+}
+
 function createCard(item, index) {
   const card = document.createElement("article");
   card.className = "classCard cleanClassCard";
+  card.setAttribute("data-aos", "fade-up");
+  card.setAttribute("data-aos-delay", String((index % 3) * 80));
 
   card.innerHTML = `
     <div class="cleanCardImage">
-      <img src="${item.image}" alt="${escapeHtml(item.title)}">
+      <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy">
     </div>
 
     <div class="cleanCardFront">
@@ -159,16 +265,26 @@ function createCard(item, index) {
     </div>
 
     <div class="cleanCardOverlay">
+      <span class="cleanCardLabel">Overview</span>
       <h3>${escapeHtml(item.title)}</h3>
       <p>${escapeHtml(item.overview)}</p>
 
+      <div class="cleanCardStats">
+        <div>${icon("credit")} <strong>${escapeHtml(item.credit)}</strong></div>
+        <div>${icon("clock")} <strong>${escapeHtml(item.time)}</strong></div>
+      </div>
+
       <ul class="cleanCardBullets">
-        ${item.bullets.map(b => `<li>${b}</li>`).join("")}
+        ${bulletHtml(item.bullets)}
       </ul>
 
       <div class="cleanCardActions">
-        <a class="btn btn--primary" href="${item.checkoutUrl}">Enroll</a>
-        <a class="btn btn--ghost" href="${item.classUrl}">Preview</a>
+        <a class="btn btn--primary" href="${escapeHtml(item.checkoutUrl)}">
+          Enroll
+        </a>
+        <a class="btn btn--ghost" href="${escapeHtml(item.classUrl)}">
+          Preview
+        </a>
       </div>
     </div>
   `;
@@ -177,10 +293,24 @@ function createCard(item, index) {
 }
 
 function renderClasses() {
+  if (!classGrid) return;
+
   classGrid.innerHTML = "";
-  buildClasses().forEach((item, index) => {
+
+  const classes = buildClasses();
+
+  classes.forEach((item, index) => {
     classGrid.appendChild(createCard(item, index));
   });
+
+  if (window.AOS) {
+    window.AOS.init({
+      duration: 650,
+      easing: "ease-out-cubic",
+      once: true,
+      offset: 80
+    });
+  }
 }
 
 renderClasses();
