@@ -18,106 +18,207 @@
 <body>
   <header class="utilityBar">
     <div class="utilityBar__inner">
-      <div class="utilityBar__left">
-        <span class="utilityBar__eyebrow">Momentum Academic Credit</span>
-      </div>
-
+      <span class="utilityBar__eyebrow">Momentum Academic Credit</span>
       <div class="utilityBar__right">
-        <span class="utilityBar__item">21 Individual Classes</span>
-        <span class="utilityBar__divider"></span>
-        <span class="utilityBar__item">Parent Enrollment</span>
-        <span class="utilityBar__divider"></span>
-        <span class="utilityBar__item">Student Portal Access</span>
+        <span>21 Individual Classes</span>
+        <span>Parent Enrollment</span>
+        <span>Student Portal Access</span>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero__inner" data-aos="fade-up">
-        <p class="eyebrow">For clubs, schools, and student-athletes</p>
+    <section class="hero hero--premium">
+      <div class="hero__inner">
+        <div class="hero__content" data-aos="fade-up">
+          <p class="eyebrow">For student-athletes, parents, clubs, and schools</p>
+          <h1>Turn athletic training into structured academic credit.</h1>
+          <p class="hero__copy">
+            Momentum helps families choose an individual class that connects real training,
+            reflection, accountability, and student development.
+          </p>
 
-        <h1>Choose an individual Momentum class.</h1>
+          <div class="heroSelector" aria-label="Class focus shortcuts">
+            <p>What is your student focused on?</p>
+            <div class="heroSelector__buttons">
+              <button type="button" data-focus="Performance">Performance</button>
+              <button type="button" data-focus="Wellness">Wellness</button>
+              <button type="button" data-focus="Leadership">Leadership</button>
+              <button type="button" data-focus="Student Success">College Prep</button>
+            </div>
+          </div>
 
-        <p class="hero__copy">
-          Parents can review all available Momentum class options, understand what each class covers,
-          complete enrollment, and send their student directly into the selected class.
-        </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#classes">View Classes</a>
+            <a class="btn btn--ghost" href="#paths">Explore Paths</a>
+          </div>
+        </div>
 
-        <div class="hero__actions">
-          <a class="btn btn--primary" href="#classes">View All 21 Classes</a>
-          <a class="btn btn--ghost" href="#how-it-works">How It Works</a>
+        <div class="heroPanel" data-aos="fade-up" data-aos-delay="120">
+          <div class="heroPanel__top">
+            <span>Recommended structure</span>
+            <strong>Choose → Enroll → Begin</strong>
+          </div>
+
+          <div class="flowSteps">
+            <div>
+              <span>01</span>
+              <strong>Pick a focus</strong>
+              <p>Performance, wellness, leadership, academics, or life skills.</p>
+            </div>
+            <div>
+              <span>02</span>
+              <strong>Select a class</strong>
+              <p>Each option shows credit, time, outcomes, and best fit.</p>
+            </div>
+            <div>
+              <span>03</span>
+              <strong>Start coursework</strong>
+              <p>The student is routed into the selected class experience.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="trustBand">
-      <div class="trustBand__inner">
+    <section class="proofStrip">
+      <div data-aos="fade-up">
+        <strong>Real training</strong>
+        <span>Built around actual athletic activity.</span>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="80">
+        <strong>Guided reflection</strong>
+        <span>Students connect effort to learning.</span>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="160">
+        <strong>Academic structure</strong>
+        <span>Clear expectations, credit, and accountability.</span>
+      </div>
+    </section>
+
+    <section class="section section--intro">
+      <div class="splitIntro">
         <div data-aos="fade-up">
-          <strong>21 Class Options</strong>
-          <span>Each class is shown as its own parent-friendly enrollment card.</span>
+          <p class="eyebrow">Why Momentum exists</p>
+          <h2>Not just workouts. Not just theory.</h2>
+          <p>
+            Every class connects athletic experience with structured coursework,
+            reflection prompts, and student responsibility.
+          </p>
         </div>
 
-        <div data-aos="fade-up" data-aos-delay="80">
-          <strong>Clear Class Details</strong>
-          <span>Parents can see credits, time expectations, overview, and student outcomes.</span>
+        <div class="differenceCard" data-aos="fade-up" data-aos-delay="100">
+          <span>Momentum Method</span>
+          <h3>Training → Reflection → Academic credit</h3>
+          <p>
+            Students use what they already do in sport as the foundation for organized,
+            parent-visible academic work.
+          </p>
         </div>
+      </div>
+    </section>
 
-        <div data-aos="fade-up" data-aos-delay="160">
-          <strong>Direct Portal Access</strong>
-          <span>After enrollment, students can open the exact selected class.</span>
-        </div>
+    <section class="section" id="paths">
+      <div class="section__header" data-aos="fade-up">
+        <p class="eyebrow">Recommended Paths</p>
+        <h2>Start with the focus that fits the student.</h2>
+        <p>Parents do not have to guess from 21 options. These paths help narrow the choice.</p>
+      </div>
+
+      <div class="pathGrid">
+        <button class="pathCard" type="button" data-focus="Performance" data-aos="fade-up">
+          <span>Performance Path</span>
+          <h3>Training, strength, and athletic development</h3>
+          <p>Best for athletes focused on structure, consistency, and performance habits.</p>
+        </button>
+
+        <button class="pathCard" type="button" data-focus="Wellness" data-aos="fade-up" data-aos-delay="80">
+          <span>Wellness Path</span>
+          <h3>Health, recovery, and nutrition</h3>
+          <p>Best for students building sustainable habits around sport and wellness.</p>
+        </button>
+
+        <button class="pathCard" type="button" data-focus="Leadership" data-aos="fade-up" data-aos-delay="160">
+          <span>Leadership Path</span>
+          <h3>Teamwork, character, and mentorship</h3>
+          <p>Best for captains, mentors, and students growing through responsibility.</p>
+        </button>
+
+        <button class="pathCard" type="button" data-focus="Student Success" data-aos="fade-up" data-aos-delay="240">
+          <span>College Prep Path</span>
+          <h3>Time management, goals, and readiness</h3>
+          <p>Best for students balancing higher expectations in school and athletics.</p>
+        </button>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="section__header" data-aos="fade-up">
+        <p class="eyebrow">Who this is for</p>
+        <h2>Built for students already growing through sport.</h2>
+      </div>
+
+      <div class="fitGrid">
+        <div data-aos="fade-up">Student-athletes training consistently</div>
+        <div data-aos="fade-up" data-aos-delay="80">Families wanting structured academic support</div>
+        <div data-aos="fade-up" data-aos-delay="160">Programs needing accountability beyond practice</div>
+        <div data-aos="fade-up" data-aos-delay="240">Students preparing for higher-level expectations</div>
       </div>
     </section>
 
     <section class="section" id="classes">
       <div class="section__header" data-aos="fade-up">
         <p class="eyebrow">Available Classes</p>
-        <h2>All 21 Momentum Classes</h2>
+        <h2>Choose the class that matches the student’s current focus.</h2>
         <p>
-          Select the individual class that best matches the athlete’s current training,
-          wellness, competition, or performance development focus.
+          Each class stands alone with clear outcomes, parent-friendly enrollment,
+          and direct student access.
         </p>
+      </div>
+
+      <div class="filterBar" data-aos="fade-up">
+        <button type="button" class="filterBtn is-active" data-filter="All">All</button>
+        <button type="button" class="filterBtn" data-filter="Performance">Performance</button>
+        <button type="button" class="filterBtn" data-filter="Wellness">Wellness</button>
+        <button type="button" class="filterBtn" data-filter="Leadership">Leadership</button>
+        <button type="button" class="filterBtn" data-filter="Academic Study">Academic Study</button>
+        <button type="button" class="filterBtn" data-filter="Student Success">Student Success</button>
       </div>
 
       <div id="classGrid" class="classGrid"></div>
     </section>
 
-    <section class="section section--soft" id="how-it-works">
-      <div class="section__header" data-aos="fade-up">
-        <p class="eyebrow">Simple Enrollment</p>
-        <h2>From parent checkout to class access.</h2>
-      </div>
-
-      <div class="steps">
-        <article class="stepCard" data-aos="fade-up">
-          <span>01</span>
-          <h3>Choose a class</h3>
-          <p>Parents review all 21 individual class options and select the right one.</p>
-        </article>
-
-        <article class="stepCard" data-aos="fade-up" data-aos-delay="80">
-          <span>02</span>
-          <h3>Complete enrollment</h3>
-          <p>The selected class connects to its own Stripe, Square, or payment link.</p>
-        </article>
-
-        <article class="stepCard" data-aos="fade-up" data-aos-delay="160">
-          <span>03</span>
-          <h3>Begin class work</h3>
-          <p>The student is routed directly into the selected class page to begin coursework.</p>
-        </article>
-      </div>
-    </section>
-
     <section class="ctaSection">
       <div class="ctaSection__inner" data-aos="fade-up">
         <p class="eyebrow eyebrow--light">Ready to begin?</p>
-        <h2>View the available Momentum classes and choose the right fit.</h2>
+        <h2>Pick the class that fits the student’s season, goals, and responsibilities.</h2>
         <a class="btn btn--light" href="#classes">View Available Classes</a>
       </div>
     </section>
   </main>
+
+  <div class="courseModal" id="courseModal" hidden>
+    <div class="courseModal__backdrop" data-close-modal></div>
+    <article class="courseModal__panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="courseModal__close" type="button" data-close-modal>×</button>
+      <p class="eyebrow" id="modalCategory"></p>
+      <h2 id="modalTitle"></h2>
+      <p id="modalOverview"></p>
+      <div class="modalMeta">
+        <span id="modalCredit"></span>
+        <span id="modalTime"></span>
+      </div>
+      <div class="modalBestFor">
+        <strong>Best for</strong>
+        <p id="modalBestFor"></p>
+      </div>
+      <ul id="modalBullets"></ul>
+      <div class="courseModal__actions">
+        <a class="btn btn--primary" id="modalEnroll" href="#">Choose This Class</a>
+        <a class="btn btn--ghost" id="modalPreview" href="#">View Class Details</a>
+      </div>
+    </article>
+  </div>
 
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script type="module" src="./classes.js"></script>
