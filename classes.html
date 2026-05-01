@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Momentum Classes | Parent Enrollment</title>
+  <meta name="description" content="Enroll in Momentum academic credit courses for student-athletes." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./classes.css" />
+</head>
+
+<body>
+  <header class="utilityBar">
+    <div class="utilityBar__inner">
+      <div class="utilityBar__left">
+        <span class="utilityBar__eyebrow">Momentum Academic Credit</span>
+      </div>
+
+      <div class="utilityBar__right">
+        <span class="utilityBar__item">Athlete-Focused Courses</span>
+        <span class="utilityBar__divider"></span>
+        <span class="utilityBar__item">Parent Enrollment</span>
+        <span class="utilityBar__divider"></span>
+        <span class="utilityBar__item">Class Portal Access</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__inner">
+        <p class="eyebrow">For clubs, schools, and student-athletes</p>
+        <h1>Turn real athletic training into structured academic credit.</h1>
+        <p class="hero__copy">
+          Momentum helps families enroll in guided academic courses built around training,
+          competition, wellness, and athlete development.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#classes">Choose a Class</a>
+          <a class="btn btn--ghost" href="#how-it-works">How It Works</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="trustBand" aria-label="Momentum course highlights">
+      <div class="trustBand__inner">
+        <div>
+          <strong>1.0 Credit Options</strong>
+          <span>Structured coursework for athlete development.</span>
+        </div>
+        <div>
+          <strong>Parent-Friendly Enrollment</strong>
+          <span>Choose a class, complete checkout, and begin.</span>
+        </div>
+        <div>
+          <strong>Guided Modules</strong>
+          <span>Students complete written reflections and course work.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="classes">
+      <div class="section__header">
+        <p class="eyebrow">Available Classes</p>
+        <h2>Select the course that best fits your athlete.</h2>
+        <p>
+          Each class is designed to connect real athletic activity with academic reflection,
+          skill development, and measurable growth.
+        </p>
+      </div>
+
+      <div id="classGrid" class="classGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="section section--soft" id="how-it-works">
+      <div class="section__header">
+        <p class="eyebrow">Simple Enrollment</p>
+        <h2>From parent checkout to class access.</h2>
+      </div>
+
+      <div class="steps">
+        <article class="stepCard">
+          <span>01</span>
+          <h3>Choose a class</h3>
+          <p>Select the course that matches the athlete’s training, competition, or wellness focus.</p>
+        </article>
+
+        <article class="stepCard">
+          <span>02</span>
+          <h3>Complete payment</h3>
+          <p>The parent completes checkout through the class enrollment button.</p>
+        </article>
+
+        <article class="stepCard">
+          <span>03</span>
+          <h3>Start the course</h3>
+          <p>After payment, the student is routed into the class portal and begins Module 1.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ctaSection">
+      <div class="ctaSection__inner">
+        <p class="eyebrow eyebrow--light">Ready to begin?</p>
+        <h2>Choose a Momentum class and start enrollment today.</h2>
+        <a class="btn btn--light" href="#classes">View Classes</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./classes.js"></script>
+</body>
+</html>
