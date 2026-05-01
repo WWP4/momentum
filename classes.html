@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <link rel="stylesheet" href="./classes.css" />
 </head>
 
@@ -26,21 +27,21 @@
         <span class="utilityBar__divider"></span>
         <span class="utilityBar__item">Parent Enrollment</span>
         <span class="utilityBar__divider"></span>
-        <span class="utilityBar__item">Class Portal Access</span>
+        <span class="utilityBar__item">Student Portal Access</span>
       </div>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="hero__inner">
+      <div class="hero__inner" data-aos="fade-up">
         <p class="eyebrow">For clubs, schools, and student-athletes</p>
 
         <h1>Choose an individual Momentum class.</h1>
 
         <p class="hero__copy">
-          Parents can view all available Momentum class options, enroll in the right fit,
-          and send their student directly into the selected class.
+          Parents can review all available Momentum class options, understand what each class covers,
+          complete enrollment, and send their student directly into the selected class.
         </p>
 
         <div class="hero__actions">
@@ -52,30 +53,30 @@
 
     <section class="trustBand">
       <div class="trustBand__inner">
-        <div>
+        <div data-aos="fade-up">
           <strong>21 Class Options</strong>
-          <span>Each class is shown as its own enrollment card.</span>
+          <span>Each class is shown as its own parent-friendly enrollment card.</span>
         </div>
 
-        <div>
-          <strong>Parent Checkout</strong>
-          <span>Each class can connect to its own payment link.</span>
+        <div data-aos="fade-up" data-aos-delay="80">
+          <strong>Clear Class Details</strong>
+          <span>Parents can see credits, time expectations, overview, and student outcomes.</span>
         </div>
 
-        <div>
-          <strong>Direct Class Access</strong>
+        <div data-aos="fade-up" data-aos-delay="160">
+          <strong>Direct Portal Access</strong>
           <span>After enrollment, students can open the exact selected class.</span>
         </div>
       </div>
     </section>
 
     <section class="section" id="classes">
-      <div class="section__header">
+      <div class="section__header" data-aos="fade-up">
         <p class="eyebrow">Available Classes</p>
         <h2>All 21 Momentum Classes</h2>
         <p>
           Select the individual class that best matches the athlete’s current training,
-          wellness, competition, or performance focus.
+          wellness, competition, or performance development focus.
         </p>
       </div>
 
@@ -83,33 +84,42 @@
     </section>
 
     <section class="section section--soft" id="how-it-works">
-      <div class="section__header">
+      <div class="section__header" data-aos="fade-up">
         <p class="eyebrow">Simple Enrollment</p>
         <h2>From parent checkout to class access.</h2>
       </div>
 
       <div class="steps">
-        <article class="stepCard">
+        <article class="stepCard" data-aos="fade-up">
           <span>01</span>
           <h3>Choose a class</h3>
           <p>Parents review all 21 individual class options and select the right one.</p>
         </article>
 
-        <article class="stepCard">
+        <article class="stepCard" data-aos="fade-up" data-aos-delay="80">
           <span>02</span>
           <h3>Complete enrollment</h3>
-          <p>The selected class can connect to its own Stripe, Square, or payment link.</p>
+          <p>The selected class connects to its own Stripe, Square, or payment link.</p>
         </article>
 
-        <article class="stepCard">
+        <article class="stepCard" data-aos="fade-up" data-aos-delay="160">
           <span>03</span>
           <h3>Begin class work</h3>
-          <p>The student is routed directly into the selected class page after enrollment.</p>
+          <p>The student is routed directly into the selected class page to begin coursework.</p>
         </article>
+      </div>
+    </section>
+
+    <section class="ctaSection">
+      <div class="ctaSection__inner" data-aos="fade-up">
+        <p class="eyebrow eyebrow--light">Ready to begin?</p>
+        <h2>View the available Momentum classes and choose the right fit.</h2>
+        <a class="btn btn--light" href="#classes">View Available Classes</a>
       </div>
     </section>
   </main>
 
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script type="module" src="./classes.js"></script>
 </body>
 </html>
