@@ -5,6 +5,7 @@ const classGrid = document.getElementById("classGrid");
 const CLASS_LIMIT = 21;
 const CLASS_PRICE = "$395";
 
+/* 🔑 REAL IMAGE MAP — MATCHED TO COURSE PURPOSE */
 const COURSE_IMAGE_MAP = {
   "sports-training-performance":
     "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=1200&auto=format&fit=crop",
@@ -89,10 +90,6 @@ function icon(type) {
   return icons[type] || icons.check;
 }
 
-function getModuleNumber(module, index) {
-  return Number(module?.n || module?.number || index + 1);
-}
-
 function getOverview(module, course) {
   return (
     module?.subtitle ||
@@ -105,71 +102,54 @@ function getOverview(module, course) {
 function getBullets(module, course) {
   const text = `${module?.title || ""} ${course?.title || ""}`.toLowerCase();
 
-  if (text.includes("wellness") || text.includes("sleep") || text.includes("recovery") || text.includes("stress")) {
-    return ["Build healthier routines", "Reflect on stress and recovery", "Support balance and self-awareness"];
+  if (text.includes("wellness") || text.includes("recovery")) {
+    return ["Build healthier routines", "Reflect on recovery", "Support long-term performance"];
   }
 
-  if (text.includes("strength") || text.includes("conditioning") || text.includes("mobility")) {
-    return ["Track training progress", "Connect workouts to academics", "Build safer performance habits"];
+  if (text.includes("strength") || text.includes("conditioning")) {
+    return ["Track progress", "Build performance habits", "Train with structure"];
   }
 
-  if (text.includes("competitive") || text.includes("game") || text.includes("pressure") || text.includes("tournament")) {
-    return ["Reflect on competition", "Understand pressure moments", "Turn games into class work"];
+  if (text.includes("competitive") || text.includes("game")) {
+    return ["Reflect on competition", "Understand pressure", "Turn games into coursework"];
   }
 
-  return ["Use real athletic training", "Complete guided reflection", "Build academic credit through sport"];
+  return ["Real training experience", "Guided reflection", "Earn academic credit"];
 }
 
 function buildClasses() {
   const items = [];
-  let globalIndex = 0;
+  let count = 0;
 
   COURSES.forEach((course) => {
-    const modules = Array.isArray(course.modules) ? course.modules : [];
+    if (count >= CLASS_LIMIT) return;
 
-    modules.forEach((module, moduleIndex) => {
-      if (items.length >= CLASS_LIMIT) return;
-
-      const moduleNumber = getModuleNumber(module, moduleIndex);
-
-      items.push({
-        title: module?.title || `Class ${globalIndex + 1}`,
-        courseTitle: course.title || "Momentum Course",
-        overview: getOverview(module, course),
-        bullets: getBullets(module, course),
-        image: CLASS_IMAGES[globalIndex],
-        credit: course.credit || "1.0 Credit",
-        time: "Self-paced • 2–4 weeks",
-        price: CLASS_PRICE,
-        checkoutUrl: `#checkout-${course.id}-module-${moduleNumber}`,
-        classUrl: `./module.html?course=${encodeURIComponent(course.id)}&module=${encodeURIComponent(moduleNumber)}`
-      });
-
-      globalIndex += 1;
+    items.push({
+      title: course.title,
+      courseTitle: "Momentum Course",
+      overview: course.description,
+      bullets: getBullets({}, course),
+      image: COURSE_IMAGE_MAP[course.id],
+      credit: "1.0 Credit",
+      time: "Self-paced • 2–4 weeks",
+      price: CLASS_PRICE,
+      checkoutUrl: `#checkout-${course.id}`,
+      classUrl: `./module.html?course=${encodeURIComponent(course.id)}`
     });
+
+    count++;
   });
 
   return items;
 }
 
-function bulletHtml(bullets) {
-  return bullets.map((item) => `
-    <li>
-      <span>${icon("check")}</span>
-      ${escapeHtml(item)}
-    </li>
-  `).join("");
-}
-
 function createCard(item, index) {
   const card = document.createElement("article");
   card.className = "classCard cleanClassCard";
-  card.setAttribute("data-aos", "fade-up");
-  card.setAttribute("data-aos-delay", String((index % 3) * 80));
 
   card.innerHTML = `
     <div class="cleanCardImage">
-      <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy">
+      <img src="${item.image}" alt="${escapeHtml(item.title)}">
     </div>
 
     <div class="cleanCardFront">
@@ -179,26 +159,16 @@ function createCard(item, index) {
     </div>
 
     <div class="cleanCardOverlay">
-      <span class="cleanCardLabel">Overview</span>
       <h3>${escapeHtml(item.title)}</h3>
       <p>${escapeHtml(item.overview)}</p>
 
-      <div class="cleanCardStats">
-        <div>${icon("credit")} <strong>${escapeHtml(item.credit)}</strong></div>
-        <div>${icon("clock")} <strong>${escapeHtml(item.time)}</strong></div>
-      </div>
-
       <ul class="cleanCardBullets">
-        ${bulletHtml(item.bullets)}
+        ${item.bullets.map(b => `<li>${b}</li>`).join("")}
       </ul>
 
       <div class="cleanCardActions">
-        <a class="btn btn--primary" href="${escapeHtml(item.checkoutUrl)}" data-checkout>
-          Enroll
-        </a>
-        <a class="btn btn--ghost" href="${escapeHtml(item.classUrl)}">
-          Preview
-        </a>
+        <a class="btn btn--primary" href="${item.checkoutUrl}">Enroll</a>
+        <a class="btn btn--ghost" href="${item.classUrl}">Preview</a>
       </div>
     </div>
   `;
@@ -207,33 +177,10 @@ function createCard(item, index) {
 }
 
 function renderClasses() {
-  if (!classGrid) return;
-
   classGrid.innerHTML = "";
-
   buildClasses().forEach((item, index) => {
     classGrid.appendChild(createCard(item, index));
   });
 }
 
-document.addEventListener("click", (event) => {
-  const checkout = event.target.closest("[data-checkout]");
-  if (!checkout) return;
-
-  const href = checkout.getAttribute("href") || "";
-  if (!href.startsWith("#checkout")) return;
-
-  event.preventDefault();
-  alert("Replace this placeholder with the real payment link for this class.");
-});
-
 renderClasses();
-
-if (window.AOS) {
-  window.AOS.init({
-    duration: 650,
-    easing: "ease-out-cubic",
-    once: true,
-    offset: 80
-  });
-}
