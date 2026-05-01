@@ -645,3 +645,216 @@ a{
   width:13px;
   height:13px;
 }
+
+.cleanClassCard{
+  position:relative;
+  min-height:430px;
+  border-radius:10px;
+  overflow:hidden;
+  background:#111317;
+  color:#fff;
+  border:1px solid rgba(23,26,32,.10);
+  isolation:isolate;
+}
+
+.cleanCardImage{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+
+.cleanCardImage::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.72)),
+    linear-gradient(90deg, rgba(0,0,0,.25), rgba(0,0,0,.05));
+  transition:opacity .28s ease;
+}
+
+.cleanCardImage img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(.92) contrast(.98);
+  transform:scale(1.01);
+  transition:transform .5s ease, filter .3s ease;
+}
+
+.cleanCardFront{
+  position:absolute;
+  inset:auto 0 0 0;
+  z-index:2;
+  padding:26px;
+  transition:opacity .24s ease, transform .24s ease;
+}
+
+.cleanCardFront h3,
+.cleanCardOverlay h3{
+  margin:0;
+  font-size:25px;
+  line-height:1.08;
+  letter-spacing:-.035em;
+}
+
+.cleanCardFront p{
+  margin:10px 0 0;
+  color:rgba(255,255,255,.76);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.cleanCardLabel{
+  display:inline-flex;
+  margin-bottom:12px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.68);
+}
+
+.cleanCardOverlay{
+  position:absolute;
+  inset:14px;
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  padding:22px;
+  border-radius:9px;
+  background:rgba(255,255,255,.96);
+  color:#171a20;
+  opacity:0;
+  transform:translateY(12px) scale(.985);
+  pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease;
+}
+
+.cleanCardOverlay p{
+  margin:12px 0 0;
+  color:#5c5e62;
+  font-size:14px;
+  line-height:1.55;
+}
+
+.cleanClassCard:hover .cleanCardOverlay,
+.cleanClassCard:focus-within .cleanCardOverlay{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+
+.cleanClassCard:hover .cleanCardFront,
+.cleanClassCard:focus-within .cleanCardFront{
+  opacity:0;
+  transform:translateY(12px);
+}
+
+.cleanClassCard:hover .cleanCardImage img,
+.cleanClassCard:focus-within .cleanCardImage img{
+  transform:scale(1.055);
+  filter:saturate(.8) contrast(.95);
+}
+
+.cleanCardStats{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:16px;
+}
+
+.cleanCardStats div{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-height:36px;
+  padding:8px 10px;
+  border:1px solid rgba(23,26,32,.10);
+  border-radius:7px;
+  background:#fafafa;
+  font-size:13px;
+}
+
+.cleanCardStats svg,
+.cleanCardBullets svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:#171a20;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  flex:0 0 auto;
+}
+
+.cleanCardBullets{
+  list-style:none;
+  padding:0;
+  margin:16px 0 0;
+  display:grid;
+  gap:9px;
+}
+
+.cleanCardBullets li{
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+  color:#5c5e62;
+  font-size:13.5px;
+  line-height:1.4;
+}
+
+.cleanCardBullets span{
+  width:22px;
+  height:22px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(23,26,32,.10);
+  border-radius:999px;
+  flex:0 0 22px;
+  background:#fff;
+}
+
+.cleanCardBullets svg{
+  width:12px;
+  height:12px;
+}
+
+.cleanCardActions{
+  display:flex;
+  gap:9px;
+  margin-top:auto;
+  padding-top:18px;
+}
+
+.cleanCardActions .btn{
+  flex:1;
+  min-width:0;
+  min-height:40px;
+  padding:0 14px;
+}
+
+.cleanCardActions .btn--ghost{
+  background:#fff;
+}
+
+@media (max-width:640px){
+  .cleanClassCard{
+    min-height:460px;
+  }
+
+  .cleanCardOverlay{
+    opacity:1;
+    transform:none;
+    position:relative;
+    inset:auto;
+    margin:160px 12px 12px;
+    pointer-events:auto;
+  }
+
+  .cleanCardFront{
+    opacity:0;
+  }
+}
